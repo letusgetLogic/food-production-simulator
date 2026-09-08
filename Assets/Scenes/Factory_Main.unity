@@ -2742,6 +2742,7 @@ GameObject:
   - component: {fileID: 1221788173}
   - component: {fileID: 1221788172}
   - component: {fileID: 1221788171}
+  - component: {fileID: 1221788174}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2842,6 +2843,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221788169}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1221788174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221788169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ffd39c81e74ec49b6c5f051a9c5540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platform::Game.Platform.DebugLogInteractable
+  _isInteractable: 1
 --- !u!1001 &1268918810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3219,6 +3233,7 @@ GameObject:
   - component: {fileID: 1635455456}
   - component: {fileID: 1635455455}
   - component: {fileID: 1635455454}
+  - component: {fileID: 1635455457}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -3319,6 +3334,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635455452}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1635455457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635455452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ffd39c81e74ec49b6c5f051a9c5540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platform::Game.Platform.DebugLogInteractable
+  _isInteractable: 1
 --- !u!4 &1656005829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8899788586094158687, guid: ebc3187152a220749bb7f217f1044017, type: 3}
@@ -4049,6 +4077,7 @@ GameObject:
   - component: {fileID: 2066248925}
   - component: {fileID: 2066248924}
   - component: {fileID: 2066248923}
+  - component: {fileID: 2066248926}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4149,6 +4178,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066248921}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2066248926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066248921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ffd39c81e74ec49b6c5f051a9c5540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platform::Game.Platform.DebugLogInteractable
+  _isInteractable: 1
 --- !u!1001 &2074811492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4223,6 +4265,7 @@ GameObject:
   - component: {fileID: 2089047432}
   - component: {fileID: 2089047431}
   - component: {fileID: 2089047430}
+  - component: {fileID: 2089047433}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4323,6 +4366,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089047428}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2089047433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089047428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ffd39c81e74ec49b6c5f051a9c5540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platform::Game.Platform.DebugLogInteractable
+  _isInteractable: 1
 --- !u!4 &2098479437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8899788586094158687, guid: ebc3187152a220749bb7f217f1044017, type: 3}
