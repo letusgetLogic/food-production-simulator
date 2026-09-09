@@ -11,5 +11,104 @@ https://www.ggmgastro.com/de-de-eur/teigportionier-er-inkl-teigabrunder-und-unte
 Pizzateig-Formpresse
 https://www.gastore.de/pizzateigpresse-fuer-pizzen-o-35-cm-OEM.html
 
+## Produktionsstationen
+
+### Rohstofflager
+
+Verwaltung von:
+
+* Mehl
+* Wasser
+* Hefe
+* Salz
+* Tomatensauce
+* Käse
+* Verpackungsmaterial
+
+Das Lager besitzt Bestände und kann die Produktion stoppen, wenn benötigte Materialien fehlen.
+
+### Teigmischer
+
+Mischt die benötigten Zutaten nach einem Rezept.
+
+Simulierte Parameter:
+
+* Mischdauer
+* benötigte Zutaten
+* Mischstatus
+* Maschinenstatus
+
+### Portionierer
+
+Teilt den fertigen Teig in einzelne Portionen.
+
+Eine Waage überprüft das Gewicht.
+
+```text
+Sollgewicht: 300 g
+Toleranz:    ±10 g
+```
+
+Außerhalb der Toleranz wird die Portion als fehlerhaft markiert.
+
+### Formanlage
+
+Formt die Teigportion zu einem Pizzaboden.
+
+Der Boden wird anschließend auf das Förderband übergeben.
+
+### Dosierstation
+
+Automatische Dosierung von:
+
+* Tomatensauce
+* Käse
+* optional weiteren Zutaten
+
+Die Dosiermenge kann überwacht werden.
+
+### Backofen
+
+Simuliert einen kontinuierlichen oder chargenweisen Backprozess.
+
+Parameter:
+
+* Temperatur
+* Backzeit
+* Durchlaufzeit
+* Ofenstatus
+
+### Kühleinheit
+
+Die Pizza wird nach dem Backen kontrolliert heruntergekühlt.
+
+### Schockfroster
+
+Die Pizza wird auf eine niedrige Temperatur gebracht.
+
+Die Simulation konzentriert sich auf:
+
+* Temperatur
+* Durchlaufzeit
+* Anlagenstatus
+
+### Verpackungsanlage
+
+Die fertige Pizza wird verpackt und mit Produkt-/Chargendaten versehen.
+
+### Qualitätskontrolle
+
+Überprüft beispielsweise:
+
+* Gewicht
+* Temperatur
+* Produktionsstatus
+* Verpackungsstatus
+
+Fehlerhafte Produkte werden ausgeschleust.
+
+---
+
+
 Fachwörter:
 HMI-Bedienteil = Human Machine Interface
