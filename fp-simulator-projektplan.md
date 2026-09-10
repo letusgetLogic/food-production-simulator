@@ -170,9 +170,16 @@ Da alle 4 Accounts auf dem Free-Plan ohne Claude Code/API laufen, ist jede Inter
   - XML-Doc-Kommentare (`///`) auf Englisch für öffentliche APIs.
 - **Kern-Interfaces (aus dem Design-Dokument):** `IMachine`, `ISensor`, `IProductProcessor`, `IConveyor`, `IQualityCheck` – zusätzlich `IInteractable`/`IInteractor` für Navigation und HMI-Bedienung.
 - **Struktur:** Assembly Definitions je Modul, z. B. `Game.Core` (Interfaces, Interaction-Layer, Navigation), `Game.Production` (MachineSystem, ConveyorSystem, RecipeSystem, ProductSystem, die 8 Stationen), `Game.Sensors` (SensorSystem), `Game.Quality` (QualitySystem, FaultSystem), `Game.HMI` (UI/Bedienpanel), `Game.Platform` (WebGL, Save/Load, Debug-Tools).
-- **Interaction-Abstraction:** Kein Code darf direkt gegen Desktop-Input oder XR-Input koppeln. Navigations-Pfeile und HMI-Bedienelemente laufen über `IInteractable`/`IInteractor`, damit Woche 5 die VR-Teleport-/Grab-Bindings ohne Redesign andocken kann.
-- **Maschinen-Zustandsautomat:** Einheitlich `Idle → Starting → Running → Stopping → Stopped`, bei Störung `Fault → Maintenance → Running`, implementiert in einer generischen Basisklasse, von der alle 8 Stationen erben.
+- **Interaction-Abstraction:** Kein Code darf direkt gegen Desktop-Input oder XR-Input koppeln. Navigations-Pfeile und HMI-Bedienelemente laufen über `IInteractable`/`IInteractor`, damit Woche 5 die VR-Teleport-/Grab-Bindings ohne Redesign andocken kann. **`IInteractable` sitzt nicht auf der Maschine als Ganzes**, sondern auf einzelnen Maschinenteilen (z. B. Bedienknöpfen, Wartungszugängen) und auf HMI-Elementen – die Maschine selbst (`MachineBase`) bleibt ohne `InteractableBase`.
+- **Assembly-Abhängigkeitsrichtung (verbindlich):** `Game.Core → Game.Sensors → Game.Production → Game.Quality → Game.HMI` – jede Assembly referenziert nur "nach unten", nie zurück. Gemeinsam benötigte Typen wandern in die niedrigere Schicht (`Game.Core`), statt eine Rückreferenz einzuführen.
+- **Produktidentität auf physischen Objekten:** `ProductToken` (Bindeglied physisches Objekt ↔ `ProductInstance`) liegt in `Game.Core`, nicht in `Game.Production` – dadurch bleibt `Game.Sensors` unabhängig von `Game.Production` (kein Zirkelbezug). Sensoren liefern ausschließlich rohe, produktneutrale Messwerte; die Korrelation von Messwert und Produktidentität (`ProductToken` vom aktuellen GameObject an der Station holen) übernimmt die jeweilige Station in `Game.Production`, nicht der Sensor selbst.
+- **Maschinen-Zustandsautomat:** Einheitlich `Idle → Starting → Running → Stopping → Stopped`, bei Störung `Fault → Maintenance → Running`, implementiert in einer generischen Basisklasse, von der alle 8 Stationen erben. Rückweg aus `Stopped`/`Fault`/`Maintenance` läuft **immer** über explizite Bediener-/HMI-Aktion (`ResetToIdle()`, `AcknowledgeFault()`, `CompleteMaintenance()`) – kein Selbst-Reset.
+- **Naming-Sonderregel `IMachine`:** Keine Unity-Magic-Method-Namen in der API (z. B. `Start` → `StartMachine()`), da diese sonst mit dem MonoBehaviour-Lifecycle kollidieren – vor jeder neuen Interface-Methode gegenprüfen.
 - **Produktzustand:** `RawDough → MixedDough → PortionedDough → FormedPizza → SaucedPizza → ToppedPizza → BakedPizza → CooledPizza → FrozenPizza → PackagedPizza` als zentrales Datenmodell (`IProductProcessor`), das jede Station validiert und weiterreicht.
+- **Conveyor-Datenmodell:** `IConveyor` transportiert ausschließlich die physische Last (`GameObject`), **keine** `ProductInstance` direkt – die Produktidentität wird über `ProductToken` (Bindeglied physisches Objekt ↔ `ProductInstance`) und stationsseitige Sensoren aufgelöst.
+- **Fehlerzustand vs. Normalbetrieb bei Förderbändern:** `IsJammed` (physischer Defekt, Fault-relevant) ist strikt von `IsBackedUp` (normale Rückstauung durch eine gestoppte Folgestation, kein Fehler) zu trennen, damit das FaultSystem nicht bei jedem normalen Maschinenstopp fälschlich einen Fehler meldet.
+- **Komponenten-Komposition statt Mehrfachvererbung:** Da C# keine Mehrfachvererbung erlaubt und `MachineBase`/`InteractableBase` beide eigene MonoBehaviour-Basisklassen sind, gilt generell: Interaktive Elemente werden als **separate Komponente auf einem eigenen (Kind-)GameObject** eingebunden, nie als gemeinsame Basisklasse mit `MachineBase`. Konkret: einzelne Maschinenteile (Bedienknöpfe, Wartungszugänge) und HMI-Elemente tragen `InteractableBase`, die übergeordnete Maschine (`MachineBase`) nicht.
+- **Input:** Ausschließlich das neue Unity Input System (`com.unity.inputsystem`), Active Input Handling = "Input System Package (New)"/"Both" – kein Legacy `UnityEngine.Input` in neuem Code.
 - **Daten:** Rezepte, Prozessparameter und Toleranzen als ScriptableObjects, nicht hartkodiert – Grundlage für die Balancing-/Debug-Tools.
 - **Save-Format:** JSON, versioniert (Schema-Version-Feld im Root-Objekt) für spätere Migrationssicherheit.
 
@@ -192,7 +199,16 @@ Da alle 4 Accounts auf dem Free-Plan ohne Claude Code/API laufen, ist jede Inter
 - Kern-Interfaces: IMachine, ISensor, IProductProcessor, IConveyor, IQualityCheck, IInteractable/IInteractor
 - Assembly-Struktur: Game.Core, Game.Production, Game.Sensors, Game.Quality, Game.HMI, Game.Platform
 - Machine-State-Machine: Idle/Starting/Running/Stopping/Stopped, bei Fehler Fault/Maintenance/Running
+- Rückweg aus Stopped/Fault/Maintenance immer über explizite Bediener-/HMI-Aktion (ResetToIdle/AcknowledgeFault/CompleteMaintenance) - kein Selbst-Reset
+- IMachine-API ohne Unity-Magic-Method-Namen (Start -> StartMachine())
 - Produktzustand: RawDough -> ... -> PackagedPizza (zentrales Datenmodell)
+- IConveyor transportiert nur physische Last (GameObject), keine ProductInstance - Produktidentität über ProductToken + Sensoren
+- IsJammed (Fault) getrennt von IsBackedUp (normale Rückstauung, kein Fehler)
+- Komposition statt Mehrfachvererbung: interaktive Elemente als separate Komponente auf eigenem (Kind-)GameObject, nie gemeinsame Basisklasse mit MachineBase
+- IInteractable sitzt auf Maschinenteilen (Knöpfe, Wartungszugänge) und HMI-Elementen, nicht auf der Maschine als Ganzes
+- Assembly-Abhängigkeitsrichtung: Game.Core -> Game.Sensors -> Game.Production -> Game.Quality -> Game.HMI, nur "nach unten" referenzieren
+- ProductToken liegt in Game.Core (nicht Game.Production) - Sensoren liefern nur rohe Messwerte, Stationen korrelieren Messwert+Produktidentität selbst
+- Input: nur neues Input System (com.unity.inputsystem), kein Legacy UnityEngine.Input
 - Navigation: Punkt-zu-Punkt via interaktiver Pfeile, kein freies Movement
 - Content als ScriptableObjects, keine Hardcoded-Werte
 - Save-Format: JSON, versioniert
