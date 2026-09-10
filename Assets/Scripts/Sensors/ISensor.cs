@@ -1,3 +1,5 @@
+using System;
+
 namespace Game.Sensors
 {
     /// <summary>
@@ -32,5 +34,6 @@ namespace Game.Sensors
     {
         /// <summary>The current measured value of this sensor.</summary>
         T CurrentValue { get; }
+        event Action<T> OnValueChanged;
     }
 }

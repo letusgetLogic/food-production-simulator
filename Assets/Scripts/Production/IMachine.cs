@@ -35,7 +35,7 @@ namespace Game.Production
         /// Requests the machine to stop (Running -> Stopping -> Stopped).
         /// No-op (or ignored) if the machine is not currently in a state that allows stopping.
         /// </summary>
-        void Stop();
+        void StopMachine();
 
         /// <summary>
         /// Signals that the machine has entered an error condition, transitioning it into <see cref="MachineState.Fault"/>.

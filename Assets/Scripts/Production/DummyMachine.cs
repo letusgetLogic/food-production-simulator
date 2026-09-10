@@ -85,7 +85,7 @@ namespace Game.Production
         [ContextMenu("Demo: Stop")]
         private void DemoStop()
         {
-            Stop(); // Running -> Stopping (Stopped is reached automatically via Update)
+            StopMachine(); // Running -> Stopping (Stopped is reached automatically via Update)
         }
 
         /// <summary>

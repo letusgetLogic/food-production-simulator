@@ -42,7 +42,7 @@ namespace Game.Production
         }
 
         /// <inheritdoc />
-        public void Stop()
+        public void StopMachine()
         {
             if (_currentState != MachineState.Running)
             {
