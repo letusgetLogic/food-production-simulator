@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 73518a1b5e36549bb07b894b09703ed0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/KeyEventArgs.cs
+  uploadId: 456932

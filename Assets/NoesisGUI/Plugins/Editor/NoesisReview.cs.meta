@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 63dd8c78ecbe9004cbfe103aa7761dd1
+timeCreated: 1487056783
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/Editor/NoesisReview.cs
+  uploadId: 456932

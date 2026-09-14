@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 562b410cef0768040900212aa371f5b7
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/UniformGrid.xaml
+  uploadId: 456932

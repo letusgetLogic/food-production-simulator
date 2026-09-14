@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: bfe090ab288c0784d93fd1e41340df76
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/StatusBar.xaml
+  uploadId: 456932

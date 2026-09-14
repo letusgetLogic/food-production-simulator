@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: a0dcd482aa723c24088082b3e37da0bb
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/ImageAtlas.xaml
+  uploadId: 456932

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f5e449283322511bb248d0ca25f57901
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/GeometryCollection.cs
+  uploadId: 456932

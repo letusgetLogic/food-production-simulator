@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 88c13ff9515a82843ae25a45874f2e73
+timeCreated: 1511872041
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/QuestLog/Resources.xaml
+  uploadId: 456932

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cfdf7f18a2316424b916f1dea0ed529c
+timeCreated: 1488253346
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/Fonts/Roboto-Italic.asset
+  uploadId: 456932

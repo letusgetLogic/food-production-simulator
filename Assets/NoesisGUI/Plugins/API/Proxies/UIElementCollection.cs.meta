@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 450a2a76b7ef5794bf3e3eecf7c4e5e2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/UIElementCollection.cs
+  uploadId: 456932

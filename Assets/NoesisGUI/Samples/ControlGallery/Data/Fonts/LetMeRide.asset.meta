@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e301f5f381a8b0d4bb9776a5393713d8
+timeCreated: 1488253346
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/Fonts/LetMeRide.asset
+  uploadId: 456932

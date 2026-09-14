@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6b83badc924711943aaa48e7c1ef1940
+timeCreated: 1488253346
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/Fonts/Roboto-Regular.asset
+  uploadId: 456932

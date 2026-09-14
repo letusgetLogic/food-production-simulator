@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 00f2e7c78150bea4396da9a324c6cf75
+timeCreated: 1488253346
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/Fonts/Roboto-Bold.asset
+  uploadId: 456932

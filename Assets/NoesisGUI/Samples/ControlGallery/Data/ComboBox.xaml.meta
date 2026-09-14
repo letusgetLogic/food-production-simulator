@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 2efa0228d08c5394fb18f69f15194bf2
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/ComboBox.xaml
+  uploadId: 456932

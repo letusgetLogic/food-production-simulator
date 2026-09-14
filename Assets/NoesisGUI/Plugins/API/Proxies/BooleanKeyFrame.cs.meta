@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 069e763a3e6a51f4849308490ff6d9bc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/BooleanKeyFrame.cs
+  uploadId: 456932

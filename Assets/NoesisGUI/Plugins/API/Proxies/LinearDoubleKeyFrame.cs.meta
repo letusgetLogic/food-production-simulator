@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: dcd32f4e069654cca9d1182061879c58
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/LinearDoubleKeyFrame.cs
+  uploadId: 456932

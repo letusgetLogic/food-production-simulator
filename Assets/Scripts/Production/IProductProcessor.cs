@@ -41,5 +41,4 @@ namespace Game.Production
         /// <returns>True if a completed product was retrieved; false otherwise.</returns>
         bool TryCollectProcessedProduct(out ProductInstance product);
     }
-
 }

@@ -25,7 +25,7 @@ namespace Game.Production
     /// </summary>
     public class SlotConveyor : MonoBehaviour, IConveyor
     {
-        [SerializeField] private ConveyorConfig _config;
+        [SerializeField] private SO_ConveyorConfig _config;
         [SerializeField] private Transform[] _slotAnchors; // world positions per slot, index 0 = input end
 
         private GameObject[] _slots;

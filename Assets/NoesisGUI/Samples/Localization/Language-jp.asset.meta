@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 21ec05158b3906442b5cb4651150375d
+timeCreated: 1519870789
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Localization/Language-jp.asset
+  uploadId: 456932

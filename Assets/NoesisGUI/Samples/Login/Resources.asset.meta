@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 563eda68466951645a788b4d074ab9fe
+timeCreated: 1511871443
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Login/Resources.asset
+  uploadId: 456932

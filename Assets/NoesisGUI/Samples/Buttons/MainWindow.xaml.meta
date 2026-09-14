@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 032c093f6d88e0341876399b4e96e6bf
+timeCreated: 1461918720
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Buttons/MainWindow.xaml
+  uploadId: 456932

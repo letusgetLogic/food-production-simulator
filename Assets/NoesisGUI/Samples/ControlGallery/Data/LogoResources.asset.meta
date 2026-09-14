@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4be128aad8424694eadd759c7f73fb0b
+timeCreated: 1511873604
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/LogoResources.asset
+  uploadId: 456932

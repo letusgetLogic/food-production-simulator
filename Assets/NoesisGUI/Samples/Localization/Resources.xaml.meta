@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f02c731abb6d11a42a67c64f83a61910
+timeCreated: 1511871433
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Localization/Resources.xaml
+  uploadId: 456932

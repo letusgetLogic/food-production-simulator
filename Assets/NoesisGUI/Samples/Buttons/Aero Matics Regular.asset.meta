@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: fa4b61ae60f6ec744b053e5b8ba67913
+timeCreated: 1511870001
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Buttons/Aero Matics Regular.asset
+  uploadId: 456932

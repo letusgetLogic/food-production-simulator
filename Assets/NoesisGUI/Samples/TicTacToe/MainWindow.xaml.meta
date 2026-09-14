@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b552763ac0c1f10468afcc2519ac84ad
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/TicTacToe/MainWindow.xaml
+  uploadId: 456932

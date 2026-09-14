@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: eea6f14dc430571eb7666cbc02ddf9b7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Interactivity/StoryboardTrigger.cs
+  uploadId: 456932

@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: e2f600168f74e6c4698a68a3b6726bfa
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/RadioButton.xaml
+  uploadId: 456932

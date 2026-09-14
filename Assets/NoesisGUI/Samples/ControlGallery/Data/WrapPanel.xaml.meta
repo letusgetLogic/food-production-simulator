@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: f3c7ba9bffe2ae64d920c9484aea2b9f
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/WrapPanel.xaml
+  uploadId: 456932

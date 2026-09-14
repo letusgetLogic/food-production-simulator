@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e045ebc8cf30e3445b0384d0b6fcd78a
+timeCreated: 1488230231
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Scoreboard/Fonts/PERRYGOT.asset
+  uploadId: 456932

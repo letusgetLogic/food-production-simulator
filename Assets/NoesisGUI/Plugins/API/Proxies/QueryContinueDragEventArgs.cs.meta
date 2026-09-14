@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f6d3c7a9f4fb550eb2626d96379cf4d1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/QueryContinueDragEventArgs.cs
+  uploadId: 456932

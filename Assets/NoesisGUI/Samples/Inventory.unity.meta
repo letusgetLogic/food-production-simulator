@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fd18a28eefbb2ff4a988544e689fd4f2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Inventory.unity
+  uploadId: 456932

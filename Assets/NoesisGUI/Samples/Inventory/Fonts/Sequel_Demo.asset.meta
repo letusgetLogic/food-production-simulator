@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 97b6a7eab5ee98948a958241ba5105bb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Inventory/Fonts/Sequel_Demo.asset
+  uploadId: 456932

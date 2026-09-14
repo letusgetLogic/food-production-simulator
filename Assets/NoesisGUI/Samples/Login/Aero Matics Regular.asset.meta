@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e0df845b9c0d4034fa17e97eef85d620
+timeCreated: 1511871443
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Login/Aero Matics Regular.asset
+  uploadId: 456932

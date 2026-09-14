@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 602ca8caf2d39434fbe5301b4c72171e
+timeCreated: 1512394474
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/HelloWorld/MainWindow.xaml.cs
+  uploadId: 456932

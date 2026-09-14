@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f5eb35682020e904fa04f367568040b7
+timeCreated: 1511870001
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Buttons/Resources.asset
+  uploadId: 456932

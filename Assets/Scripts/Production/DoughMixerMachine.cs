@@ -30,7 +30,7 @@ namespace Game.Production
     public class DoughMixerMachine : MachineBase, IProductProcessor
     {
         [Header("Machine Configuration")]
-        [SerializeField] private DoughMixerConfig _config;
+        [SerializeField] private SO_DoughMixerConfig _config;
 
         [Header("Debug / Read-Only")]
         [SerializeField] private float _configuredMixingDurationSeconds;

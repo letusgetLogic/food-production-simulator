@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 34bba7d72678c4c498488fb97f8cd8f6
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/ContextMenu.xaml
+  uploadId: 456932

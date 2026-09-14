@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3a073f36d8842ae4e866fa2178c926f9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/Editor/NoesisFontEditor.cs
+  uploadId: 456932

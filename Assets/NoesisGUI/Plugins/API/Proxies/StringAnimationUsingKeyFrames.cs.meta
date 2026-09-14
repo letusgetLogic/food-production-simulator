@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 28a24f89aff75078b8a3c911b5de2087
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/API/Proxies/StringAnimationUsingKeyFrames.cs
+  uploadId: 456932

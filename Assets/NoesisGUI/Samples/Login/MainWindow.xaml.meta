@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7a18a3dfc164c64fa5635bfa27c83f6
+timeCreated: 1462536849
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/Login/MainWindow.xaml
+  uploadId: 456932

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: bbd32d1842e94634197b07da6945fdb4
+timeCreated: 1511872041
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/QuestLog/NotifyPropertyChangedBase.cs
+  uploadId: 456932

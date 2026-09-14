@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 8b5150bf7046d6b42ac9fe27af923eae
+timeCreated: 1463475353
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/QuestLog/ViewModel.cs
+  uploadId: 456932

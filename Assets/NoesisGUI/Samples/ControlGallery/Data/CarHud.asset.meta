@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 619ce578cbcd6ba4faab8709b201c95d
+timeCreated: 1488259411
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/ControlGallery/Data/CarHud.asset
+  uploadId: 456932

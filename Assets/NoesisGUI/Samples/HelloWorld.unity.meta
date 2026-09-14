@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6dce867caa440044e9362401f6f18d50
+timeCreated: 1512398847
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Samples/HelloWorld.unity
+  uploadId: 456932

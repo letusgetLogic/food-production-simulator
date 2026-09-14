@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 9a534207d1d5ff04daa9dc7bacafca25
+timeCreated: 1485659104
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 9282
+  packageName: NoesisGUI 2.2
+  packageVersion: 2.2.6
+  assetPath: Assets/NoesisGUI/Plugins/NoesisKeyCodes.cs
+  uploadId: 456932
