@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,20 +10,25 @@ namespace Game.Production
     /// ProductInstance, per the interface contract. Identity resolution is the
     /// job of sensors/stations scanning the physical load themselves.
     ///
-    /// Data flow model: this conveyor moves loads along its own slots
-    /// autonomously. Getting a load OFF the exit end and onto the next
-    /// conveyor/station is NOT automatic - some external wiring (a connector
-    /// script, or the next station itself) is expected to call
-    /// TryReleaseLoad(out load) and then hand that load to the next
-    /// component's TryAcceptLoad(load). This conveyor has no reference to
-    /// what comes next.
+    /// This conveyor has no opinion about *when* it should run - running state
+    /// is commanded entirely from outside via StartRunning()/StopRunning(),
+    /// typically by a ConveyorLineController reacting to the receiving
+    /// machine's readiness. Backpressure/queueing while stopped is a normal,
+    /// unmanaged side effect - not a state this conveyor tracks or reports.
     ///
-    /// IsBackedUp is therefore only meaningful if that external wiring also
-    /// tells this conveyor whether the next component currently accepts loads
-    /// (see SetDownstreamAvailabilityCheck) - without it, IsBackedUp stays
-    /// false and a completed load simply waits at the exit slot for pickup.
+    /// IsJammed represents a genuine physical fault and, per the Tag-2
+    /// decision, is still set externally (fault system / debug tooling) since
+    /// there is no real jam-detection hardware simulated yet - it is never
+    /// derived from movement logic here.
+    ///
+    /// Hand-off to whatever comes next is not part of the public IConveyor
+    /// contract (see ILoadReceiver). This conveyor implements ILoadReceiver
+    /// itself (to accept loads pushed onto its entry slot) and, once wired via
+    /// LinkNext, actively pushes a completed exit-slot load onto whatever
+    /// ILoadReceiver comes after it - another SlotConveyor, or a receiving
+    /// machine's intake.
     /// </summary>
-    public class SlotConveyor : MonoBehaviour, IConveyor
+    public class SlotConveyor : MonoBehaviour, IConveyor, ILoadReceiver
     {
         [SerializeField] private SO_ConveyorConfig _config;
         [SerializeField] private Transform[] _slotAnchors; // world positions per slot, index 0 = input end
@@ -31,21 +36,26 @@ namespace Game.Production
         private GameObject[] _slots;
         private bool[] _occupancy;
         private float[] _slotProgress; // 0..1 progress toward the *next* slot anchor, per occupied slot
-        private Func<bool> _downstreamAvailabilityCheck; // optional, wired externally
+        private bool _isRunning;
+        private ILoadReceiver _next; // wired by ConveyorLineController, not part of IConveyor
 
         public int SlotCount => _config.SlotCount;
+
+        /// <summary>
+        /// Diagnostic/HMI use only. Not part of IConveyor - the abstract
+        /// contract doesn't know or care that this implementation happens to
+        /// be slot-based.
+        /// </summary>
         public IReadOnlyList<bool> SlotOccupancy => _occupancy;
+
+        public bool IsRunning => _isRunning;
 
         /// <summary>
         /// Set externally (fault system / debug tooling) since there is no real
-        /// jam-detection hardware simulated yet. Never derived from movement or
-        /// backpressure logic.
+        /// jam-detection hardware simulated yet. Never derived from movement
+        /// logic here.
         /// </summary>
         public bool IsJammed { get; private set; }
-
-        public bool IsBackedUp { get; private set; }
-
-        public bool CanAcceptLoad => !IsJammed && _slots[0] == null;
 
         private void Awake()
         {
@@ -54,23 +64,33 @@ namespace Game.Production
             _slotProgress = new float[_config.SlotCount];
         }
 
-        /// <summary>
-        /// Wires this conveyor to an external check for "can the next
-        /// component accept a load right now?" so IsBackedUp reflects real
-        /// downstream backpressure. Optional - without it, IsBackedUp is
-        /// always false and loads simply wait at the exit slot.
-        /// </summary>
-        public void SetDownstreamAvailabilityCheck(Func<bool> canDownstreamAccept)
-        {
-            _downstreamAvailabilityCheck = canDownstreamAccept;
-        }
+        public void StartRunning() => _isRunning = true;
+
+        public void StopRunning() => _isRunning = false;
 
         /// <summary>Debug/fault-system entry point until real jam hardware exists.</summary>
         public void SetJammed(bool jammed) => IsJammed = jammed;
 
-        public bool TryAcceptLoad(GameObject load)
+        /// <summary>
+        /// Wired once by ConveyorLineController at line-build time. Not
+        /// exposed on IConveyor - this is internal chain plumbing, not a
+        /// public control surface.
+        /// </summary>
+        public void LinkNext(ILoadReceiver next) => _next = next;
+
+        /// <summary>
+        /// ILoadReceiver implementation: lets a previous segment (or a
+        /// producing machine, for the first segment in a line) place a load
+        /// onto this conveyor's entry slot. Independent of IsRunning - a load
+        /// can be set down on a stopped belt, it simply won't advance until
+        /// StartRunning() is called.
+        /// </summary>
+        public bool TryReceiveLoad(GameObject load)
         {
-            if (!CanAcceptLoad) return false;
+            if (IsJammed || _slots[0] != null)
+            {
+                return false;
+            }
 
             _slots[0] = load;
             _occupancy[0] = true;
@@ -79,28 +99,9 @@ namespace Game.Production
             return true;
         }
 
-        public bool TryReleaseLoad(out GameObject load)
-        {
-            int exitIndex = _slots.Length - 1;
-
-            if (IsJammed || IsBackedUp || _slots[exitIndex] == null || _slotProgress[exitIndex] < 1f)
-            {
-                load = null;
-                return false;
-            }
-
-            load = _slots[exitIndex];
-            _slots[exitIndex] = null;
-            _occupancy[exitIndex] = false;
-            _slotProgress[exitIndex] = 0f;
-            return true;
-        }
-
         private void Update()
         {
-            RecomputeBackedUp();
-
-            if (IsJammed) return; // belt physically stuck - nothing moves
+            if (!_isRunning || IsJammed) return; // stopped on purpose, or physically stuck - nothing moves
 
             float step = _config.TransportSpeed * Time.deltaTime / _config.SlotSpacing;
             int exitIndex = _slots.Length - 1;
@@ -114,10 +115,7 @@ namespace Game.Production
 
                 if (i == exitIndex)
                 {
-                    // Already at the exit slot - just sits there (progress
-                    // caps at 1) until TryReleaseLoad is called externally.
-                    _slotProgress[i] = Mathf.Min(1f, _slotProgress[i] + step);
-                    PositionLoad(load, i, _slotProgress[i]);
+                    AdvanceExitSlot(load, i, step);
                     continue;
                 }
 
@@ -141,13 +139,24 @@ namespace Game.Production
             }
         }
 
-        private void RecomputeBackedUp()
+        private void AdvanceExitSlot(GameObject load, int exitIndex, float step)
         {
-            int exitIndex = _slots.Length - 1;
-            bool loadReadyAtExit = _slots[exitIndex] != null && _slotProgress[exitIndex] >= 1f;
-            bool downstreamUnavailable = _downstreamAvailabilityCheck != null && !_downstreamAvailabilityCheck();
+            _slotProgress[exitIndex] = Mathf.Min(1f, _slotProgress[exitIndex] + step);
 
-            IsBackedUp = loadReadyAtExit && downstreamUnavailable;
+            bool readyToHandOff = _slotProgress[exitIndex] >= 1f;
+            bool handedOff = readyToHandOff && _next != null && _next.TryReceiveLoad(load);
+
+            if (handedOff)
+            {
+                _slots[exitIndex] = null;
+                _occupancy[exitIndex] = false;
+                _slotProgress[exitIndex] = 0f;
+                return;
+            }
+
+            // No next receiver linked, or it has no room right now - the load
+            // simply waits at the exit anchor. Normal backpressure, not tracked.
+            PositionLoad(load, exitIndex, _slotProgress[exitIndex]);
         }
 
         private void PositionLoad(GameObject load, int slotIndex, float progressToNext)

@@ -1,6 +1,6 @@
+using Game.Sensors;
 using System.Collections;
 using UnityEngine;
-using Game.Sensors;
 
 namespace Game.Production
 {
