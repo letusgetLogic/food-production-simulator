@@ -1,9 +1,9 @@
 {
-    "name": "Game.Platform",
-    "rootNamespace": "Game.Platform",
+    "name": "Game.HMI",
+    "rootNamespace": "Game.HMI",
     "references": [
         "Game.Core",
-        "Unity.InputSystem",
+        "Game.Production",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [],

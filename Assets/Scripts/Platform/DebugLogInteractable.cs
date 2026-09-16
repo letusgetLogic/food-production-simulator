@@ -12,7 +12,7 @@ namespace Game.Platform
     [AddComponentMenu("Game/Platform/Debug Log Interactable (Smoke Test)")]
     public class DebugLogInteractable : InteractableBase
     {
-        protected override void OnInteract(IInteractor interactor)
+        public override void OnInteract(IInteractor interactor)
         {
             Debug.Log($"[Smoke Test] {name} interacted with by {interactor.GetType().Name}.", this);
         }

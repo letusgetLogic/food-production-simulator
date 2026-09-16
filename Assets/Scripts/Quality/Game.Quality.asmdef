@@ -1,10 +1,10 @@
 {
-    "name": "Game.Platform",
-    "rootNamespace": "Game.Platform",
+    "name": "Game.Quality",
+    "rootNamespace": "Game.Quality",
     "references": [
         "Game.Core",
-        "Unity.InputSystem",
-        "Unity.TextMeshPro"
+        "Game.Sensors",
+        "Game.Production"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

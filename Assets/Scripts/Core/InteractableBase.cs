@@ -44,7 +44,7 @@ namespace Game.Core
         }
 
         /// <summary>Override to implement the actual interaction behaviour.</summary>
-        protected abstract void OnInteract(IInteractor interactor);
+        public abstract void OnInteract(IInteractor interactor);
 
         /// <summary>Override to show a highlight; default does nothing.</summary>
         public virtual void OnHoverEnter(IInteractor interactor) { }
