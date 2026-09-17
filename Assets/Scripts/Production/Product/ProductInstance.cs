@@ -18,7 +18,7 @@ namespace Game.Production
     /// conveyor remains unchanged. A class guarantees every reference points to the same instance.
     /// </item>
     /// <item>
-    /// It already holds a reference to a <see cref="RecipeDefinition"/> (a UnityEngine.Object /
+    /// It already holds a reference to a <see cref="SO_RecipeDefinition"/> (a UnityEngine.Object /
     /// ScriptableObject asset), so it is not a small, self-contained value type to begin with -
     /// there is no perf upside to a struct here, and structs containing object references still
     /// get boxed/copied on every pass, which is wasted work for a moderately sized payload that
@@ -47,7 +47,7 @@ namespace Game.Production
         /// The recipe this product instance was created from. May be null right after deserialization
         /// until re-resolved via <see cref="RecipeId"/> against the loaded recipe catalog.
         /// </summary>
-        public RecipeDefinition Recipe;
+        public SO_RecipeDefinition Recipe;
 
         /// <summary>
         /// Stable string identifier of <see cref="Recipe"/>, stored alongside the direct reference so the
@@ -65,7 +65,7 @@ namespace Game.Production
         public float? ActualBakeTimeSeconds;
 
         /// <summary>Creates a new product instance in its initial state.</summary>
-        public ProductInstance(string instanceId, RecipeDefinition recipe, ProductState initialState = ProductState.RawDough)
+        public ProductInstance(string instanceId, SO_RecipeDefinition recipe, ProductState initialState = ProductState.RawDough)
         {
             InstanceId = instanceId;
             Recipe = recipe;

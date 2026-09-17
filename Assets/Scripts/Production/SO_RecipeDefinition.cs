@@ -8,7 +8,7 @@ namespace Game.Production
     /// entirely in the Unity editor without touching code.
     /// </summary>
     [CreateAssetMenu(fileName = "RecipeDefinition", menuName = "Production/Recipe Definition")]
-    public class RecipeDefinition : ScriptableObject
+    public class SO_RecipeDefinition : ScriptableObject
     {
         [Header("Identity")]
 

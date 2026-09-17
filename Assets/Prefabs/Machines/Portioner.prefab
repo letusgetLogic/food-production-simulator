@@ -154,7 +154,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011752117663627395}
   m_Layer: 0
-  m_Name: Portioner
+  m_Name: portioner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,9 +5,7 @@ namespace Game.HMI
 {
     /// <summary>
     /// The physical terminal in the hall. Sits on its own collider next to a
-    /// machine – the machine itself stays free of IInteractable. Inherits
-    /// IsInteractable / InteractableChanged / OnHoverEnter / OnHoverExit from
-    /// InteractableBase and only supplies the actual action.
+    /// machine – the machine itself stays free of IInteractable.
     /// </summary>
     public class HmiTerminalInteractable : InteractableBase
     {

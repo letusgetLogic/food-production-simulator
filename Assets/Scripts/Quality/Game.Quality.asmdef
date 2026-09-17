@@ -3,7 +3,6 @@
     "rootNamespace": "Game.Quality",
     "references": [
         "Game.Core",
-        "Game.Sensors",
         "Game.Production"
     ],
     "includePlatforms": [],
