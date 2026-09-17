@@ -13,10 +13,14 @@ namespace Game.Production
         [SerializeField]
         private string _machineId = string.Empty;
 
+        [SerializeField]
+        private string _machineName = string.Empty;
+
         private MachineState _currentState = MachineState.Idle;
 
         /// <inheritdoc />
         public string MachineId => _machineId;
+        public string MachineName => _machineName;
 
         /// <inheritdoc />
         public MachineState CurrentState => _currentState;

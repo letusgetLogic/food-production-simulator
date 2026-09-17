@@ -14,7 +14,7 @@ namespace Game.HMI
     public class MachineDetailPanel : HmiPanelBase
     {
         [Header("Header")]
-        [SerializeField] private TMP_Text _machineNameText;
+        [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private MachineStateRowView _stateRow;
 
         [Header("Readouts")]
@@ -95,5 +95,6 @@ namespace Game.HMI
                 button.interactable = interactable;
             }
         }
+
     }
 }

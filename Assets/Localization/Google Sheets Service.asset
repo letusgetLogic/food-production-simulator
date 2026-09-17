@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3888c1c1b587a654a919e0f68b03567e, type: 3}
   m_Name: Google Sheets Service
   m_EditorClassIdentifier: Unity.Localization.Editor::UnityEditor.Localization.Plugins.Google.SheetsServiceProvider
-  m_ApiKey: 
+  m_ApiKey: AIzaSyAN7DDbxjX3UpEw8ib6qo01Lyva9hDayu4
   m_ClientId: 
   m_ClientSecret: 
   m_AuthenticationType: 2
-  m_ApplicationName: Food Production Simulator
+  m_ApplicationName: HMI_Localization_GoogleSheets
   m_NewSheetProperties:
     m_HeaderForegroundColor: {r: 0.8941177, g: 0.8941177, b: 0.8941177, a: 1}
     m_HeaderBackgroundColor: {r: 0.2196079, g: 0.2196079, b: 0.2196079, a: 1}

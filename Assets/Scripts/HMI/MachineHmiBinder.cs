@@ -1,6 +1,6 @@
+using Game.Production;
 using System;
 using System.Collections.Generic;
-using Game.Production;
 using UnityEngine;
 
 namespace Game.HMI

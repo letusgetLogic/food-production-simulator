@@ -59,5 +59,21 @@ namespace Game.HMI
 
             return null;
         }
+
+        public MachineStateRowView AddOrGetRow(string machineName)
+        {
+            for (int i = 0; i < _machineRows.Count; i++)
+            {
+                if (_machineRows[i] != null && _machineRows[i].MachineName == machineName)
+                {
+                    return _machineRows[i];
+                }
+            }
+            var newRow = Instantiate(Resources.Load<MachineStateRowView>("Prefabs/HMI/MachineStateRowView"), transform);
+            newRow.SetMachineName(machineName);
+            _machineRows.Add(newRow);
+
+            return newRow;
+        }
     }
 }
