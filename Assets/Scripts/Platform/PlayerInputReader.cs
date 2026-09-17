@@ -17,6 +17,7 @@ namespace Game.Platform
         private InputAction _lookAction;
         private InputAction _sprintAction;
         private InputAction _interactAction;
+        private InputAction _escapeAction;
 
         public Vector2 Move => _moveAction.ReadValue<Vector2>();
         public Vector2 Look => _lookAction.ReadValue<Vector2>();
@@ -24,6 +25,8 @@ namespace Game.Platform
 
         /// <summary>Raised once per interact button press.</summary>
         public event Action InteractPerformed;
+        /// <summary>Raised once per escape button press.</summary>
+        public event Action EscapePerformed;
 
         private void Awake()
         {
@@ -48,6 +51,9 @@ namespace Game.Platform
             _interactAction = _map.AddAction("Interact", InputActionType.Button, "<Keyboard>/e");
             _interactAction.AddBinding("<Mouse>/leftButton");
             _interactAction.performed += OnInteractPerformed;
+
+            _escapeAction = _map.AddAction("Escape", InputActionType.Button, "<Keyboard>/escape");
+            _escapeAction.performed += OnEscapePerformed;
         }
 
         private void OnEnable() => _map.Enable();
@@ -57,9 +63,11 @@ namespace Game.Platform
         private void OnDestroy()
         {
             _interactAction.performed -= OnInteractPerformed;
+            _escapeAction.performed -= OnEscapePerformed;
             _map.Dispose();
         }
 
         private void OnInteractPerformed(InputAction.CallbackContext context) => InteractPerformed?.Invoke();
+        private void OnEscapePerformed(InputAction.CallbackContext context) => EscapePerformed?.Invoke();
     }
 }

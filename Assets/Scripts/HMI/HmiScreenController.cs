@@ -12,7 +12,7 @@ namespace Game.HMI
     [DisallowMultipleComponent]
     public class HmiScreenController : MonoBehaviour
     {
-        [SerializeField] private UiFocusChannel _uiFocusChannel;
+        [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private GameObject _screenRoot;
         [SerializeField] private List<HmiPanelBase> _panels = new List<HmiPanelBase>();
         [SerializeField] private string _defaultPanelId = "overview";

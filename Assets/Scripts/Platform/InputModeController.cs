@@ -11,17 +11,24 @@ namespace Game.Platform
     [DisallowMultipleComponent]
     public class InputModeController : MonoBehaviour
     {
-        [SerializeField] private UiFocusChannel _uiFocusChannel;
+        [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private FirstPersonController _controller;
         [SerializeField] private AimInteractor _aimInteractor;
 
         private void OnEnable()
         {
+            _controller.Input.EscapePerformed += DisableFocus;
             _uiFocusChannel.FocusChanged += OnFocusChanged;
             OnFocusChanged(_uiFocusChannel.IsUiFocused);
         }
 
-        private void OnDisable() => _uiFocusChannel.FocusChanged -= OnFocusChanged;
+        private void OnDisable()
+        {
+            _controller.Input.EscapePerformed -= DisableFocus;
+            _uiFocusChannel.FocusChanged -= OnFocusChanged;
+        }
+
+        private void DisableFocus() => OnFocusChanged(false);
 
         private void OnFocusChanged(bool uiFocused)
         {

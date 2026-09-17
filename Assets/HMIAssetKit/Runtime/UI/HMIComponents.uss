@@ -1,0 +1,22 @@
+:root { --hmi-bg: #14181c; --hmi-surface: #1b2025; --hmi-border: #2a3038; --hmi-text: #d7dce1; --hmi-muted: #7d8791; --hmi-green: #3fbf6f; --hmi-yellow: #e8b13c; --hmi-red: #d94a44; --hmi-blue: #2e9be6; }
+* { -unity-font-definition: resource("Fonts/Default"); }
+.hmi-root { background-color: var(--hmi-bg); color: var(--hmi-text); padding: 18px; }
+.hmi-header { flex-direction: row; justify-content: space-between; align-items: center; border-bottom-width: 1px; border-bottom-color: var(--hmi-border); padding-bottom: 12px; margin-bottom: 14px; }
+.hmi-title { font-size: 18px; -unity-font-style: bold; }
+.hmi-section-label { color: var(--hmi-muted); font-size: 11px; margin-top: 12px; margin-bottom: 7px; }
+.metric-grid { flex-direction: row; flex-wrap: wrap; padding-right: 8px; padding-bottom: 8px; }
+.metric-card { flex-grow: 1; min-width: 125px; background-color: var(--hmi-surface); border-left-width: 3px; border-left-color: var(--hmi-green); border-radius: 4px; padding: 10px; }
+.metric-card.warning { border-left-color: var(--hmi-yellow); }
+.metric-card.fault { border-left-color: var(--hmi-red); }
+.metric-label { color: var(--hmi-muted); font-size: 11px; }
+.metric-value { color: var(--hmi-text); font-size: 20px; margin-top: 4px; }
+.machine-list { background-color: var(--hmi-surface); border-radius: 4px; }
+.machine-row { padding: 11px; border-bottom-width: 1px; border-bottom-color: var(--hmi-border); color: var(--hmi-muted); font-size: 13px; }
+.machine-row.running { color: var(--hmi-green); }
+.machine-row.warning { color: var(--hmi-yellow); }
+.machine-row.fault { color: var(--hmi-red); }
+.machine-row.idle { color: var(--hmi-muted); }
+.alert { background-color: #241a1a; border-left-width: 3px; border-left-color: var(--hmi-red); color: #f0c9c7; padding: 11px; border-radius: 4px; }
+.button-row { flex-direction: row; flex-wrap: wrap; padding-right: 8px; padding-bottom: 8px; margin-top: 8px; }
+.hmi-button { flex-grow: 1; min-height: 44px; background-color: var(--hmi-surface); border-width: 1px; border-color: var(--hmi-border); color: var(--hmi-text); border-radius: 4px; }
+.hmi-button.danger { border-color: var(--hmi-red); color: #f2b8ab; background-color: #3a2320; }

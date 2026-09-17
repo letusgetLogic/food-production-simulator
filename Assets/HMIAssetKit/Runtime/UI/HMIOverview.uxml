@@ -1,0 +1,32 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/HMIAssetKit/Runtime/UI/HMITheme.uss?fileID=7433441132597879392&amp;guid=a7e391c88d2b1d44c9c1eb28dc893b95&amp;type=3#HMITheme"/>
+    <ui:VisualElement name="overview-root" class="hmi-root">
+        <ui:VisualElement class="hmi-header">
+            <ui:Label text="Linienübersicht" class="hmi-title"/>
+            <ui:Label text="SYSTEM OK"/>
+        </ui:VisualElement>
+        <ui:Label text="KENNZAHLEN" class="hmi-section-label"/>
+        <ui:VisualElement class="metric-grid">
+            <ui:VisualElement class="metric-card">
+                <ui:Label text="durchsatz" class="metric-label"/>
+                <ui:Label name="throughput-value" text="42.0 /min" class="metric-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="metric-card">
+                <ui:Label text="einheiten" class="metric-label"/>
+                <ui:Label name="units-value" text="1284" class="metric-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="metric-card warning">
+                <ui:Label text="ausschuss" class="metric-label"/>
+                <ui:Label name="scrap-value" text="17" class="metric-value"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="metric-card fault">
+                <ui:Label text="akt. fehler" class="metric-label"/>
+                <ui:Label name="faults-value" text="1" class="metric-value"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="MASCHINEN" class="hmi-section-label"/>
+        <ui:VisualElement name="machine-list" class="machine-list"/>
+        <ui:Label text="AKTIVE FEHLER" class="hmi-section-label"/>
+        <ui:Label name="active-fault" text="Former — Formsensor außerhalb Toleranz" class="alert"/>
+    </ui:VisualElement>
+</ui:UXML>

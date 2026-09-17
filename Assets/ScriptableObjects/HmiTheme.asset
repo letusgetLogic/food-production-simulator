@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7a3fd4cde6753498fb3d924095e56f, type: 3}
+  m_Name: HmiTheme
+  m_EditorClassIdentifier: Game.HMI::Game.HMI.HmiTheme
+  PanelBackground: {r: 0.09, g: 0.11, b: 0.13, a: 0.96}
+  PanelBorder: {r: 0.22, g: 0.26, b: 0.3, a: 1}
+  HeaderBackground: {r: 0.13, g: 0.16, b: 0.19, a: 1}
+  LabelText: {r: 0.62, g: 0.68, b: 0.73, a: 1}
+  ValueText: {r: 0.92, g: 0.95, b: 0.97, a: 1}
+  Normal: {r: 0.3, g: 0.8, b: 0.45, a: 1}
+  Warning: {r: 0.98, g: 0.72, b: 0.16, a: 1}
+  Alarm: {r: 0.92, g: 0.28, b: 0.24, a: 1}
+  Inactive: {r: 0.4, g: 0.45, b: 0.5, a: 1}
+  _machineStateStyles:
+  - State: 0
+    Color: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
+    DisplayName: 
+  - State: 1
+    Color: {r: 1, g: 0.92081726, b: 0, a: 0}
+    DisplayName: 
+  - State: 3
+    Color: {r: 1, g: 0.92081726, b: 0, a: 0}
+    DisplayName: 
+  - State: 2
+    Color: {r: 0.12381935, g: 1, b: 0, a: 0}
+    DisplayName: 
+  - State: 4
+    Color: {r: 0.36084905, g: 0.38640365, b: 0.5, a: 0}
+    DisplayName: 
+  - State: 5
+    Color: {r: 1, g: 0.028783672, b: 0, a: 0}
+    DisplayName: 
+  - State: 6
+    Color: {r: 1, g: 0.51687396, b: 0, a: 0}
+    DisplayName: 

@@ -28,6 +28,7 @@ namespace Game.Platform
 
         private CharacterController _controller;
         private PlayerInputReader _input;
+        public PlayerInputReader Input;
         private Vector3 _horizontalVelocity;
         private float _verticalVelocity;
         private float _pitch;

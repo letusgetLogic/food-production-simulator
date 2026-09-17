@@ -1,0 +1,14 @@
+{
+  "name": "HMIAssetKit.Editor",
+  "rootNamespace": "HMIAssetKit.Editor",
+  "references": ["HMIAssetKit"],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

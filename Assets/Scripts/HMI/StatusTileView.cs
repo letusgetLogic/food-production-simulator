@@ -25,9 +25,9 @@ namespace Game.HMI
     public class StatusTileView : MonoBehaviour
     {
         [SerializeField] private HmiTheme _theme;
-        [SerializeField] private TMP_Text _labelText;
-        [SerializeField] private TMP_Text _valueText;
-        [SerializeField] private TMP_Text _unitText;
+        [SerializeField] private TextMeshProUGUI _labelText;
+        [SerializeField] private TextMeshProUGUI _valueText;
+        [SerializeField] private TextMeshProUGUI _unitText;
         [SerializeField] private Image _severityBar;
 
         [Header("Defaults")]
