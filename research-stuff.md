@@ -96,6 +96,13 @@ Die Simulation konzentriert sich auf:
 
 Die fertige Pizza wird verpackt und mit Produkt-/Chargendaten versehen.
 
+#### Rechtliche Kennzeichnung (Verpackung)
+Für die Füllmengenangabe auf verpackten Lebensmitteln gilt in Deutschland die Fertigpackungsverordnung (FPackV).  Flüssige Lebensmittel werden in der Regel nach Volumen (Liter, Milliliter) gekennzeichnet, während feste Lebensmittel nach Gewicht (Gramm, Kilogramm) angegeben werden.  Es gibt jedoch wichtige Ausnahmen:
+
+- Nach Gewicht gekennzeichnet: Honig, Sirupe, Milcherzeugnisse (wie Joghurt), Essigessenz und Würzen. 
+- Nach Volumen gekennzeichnet: Feinkostsoßen, Senf und Speiseeis. 
+- Grenzfälle: Hier entscheidet die „allgemeine Verkehrsauffassung“. Ist die flüssige Beschaffenheit charakteristisch (z. B. Nudelsuppe), wird nach Volumen gekennzeichnet. Ist der feste Bestandteil wertgebend (z. B. Fisch in Soße), wird nach Gewicht gekennzeichnet. 
+
 ### Qualitätskontrolle
 
 Überprüft beispielsweise:
