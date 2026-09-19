@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace Game.Production
@@ -25,9 +24,9 @@ namespace Game.Production
     /// yet at this point either; that still only exists per formed/portioned
     /// pizza further down the line.
     /// </summary>
-    public class DoughHopper : MonoBehaviour, IFillLevelSource
+    public class Hopper : MonoBehaviour, IFillLevelSource
     {
-        [SerializeField] private float _capacityGrams = 5000f;
+        [SerializeField] private float _capacityGrams = 300000f; // 300kg
 
         public float CurrentAmountGrams { get; private set; }
         public bool HasDough => CurrentAmountGrams > 0f;
@@ -56,5 +55,4 @@ namespace Game.Production
             CurrentAmountGrams = Mathf.Max(0f, CurrentAmountGrams - amountGrams);
         }
     }
-
 }

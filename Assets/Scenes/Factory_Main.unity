@@ -4688,6 +4688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.HMI::Game.HMI.MachineHmiBinder
   _overviewPanel: {fileID: 1738625326}
   _detailPanel: {fileID: 198188568}
+  _boundDetailMachine: {fileID: 0}
 --- !u!1001 &849158975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8983,7 +8984,9 @@ MonoBehaviour:
   _producedUnitsTile: {fileID: 0}
   _scrapUnitsTile: {fileID: 0}
   _activeFaultsTile: {fileID: 0}
-  _machineRows: []
+  _channel: {fileID: 0}
+  _rowTemplate: {fileID: 0}
+  _rowContainer: {fileID: 0}
   _alarmList: {fileID: 0}
 --- !u!225 &1738625327
 CanvasGroup:

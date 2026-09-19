@@ -27,7 +27,7 @@ namespace Game.Production
     /// confirmed against the real MachineBase source.
     /// </summary>
     [DisallowMultipleComponent]
-    public class DoughMixerMachine : MachineBase, IProductProcessor
+    public class MixerMachine : MachineBase, IProductProcessor
     {
         [Header("Machine Configuration")]
         [SerializeField] private SO_DoughMixerConfig _config;
