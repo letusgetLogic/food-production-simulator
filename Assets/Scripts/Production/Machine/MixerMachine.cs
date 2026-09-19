@@ -1,158 +1,108 @@
+// Game.Production/MixerMachine.cs
+// (formerly DoughMixerMachine — renamed, see PROJECT STATUS)
+//
+// Source station, same as PortionerMachine: produces a product from raw material instead of
+// processing an existing ProductInstance. Deliberately does not implement IProductProcessor.
+//
+// Confirmed decisions:
+// 1) Tilting is an explicit operator action on the HMI (tilt button), no auto-tilt on IsProcessingComplete
+// 2) The dough ball drops at the drop point regardless of whether a container is present there -
+//    no sensor, no gating. The worker can start the machine and tilt it even without content in place;
+//    catching the dough ball is on them, not something the machine validates.
+// 3) The ProductInstance is created entirely new on tilt, not already at the start of mixing
+// 4) MeasuredWeightGrams on tilt comes from SO_MixerConfig.DoughBallWeightGrams (fixed machine value,
+//    not a sensor reading or operator input)
+// 5) Mixing duration is timed via OnEnterRunning; MixingCompleted fires once the timer elapses
+
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Game.Production
 {
-    /// <summary>
-    /// First real machine implementation, replacing DummyMachine.
-    /// Represents the dough mixer station: accepts a RawDough-stage
-    /// ProductInstance, mixes it for an operator-configured duration, and
-    /// makes the result available via IProductProcessor.TryCollectProcessedProduct.
-    ///
-    /// Does NOT implement IInteractable. Start/stop is triggered externally via
-    /// StartMachine()/StopMachine() (inherited from MachineBase) by a separate
-    /// Hotspot/HMI component (Dev C), per the MachineBase/InteractableBase
-    /// composition decision.
-    ///
-    /// Recipe handling: per team decision, this machine does NOT hold a
-    /// RecipeDefinition reference. The operator reads the active recipe at the
-    /// HMI and dials in the mixing duration there; the HMI calls
-    /// SetMixingDuration() on this machine. Correctness checking against the
-    /// recipe target (e.g. Margherita's 20s) is presumably a QualitySystem
-    /// concern for a later week - not handled here.
-    ///
-    /// Starting/Stopping timing: this machine owns its own grace periods via
-    /// DoughMixerConfig.startupDurationSeconds/shutdownDurationSeconds, driven
-    /// through the OnEnterStarting/OnEnterStopping hooks + SetState(), as
-    /// confirmed against the real MachineBase source.
-    /// </summary>
-    [DisallowMultipleComponent]
-    public class MixerMachine : MachineBase, IProductProcessor
+    public class MixerMachine : MachineBase
     {
-        [Header("Machine Configuration")]
-        [SerializeField] private SO_DoughMixerConfig _config;
+        [SerializeField] private SO_MixerConfig _config;
+        [SerializeField] private Transform _doughDropPoint;
+        [SerializeField] private GameObject _doughSpherePrefab;
 
-        [Header("Debug / Read-Only")]
-        [SerializeField] private float _configuredMixingDurationSeconds;
-        [SerializeField] private float _mixingElapsedSeconds;
-        [SerializeField] private ProductInstance _heldProduct;
-        [SerializeField] private bool _isProcessingComplete;
+        private float? _mixingDurationOverrideSeconds;
+        private bool _isMixingComplete;
+        private Coroutine _mixingTimerCoroutine;
+        private SO_RecipeDefinition _pendingRecipe;
 
-        public ProductState ExpectedInputState => ProductState.RawDough;
-        public ProductState OutputState => ProductState.MixedDough;
+        /// <summary>Raised once the mixing timer elapses (i.e. a run has finished).</summary>
+        public event Action MixingCompleted;
 
-        public bool CanAcceptProduct =>
-            _heldProduct == null && CurrentState == MachineState.Idle;
-
-        public bool IsProcessingComplete => _isProcessingComplete;
-
+        public bool IsMixingComplete => _isMixingComplete;
 
         /// <summary>
-        /// Called by the HMI/control-panel component when the operator dials in
-        /// the mixing duration after reading it off the active recipe. Ignored
-        /// while a product is already being mixed.
+        /// Effective mixing duration: the operator's HMI override if set via SetMixingDuration,
+        /// otherwise SO_MixerConfig.DefaultMixingDurationSeconds.
         /// </summary>
+        private float MixingDurationSeconds => _mixingDurationOverrideSeconds ?? _config.DefaultMixingDurationSeconds;
+
+        /// <summary>Operator-facing HMI setting, analogous to SetFormingDuration on FormerMachine.</summary>
         public void SetMixingDuration(float seconds)
         {
-            if (_heldProduct != null)
-            {
-                Debug.LogWarning($"{name}: cannot change mixing duration while a product is being processed.", this);
-                return;
-            }
-
-            if (seconds <= 0f)
-            {
-                Debug.LogWarning($"{name}: mixing duration must be positive.", this);
-                return;
-            }
-
-            _configuredMixingDurationSeconds = seconds;
+            _mixingDurationOverrideSeconds = Mathf.Max(0f, seconds);
         }
 
-        public bool TryBeginProcessing(ProductInstance product)
+        protected override void OnEnterRunning()
         {
-            if (!CanAcceptProduct) return false;
-            if (product == null || product.CurrentState != ExpectedInputState) return false;
-
-            if (_configuredMixingDurationSeconds <= 0f)
-            {
-                Debug.LogWarning($"{name}: no mixing duration configured via HMI yet.", this);
-                return false;
-            }
-
-            _heldProduct = product;
-            _mixingElapsedSeconds = 0f;
-            _isProcessingComplete = false;
-
-            StartMachine(); // Idle -> Starting; OnEnterStarting() takes it to Running after the grace period.
-            return true;
-        }
-
-        public bool TryCollectProcessedProduct(out ProductInstance product)
-        {
-            if (!_isProcessingComplete || _heldProduct == null)
-            {
-                product = null;
-                return false;
-            }
-
-            product = _heldProduct;
-            product.CurrentState = OutputState;
-
-            _heldProduct = null;
-            _isProcessingComplete = false;
-            _mixingElapsedSeconds = 0f;
-
-            return true;
-        }
-
-        private void Update()
-        {
-            if (_heldProduct == null || _isProcessingComplete) return;
-            if (CurrentState != MachineState.Running) return;
-
-            _mixingElapsedSeconds += Time.deltaTime;
-
-            if (_mixingElapsedSeconds >= _configuredMixingDurationSeconds)
-            {
-                _isProcessingComplete = true;
-                StopMachine(); // Running -> Stopping; OnEnterStopping() takes it to Stopped after the grace period.
-            }
-        }
-
-        // ---- MachineBase hooks: own the Starting/Stopping grace periods ----
-
-        protected override void OnEnterStarting()
-        {
-            StartCoroutine(AdvanceAfterDelay(
-                _config != null ? _config.StartupDurationSeconds : 0f,
-                MachineState.Running));
-        }
-
-        protected override void OnEnterStopping()
-        {
-            StartCoroutine(AdvanceAfterDelay(
-                _config != null ? _config.ShutdownDurationSeconds : 0f,
-                MachineState.Stopped));
+            base.OnEnterRunning();
+            _isMixingComplete = false;
+            _mixingTimerCoroutine = StartCoroutine(MixingTimerRoutine(MixingDurationSeconds));
         }
 
         protected override void OnEnterFault(string reason)
         {
-            // Prevents a pending startup/shutdown coroutine from firing a stale
-            // SetState() call after a fault has interrupted the transition.
-            // (SetState() would reject it anyway since Fault only leads to
-            // Maintenance, but stopping the coroutine keeps intent clear.)
-            StopAllCoroutines();
+            base.OnEnterFault(reason);
+            if (_mixingTimerCoroutine != null)
+            {
+                StopCoroutine(_mixingTimerCoroutine);
+                _mixingTimerCoroutine = null;
+            }
         }
 
-        private IEnumerator AdvanceAfterDelay(float delaySeconds, MachineState target)
+        private IEnumerator MixingTimerRoutine(float durationSeconds)
         {
-            if (delaySeconds > 0f)
+            yield return new WaitForSeconds(durationSeconds);
+            _isMixingComplete = true;
+            _mixingTimerCoroutine = null;
+            MixingCompleted?.Invoke();
+        }
+
+        /// <summary>
+        /// Called from the tilt button on the mixer HMI. Explicit operator action — never tilts automatically.
+        /// No container/sensor check: the ball is spawned at the drop point regardless of what's underneath.
+        /// </summary>
+        public bool TryTiltDrum(out ProductInstance dough)
+        {
+            dough = null;
+
+            if (!_isMixingComplete)
             {
-                yield return new WaitForSeconds(delaySeconds);
+                Debug.LogWarning($"{name}: TryTiltDrum called before mixing finished.");
+                return false;
             }
 
-            SetState(target);
+            dough = new ProductInstance(Guid.NewGuid().ToString(), _pendingRecipe, ProductState.MixedDough)
+            {
+                MeasuredWeightGrams = _config.DoughBallWeightGrams
+            };
+
+            SpawnDoughSphere(dough);
+
+            _isMixingComplete = false;
+            return true;
+        }
+
+        private void SpawnDoughSphere(ProductInstance dough)
+        {
+            GameObject sphere = Instantiate(_doughSpherePrefab, _doughDropPoint.position, _doughDropPoint.rotation);
+            ProductToken token = sphere.GetComponent<ProductToken>();
+            token.Product = dough;
         }
     }
 }

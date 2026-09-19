@@ -8,7 +8,7 @@ namespace Game.Production
     // Lives in Game.Production (not Game.Core) because it carries MachineState,
     // which is defined here - putting it in Core would create a Core -> Production
     // -> Core cycle.
-    [CreateAssetMenu(menuName = "HMI/Machine Overview Channel")]
+    [CreateAssetMenu(menuName = "HMI/Machine Overview Channel", fileName = "MachineOverviewChannel")]
     public class SO_MachineOverviewChannel : ScriptableObject
     {
         private readonly Dictionary<string, MachineState> _states = new Dictionary<string, MachineState>();

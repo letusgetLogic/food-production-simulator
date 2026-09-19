@@ -778,6 +778,7 @@ MonoBehaviour:
   _fillLevelTile: {fileID: 2145698868}
   _cycleTimeTile: {fileID: 1785391403}
   _setpointTile: {fileID: 1385041212}
+  _commandRow: {fileID: 0}
   _startButton: {fileID: 6911286903786199482}
   _stopButton: {fileID: 192998684}
   _acknowledgeFaultButton: {fileID: 1385981489}
@@ -1127,6 +1128,51 @@ Transform:
   - {fileID: 824140936}
   - {fileID: 1105141322}
   m_Father: {fileID: 422789786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &253165967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 253165969}
+  - component: {fileID: 253165968}
+  m_Layer: 0
+  m_Name: MachineOverviewReporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &253165968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253165967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc22c9d1b00d82408c6197a5b0cdd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Production::Game.Production.MachineOverviewReporter
+  _channel: {fileID: 11400000, guid: d7521a40fd0163b48a432eca3aca3010, type: 2}
+--- !u!4 &253165969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253165967}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 42.45112, y: 0.01, z: -2.19323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &260496255
 GameObject:
@@ -11825,6 +11871,7 @@ SceneRoots:
   - {fileID: 1113739878}
   - {fileID: 1409154466}
   - {fileID: 543579900}
+  - {fileID: 253165969}
   - {fileID: 1217757293}
   - {fileID: 2032840138}
   - {fileID: 847133062}

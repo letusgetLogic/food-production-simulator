@@ -20,6 +20,7 @@ namespace Game.Production
 
         /// <inheritdoc />
         public string MachineId => _machineId;
+        public void SetMachineId(string id) => _machineId = id;
         public string MachineName => _machineName;
 
         /// <inheritdoc />

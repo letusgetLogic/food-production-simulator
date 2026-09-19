@@ -1,6 +1,6 @@
+using System;
 using Game.Production;
 using TMPro;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,11 +24,15 @@ namespace Game.HMI
         [SerializeField] private StatusTileView _setpointTile;
 
         [Header("Operator commands")]
+        [SerializeField] private GameObject _commandRow;
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _stopButton;
         [SerializeField] private Button _acknowledgeFaultButton;
         [SerializeField] private Button _completeMaintenanceButton;
         [SerializeField] private Button _resetToIdleButton;
+
+        private bool _controlEnabled = true;
+        private MachineState _currentState;
 
         public event Action StartRequested;
         public event Action StopRequested;
@@ -59,8 +63,26 @@ namespace Game.HMI
 
         public void SetState(MachineState state)
         {
+            _currentState = state;
             _stateRow?.SetState(state);
             UpdateCommandAvailability(state);
+        }
+
+        /// <summary>
+        /// Toggles whether this instance may operate the machine (Terminal) or is
+        /// read-only (Tablet). The command row is hidden entirely rather than just
+        /// disabled, so a read-only viewer never sees buttons that look pressable.
+        /// </summary>
+        public void SetControlEnabled(bool controlEnabled)
+        {
+            _controlEnabled = controlEnabled;
+
+            if (_commandRow != null)
+            {
+                _commandRow.SetActive(controlEnabled);
+            }
+
+            UpdateCommandAvailability(_currentState);
         }
 
         public void SetTemperature(float celsius, HmiValueSeverity severity) =>
@@ -81,6 +103,16 @@ namespace Game.HMI
         /// </summary>
         private void UpdateCommandAvailability(MachineState state)
         {
+            if (!_controlEnabled)
+            {
+                SetInteractable(_startButton, false);
+                SetInteractable(_stopButton, false);
+                SetInteractable(_acknowledgeFaultButton, false);
+                SetInteractable(_completeMaintenanceButton, false);
+                SetInteractable(_resetToIdleButton, false);
+                return;
+            }
+
             SetInteractable(_startButton, state == MachineState.Idle);
             SetInteractable(_stopButton, state == MachineState.Running);
             SetInteractable(_acknowledgeFaultButton, state == MachineState.Fault);
@@ -95,6 +127,5 @@ namespace Game.HMI
                 button.interactable = interactable;
             }
         }
-
     }
 }

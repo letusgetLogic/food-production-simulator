@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &280209375841772880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3140677733384905257}
+  - component: {fileID: 8748822333453470499}
+  - component: {fileID: 4440957555940292330}
+  m_Layer: 0
+  m_Name: hopper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3140677733384905257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280209375841772880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 696227699021999040}
+  m_Father: {fileID: 2011752117663627395}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8748822333453470499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280209375841772880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78cb07683405cb4da3b3aea7a2c8f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Production::Game.Production.Hopper
+  _capacityGrams: 300000
+--- !u!114 &4440957555940292330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 280209375841772880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1c454cab4ab714a8a832eeff905c44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Production::Game.Production.LevelSensor
+  _sensorId: 
 --- !u!1 &3668001869896119233
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +213,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2011752117663627395}
+  - component: {fileID: 7104271000645298806}
   m_Layer: 0
   m_Name: portioner
   m_TagString: Untagged
@@ -173,12 +234,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 696227699021999040}
+  - {fileID: 3140677733384905257}
   - {fileID: 5155838984412309643}
   - {fileID: 2873884660676935776}
   - {fileID: 273529982481650088}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7104271000645298806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6384296262994184565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf21060222c844d43843b19597341180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Production::Game.Production.PortionerMachine
+  _machineId: 
+  _machineName: 
+  _config: {fileID: 11400000, guid: 43e2759bdf5616e48b14d6c0184957d7, type: 2}
+  _hopper: {fileID: 8748822333453470499}
+  _levelSensor: {fileID: 4440957555940292330}
 --- !u!1 &6930534890380452202
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +329,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2011752117663627395}
+    m_TransformParent: {fileID: 3140677733384905257}
     m_Modifications:
     - target: {fileID: -9042917943815199277, guid: c9fc2e556c66330489558405029ed4c5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -259,7 +337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9042917943815199277, guid: c9fc2e556c66330489558405029ed4c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -9042917943815199277, guid: c9fc2e556c66330489558405029ed4c5, type: 3}
       propertyPath: m_LocalPosition.z

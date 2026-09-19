@@ -3,25 +3,32 @@ using UnityEngine;
 namespace Game.Production
 {
     /// <summary>
-    /// Data-only configuration for a single conveyor segment.
-    /// No hardcoded values in behaviour scripts - everything tunable lives here.
+    /// Content data for a conveyor segment. No hardcoded values in code,
+    /// everything here is configurable via inspector/content.
     /// </summary>
-    [CreateAssetMenu(fileName = "ConveyorConfig", menuName = "Production/Conveyor Config")]
+    [CreateAssetMenu(fileName = "SO_ConveyorConfig", menuName = "FoodProductionSimulator/Conveyor Config")]
     public class SO_ConveyorConfig : ScriptableObject
     {
-        [Header("Layout")]
-        [Tooltip("Number of discrete transport slots on this conveyor segment.")]
-        [Min(1)] public int SlotCount = 6;
+        [Header("Movement")]
+        [SerializeField] private float _beltSpeedMetersPerSecond = 0.5f;
+        [SerializeField] private float _beltLengthMeters = 2f;
 
-        [Tooltip("World-space distance between two adjacent slots.")]
-        [Min(0.01f)] public float SlotSpacing = 0.5f;
+        [Header("Jam Detection")]
+        [Tooltip("How often we check whether products on the belt are still moving.")]
+        [SerializeField] private float _jamCheckIntervalSeconds = 0.5f;
+        [Tooltip("Position change below this value counts as 'not moving'.")]
+        [SerializeField] private float _jamPositionThresholdMeters = 0.02f;
+        [Tooltip("A product must be stuck for this long despite the belt running before IsJammed is triggered.")]
+        [SerializeField] private float _jamTimeToTriggerSeconds = 3f;
 
-        [Header("Motion")]
-        [Tooltip("Linear speed at which tokens move between slots, in units/second.")]
-        [Min(0.01f)] public float TransportSpeed = 1.0f;
+        [Header("Visual (Planks)")]
+        [SerializeField] private float _plankLengthMeters = 0.25f;
 
-        [Header("Fault Simulation (optional, for later fault system integration)")]
-        [Tooltip("If true, this conveyor can be forced into a jammed state externally (debug/testing).")]
-        public bool AllowManualJamToggle = true;
+        public float BeltSpeedMetersPerSecond => _beltSpeedMetersPerSecond;
+        public float BeltLengthMeters => _beltLengthMeters;
+        public float JamCheckIntervalSeconds => _jamCheckIntervalSeconds;
+        public float JamPositionThresholdMeters => _jamPositionThresholdMeters;
+        public float JamTimeToTriggerSeconds => _jamTimeToTriggerSeconds;
+        public float PlankLengthMeters => _plankLengthMeters;
     }
 }
