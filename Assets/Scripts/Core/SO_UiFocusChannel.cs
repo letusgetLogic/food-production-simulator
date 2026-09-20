@@ -20,6 +20,8 @@ namespace Game.Core
         public bool IsUiFocused => _focusRequests > 0;
 
         public event Action<bool> FocusChanged;
+        public event Action CloseRequested;
+        public void CloseFocus() => CloseRequested?.Invoke();
 
         /// <summary>Reference-counted so several surfaces can hold focus at once.</summary>
         public void PushFocus()

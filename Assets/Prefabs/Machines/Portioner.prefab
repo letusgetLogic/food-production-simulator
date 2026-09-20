@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Production::Game.Production.PortionerMachine
   _machineId: 
-  _machineName: 
+  _machineName: text.portioner
   _config: {fileID: 11400000, guid: 43e2759bdf5616e48b14d6c0184957d7, type: 2}
   _hopper: {fileID: 8748822333453470499}
   _levelSensor: {fileID: 4440957555940292330}

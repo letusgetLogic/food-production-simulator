@@ -12,7 +12,7 @@ namespace Game.HMI
     /// </summary>
     public class MachineStateRowView : MonoBehaviour
     {
-        [SerializeField] private HmiTheme _theme;
+        [SerializeField] private SO_HmiTheme _theme;
         [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private TextMeshProUGUI _stateText;
         [SerializeField] private Image _stateLamp;

@@ -1,0 +1,415 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Localization Table_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8dde0fd5ff2680540a08d198e1b46953, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 22459571449856
+    m_Localized: Acknowledge fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459630170112
+    m_Localized: Automatic mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364416
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364417
+    m_Localized: Baking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364418
+    m_Localized: Baking finished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364419
+    m_Localized: Batch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364420
+    m_Localized: Batch number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364421
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364422
+    m_Localized: Close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364423
+    m_Localized: Complete maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364424
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364425
+    m_Localized: Connection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364426
+    m_Localized: Connection established
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364427
+    m_Localized: Connection lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364428
+    m_Localized: Conveyor belt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364429
+    m_Localized: Conveyor belt speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364430
+    m_Localized: Cooling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364431
+    m_Localized: Cycle time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364432
+    m_Localized: Dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364433
+    m_Localized: Dough cutting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364434
+    m_Localized: Dough forming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364435
+    m_Localized: Dough mixing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364436
+    m_Localized: Dough portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364437
+    m_Localized: Dough ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364438
+    m_Localized: Dough rolling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364439
+    m_Localized: Duration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364440
+    m_Localized: Emergency stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364441
+    m_Localized: Emergency stop active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364442
+    m_Localized: Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364443
+    m_Localized: Errors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364444
+    m_Localized: Active errors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364445
+    m_Localized: Unknown error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364446
+    m_Localized: No active errors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364447
+    m_Localized: Fill level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364448
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364449
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364450
+    m_Localized: Machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364451
+    m_Localized: Machine error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364452
+    m_Localized: Machine ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364453
+    m_Localized: Machine running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364454
+    m_Localized: Machine stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364455
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364456
+    m_Localized: Maintenance active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364457
+    m_Localized: Maintenance required
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364458
+    m_Localized: Manual mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364459
+    m_Localized: Mixer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364460
+    m_Localized: Motor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364461
+    m_Localized: Motor speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364462
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364463
+    m_Localized: Offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364464
+    m_Localized: Online
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364465
+    m_Localized: Oven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364466
+    m_Localized: Oven heating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364467
+    m_Localized: Oven ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364468
+    m_Localized: Overview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364469
+    m_Localized: Packaging
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364470
+    m_Localized: Packaging finished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364471
+    m_Localized: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364472
+    m_Localized: Portioner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364473
+    m_Localized: Pressure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364474
+    m_Localized: Current pressure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364475
+    m_Localized: Target pressure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364476
+    m_Localized: Previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364477
+    m_Localized: Production
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364478
+    m_Localized: Production finished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364479
+    m_Localized: Production ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364480
+    m_Localized: Production running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364481
+    m_Localized: Production stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364482
+    m_Localized: Quantity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364483
+    m_Localized: Recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364484
+    m_Localized: Recipe loaded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364485
+    m_Localized: No active recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364486
+    m_Localized: Select recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364487
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364488
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364489
+    m_Localized: Safety door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364490
+    m_Localized: Safety door open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364491
+    m_Localized: Safety system ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364492
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364493
+    m_Localized: Setpoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364494
+    m_Localized: Scrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364495
+    m_Localized: Sensor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364496
+    m_Localized: Sensor error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364497
+    m_Localized: Sensor value
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364498
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364499
+    m_Localized: Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364500
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364501
+    m_Localized: Status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364502
+    m_Localized: Stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364503
+    m_Localized: Temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364504
+    m_Localized: Current temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364505
+    m_Localized: Target temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364506
+    m_Localized: Throughput
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364507
+    m_Localized: Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364508
+    m_Localized: Topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364509
+    m_Localized: Applying topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364510
+    m_Localized: Units
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364511
+    m_Localized: Warning
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

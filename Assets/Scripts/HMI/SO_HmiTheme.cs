@@ -10,7 +10,7 @@ namespace Game.HMI
     /// instead of hardcoded in views.
     /// </summary>
     [CreateAssetMenu(menuName = "HMI/HMI Theme", fileName = "HmiTheme")]
-    public class HmiTheme : ScriptableObject
+    public class SO_HmiTheme : ScriptableObject
     {
         [Serializable]
         public struct MachineStateStyle

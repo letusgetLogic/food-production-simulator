@@ -1,3 +1,4 @@
+using Game.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,13 @@ namespace Game.Production
     public class MachineOverviewReporter : MonoBehaviour
     {
         [SerializeField] private SO_MachineOverviewChannel _channel;
+        [SerializeField] private SO_LanguageSwitcherChannel _languageChannel;
 
-        private readonly Dictionary<string, int> _machineTypes = new Dictionary<string, int>();
-        private readonly Dictionary<string, MachineBase> _machinesById = new Dictionary<string, MachineBase>();
-        private readonly Dictionary<string, Action<MachineState, MachineState>> _handlers =
-            new Dictionary<string, Action<MachineState, MachineState>>();
+        private readonly Dictionary<string, int> _machineTypes = new();
+        private readonly Dictionary<string, MachineBase> _machinesById = new();
+        private readonly Dictionary<string, Action<MachineState, MachineState>> _handlers = new();
+
+        private readonly Dictionary<string, Action> _nameHandlers = new();
 
         private void Awake()
         {
@@ -23,44 +26,36 @@ namespace Game.Production
 
             foreach (MachineBase machine in machines)
             {
-                if (string.IsNullOrEmpty(machine.MachineId))
-                {
-                    Debug.LogWarning(
-                        $"{nameof(MachineOverviewReporter)}: machine on '{machine.name}' has no MachineId, skipping.",
-                        machine);
-                    continue;
-                }
-
-                if (_machinesById.ContainsKey(machine.MachineId))
-                {
-                    Debug.LogError(
-                        $"{nameof(MachineOverviewReporter)}: duplicate MachineId '{machine.MachineId}'.", machine);
-                    continue;
-                }
-
                 int index = 0;
-                if (_machineTypes.ContainsKey(machine.MachineName))
+                if (_machineTypes.ContainsKey(machine.NameKey))
                 {
-                    index = _machineTypes[machine.MachineName]++;
+                    _machineTypes[machine.NameKey]++;
+                    index = _machineTypes[machine.NameKey];
                 }
                 else
                 {
-                    index = _machineTypes[machine.MachineName] = 1;
+                    _machineTypes.Add(machine.NameKey, 1);
+                    index = _machineTypes[machine.NameKey];
                 }
-                machine.SetMachineId($"{machine.MachineName} {index}");
-                _machinesById.Add(machine.MachineId, machine);
+                machine.SetNumber(index);
+                _machinesById.Add(machine.Id, machine);
 
                 // Capture by value for the closure - not the loop variable.
-                string machineId = machine.MachineId;
-                string displayName = $"{machine.MachineName} {index}"; 
+                string machineId = machine.Id;
+                string DisplayName() => $"{machine.Name} {index}";
 
                 Action<MachineState, MachineState> handler = (_, next) =>
-                    _channel.ReportState(machineId, displayName, next);
+                    _channel.ReportState(machineId, DisplayName(), next);
+                Action nameHandler = () =>
+                    _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
 
                 machine.StateChanged += handler;
                 _handlers.Add(machineId, handler);
 
-                _channel.ReportState(machineId, displayName, machine.CurrentState);
+                _languageChannel.LanguageChanged += nameHandler;
+                _nameHandlers.Add(machineId, nameHandler);
+
+                _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
             }
         }
 
@@ -72,6 +67,12 @@ namespace Game.Production
                 {
                     entry.Value.StateChanged -= handler;
                 }
+            }
+
+            foreach (KeyValuePair<string, Action> entry in _nameHandlers)
+            {
+                if (_languageChannel != null)
+                    _languageChannel.LanguageChanged -= entry.Value;
             }
         }
     }

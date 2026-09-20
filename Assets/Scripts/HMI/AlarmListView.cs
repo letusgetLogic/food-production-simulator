@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.HMI
 {
@@ -18,32 +16,6 @@ namespace Game.HMI
             SourceName = sourceName;
             Message = message;
             IsAcknowledged = isAcknowledged;
-        }
-    }
-
-    public class AlarmEntryView : MonoBehaviour
-    {
-        [SerializeField] private HmiTheme _theme;
-        [SerializeField] private TMP_Text _sourceText;
-        [SerializeField] private TMP_Text _messageText;
-        [SerializeField] private Image _severityBar;
-
-        public void Bind(HmiAlarmEntry entry)
-        {
-            if (_sourceText != null)
-            {
-                _sourceText.text = entry.SourceName;
-            }
-
-            if (_messageText != null)
-            {
-                _messageText.text = entry.Message;
-            }
-
-            if (_severityBar != null && _theme != null)
-            {
-                _severityBar.color = entry.IsAcknowledged ? _theme.Warning : _theme.Alarm;
-            }
         }
     }
 
@@ -93,7 +65,9 @@ namespace Game.HMI
 
             while (_pool.Count < required)
             {
-                _pool.Add(Instantiate(_entryPrefab, _entryContainer));
+                var prefab = Instantiate(_entryPrefab, _entryContainer);
+                _pool.Add(prefab);
+                prefab.transform.SetSiblingIndex(3); // below the header and status labels
             }
         }
     }

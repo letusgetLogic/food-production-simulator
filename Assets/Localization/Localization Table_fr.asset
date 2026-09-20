@@ -1,0 +1,415 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Localization Table_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 8dde0fd5ff2680540a08d198e1b46953, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 22459571449856
+    m_Localized: "Reconna\xEEtre la faute"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459630170112
+    m_Localized: Mode automatique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364416
+    m_Localized: Dos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364417
+    m_Localized: "P\xE2tisserie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364418
+    m_Localized: "Cuisson termin\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364419
+    m_Localized: Lot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364420
+    m_Localized: "Num\xE9ro de lot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364421
+    m_Localized: Annuler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364422
+    m_Localized: Fermer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364423
+    m_Localized: "Maintenance compl\xE8te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364424
+    m_Localized: Confirmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364425
+    m_Localized: Connexion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364426
+    m_Localized: "Connexion \xE9tablie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364427
+    m_Localized: Connexion perdue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364428
+    m_Localized: Tapis roulant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364429
+    m_Localized: vitesse du tapis roulant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364430
+    m_Localized: Refroidissement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364431
+    m_Localized: Temps de cycle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364432
+    m_Localized: "P\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364433
+    m_Localized: "D\xE9coupe de la p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364434
+    m_Localized: "Formation de la p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364435
+    m_Localized: "M\xE9lange de la p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364436
+    m_Localized: "portionnement de la p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364437
+    m_Localized: "P\xE2te pr\xEAte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364438
+    m_Localized: "Roulage de la p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364439
+    m_Localized: "Dur\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364440
+    m_Localized: "Arr\xEAt d'urgence"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364441
+    m_Localized: "Arr\xEAt d'urgence actif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364442
+    m_Localized: Erreur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364443
+    m_Localized: Erreurs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364444
+    m_Localized: Erreurs actives
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364445
+    m_Localized: Erreur inconnue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364446
+    m_Localized: Aucune erreur active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364447
+    m_Localized: Niveau de remplissage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364448
+    m_Localized: Maison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364449
+    m_Localized: Charger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364450
+    m_Localized: Machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364451
+    m_Localized: Erreur machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364452
+    m_Localized: "Machine pr\xEAte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364453
+    m_Localized: Machine en marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364454
+    m_Localized: "La machine s'est arr\xEAt\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364455
+    m_Localized: Entretien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364456
+    m_Localized: Maintenance active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364457
+    m_Localized: Maintenance requise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364458
+    m_Localized: Mode manuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364459
+    m_Localized: Mixer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364460
+    m_Localized: Moteur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364461
+    m_Localized: vitesse du moteur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364462
+    m_Localized: Suivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364463
+    m_Localized: Hors ligne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364464
+    m_Localized: En ligne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364465
+    m_Localized: Four
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364466
+    m_Localized: Chauffage du four
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364467
+    m_Localized: "Pr\xEAt \xE0 cuire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364468
+    m_Localized: "Aper\xE7u"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364469
+    m_Localized: Conditionnement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364470
+    m_Localized: "Emballage termin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364471
+    m_Localized: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364472
+    m_Localized: Portionneur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364473
+    m_Localized: Pression
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364474
+    m_Localized: Pression actuelle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364475
+    m_Localized: Pression cible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364476
+    m_Localized: "Pr\xE9c\xE9dent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364477
+    m_Localized: Production
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364478
+    m_Localized: "Production termin\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364479
+    m_Localized: "Pr\xEAt pour la production"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364480
+    m_Localized: Production en cours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364481
+    m_Localized: "La production a \xE9t\xE9 arr\xEAt\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364482
+    m_Localized: "Quantit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364483
+    m_Localized: Recette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364484
+    m_Localized: "Recette charg\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364485
+    m_Localized: Aucune recette active
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364486
+    m_Localized: "S\xE9lectionner une recette"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364487
+    m_Localized: "R\xE9initialiser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364488
+    m_Localized: CV
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364489
+    m_Localized: "Porte de s\xE9curit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364490
+    m_Localized: "Porte de s\xE9curit\xE9 ouverte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364491
+    m_Localized: "Syst\xE8me de s\xE9curit\xE9 pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364492
+    m_Localized: Sauvegarder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364493
+    m_Localized: point de consigne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364494
+    m_Localized: Ferraille
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364495
+    m_Localized: Capteur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364496
+    m_Localized: Erreur du capteur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364497
+    m_Localized: valeur du capteur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364498
+    m_Localized: "Param\xE8tres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364499
+    m_Localized: Vitesse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364500
+    m_Localized: Commencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364501
+    m_Localized: Statut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364502
+    m_Localized: "Arr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364503
+    m_Localized: "Temp\xE9rature"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364504
+    m_Localized: "Temp\xE9rature actuelle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364505
+    m_Localized: "Temp\xE9rature cible"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364506
+    m_Localized: "d\xE9bit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364507
+    m_Localized: Temps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364508
+    m_Localized: Garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364509
+    m_Localized: Application de la garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364510
+    m_Localized: "Unit\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364511
+    m_Localized: Avertissement
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -13,6 +13,9 @@ namespace Game.HMI
     /// </summary>
     public class MachineDetailPanel : HmiPanelBase
     {
+        [Header("Scroll View")]
+        [SerializeField] private RectTransform _scrollViewRect;
+
         [Header("Header")]
         [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private MachineStateRowView _stateRow;
@@ -22,6 +25,9 @@ namespace Game.HMI
         [SerializeField] private StatusTileView _fillLevelTile;
         [SerializeField] private StatusTileView _cycleTimeTile;
         [SerializeField] private StatusTileView _setpointTile;
+
+        [Header("Content")]
+        [SerializeField] private TextMeshProUGUI _content;
 
         [Header("Operator commands")]
         [SerializeField] private GameObject _commandRow;
@@ -82,6 +88,11 @@ namespace Game.HMI
                 _commandRow.SetActive(controlEnabled);
             }
 
+            if (_scrollViewRect != null)
+            {
+                _scrollViewRect.offsetMin = new Vector2(_scrollViewRect.offsetMin.x, controlEnabled ? 90f : 0f);
+            }
+
             UpdateCommandAvailability(_currentState);
         }
 
@@ -96,6 +107,9 @@ namespace Game.HMI
 
         public void SetSetpoint(string value) =>
             _setpointTile?.SetValue(value, HmiValueSeverity.Normal);
+
+        public void SetContent(string content) =>
+            _content?.SetText(content);
 
         /// <summary>
         /// Mirrors the state machine rules: no self-reset out of Stopped, Fault or

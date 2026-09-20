@@ -34,6 +34,12 @@ namespace Game.HMI
             }
         }
 
+        private void OnEnable()
+        {
+            if (_uiFocusChannel)
+                _uiFocusChannel.CloseRequested += Close;
+        }
+
         public void Open() => Open(_defaultPanelId);
 
         public void Open(string panelId)
@@ -116,6 +122,8 @@ namespace Game.HMI
                 IsOpen = false;
                 _uiFocusChannel?.PopFocus();
             }
+            if (_uiFocusChannel)
+                _uiFocusChannel.CloseRequested -= Close;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Game.HMI
                 return;
             }
 
-            _row.SetMachineName(_machine.MachineId);
+            _row.SetMachineName(_machine.Id);
             _row.SetState(_machine.CurrentState);
             _machine.StateChanged += OnStateChanged;
         }

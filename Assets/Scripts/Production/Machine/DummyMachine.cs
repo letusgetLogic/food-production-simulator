@@ -16,23 +16,23 @@ namespace Game.Production
 
         protected override void OnEnterIdle()
         {
-            Debug.Log($"[{MachineId}] Idle.");
+            Debug.Log($"[{Id}] Idle.");
         }
 
         protected override void OnEnterStarting()
         {
-            Debug.Log($"[{MachineId}] Warming up...");
+            Debug.Log($"[{Id}] Warming up...");
             _startupTimer = 0f;
         }
 
         protected override void OnEnterRunning()
         {
-            Debug.Log($"[{MachineId}] Now running.");
+            Debug.Log($"[{Id}] Now running.");
         }
 
         protected override void OnEnterStopping()
         {
-            Debug.Log($"[{MachineId}] Winding down...");
+            Debug.Log($"[{Id}] Winding down...");
             // A real machine would finish its current product cycle here;
             // the dummy finishes immediately.
             SetState(MachineState.Stopped);
@@ -40,17 +40,17 @@ namespace Game.Production
 
         protected override void OnEnterStopped()
         {
-            Debug.Log($"[{MachineId}] Stopped.");
+            Debug.Log($"[{Id}] Stopped.");
         }
 
         protected override void OnEnterFault(string reason)
         {
-            Debug.LogError($"[{MachineId}] FAULT: {reason}");
+            Debug.LogError($"[{Id}] FAULT: {reason}");
         }
 
         protected override void OnEnterMaintenance()
         {
-            Debug.Log($"[{MachineId}] Under maintenance.");
+            Debug.Log($"[{Id}] Under maintenance.");
         }
 
         private void Update()

@@ -1,0 +1,415 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Localization Table_es
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: es
+  m_SharedData: {fileID: 11400000, guid: 8dde0fd5ff2680540a08d198e1b46953, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 22459571449856
+    m_Localized: Reconocer el error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459630170112
+    m_Localized: "Modo autom\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364416
+    m_Localized: "Atr\xE1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364417
+    m_Localized: Hornada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364418
+    m_Localized: Horneado terminado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364419
+    m_Localized: Lote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364420
+    m_Localized: "N\xFAmero de lote"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364421
+    m_Localized: Cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364422
+    m_Localized: Cerca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364423
+    m_Localized: Mantenimiento completo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364424
+    m_Localized: Confirmar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364425
+    m_Localized: "Conexi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364426
+    m_Localized: "Conexi\xF3n establecida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364427
+    m_Localized: "Se perdi\xF3 la conexi\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364428
+    m_Localized: Cinta transportadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364429
+    m_Localized: Velocidad de la cinta transportadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364430
+    m_Localized: Enfriamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364431
+    m_Localized: Tiempo de ciclo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364432
+    m_Localized: Masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364433
+    m_Localized: Corte de la masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364434
+    m_Localized: "Formaci\xF3n de la masa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364435
+    m_Localized: Mezcla de masas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364436
+    m_Localized: Porcionado de la masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364437
+    m_Localized: Masa lista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364438
+    m_Localized: Estirar la masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364439
+    m_Localized: "Duraci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364440
+    m_Localized: Parada de emergencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364441
+    m_Localized: Parada de emergencia activa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364442
+    m_Localized: Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364443
+    m_Localized: Errores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364444
+    m_Localized: Errores activos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364445
+    m_Localized: Error desconocido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364446
+    m_Localized: No hay errores activos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364447
+    m_Localized: Nivel de llenado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364448
+    m_Localized: Hogar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364449
+    m_Localized: Carga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364450
+    m_Localized: "M\xE1quina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364451
+    m_Localized: "Error de la m\xE1quina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364452
+    m_Localized: "Listo para m\xE1quina"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364453
+    m_Localized: "M\xE1quina en funcionamiento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364454
+    m_Localized: "La m\xE1quina se detuvo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364455
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364456
+    m_Localized: Mantenimiento activo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364457
+    m_Localized: Mantenimiento requerido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364458
+    m_Localized: Modo manual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364459
+    m_Localized: Mezclador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364460
+    m_Localized: Motor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364461
+    m_Localized: Velocidad del motor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364462
+    m_Localized: "Pr\xF3ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364463
+    m_Localized: Desconectado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364464
+    m_Localized: "En l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364465
+    m_Localized: Horno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364466
+    m_Localized: Calentamiento del horno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364467
+    m_Localized: Listo para hornear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364468
+    m_Localized: "Descripci\xF3n general"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364469
+    m_Localized: Embalaje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364470
+    m_Localized: Embalaje terminado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364471
+    m_Localized: Pausa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364472
+    m_Localized: Porcionador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364473
+    m_Localized: "Presi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364474
+    m_Localized: "Presi\xF3n actual"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364475
+    m_Localized: "Presi\xF3n objetivo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364476
+    m_Localized: Anterior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364477
+    m_Localized: "Producci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364478
+    m_Localized: "Producci\xF3n finalizada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364479
+    m_Localized: "Listo para producci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364480
+    m_Localized: "Producci\xF3n en marcha"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364481
+    m_Localized: "La producci\xF3n se detuvo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364482
+    m_Localized: Cantidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364483
+    m_Localized: Receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364484
+    m_Localized: Receta cargada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364485
+    m_Localized: No hay receta activa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364486
+    m_Localized: Seleccionar receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364487
+    m_Localized: Reiniciar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364488
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364489
+    m_Localized: Puerta de seguridad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364490
+    m_Localized: Puerta de seguridad abierta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364491
+    m_Localized: Sistema de seguridad listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364492
+    m_Localized: Ahorrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364493
+    m_Localized: Punto de ajuste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364494
+    m_Localized: Chatarra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364495
+    m_Localized: Sensor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364496
+    m_Localized: Error del sensor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364497
+    m_Localized: Valor del sensor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364498
+    m_Localized: Ajustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364499
+    m_Localized: Velocidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364500
+    m_Localized: Comenzar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364501
+    m_Localized: Estado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364502
+    m_Localized: Detener
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364503
+    m_Localized: Temperatura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364504
+    m_Localized: Temperatura actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364505
+    m_Localized: Temperatura objetivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364506
+    m_Localized: Rendimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364507
+    m_Localized: Tiempo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364508
+    m_Localized: Cubierta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364509
+    m_Localized: "Aplicaci\xF3n de la capa superior"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364510
+    m_Localized: Unidades
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364511
+    m_Localized: Advertencia
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

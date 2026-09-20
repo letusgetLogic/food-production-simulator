@@ -24,7 +24,7 @@ namespace Game.HMI
     /// </summary>
     public class StatusTileView : MonoBehaviour
     {
-        [SerializeField] private HmiTheme _theme;
+        [SerializeField] private SO_HmiTheme _theme;
         [SerializeField] private TextMeshProUGUI _labelText;
         [SerializeField] private TextMeshProUGUI _valueText;
         [SerializeField] private TextMeshProUGUI _unitText;

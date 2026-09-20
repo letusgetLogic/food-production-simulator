@@ -10,17 +10,26 @@ namespace Game.HMI
     public class MachineDetailBinder : MonoBehaviour
     {
         [SerializeField] private MachineDetailPanel _detailPanel;
+        [SerializeField] private MachineBase _machineInstance;
 
         private MachineBase _boundMachine;
         private Action<MachineState, MachineState> _stateHandler;
 
         private void Awake()
         {
-            _detailPanel.StartRequested += () => _boundMachine?.StartMachine();
-            _detailPanel.StopRequested += () => _boundMachine?.StopMachine();
-            _detailPanel.AcknowledgeFaultRequested += () => _boundMachine?.AcknowledgeFault();
-            _detailPanel.CompleteMaintenanceRequested += () => _boundMachine?.CompleteMaintenance();
-            _detailPanel.ResetToIdleRequested += () => _boundMachine?.ResetToIdle();
+            if (_boundMachine)
+            {
+                _detailPanel.StartRequested += () => _boundMachine.StartMachine();
+                _detailPanel.StopRequested += () => _boundMachine.StopMachine();
+                _detailPanel.AcknowledgeFaultRequested += () => _boundMachine.AcknowledgeFault();
+                _detailPanel.CompleteMaintenanceRequested += () => _boundMachine.CompleteMaintenance();
+                _detailPanel.ResetToIdleRequested += () => _boundMachine.ResetToIdle();
+            }
+
+            if (_machineInstance)
+            {
+                Bind(_machineInstance);
+            }
         }
 
         public void Bind(MachineBase machine)
@@ -41,7 +50,7 @@ namespace Game.HMI
             _stateHandler = (_, next) => _detailPanel.SetState(next);
             machine.StateChanged += _stateHandler;
 
-            _detailPanel.SetMachineName(machine.MachineId);
+            _detailPanel.SetMachineName(machine.Name);
             _detailPanel.SetState(machine.CurrentState);
         }
 

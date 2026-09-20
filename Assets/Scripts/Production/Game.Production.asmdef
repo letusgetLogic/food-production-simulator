@@ -3,7 +3,8 @@
     "rootNamespace": "Game.Production",
     "references": [
         "Game.Core",
-        "AYellowpaper.SerializeInterfaces"
+        "AYellowpaper.SerializeInterfaces",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

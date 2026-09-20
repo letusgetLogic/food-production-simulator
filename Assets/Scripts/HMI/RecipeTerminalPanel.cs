@@ -47,6 +47,7 @@ namespace Game.HMI
     public class RecipeTerminalPanel : HmiPanelBase
     {
         [SerializeField] private TextMeshProUGUI _recipeNameText;
+        [SerializeField] private TextMeshProUGUI _recipeInfoText;
         [SerializeField] private RecipeEntryRowView _entryPrefab;
         [SerializeField] private RectTransform _entryContainer;
         [SerializeField] private GameObject _emptyStateRoot;
@@ -61,27 +62,31 @@ namespace Game.HMI
             }
         }
 
-        public void SetEntries(IReadOnlyList<RecipeEntryData> entries)
+
+        public void SetEntries(/*IReadOnlyList<*/RecipeEntryData entries)
         {
-            int count = entries?.Count ?? 0;
+            _recipeNameText.text = entries.Label;
+            _recipeInfoText.text = entries.Value;
 
-            EnsurePoolSize(count);
+            //int count = entries?.Count ?? 0;
 
-            for (int i = 0; i < _pool.Count; i++)
-            {
-                bool active = i < count;
-                _pool[i].gameObject.SetActive(active);
+            //EnsurePoolSize(count);
 
-                if (active)
-                {
-                    _pool[i].Bind(entries[i]);
-                }
-            }
+            //for (int i = 0; i < _pool.Count; i++)
+            //{
+            //    bool active = i < count;
+            //    _pool[i].gameObject.SetActive(active);
 
-            if (_emptyStateRoot != null)
-            {
-                _emptyStateRoot.SetActive(count == 0);
-            }
+            //    if (active)
+            //    {
+            //        _pool[i].Bind(entries[i]);
+            //    }
+            //}
+
+            //if (_emptyStateRoot != null)
+            //{
+            //    _emptyStateRoot.SetActive(count == 0);
+            //}
         }
 
         private void EnsurePoolSize(int required)
@@ -93,7 +98,9 @@ namespace Game.HMI
 
             while (_pool.Count < required)
             {
-                _pool.Add(Instantiate(_entryPrefab, _entryContainer));
+                var prefab = Instantiate(_entryPrefab, _entryContainer);
+                _pool.Add(prefab);
+                prefab.transform.SetSiblingIndex(2); // below the header
             }
         }
     }

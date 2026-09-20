@@ -17,18 +17,16 @@ namespace Game.Platform
 
         private void OnEnable()
         {
-            _controller.Input.EscapePerformed += DisableFocus;
+            _controller.Input.EscapePerformed += _uiFocusChannel.CloseFocus;
             _uiFocusChannel.FocusChanged += OnFocusChanged;
             OnFocusChanged(_uiFocusChannel.IsUiFocused);
         }
 
         private void OnDisable()
         {
-            _controller.Input.EscapePerformed -= DisableFocus;
+            _controller.Input.EscapePerformed -= _uiFocusChannel.CloseFocus;
             _uiFocusChannel.FocusChanged -= OnFocusChanged;
         }
-
-        private void DisableFocus() => OnFocusChanged(false);
 
         private void OnFocusChanged(bool uiFocused)
         {

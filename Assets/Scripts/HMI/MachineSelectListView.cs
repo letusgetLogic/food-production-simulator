@@ -32,7 +32,7 @@ namespace Game.HMI
 
             if (_machineNameText != null)
             {
-                _machineNameText.text = machine != null ? machine.MachineId : string.Empty;
+                _machineNameText.text = machine != null ? machine.Id : string.Empty;
             }
         }
     }

@@ -12,8 +12,9 @@ namespace Game.Production
         /// <summary>
         /// Unique, stable identifier for this machine instance (used for save/load, HMI, logging).
         /// </summary>
-        string MachineId { get; }
-        string MachineName { get; }
+        string Id { get; }
+        string Name { get; }
+        int Number { get; }
 
         /// <summary>
         /// The machine's current lifecycle state.

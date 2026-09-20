@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Game.Production
 {
@@ -11,17 +12,16 @@ namespace Game.Production
     public abstract class MachineBase : MonoBehaviour, IMachine
     {
         [SerializeField]
-        private string _machineId = string.Empty;
-
-        [SerializeField]
-        private string _machineName = string.Empty;
-
+        private LocalizedString _nameKey;
+        public string NameKey => _nameKey.TableEntryReference.Key;
         private MachineState _currentState = MachineState.Idle;
 
         /// <inheritdoc />
-        public string MachineId => _machineId;
-        public void SetMachineId(string id) => _machineId = id;
-        public string MachineName => _machineName;
+        public string Id => $"{_nameKey}_{_number}";
+        public string Name => _nameKey.GetLocalizedString();
+        private int _number;
+        public int Number => _number;
+        public void SetNumber(int number) => _number = number;
 
         /// <inheritdoc />
         public MachineState CurrentState => _currentState;
@@ -116,7 +116,7 @@ namespace Game.Production
             if (!IsValidTransition(_currentState, target))
             {
                 Debug.LogWarning(
-                    $"[{_machineId}] Rejected invalid machine state transition: {_currentState} -> {target}.");
+                    $"[{Id}] Rejected invalid machine state transition: {_currentState} -> {target}.");
                 return;
             }
 

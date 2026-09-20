@@ -18,7 +18,7 @@ namespace Game.Platform
         [Header("References")]
         [SerializeField] private AimInteractor _interactor;
         [SerializeField] private Graphic _reticle;
-        [SerializeField] private TMP_Text _promptLabel;
+        [SerializeField] private TextMeshProUGUI _promptLabel;
 
         [Header("Appearance")]
         [SerializeField] private Color _idleColor = new Color(1f, 1f, 1f, 0.45f);

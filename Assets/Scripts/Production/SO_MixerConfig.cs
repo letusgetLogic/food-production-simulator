@@ -36,5 +36,10 @@ namespace Game.Production
                  "OnEnterStarting/OnEnterStopping hooks + SetState().")]
         [Min(0f)] public float StartupDurationSeconds = 2f;
         [Min(0f)] public float ShutdownDurationSeconds = 1.5f;
+
+        [Header("Drum Tilt")]
+        [Tooltip("Duration of the drum's animated rotation on the X-axis between upright " +
+                 "(0 deg) and tilted (90 deg), used for both the tilt button and the reset button.")]
+        [Min(0f)] public float TiltRotationDurationSeconds = 1f;
     }
 }
