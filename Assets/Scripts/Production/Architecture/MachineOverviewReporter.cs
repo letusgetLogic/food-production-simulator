@@ -16,6 +16,7 @@ namespace Game.Production
 
         private readonly Dictionary<string, int> _machineTypes = new();
         private readonly Dictionary<string, MachineBase> _machinesById = new();
+        public MachineBase GetMachineById(string machineId) => _machinesById.TryGetValue(machineId, out var machine) ? machine : null;
         private readonly Dictionary<string, Action<MachineState, MachineState>> _handlers = new();
 
         private readonly Dictionary<string, Action> _nameHandlers = new();
@@ -46,6 +47,8 @@ namespace Game.Production
 
                 Action<MachineState, MachineState> handler = (_, next) =>
                     _channel.ReportState(machineId, DisplayName(), next);
+
+                // Language change handler to update the display name
                 Action nameHandler = () =>
                     _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
 
@@ -75,5 +78,6 @@ namespace Game.Production
                     _languageChannel.LanguageChanged -= entry.Value;
             }
         }
+
     }
 }

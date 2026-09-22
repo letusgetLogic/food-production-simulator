@@ -13,6 +13,10 @@ namespace Game.HMI
     /// </summary>
     public class MachineDetailPanel : HmiPanelBase
     {
+        [Header("Navigation")]
+        [SerializeField] private GameObject _navButton;
+        [SerializeField] private TextMeshProUGUI _navButtonText;
+
         [Header("Scroll View")]
         [SerializeField] private RectTransform _scrollViewRect;
 
@@ -57,20 +61,39 @@ namespace Game.HMI
             _resetToIdleButton?.onClick.AddListener(() => ResetToIdleRequested?.Invoke());
         }
 
+        private void OnEnable()
+        {
+            if (_navButton != null)
+                _navButton.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            if (_navButton != null)
+                _navButton.SetActive(false);
+        }
+
         public void SetMachineName(string machineName)
         {
+            if (_navButtonText != null)
+                _navButtonText.text = machineName;
+
             if (_machineNameText != null)
             {
                 _machineNameText.text = machineName;
             }
-
-            _stateRow?.SetMachineName(machineName);
+            if (_stateRow != null)
+            {
+                _stateRow.SetMachineName(machineName);
+            }
         }
 
         public void SetState(MachineState state)
         {
             _currentState = state;
-            _stateRow?.SetState(state);
+            if (_stateRow)
+                _stateRow.SetState(state);
+
             UpdateCommandAvailability(state);
         }
 
@@ -127,7 +150,7 @@ namespace Game.HMI
                 return;
             }
 
-            SetInteractable(_startButton, state == MachineState.Idle);
+            SetInteractable(_startButton, state == MachineState.Ready);
             SetInteractable(_stopButton, state == MachineState.Running);
             SetInteractable(_acknowledgeFaultButton, state == MachineState.Fault);
             SetInteractable(_completeMaintenanceButton, state == MachineState.Maintenance);
@@ -140,6 +163,15 @@ namespace Game.HMI
             {
                 button.interactable = interactable;
             }
+        }
+
+        public void ClearDelegates()
+        {
+            StartRequested = null;
+            StopRequested = null;
+            AcknowledgeFaultRequested = null;
+            CompleteMaintenanceRequested = null;
+            ResetToIdleRequested = null;
         }
     }
 }

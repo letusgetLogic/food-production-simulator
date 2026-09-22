@@ -11,25 +11,20 @@ namespace Game.HMI
     // terminal that only opens the plant-wide overview.
     public class HmiTerminalInteractable : InteractableBase
     {
-        [SerializeField] private HmiScreenController _screen;
-        [SerializeField] private MachineDetailBinder _binder;
+        [SerializeField] private SO_HmiInteractChannel _interactChannel;
         [SerializeField] private MachineBase _machine;
         [SerializeField] private string _panelId = "overview";
 
         public override void OnInteract(IInteractor interactor)
         {
-            if (_screen == null)
+            if (_interactChannel != null)
             {
-                Debug.LogError($"{nameof(HmiTerminalInteractable)}: no screen assigned.", this);
-                return;
+                _interactChannel.Request(_panelId, _machine);
             }
-
-            if (_machine != null && _binder != null)
+            else
             {
-                _binder.Bind(_machine);
+                Debug.LogWarning($"HmiTerminalInteractable {name} has no interact channel assigned.");
             }
-
-            _screen.Open(_panelId);
         }
     }
 }

@@ -10,9 +10,11 @@ namespace Game.HMI
     /// MachineState – no subscription to StateChanged here, so the event-channel
     /// decision stays open.
     /// </summary>
+    [RequireComponent(typeof(Button))]
     public class MachineStateRowView : MonoBehaviour
     {
         [SerializeField] private SO_HmiTheme _theme;
+        [SerializeField] private SO_HmiInteractChannel _interactChannel;
         [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private TextMeshProUGUI _stateText;
         [SerializeField] private Image _stateLamp;
@@ -22,8 +24,12 @@ namespace Game.HMI
 
         public string MachineName => _machineName;
 
+        private Button _button;
+
         private void Awake()
         {
+            _button = GetComponent<Button>();
+            _button.interactable = false;
             SetMachineName(_machineName);
             SetUnknownState();
         }
@@ -35,6 +41,11 @@ namespace Game.HMI
             {
                 _machineNameText.text = machineName;
             }
+        }
+
+        public void SetMachine(string machineId)
+        {
+            _button.onClick.AddListener(() => _interactChannel.Request(machineId));
         }
 
         public void SetState(MachineState state)
@@ -51,6 +62,8 @@ namespace Game.HMI
                 _stateLamp.color = _theme != null ? _theme.GetMachineStateColor(state) : Color.grey;
             }
         }
+
+        public void SetButton() => _button.interactable = true;
 
         /// <summary>Placeholder state used until a machine is bound to this row.</summary>
         public void SetUnknownState()

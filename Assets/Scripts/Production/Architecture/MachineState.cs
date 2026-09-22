@@ -8,10 +8,10 @@ namespace Game.Production
         /// <summary>
         /// The machine is powered but not processing. Safe to start or enter maintenance.
         /// </summary>
-        Idle,
+        Ready,
 
         /// <summary>
-        /// The machine is transitioning from Idle to Running (warm-up, homing, self-check, etc.).
+        /// The machine is transitioning from Ready to Running (warm-up, homing, self-check, etc.).
         /// </summary>
         Starting,
 
@@ -38,6 +38,6 @@ namespace Game.Production
         /// <summary>
         /// The machine is undergoing maintenance, typically to clear a Fault and reset internal conditions.
         /// </summary>
-        Maintenance
+        Maintenance,
     }
 }

@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace Game.HMI
 {
@@ -49,5 +51,6 @@ namespace Game.HMI
             _canvasGroup.interactable = visible;
             _canvasGroup.blocksRaycasts = visible;
         }
+
     }
 }

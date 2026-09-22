@@ -91,7 +91,7 @@ namespace Game.Production
             if (downstreamBlocked && CurrentState == MachineState.Running)
             {
                 // Normal backpressure - not a fault of our own.
-                StopMachine();
+                StopRun();
             }
             else if (!downstreamBlocked && downstreamState == MachineState.Running
                      && CurrentState == MachineState.Stopped)
@@ -99,7 +99,7 @@ namespace Game.Production
                 // Only auto-resume if we stopped purely due to backpressure - never
                 // out of Fault/Maintenance (convention: no self-reset, that stays an
                 // explicit operator/HMI action).
-                StartMachine();
+                StartRun();
             }
         }
 

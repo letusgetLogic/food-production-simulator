@@ -252,11 +252,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf21060222c844d43843b19597341180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Production::Game.Production.PortionerMachine
-  _machineId: 
-  _machineName: text.portioner
+  _nameKey:
+    m_TableReference:
+      m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
+    m_TableEntryReference:
+      m_KeyId: 22459634364472
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _config: {fileID: 11400000, guid: 43e2759bdf5616e48b14d6c0184957d7, type: 2}
   _hopper: {fileID: 8748822333453470499}
   _levelSensor: {fileID: 4440957555940292330}
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6930534890380452202
 GameObject:
   m_ObjectHideFlags: 0

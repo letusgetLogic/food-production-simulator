@@ -410,6 +410,34 @@ MonoBehaviour:
     m_Localized: Avertissement
     m_Metadata:
       m_Items: []
+  - m_Id: 770484103229440
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310208
+    m_Localized: "D\xE9part..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310209
+    m_Localized: Traitement...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310210
+    m_Localized: Fait
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310211
+    m_Localized: Inclinaison vers le bas...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310212
+    m_Localized: "Inclin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310213
+    m_Localized: S'inclinant vers le haut...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

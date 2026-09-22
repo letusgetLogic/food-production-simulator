@@ -21,23 +21,41 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Production
 {
     public class MixerMachine : MachineBase
     {
+        private enum RunningState
+        {
+            Ready,
+            Starting,
+            Processing,
+            Done,
+            TiltingDownward,
+            Tilted,
+            TiltingUpward,
+            FaultOverload
+        }
+
         [SerializeField] private SO_MixerConfig _config;
         [SerializeField] private Transform _doughDropPoint;
         [SerializeField] private GameObject _doughSpherePrefab;
         [SerializeField] private Transform _drumTransform;
+        //[SerializeField] private Button _buttonTiltingUpward;
+        //[SerializeField] private Button _buttonTiltingDownward;
+        [SerializeField] private List<Content<RunningState>> contents;
 
-        private const float TiltedAngleDegrees = 100f;
         private const float UprightAngleDegrees = 0f;
 
         private float? _mixingDurationOverrideSeconds;
         private bool _isMixingComplete;
         private bool _isTilted;
+        private Coroutine _startingRoutine;
+        private Coroutine _stoppingRoutine;
         private Coroutine _mixingTimerCoroutine;
         private Coroutine _drumRotationCoroutine;
         private SO_RecipeDefinition _pendingRecipe;
@@ -54,25 +72,101 @@ namespace Game.Production
         public bool IsMixingComplete => _isMixingComplete;
         public bool IsTilted => _isTilted;
 
+        private float runTimer;
+
         /// <summary>
         /// Effective mixing duration: the operator's HMI override if set via SetMixingDuration,
         /// otherwise SO_MixerConfig.DefaultMixingDurationSeconds.
         /// </summary>
         private float MixingDurationSeconds => _mixingDurationOverrideSeconds ?? _config.DefaultMixingDurationSeconds;
 
+        private string Info(RunningState state) =>
+           contents.Find(c => c.State == state)?.Info ?? string.Empty;
+
+        private void OnEnable()
+        {
+            contents.ForEach(c => c.InfoKey.StringChanged += c.SetInfo);
+            //_buttonTiltingUpward.interactable = true;
+            //_buttonTiltingDownward.interactable = true;
+            DrumTilted += () => NotifyContentChanged(Info(RunningState.Tilted));
+            DrumReset += () => { SetState(MachineState.Ready); NotifyContentChanged(Info(RunningState.Ready)); };
+            NotifyContentChanged("Hello :D");
+        }
+
+        private void OnDisable()
+        {
+            contents.ForEach(c => c.InfoKey.StringChanged -= c.SetInfo);
+            DrumTilted = null;
+            DrumReset = null;
+        }
+        protected override bool IsValidTransition(MachineState from, MachineState to)
+        {
+            switch (from)
+            {
+                case MachineState.Ready:
+                    return to == MachineState.Starting || to == MachineState.Fault;
+
+                case MachineState.Starting:
+                    return to == MachineState.Running || to == MachineState.Fault;
+
+                case MachineState.Running:
+                    return to == MachineState.Ready || to == MachineState.Stopping || to == MachineState.Fault;
+
+                case MachineState.Stopping:
+                    return to == MachineState.Stopped || to == MachineState.Fault;
+
+                case MachineState.Stopped:
+                    return to == MachineState.Ready || to == MachineState.Fault;
+
+                case MachineState.Fault:
+                    // The only way out of a fault is through maintenance.
+                    return to == MachineState.Maintenance;
+
+                case MachineState.Maintenance:
+                    return to == MachineState.Ready;
+
+                default:
+                    return false;
+            }
+        }
+
         /// <summary>Operator-facing HMI setting, analogous to SetFormingDuration on FormerMachine.</summary>
         public void SetMixingDuration(float seconds)
         {
             _mixingDurationOverrideSeconds = Mathf.Max(0f, seconds);
         }
+        protected override void OnStateExit(MachineState previousState) { }
+        protected override void OnEnterReady() { NotifyContentChanged(Info(RunningState.Ready)); }
+
+        protected override void OnEnterStarting() 
+        {
+            NotifyContentChanged(Info(RunningState.Starting));
+            if (_startingRoutine != null)
+            {
+                StopCoroutine(_startingRoutine);
+            }
+            _startingRoutine = StartCoroutine(StartingRoutine());
+        }
 
         protected override void OnEnterRunning()
         {
             base.OnEnterRunning();
+            NotifyContentChanged(Info(RunningState.Processing));
             _isMixingComplete = false;
-            _mixingTimerCoroutine = StartCoroutine(MixingTimerRoutine(MixingDurationSeconds));
+            if (runTimer <= 0f) runTimer = MixingDurationSeconds;
+            _mixingTimerCoroutine = StartCoroutine(MixingTimerRoutine());
         }
 
+        protected override void OnEnterStopping()
+        {
+            if (_stoppingRoutine != null) 
+                StopCoroutine(_stoppingRoutine);
+            if (_mixingTimerCoroutine != null) 
+                StopCoroutine(_mixingTimerCoroutine);
+
+            _stoppingRoutine = StartCoroutine(StoppingRoutine());
+        }
+        protected override void OnEnterStopped() { }
         protected override void OnEnterFault(string reason)
         {
             base.OnEnterFault(reason);
@@ -88,12 +182,30 @@ namespace Game.Production
             }
         }
 
-        private IEnumerator MixingTimerRoutine(float durationSeconds)
+        protected override void OnEnterMaintenance() { }
+
+        private IEnumerator MixingTimerRoutine()
         {
-            yield return new WaitForSeconds(durationSeconds);
+            while (runTimer > 0f)
+            {
+                int minutes = Mathf.FloorToInt(runTimer / 60);
+                int seconds = Mathf.FloorToInt(runTimer % 60);
+
+                string timer = $"{minutes}:{seconds:D2}";
+                if (minutes <= 0)
+                    timer = $"{seconds}";
+
+                NotifyContentChanged(timer + "\n" + Info(RunningState.Processing));
+
+                yield return new WaitForSeconds(1f);
+
+                runTimer--;
+            }
+            runTimer = 0f;
             _isMixingComplete = true;
             _mixingTimerCoroutine = null;
             MixingCompleted?.Invoke();
+            NotifyContentChanged(Info(RunningState.Done));
         }
 
         /// <summary>
@@ -127,7 +239,8 @@ namespace Game.Production
 
             _isMixingComplete = false;
             _isTilted = true;
-            StartDrumRotation(TiltedAngleDegrees, DrumTilted);
+            StartDrumRotation(_config.TiltedAngleDegrees, DrumTilted);
+            NotifyContentChanged(Info(RunningState.TiltingDownward));
 
             return true;
         }
@@ -146,6 +259,7 @@ namespace Game.Production
 
             _isTilted = false;
             StartDrumRotation(UprightAngleDegrees, DrumReset);
+            NotifyContentChanged(Info(RunningState.TiltingUpward));
 
             return true;
         }
@@ -185,6 +299,18 @@ namespace Game.Production
             GameObject sphere = Instantiate(_doughSpherePrefab, _doughDropPoint.position, _doughDropPoint.rotation);
             ProductToken token = sphere.GetComponent<ProductToken>();
             token.Product = dough;
+        }
+
+        private IEnumerator StartingRoutine()
+        {
+            yield return new WaitForSeconds(_config.StartupDurationSeconds);
+            SetState(MachineState.Running);
+        }
+
+        private IEnumerator StoppingRoutine()
+        {
+            yield return new WaitForSeconds(_config.ShutdownDurationSeconds);
+            SetState(MachineState.Stopped);
         }
     }
 }

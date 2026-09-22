@@ -410,6 +410,34 @@ MonoBehaviour:
     m_Localized: Warning
     m_Metadata:
       m_Items: []
+  - m_Id: 770484103229440
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310208
+    m_Localized: Starting...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310209
+    m_Localized: Processing...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310210
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310211
+    m_Localized: Tilting downward...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310212
+    m_Localized: Tilted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310213
+    m_Localized: Tilting upward...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

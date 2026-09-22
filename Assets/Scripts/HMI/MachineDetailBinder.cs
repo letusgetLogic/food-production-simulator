@@ -17,15 +17,6 @@ namespace Game.HMI
 
         private void Awake()
         {
-            if (_boundMachine)
-            {
-                _detailPanel.StartRequested += () => _boundMachine.StartMachine();
-                _detailPanel.StopRequested += () => _boundMachine.StopMachine();
-                _detailPanel.AcknowledgeFaultRequested += () => _boundMachine.AcknowledgeFault();
-                _detailPanel.CompleteMaintenanceRequested += () => _boundMachine.CompleteMaintenance();
-                _detailPanel.ResetToIdleRequested += () => _boundMachine.ResetToIdle();
-            }
-
             if (_machineInstance)
             {
                 Bind(_machineInstance);
@@ -49,17 +40,32 @@ namespace Game.HMI
 
             _stateHandler = (_, next) => _detailPanel.SetState(next);
             machine.StateChanged += _stateHandler;
+            machine.ContentChanged += _detailPanel.SetContent;
 
             _detailPanel.SetMachineName(machine.Name);
             _detailPanel.SetState(machine.CurrentState);
+
+            if (_boundMachine)
+            {
+                _detailPanel.StartRequested += () => _boundMachine.StartRun();
+                _detailPanel.StopRequested += () => _boundMachine.StopRun();
+                _detailPanel.AcknowledgeFaultRequested += () => _boundMachine.AcknowledgeFault();
+                _detailPanel.CompleteMaintenanceRequested += () => _boundMachine.CompleteMaintenance();
+                _detailPanel.ResetToIdleRequested += () => _boundMachine.ResetToIdle();
+            }
         }
 
         private void Unbind()
         {
-            if (_boundMachine != null && _stateHandler != null)
+            if (_boundMachine != null)
             {
-                _boundMachine.StateChanged -= _stateHandler;
+                if (_stateHandler != null)
+                    _boundMachine.StateChanged -= _stateHandler;
+
+                _boundMachine.ContentChanged -= _detailPanel.SetContent;
             }
+
+            _detailPanel.ClearDelegates();
 
             _boundMachine = null;
             _stateHandler = null;

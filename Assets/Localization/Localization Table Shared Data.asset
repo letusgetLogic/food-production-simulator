@@ -407,6 +407,34 @@ MonoBehaviour:
     m_Key: text.warning
     m_Metadata:
       m_Items: []
+  - m_Id: 770484103229440
+    m_Key: mixer.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310208
+    m_Key: mixer.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310209
+    m_Key: mixer.processing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310210
+    m_Key: mixer.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310211
+    m_Key: mixer.tilt_downward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310212
+    m_Key: mixer.tilted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310213
+    m_Key: mixer.tilt_upward
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

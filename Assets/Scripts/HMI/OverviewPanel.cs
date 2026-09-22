@@ -31,7 +31,9 @@ namespace Game.HMI
             foreach (KeyValuePair<string, MachineState> entry in _channel.CurrentStates)
             {
                 string displayName = _channel.DisplayNames.TryGetValue(entry.Key, out var name) ? name : entry.Key;
-                GetOrCreateRow(entry.Key, displayName).SetState(entry.Value);
+                MachineStateRowView row = GetOrCreateRow(entry.Key, displayName);
+                row.SetState(entry.Value);
+                row.SetButton();
             }
 
             _channel.MachineStateChanged += HandleMachineStateChanged;
@@ -70,6 +72,7 @@ namespace Game.HMI
             MachineStateRowView row = Instantiate(_rowTemplate, _rowContainer);
             row.gameObject.SetActive(true);
             row.SetMachineName(displayName);
+            row.SetMachine(machineId);
             _rowsById.Add(machineId, row);
             return row;
         }

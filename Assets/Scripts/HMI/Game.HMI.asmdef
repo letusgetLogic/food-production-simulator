@@ -4,7 +4,8 @@
     "references": [
         "Game.Core",
         "Game.Production",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

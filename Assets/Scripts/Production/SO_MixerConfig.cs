@@ -41,5 +41,7 @@ namespace Game.Production
         [Tooltip("Duration of the drum's animated rotation on the X-axis between upright " +
                  "(0 deg) and tilted (90 deg), used for both the tilt button and the reset button.")]
         [Min(0f)] public float TiltRotationDurationSeconds = 1f;
+
+        public float TiltedAngleDegrees = -100f;
     }
 }

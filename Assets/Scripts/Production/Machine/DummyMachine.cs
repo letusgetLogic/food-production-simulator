@@ -14,7 +14,7 @@ namespace Game.Production
 
         private float _startupTimer;
 
-        protected override void OnEnterIdle()
+        protected override void OnEnterReady()
         {
             Debug.Log($"[{Id}] Idle.");
         }
@@ -76,7 +76,7 @@ namespace Game.Production
         [ContextMenu("Demo: Run Full Cycle")]
         private void DemoRunFullCycle()
         {
-            StartMachine(); // Idle -> Starting (Running is reached automatically via Update)
+            StartRun(); // Idle -> Starting (Running is reached automatically via Update)
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Game.Production
         [ContextMenu("Demo: Stop")]
         private void DemoStop()
         {
-            StopMachine(); // Running -> Stopping (Stopped is reached automatically via Update)
+            StopRun(); // Running -> Stopping (Stopped is reached automatically via Update)
         }
 
         /// <summary>

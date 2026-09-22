@@ -31,13 +31,13 @@ namespace Game.Production
         /// Requests the machine to start (Idle -> Starting -> Running).
         /// No-op (or ignored) if the machine is not currently in a state that allows starting.
         /// </summary>
-        void StartMachine();
+        void StartRun();
 
         /// <summary>
         /// Requests the machine to stop (Running -> Stopping -> Stopped).
         /// No-op (or ignored) if the machine is not currently in a state that allows stopping.
         /// </summary>
-        void StopMachine();
+        void StopRun();
 
         /// <summary>
         /// Signals that the machine has entered an error condition, transitioning it into <see cref="MachineState.Fault"/>.
@@ -53,14 +53,14 @@ namespace Game.Production
         void AcknowledgeFault();
 
         /// <summary>
-        /// Completes maintenance and returns the machine to an operable state (<see cref="MachineState.Idle"/>).
+        /// Completes maintenance and returns the machine to an operable state (<see cref="MachineState.Ready"/>).
         /// Only valid while the machine is in <see cref="MachineState.Maintenance"/>.
         /// </summary>
         void CompleteMaintenance();
 
         /// <summary>
         /// Explicitly acknowledges that the machine has finished stopping and returns it to
-        /// <see cref="MachineState.Idle"/>, ready to be started again.
+        /// <see cref="MachineState.Ready"/>, ready to be started again.
         /// </summary>
         void ResetToIdle();
     }

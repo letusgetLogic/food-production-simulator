@@ -4,6 +4,18 @@ using UnityEngine.Localization;
 
 namespace Game.Production
 {
+    [Serializable]
+    public class Content<T> where T : Enum
+    {
+        public T State;
+        public LocalizedString InfoKey;
+
+        private string _info;
+        public string Info => _info;
+
+        public void SetInfo(string info) => _info = info;
+    }
+
     /// <summary>
     /// Generic abstract base class for all production stations. Owns the <see cref="MachineState"/>
     /// state machine, enforces valid transitions, and exposes protected hooks for concrete machines
@@ -14,7 +26,7 @@ namespace Game.Production
         [SerializeField]
         private LocalizedString _nameKey;
         public string NameKey => _nameKey.TableEntryReference.Key;
-        private MachineState _currentState = MachineState.Idle;
+        private MachineState _currentState = MachineState.Ready;
 
         /// <inheritdoc />
         public string Id => $"{_nameKey}_{_number}";
@@ -35,10 +47,14 @@ namespace Game.Production
         /// </summary>
         protected string LastFaultReason { get; private set; } = string.Empty;
 
+        public event Action<string> ContentChanged;
+        public void NotifyContentChanged(string content) => ContentChanged?.Invoke(content);
+       
+
         /// <inheritdoc />
-        public void StartMachine()
+        public void StartRun()
         {
-            if (_currentState != MachineState.Idle)
+            if (_currentState != MachineState.Ready)
             {
                 return;
             }
@@ -47,7 +63,7 @@ namespace Game.Production
         }
 
         /// <inheritdoc />
-        public void StopMachine()
+        public void StopRun()
         {
             if (_currentState != MachineState.Running)
             {
@@ -91,7 +107,7 @@ namespace Game.Production
             }
 
             LastFaultReason = string.Empty;
-            SetState(MachineState.Idle);
+            SetState(MachineState.Ready);
         }
 
         /// <inheritdoc />
@@ -102,7 +118,7 @@ namespace Game.Production
                 return;
             }
 
-            SetState(MachineState.Idle);
+            SetState(MachineState.Ready);
         }
 
         /// <summary>
@@ -133,11 +149,11 @@ namespace Game.Production
         /// Defines which state transitions are legal. Centralised here so concrete machines cannot
         /// accidentally skip steps (e.g. Idle -> Running directly, or leaving Fault without Maintenance).
         /// </summary>
-        private static bool IsValidTransition(MachineState from, MachineState to)
+        protected virtual bool IsValidTransition(MachineState from, MachineState to)
         {
             switch (from)
             {
-                case MachineState.Idle:
+                case MachineState.Ready:
                     return to == MachineState.Starting || to == MachineState.Fault;
 
                 case MachineState.Starting:
@@ -150,14 +166,14 @@ namespace Game.Production
                     return to == MachineState.Stopped || to == MachineState.Fault;
 
                 case MachineState.Stopped:
-                    return to == MachineState.Idle || to == MachineState.Fault;
+                    return to == MachineState.Ready || to == MachineState.Fault;
 
                 case MachineState.Fault:
                     // The only way out of a fault is through maintenance.
                     return to == MachineState.Maintenance;
 
                 case MachineState.Maintenance:
-                    return to == MachineState.Idle;
+                    return to == MachineState.Ready;
 
                 default:
                     return false;
@@ -171,8 +187,8 @@ namespace Game.Production
         {
             switch (entered)
             {
-                case MachineState.Idle:
-                    OnEnterIdle();
+                case MachineState.Ready:
+                    OnEnterReady();
                     break;
                 case MachineState.Starting:
                     OnEnterStarting();
@@ -200,8 +216,8 @@ namespace Game.Production
         /// <summary>Called right before the machine leaves <paramref name="previousState"/>.</summary>
         protected virtual void OnStateExit(MachineState previousState) { }
 
-        /// <summary>Called when the machine enters <see cref="MachineState.Idle"/>.</summary>
-        protected virtual void OnEnterIdle() { }
+        /// <summary>Called when the machine enters <see cref="MachineState.Ready"/>.</summary>
+        protected virtual void OnEnterReady() { }
 
         /// <summary>Called when the machine enters <see cref="MachineState.Starting"/>.</summary>
         protected virtual void OnEnterStarting() { }
