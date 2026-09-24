@@ -1,3 +1,4 @@
+using Game.Core;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ namespace Game.Platform
         private InputAction _sprintAction;
         private InputAction _interactAction;
         private InputAction _escapeAction;
+        private InputAction _releaseHoldAction;
 
         public Vector2 Move => _moveAction.ReadValue<Vector2>();
         public Vector2 Look => _lookAction.ReadValue<Vector2>();
@@ -27,6 +29,7 @@ namespace Game.Platform
         public event Action InteractPerformed;
         /// <summary>Raised once per escape button press.</summary>
         public event Action EscapePerformed;
+        public event Action ReleasePerformed;
 
         private void Awake()
         {
@@ -49,11 +52,13 @@ namespace Game.Platform
             _sprintAction = _map.AddAction("Sprint", InputActionType.Button, "<Keyboard>/leftShift");
 
             _interactAction = _map.AddAction("Interact", InputActionType.Button, "<Keyboard>/e");
-            _interactAction.AddBinding("<Mouse>/leftButton");
             _interactAction.performed += OnInteractPerformed;
 
             _escapeAction = _map.AddAction("Escape", InputActionType.Button, "<Keyboard>/escape");
             _escapeAction.performed += OnEscapePerformed;
+
+            _releaseHoldAction = _map.AddAction("Release", InputActionType.Button, "<Keyboard>/q");
+            _releaseHoldAction.performed += OnDropPerformed;
         }
 
         private void OnEnable() => _map.Enable();
@@ -69,5 +74,6 @@ namespace Game.Platform
 
         private void OnInteractPerformed(InputAction.CallbackContext context) => InteractPerformed?.Invoke();
         private void OnEscapePerformed(InputAction.CallbackContext context) => EscapePerformed?.Invoke();
+        private void OnDropPerformed(InputAction.CallbackContext context) => ReleasePerformed?.Invoke();
     }
 }

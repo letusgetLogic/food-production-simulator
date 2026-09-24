@@ -15,7 +15,7 @@ namespace Game.HMI
         [SerializeField] private MachineBase _machine;
         [SerializeField] private string _panelId = "overview";
 
-        public override void OnInteract(IInteractor interactor)
+        protected override void OnInteract(IInteractor interactor)
         {
             if (_interactChannel != null)
             {

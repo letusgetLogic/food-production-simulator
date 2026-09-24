@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 155349911}
   - component: {fileID: 155349910}
   - component: {fileID: 155349912}
+  - component: {fileID: 155349913}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -287,6 +288,7 @@ Transform:
   - {fileID: 1958466812}
   - {fileID: 1682154465}
   - {fileID: 1380463546}
+  - {fileID: 274711295}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 169.42, z: 0}
 --- !u!114 &155349910
@@ -348,6 +350,22 @@ MonoBehaviour:
   _maxPitch: 80
   _lockCursor: 1
   Input: {fileID: 155349910}
+--- !u!114 &155349913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155349908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e7e06a5d93c9a409485c035a1f7b73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platform::Game.Platform.HoldItem
+  _dropRequestChannel: {fileID: 11400000, guid: 65fcf4e66fd258f4aa181065a9e71123, type: 2}
+  _input: {fileID: 155349910}
+  _holdPoint: {fileID: 274711295}
+  _holdPointChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
 --- !u!4 &187282227 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8899788586094158687, guid: ebc3187152a220749bb7f217f1044017, type: 3}
@@ -898,6 +916,37 @@ Transform:
   - {fileID: 1187152892}
   - {fileID: 876491535}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &274711294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274711295}
+  m_Layer: 0
+  m_Name: Hold Pot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &274711295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274711294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 155349909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &284164880
 GameObject:
@@ -1925,6 +1974,7 @@ MonoBehaviour:
   _uiFocusChannel: {fileID: 11400000, guid: fe1388f20d580224d8fa86bb9334908b, type: 2}
   _controller: {fileID: 155349912}
   _aimInteractor: {fileID: 737007284}
+  _holdItem: {fileID: 0}
 --- !u!4 &543579900
 Transform:
   m_ObjectHideFlags: 0
@@ -2466,10 +2516,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6696979405324993022, guid: 955fb04be4deb6a438f763af16de72b8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 963819440}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 955fb04be4deb6a438f763af16de72b8, type: 3}
 --- !u!1001 &676564455
 PrefabInstance:
@@ -2607,6 +2654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Platform::Game.Platform.AimInteractor
   _aimCamera: {fileID: 961739752}
   _input: {fileID: 155349910}
+  _holdChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
   _maxDistance: 3
   _interactableMask:
     serializedVersion: 2
@@ -3885,38 +3933,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 962099824}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &963819434 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6696979405324993022, guid: 955fb04be4deb6a438f763af16de72b8, type: 3}
-  m_PrefabInstance: {fileID: 673637952}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &963819440
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963819434}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!4 &1020725541 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1357753250171906107, guid: 4a7a5043328a8f64992bb69d8e32d019, type: 3}
@@ -4341,7 +4357,8 @@ MonoBehaviour:
   _activeColor: {r: 1, g: 0.78, b: 0.1, a: 1}
   _idleScale: 1
   _activeScale: 1.35
-  _defaultPrompt: E
+  _defaultPrompt: (E) Interact
+  _holdPrompt: (Q) Release
 --- !u!1 &1221788169
 GameObject:
   m_ObjectHideFlags: 0
@@ -8039,6 +8056,10 @@ PrefabInstance:
     - target: {fileID: 5990470846853062243, guid: 6e05b546850870f4baf103b06d80a486, type: 3}
       propertyPath: m_Name
       value: Canvas_HMI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990470846853062243, guid: 6e05b546850870f4baf103b06d80a486, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6130752016383139929, guid: 6e05b546850870f4baf103b06d80a486, type: 3}
       propertyPath: m_AnchorMax.y

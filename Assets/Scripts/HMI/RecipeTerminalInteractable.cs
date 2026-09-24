@@ -13,7 +13,7 @@ namespace Game.HMI
         [SerializeField] private HmiScreenController _screen;
         [SerializeField] private string _panelId = "recipe";
 
-        public override void OnInteract(IInteractor interactor)
+        protected override void OnInteract(IInteractor interactor)
         {
             if (_screen == null)
             {

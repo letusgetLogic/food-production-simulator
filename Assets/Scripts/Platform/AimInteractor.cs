@@ -16,6 +16,9 @@ namespace Game.Platform
         [Header("References")]
         [SerializeField] private Camera _aimCamera;
         [SerializeField] private PlayerInputReader _input;
+        [SerializeField] private SO_HoldPointChannel _holdChannel;
+        public SO_HoldPointChannel HoldChannel => _holdChannel;
+
 
         [Header("Raycast")]
         [SerializeField] private float _maxDistance = 3f;
@@ -26,6 +29,9 @@ namespace Game.Platform
 
         public IInteractable CurrentTarget => _currentTarget;
 
+        /// <summary>
+        /// Update only by change.
+        /// </summary>
         public event Action<IInteractable, IInteractable> TargetChanged;
 
         private void Awake()
@@ -49,7 +55,16 @@ namespace Game.Platform
             SetTarget(null);
         }
 
-        private void Update() => SetTarget(FindTargetUnderAim());
+        private void Update()
+        {
+            if (_holdChannel.IsHeldItem)
+            {
+                SetTarget(null);
+                return;
+            }
+
+            SetTarget(FindTargetUnderAim());
+        }
 
         public bool TryInteract()
         {
@@ -80,6 +95,10 @@ namespace Game.Platform
             return hit.collider.GetComponentInParent<IInteractable>();
         }
 
+        /// <summary>
+        /// Called in Update.
+        /// </summary>
+        /// <param name="next"></param>
         private void SetTarget(IInteractable next)
         {
             if (ReferenceEquals(next, _currentTarget))

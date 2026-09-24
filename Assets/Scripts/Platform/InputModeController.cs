@@ -1,5 +1,6 @@
 using Game.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Platform
 {
@@ -14,6 +15,7 @@ namespace Game.Platform
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private FirstPersonController _controller;
         [SerializeField] private AimInteractor _aimInteractor;
+        [SerializeField] private HoldItem _holdItem;
 
         private void OnEnable()
         {
@@ -39,6 +41,11 @@ namespace Game.Platform
             {
                 // Disabling clears the current hover target via OnDisable.
                 _aimInteractor.enabled = !uiFocused;
+            }
+
+            if (_holdItem != null)
+            {
+                _holdItem.enabled = !uiFocused;
             }
 
             Cursor.lockState = uiFocused ? CursorLockMode.None : CursorLockMode.Locked;

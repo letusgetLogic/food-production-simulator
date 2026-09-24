@@ -28,25 +28,33 @@ namespace Game.Platform
         [SerializeField] private float _activeScale = 1.35f;
 
         [Header("Text")]
-        [SerializeField] private string _defaultPrompt = "Interact";
+        [SerializeField] private string _defaultPrompt = "(E) Interact";
+        [SerializeField] private string _holdPrompt = "(Q) Release";
 
         private IInteractable _boundTarget;
 
         private void OnEnable()
         {
+            _interactor.HoldChannel.HoldChanged += OnHoldChanged;
             _interactor.TargetChanged += OnTargetChanged;
-            Bind(_interactor.CurrentTarget);
+            BindByChangingTarget(_interactor.CurrentTarget);
         }
 
         private void OnDisable()
         {
+            _interactor.HoldChannel.HoldChanged -= OnHoldChanged;
             _interactor.TargetChanged -= OnTargetChanged;
-            Bind(null);
+            BindByChangingTarget(null);
         }
 
-        private void OnTargetChanged(IInteractable previous, IInteractable current) => Bind(current);
+        /// <summary>
+        /// Called in Update.
+        /// </summary>
+        /// <param name="previous"></param>
+        /// <param name="current"></param>
+        private void OnTargetChanged(IInteractable previous, IInteractable current) => BindByChangingTarget(current);
 
-        private void Bind(IInteractable target)
+        private void BindByChangingTarget(IInteractable target)
         {
             if (_boundTarget != null)
             {
@@ -84,6 +92,11 @@ namespace Game.Platform
                 // adds one (e.g. a small optional interface on top of IInteractable).
                 _promptLabel.text = canInteract ? _defaultPrompt : string.Empty;
             }
+        }
+
+        private void OnHoldChanged(bool isHeld)
+        {
+             _promptLabel.text = isHeld ? _holdPrompt : string.Empty;
         }
     }
 }
