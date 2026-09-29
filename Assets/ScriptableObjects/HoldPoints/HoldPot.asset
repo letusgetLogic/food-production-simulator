@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d4d1acd625a394b94b7171a810445e, type: 3}
-  m_Name: HoldPointChannel
-  m_EditorClassIdentifier: Game.Core::Game.Core.SO_HoldPointChannel
+  m_Script: {fileID: 11500000, guid: df2cac7369e4f06448e59f07880b365f, type: 3}
+  m_Name: HoldPot
+  m_EditorClassIdentifier: Game.Core::Game.Core.SO_HoldPoint

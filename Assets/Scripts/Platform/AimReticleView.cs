@@ -85,7 +85,7 @@ namespace Game.Platform
                     Vector3.one * (canInteract ? _activeScale : _idleScale);
             }
 
-            if (_promptLabel != null)
+            if (_promptLabel != null && _interactor.HoldChannel.HoldingObject == null)
             {
                 // IInteractable carries no display text of its own, so this is a
                 // generic label. Swap in a per-target string here once the team

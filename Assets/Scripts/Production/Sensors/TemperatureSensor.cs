@@ -36,7 +36,7 @@ namespace Game.Production
         public bool IsWithinNormalRange { get; private set; } // set by owning machine via SetNormalRangeExternally, see below
         public float LastReadingTimestamp => _lastReadingTimestamp;
 
-        public event System.Action<float> OnValueChanged;
+        public event System.Action<float, float> OnValueChanged;
 
         private void Awake()
         {
@@ -58,7 +58,7 @@ namespace Game.Production
 
             if (!Mathf.Approximately(previous, CurrentValue))
             {
-                OnValueChanged?.Invoke(CurrentValue);
+                OnValueChanged?.Invoke(previous, CurrentValue);
             }
         }
 

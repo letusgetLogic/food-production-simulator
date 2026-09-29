@@ -34,6 +34,6 @@ namespace Game.Production
     {
         /// <summary>The current measured value of this sensor.</summary>
         T CurrentValue { get; }
-        event Action<T> OnValueChanged;
+        event Action<T, T> OnValueChanged; // current and new values
     }
 }

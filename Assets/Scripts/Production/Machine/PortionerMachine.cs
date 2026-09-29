@@ -1,30 +1,98 @@
+using Game.Core;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Production
 {
     /// <summary>
-    /// Second production station: draws dough from a DoughHopper (filled via PortionerElevator)
-    /// and produces PortionedDough ProductInstances by weight.
+    /// Second production station: draws dough from the <see cref="Hopper"/> and produces
+    /// PortionedDough products by weight, spawned as physical prefabs with a ProductToken.
     ///
-    /// Deliberately does NOT implement IProductProcessor: that interface is for a station that
-    /// takes in an existing ProductInstance and advances its state. The Portionierer is the first
-    /// point where a ProductInstance for an individual pizza exists at all — it is a source, not a
-    /// pipe stage, since dough arrives as bulk fill level in a hopper rather than as a handed-off
-    /// product. TODO: confirm this deviation with PM/Dev B before treating it as convention for
-    /// future stations.
+    /// Material flow at this station:
+    ///   1. The worker puts the dough ball (from the mixer) into the pot on the lift platform.
+    ///      The pot's PresenceSensor detects it -> platform colour + HMI content message.
+    ///   2. The operator raises the lift (<see cref="TryRaiseLift"/>, LiftUpButton):
+    ///      <see cref="PortionerLiftArm"/> moves up and tips the pot, the dough ball falls into the
+    ///      hopper, the Hopper's intake trigger books its weight. <see cref="TryLowerLift"/>
+    ///      (LiftDownButton) brings it back down.
+    ///   3. While Running and the hopper holds at least one portion's weight, the machine
+    ///      portions: after the portioning duration the hopper's dough balls shrink by the portion
+    ///      weight and a portion prefab is instantiated at the spawn point with a fresh
+    ///      ProductInstance (PortionedDough). A rest below one portion waits in the hopper
+    ///      (shown on the terminal) until the next dough ball arrives.
+    ///   4. <see cref="TryDrainHopper"/> (HopperDrainButton) lets the whole hopper content drop
+    ///      out without creating products.
     ///
-    /// No IInteractable — operated exclusively via Hotspot/HMI (Dev C), consistent with the
-    /// Teigmischer. No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/
+    /// Deliberately does NOT implement IProductProcessor: the Portionierer is a source station
+    /// (bulk dough in, individual products out), same as MixerMachine.
+    ///
+    /// No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/
     /// SetPortioningDuration() are set by the operator at the HMI, reading the recipe off the panel.
     /// </summary>
     public class PortionerMachine : MachineBase
     {
+        /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
+        public enum PortionerInfo
+        {
+            Ready,
+            Starting,
+            Running,
+            Stopping,
+            Stopped,
+            Fault,
+            Maintenance,
+            PotLoaded,
+            PotEmpty,
+            Tipping,
+            Tipped,
+            LiftReturned,
+            HopperEmpty,
+            Portioning,
+            PortionDispatched,
+            OutputBlocked,
+            LiftLowering,
+            NotEnoughDough,
+            HopperDraining
+        }
+
         [SerializeField] private SO_PortionerConfig _config;
+
+        [Header("Hopper")]
         [SerializeField] private Hopper _hopper;
 
-        [Tooltip("Optional: reports the hopper's NormalizedLevel via IFillLevelSource, same GameObject as _hopper.")]
+        [Tooltip("Reports the hopper's NormalizedLevel via IFillLevelSource (same GameObject as the hopper). Portioning only runs while it detects content.")]
         [SerializeField] private LevelSensor _levelSensor;
+
+        [Header("Lift / Pot")]
+        [SerializeField] private PortionerLiftArm _liftArm;
+
+        [Tooltip("PotSensor inside the pot on the lift platform.")]
+        [SerializeField] private PotSensor _potSensor;
+
+        [Tooltip("Renderer of the lift platform; its colour signals whether the pot is loaded.")]
+        [SerializeField] private Renderer _platformRenderer;
+
+        [SerializeField] private Color _platformEmptyColor = new Color(0.55f, 0.55f, 0.55f);
+        [SerializeField] private Color _platformLoadedColor = new Color(0.2f, 0.75f, 0.3f);
+
+        [Header("Portion Output")]
+        [Tooltip("Prefab of the portioned dough. Must carry a ProductToken.")]
+        [SerializeField] private ProductToken _portionPrefab;
+
+        [SerializeField] private Transform _portionSpawnPoint;
+
+        [Tooltip("Optional: PresenceSensor at the spawn point. While it detects something, no new portion is produced (backpressure).")]
+        [SerializeField] private PresenceSensor _outputSensor;
+
+        [Header("HMI Content")]
+        [SerializeField] private List<Content<PortionerInfo>> _contents = new List<Content<PortionerInfo>>();
+
+        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        private static readonly int ColorId = Shader.PropertyToID("_Color");
+
+        private MaterialPropertyBlock _platformPropertyBlock;
 
         private float _portioningDurationSeconds;
         private float _targetWeightGrams;
@@ -32,18 +100,28 @@ namespace Game.Production
 
         private float _processingTimer;
         private bool _isProcessing;
-        private bool _isPortionReady;
-
-        private ProductInstance _readyPortion;
+        private PortionerInfo? _lastReportedInfo;
+        private string _lastReportedDetail;
 
         private Coroutine _startingRoutine;
         private Coroutine _stoppingRoutine;
 
-        public bool CanProducePortion =>
-            CurrentState == MachineState.Running && !_isProcessing && !_isPortionReady
-            && _hopper.CurrentAmountGrams >= _targetWeightGrams;
+        /// <summary>Raised whenever a portion has been instantiated at the spawn point.</summary>
+        public event Action<ProductInstance> PortionDispatched;
 
-        public bool IsPortionReady => _isPortionReady;
+        public bool IsPortioning => _isProcessing;
+
+        public bool IsPotLoaded => _potSensor != null && _potSensor.CurrentValue;
+
+        /// <summary>
+        /// "Level sensor still detects content": uses the LevelSensor reading if one is assigned,
+        /// otherwise falls back to the hopper's own amount.
+        /// </summary>
+        public bool HopperHasContent => _levelSensor != null
+            ? _levelSensor.CurrentValue > 0f
+            : _hopper != null && _hopper.HasDough;
+
+        public bool IsOutputBlocked => _outputSensor != null && _outputSensor.CurrentValue;
 
         private void Awake()
         {
@@ -52,33 +130,225 @@ namespace Game.Production
             _toleranceGrams = _config.DefaultToleranceGrams;
         }
 
+        private void OnEnable()
+        {
+            foreach (Content<PortionerInfo> content in _contents)
+            {
+                if (!content.InfoKey.IsEmpty)
+                {
+                    content.InfoKey.StringChanged += content.SetInfo;
+                }
+            }
+
+            if (_potSensor != null)
+            {
+                _potSensor.OnValueChanged += HandlePotPresenceChanged;
+            }
+
+            if (_liftArm != null)
+            {
+                _liftArm.PositionChanged += HandleLiftPositionChanged;
+            }
+
+            if (_hopper != null)
+            {
+                _hopper.DrainFinished += HandleDrainFinished;
+            }
+
+            ApplyPlatformColor(IsPotLoaded);
+        }
+
+        private void OnDisable()
+        {
+            foreach (Content<PortionerInfo> content in _contents)
+            {
+                if (!content.InfoKey.IsEmpty)
+                {
+                    content.InfoKey.StringChanged -= content.SetInfo;
+                }
+            }
+
+            if (_potSensor != null)
+            {
+                _potSensor.OnValueChanged -= HandlePotPresenceChanged;
+            }
+
+            if (_liftArm != null)
+            {
+                _liftArm.PositionChanged -= HandleLiftPositionChanged;
+            }
+
+            if (_hopper != null)
+            {
+                _hopper.DrainFinished -= HandleDrainFinished;
+            }
+        }
+
         private void Update()
         {
             UpdateHopperLevelEvaluation();
 
-            if (CanProducePortion)
-            {
-                BeginPortioning();
-                return;
-            }
-
-            if (!_isProcessing)
+            if (CurrentState != MachineState.Running)
             {
                 return;
             }
 
-            _processingTimer -= Time.deltaTime;
-            if (_processingTimer <= 0f)
+            if (_isProcessing)
             {
-                CompletePortioning();
+                _processingTimer -= Time.deltaTime;
+                if (_processingTimer <= 0f)
+                {
+                    CompletePortioning();
+                }
+                return;
+            }
+
+            if (_hopper.IsDraining)
+            {
+                return;
+            }
+
+            if (!HopperHasContent)
+            {
+                Report(PortionerInfo.HopperEmpty);
+                return;
+            }
+
+            float available = _hopper.CurrentAmountGrams;
+            if (available < _targetWeightGrams)
+            {
+                // Rest below one portion: wait for the next dough ball, show how much is there.
+                Report(PortionerInfo.NotEnoughDough, $"{available:0} / {_targetWeightGrams:0} g");
+                return;
+            }
+
+            if (IsOutputBlocked)
+            {
+                Report(PortionerInfo.OutputBlocked);
+                return;
+            }
+
+            BeginPortioning();
+        }
+
+        // ---- Lift / pot ----
+
+        /// <summary>
+        /// Operator action (LiftUpButton): raise the lift and tip the pot. Not possible in
+        /// Fault/Maintenance; the lift itself doesn't care whether a pot is on it.
+        /// </summary>
+        public bool TryRaiseLift() => CanOperateLift() && _liftArm.TryRaise();
+
+        /// <summary>Operator action (LiftDownButton): tilt the pot back and lower the lift.</summary>
+        public bool TryLowerLift() => CanOperateLift() && _liftArm.TryLower();
+
+        /// <summary>
+        /// Operator action (HopperDrainButton): lets the whole hopper content drop out without
+        /// creating products. A portion currently in progress is cancelled.
+        /// </summary>
+        public bool TryDrainHopper()
+        {
+            if (_hopper == null || CurrentState == MachineState.Maintenance)
+            {
+                return false;
+            }
+
+            _isProcessing = false;
+            if (!_hopper.TryDrain())
+            {
+                return false;
+            }
+
+            Report(PortionerInfo.HopperDraining, force: true);
+            return true;
+        }
+
+        private void HandleDrainFinished() => Report(PortionerInfo.HopperEmpty, force: true);
+
+        private bool CanOperateLift()
+        {
+            if (CurrentState == MachineState.Fault || CurrentState == MachineState.Maintenance)
+            {
+                Debug.LogWarning($"{name}: lift operation rejected in state {CurrentState}.", this);
+                return false;
+            }
+
+            if (_liftArm == null)
+            {
+                Debug.LogWarning($"{name}: no PortionerLiftArm assigned.", this);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void HandlePotPresenceChanged(HoldInteractable current, HoldInteractable next)
+        {
+            if (next != null)
+            {
+                next.OnReleased += SetPotOnLift;
+            }
+
+            if (current != null)
+            {
+                current.OnReleased -= SetPotOnLift;
+            }
+
+            _current = current;
+            _next = next;
+
+            bool isPresent = _next != null;
+            ApplyPlatformColor(isPresent);
+
+            // While the lift is moving, the presence change is just the content leaving the pot.
+            if (_liftArm == null || _liftArm.IsDown)
+            {
+                Report(isPresent ? PortionerInfo.PotLoaded : PortionerInfo.PotEmpty, force: true);
             }
         }
+
+        private void HandleLiftPositionChanged(PortionerLiftArm.LiftPosition position)
+        {
+            switch (position)
+            {
+                case PortionerLiftArm.LiftPosition.Raising:
+                    Report(PortionerInfo.Tipping, force: true);
+                    break;
+                case PortionerLiftArm.LiftPosition.Up:
+                    Report(PortionerInfo.Tipped, force: true);
+                    break;
+                case PortionerLiftArm.LiftPosition.Lowering:
+                    Report(PortionerInfo.LiftLowering, force: true);
+                    break;
+                case PortionerLiftArm.LiftPosition.Down:
+                    Report(PortionerInfo.LiftReturned, force: true);
+                    break;
+            }
+        }
+
+        private void ApplyPlatformColor(bool isLoaded)
+        {
+            if (_platformRenderer == null)
+            {
+                return;
+            }
+
+            _platformPropertyBlock ??= new MaterialPropertyBlock();
+            _platformRenderer.GetPropertyBlock(_platformPropertyBlock);
+
+            Color color = isLoaded ? _platformLoadedColor : _platformEmptyColor;
+            _platformPropertyBlock.SetColor(BaseColorId, color); // URP Lit
+            _platformPropertyBlock.SetColor(ColorId, color);     // Built-in/legacy shaders
+            _platformRenderer.SetPropertyBlock(_platformPropertyBlock);
+        }
+
+        // ---- Portioning ----
 
         private void UpdateHopperLevelEvaluation()
         {
             // Machine performs the assessment; sensor only ever reports the raw normalized level
             // (same convention as WeightSensor/TemperatureSensor, Tag 2).
-            if (_levelSensor != null)
+            if (_levelSensor != null && _hopper != null)
             {
                 _levelSensor.SetNormalRangeExternally(_hopper.CurrentAmountGrams >= _targetWeightGrams);
             }
@@ -88,40 +358,54 @@ namespace Game.Production
         {
             _isProcessing = true;
             _processingTimer = _portioningDurationSeconds;
+            Report(PortionerInfo.Portioning);
         }
 
         private void CompletePortioning()
         {
             _isProcessing = false;
 
-            _hopper.ConsumeDough(_targetWeightGrams);
+            // Content may have changed during the portioning time (e.g. drained).
+            if (_hopper.CurrentAmountGrams < _targetWeightGrams)
+            {
+                return;
+            }
 
-            // TODO: recipe reference for the new ProductInstance — no RecipeDefinition is bound in
-            // code (operator-set convention), so this currently passes null. Revisit once it's
-            // decided how the active recipe reaches the Portionierer (e.g. a SetActiveRecipe() HMI
-            // call, matching SetTargetWeight()/SetPortioningDuration()).
-            _readyPortion = new ProductInstance(
-                System.Guid.NewGuid().ToString(),
+            float portionWeight = _hopper.ConsumeDough(_targetWeightGrams);
+
+            // TODO: recipe reference - no RecipeDefinition is bound in code (operator-set
+            // convention), so this currently passes null.
+            ProductInstance portion = new ProductInstance(
+                Guid.NewGuid().ToString(),
                 recipe: null,
-                initialState: ProductState.PortionedDough);
-            _readyPortion.MeasuredWeightGrams = _targetWeightGrams;
+                initialState: ProductState.PortionedDough)
+            {
+                MeasuredWeightGrams = portionWeight
+            };
 
-            _isPortionReady = true;
+            if (!SpawnPortion(portion))
+            {
+                return;
+            }
+
+            PortionDispatched?.Invoke(portion);
+            Report(PortionerInfo.PortionDispatched, force: true);
         }
 
-        public bool TryCollectPortion(out ProductInstance product)
+        private bool SpawnPortion(ProductInstance portion)
         {
-            if (!_isPortionReady)
+            if (_portionPrefab == null || _portionSpawnPoint == null)
             {
-                product = null;
+                Debug.LogError($"{name}: portion prefab or spawn point not assigned - portion discarded.", this);
                 return false;
             }
 
-            product = _readyPortion;
-            _readyPortion = null;
-            _isPortionReady = false;
+            ProductToken token = Instantiate(_portionPrefab, _portionSpawnPoint.position, _portionSpawnPoint.rotation);
+            token.Product = portion;
             return true;
         }
+
+        // ---- HMI parameters ----
 
         /// <summary>Set by the operator at the HMI, read off the current recipe.</summary>
         public void SetPortioningDuration(float seconds)
@@ -136,17 +420,70 @@ namespace Game.Production
         }
 
         /// <summary>
-        /// Set by the operator at the HMI, read off the current recipe. Currently unused — the
-        /// produced portion is always exactly TargetWeightGrams, no variance is modeled yet. Kept
-        /// for the future QualitySystem (Woche 2) once a variance/quality model exists.
+        /// Set by the operator at the HMI, read off the current recipe. Currently unused - kept for
+        /// the future QualitySystem (Woche 2) once a variance/quality model exists.
         /// </summary>
         public void SetToleranceGrams(float grams)
         {
             _toleranceGrams = Mathf.Max(0f, grams);
         }
 
+        // ---- Content messages ----
+
+        /// <summary>
+        /// Sends the localized text for <paramref name="info"/> (plus an optional detail line, e.g.
+        /// an amount) to the HMI. Repeated identical reports are suppressed unless
+        /// <paramref name="force"/> is set, so per-frame checks in Update don't spam the channel.
+        /// </summary>
+        private void Report(PortionerInfo info, string detail = null, bool force = false)
+        {
+            if (!force && _lastReportedInfo == info && _lastReportedDetail == detail)
+            {
+                return;
+            }
+
+            _lastReportedInfo = info;
+            _lastReportedDetail = detail;
+            NotifyContentChanged(string.IsNullOrEmpty(detail) ? Info(info) : detail + "\n" + Info(info));
+        }
+
+        private string Info(PortionerInfo info)
+        {
+            string localized = _contents.Find(c => c.State == info)?.Info;
+            return string.IsNullOrEmpty(localized) ? FallbackText(info) : localized;
+        }
+
+        /// <summary>Used until the localization keys exist in the table.</summary>
+        private static string FallbackText(PortionerInfo info) => info switch
+        {
+            PortionerInfo.PotLoaded => "Pot loaded",
+            PortionerInfo.PotEmpty => "Pot empty",
+            PortionerInfo.Tipping => "Lifting pot",
+            PortionerInfo.Tipped => "Pot tipped into hopper",
+            PortionerInfo.LiftLowering => "Lowering lift",
+            PortionerInfo.NotEnoughDough => "Not enough dough for a portion",
+            PortionerInfo.HopperDraining => "Draining hopper",
+            PortionerInfo.LiftReturned => "Lift in loading position",
+            PortionerInfo.HopperEmpty => "Hopper empty",
+            PortionerInfo.Portioning => "Portioning",
+            PortionerInfo.PortionDispatched => "Portion dispatched",
+            PortionerInfo.OutputBlocked => "Output blocked",
+            _ => info.ToString()
+        };
+
+        // ---- State machine hooks ----
+
+        protected override void OnEnterReady() => Report(PortionerInfo.Ready, force: true);
+
+        protected override void OnEnterRunning() => Report(PortionerInfo.Running, force: true);
+
+        protected override void OnEnterStopped() => Report(PortionerInfo.Stopped, force: true);
+
+        protected override void OnEnterMaintenance() => Report(PortionerInfo.Maintenance, force: true);
+
         protected override void OnEnterStarting()
         {
+            Report(PortionerInfo.Starting, force: true);
             if (_startingRoutine != null)
             {
                 StopCoroutine(_startingRoutine);
@@ -156,6 +493,11 @@ namespace Game.Production
 
         protected override void OnEnterStopping()
         {
+            Report(PortionerInfo.Stopping, force: true);
+
+            // A portion already in progress is abandoned; its dough was not consumed yet.
+            _isProcessing = false;
+
             if (_stoppingRoutine != null)
             {
                 StopCoroutine(_stoppingRoutine);
@@ -165,8 +507,12 @@ namespace Game.Production
 
         protected override void OnEnterFault(string faultCode)
         {
-            // Minimal safeguard only, same as the other stations — stops running timing coroutines.
-            // Real fault handling for dough mid-portioning is still open (FaultSystem, Week 2).
+            // Minimal safeguard only, same as the other stations - real fault handling is still
+            // open (FaultSystem, Week 2). The lift keeps running its cycle so no product is left
+            // hanging mid-air.
+            Report(PortionerInfo.Fault, force: true);
+            _isProcessing = false;
+
             if (_startingRoutine != null)
             {
                 StopCoroutine(_startingRoutine);
@@ -190,5 +536,23 @@ namespace Game.Production
             yield return new WaitForSeconds(_config.ShutdownDurationSeconds);
             SetState(MachineState.Stopped);
         }
+        private HoldInteractable _current;
+        private HoldInteractable _next;
+        private void SetPotOnLift()
+        {
+            if (_next == null && _current)
+            {
+                _current.transform.SetParent(null);
+            }
+
+            if (_next != null && _current == null)
+            {
+                var rb = _next.GetComponent<Rigidbody>();
+                if (rb) rb.isKinematic = true;
+                _next.transform.SetParent(_liftArm.transform, false);
+                _next.transform.localPosition = Vector3.zero;
+            }
+        }
+
     }
 }

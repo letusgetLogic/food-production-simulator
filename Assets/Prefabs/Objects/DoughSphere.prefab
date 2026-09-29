@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 4605888902832621348}
   - component: {fileID: 4144390608353557217}
   - component: {fileID: 109983507123610057}
+  - component: {fileID: 2354834711768331086}
   - component: {fileID: 6679393429894747144}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoughSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +132,25 @@ MonoBehaviour:
     CurrentState: 0
     Recipe: {fileID: 0}
     RecipeId: 
+--- !u!114 &2354834711768331086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5116207585960637407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17987b08524567d4cad91e1f48892dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Core::Game.Core.HoldInteractable
+  _isInteractable: 1
+  _holdChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
+  _holdPoint: {fileID: 11400000, guid: a56a74a36ecee7f44889d62fea37bc75, type: 2}
+  _dropRequestChannel: {fileID: 11400000, guid: 65fcf4e66fd258f4aa181065a9e71123, type: 2}
+  _rigidbody: {fileID: 6679393429894747144}
+  _followLerpSpeed: 5
+  _lookYaw: 0
 --- !u!54 &6679393429894747144
 Rigidbody:
   m_ObjectHideFlags: 0

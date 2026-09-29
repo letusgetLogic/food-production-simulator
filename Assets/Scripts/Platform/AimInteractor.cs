@@ -16,8 +16,8 @@ namespace Game.Platform
         [Header("References")]
         [SerializeField] private Camera _aimCamera;
         [SerializeField] private PlayerInputReader _input;
-        [SerializeField] private SO_HoldPointChannel _holdChannel;
-        public SO_HoldPointChannel HoldChannel => _holdChannel;
+        [SerializeField] private SO_HoldChannel _holdChannel;
+        public SO_HoldChannel HoldChannel => _holdChannel;
 
 
         [Header("Raycast")]
@@ -57,7 +57,7 @@ namespace Game.Platform
 
         private void Update()
         {
-            if (_holdChannel.IsHeldItem)
+            if (_holdChannel.HoldingObject != null)
             {
                 SetTarget(null);
                 return;

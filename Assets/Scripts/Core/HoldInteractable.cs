@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Core
@@ -5,7 +6,8 @@ namespace Game.Core
     [RequireComponent(typeof(Transform))]
     public class HoldInteractable : InteractableBase
     {
-        [SerializeField] private SO_HoldPointChannel _holdPointChannel;
+        [SerializeField] private SO_HoldChannel _holdChannel;
+        [SerializeField] private SO_HoldPoint _holdPoint;
         [SerializeField] private SO_DropRequestChannel _dropRequestChannel;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _followLerpSpeed = 15f;
@@ -13,6 +15,7 @@ namespace Game.Core
 
         private Transform _tf;
         private bool _isHeld;
+        public event Action OnReleased; 
 
         private void Start()
         {
@@ -27,13 +30,19 @@ namespace Game.Core
                         // since holding it keeps it out of interact range/targeting
             }
 
-            if (_holdPointChannel == null || _holdPointChannel.HoldPoint == null)
+            if (_holdChannel == null)
+            {
+                Debug.LogWarning($"{name}: no hold channel available, cannot pick up.", this);
+                return;
+            }
+
+            if (_holdPoint == null)
             {
                 Debug.LogWarning($"{name}: no hold point available, cannot pick up.", this);
                 return;
             }
 
-            if (!_holdPointChannel.TryClaim())
+            if (!_holdChannel.TryClaim(this))
             {
                 return; // another item is already held, ignore this pickup attempt
             }
@@ -70,12 +79,14 @@ namespace Game.Core
                 _dropRequestChannel.DropRequested -= Release;
             }
 
-            _holdPointChannel?.ReleaseClaim();
+            _holdChannel?.ReleaseClaim();
 
             if (_rigidbody != null)
             {
                 _rigidbody.isKinematic = false;
             }
+
+            OnReleased?.Invoke();
         }
 
         private void FixedUpdate()
@@ -85,7 +96,7 @@ namespace Game.Core
                 return;
             }
 
-            Transform holdPoint = _holdPointChannel != null ? _holdPointChannel.HoldPoint : null;
+            Transform holdPoint = _holdPoint != null ? _holdPoint.HoldPoint : null;
             if (holdPoint == null)
             {
                 return;
@@ -123,7 +134,7 @@ namespace Game.Core
                 _dropRequestChannel.DropRequested -= Release;
             }
 
-            _holdPointChannel?.ReleaseClaim();
+            _holdChannel?.ReleaseClaim();
         }
     }
 

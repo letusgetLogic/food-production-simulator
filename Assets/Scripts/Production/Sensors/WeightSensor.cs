@@ -45,12 +45,12 @@ namespace Game.Production
             private set
             {
                 if (Mathf.Approximately(_currentValue, value)) return;
+                OnValueChanged?.Invoke(_currentValue, value);
                 _currentValue = value;
-                OnValueChanged?.Invoke(_currentValue);
             }
         }
 
-        public event Action<float> OnValueChanged;
+        public event Action<float, float> OnValueChanged;
 
         private void OnTriggerEnter(Collider other)
         {

@@ -42,12 +42,12 @@ namespace Game.Production
             private set
             {
                 if (_currentValue == value) return;
+                OnValueChanged?.Invoke(_currentValue, value);
                 _currentValue = value;
-                OnValueChanged?.Invoke(_currentValue);
             }
         }
 
-        public event Action<bool> OnValueChanged;
+        public event Action<bool, bool> OnValueChanged;
 
         private void OnTriggerEnter(Collider other) => _overlapCount++;
 

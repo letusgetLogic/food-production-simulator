@@ -1,6 +1,6 @@
 using Game.Core;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Platform
 {
@@ -13,9 +13,10 @@ namespace Game.Platform
     public class InputModeController : MonoBehaviour
     {
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
+        // Disabled components while ui focus:
         [SerializeField] private FirstPersonController _controller;
         [SerializeField] private AimInteractor _aimInteractor;
-        [SerializeField] private HoldItem _holdItem;
+        [SerializeField] private List<HoldItem> _holdBehaviours;
 
         private void OnEnable()
         {
@@ -43,9 +44,9 @@ namespace Game.Platform
                 _aimInteractor.enabled = !uiFocused;
             }
 
-            if (_holdItem != null)
+            if (_holdBehaviours != null && _holdBehaviours.Count > 0)
             {
-                _holdItem.enabled = !uiFocused;
+                _holdBehaviours.ForEach(hold => hold.enabled = !uiFocused);
             }
 
             Cursor.lockState = uiFocused ? CursorLockMode.None : CursorLockMode.Locked;

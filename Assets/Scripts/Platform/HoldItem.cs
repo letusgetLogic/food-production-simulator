@@ -7,12 +7,12 @@ namespace Game.Platform
     {
         [SerializeField] private SO_DropRequestChannel _dropRequestChannel;
         [SerializeField] private PlayerInputReader _input;
-        [SerializeField] private Transform _holdPoint;
-        [SerializeField] private SO_HoldPointChannel _holdPointChannel;
+        [SerializeField] private Transform _holdItemPoint;
+        [SerializeField] private SO_HoldPoint _holdPointChannel;
 
         private void Awake()
         {
-            _holdPointChannel.SetHoldPoint(_holdPoint);
+            _holdPointChannel.SetHoldPoint(_holdItemPoint);
         }
 
         private void OnEnable()
