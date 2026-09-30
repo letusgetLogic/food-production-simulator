@@ -130,7 +130,7 @@ namespace Game.Production
             }
         }
 
-        /// <summary>Operator-facing HMI setting, analogous to SetFormingDuration on FormerMachine.</summary>
+        /// <summary>Operator-facing HMI setting, analogous to SetPressSpeed on PressMachine.</summary>
         public void SetMixingDuration(float seconds)
         {
             _mixingDurationOverrideSeconds = Mathf.Max(0f, seconds);

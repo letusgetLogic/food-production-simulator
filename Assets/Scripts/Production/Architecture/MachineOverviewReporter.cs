@@ -27,6 +27,9 @@ namespace Game.Production
 
             foreach (MachineBase machine in machines)
             {
+                if (machine.gameObject.activeInHierarchy == false)
+                    continue;
+
                 int index = 0;
                 if (_machineTypes.ContainsKey(machine.NameKey))
                 {

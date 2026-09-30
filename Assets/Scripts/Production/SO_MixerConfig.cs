@@ -23,7 +23,7 @@ namespace Game.Production
         [Tooltip("Weight assigned to the dough ball's ProductInstance when the drum is tilted. " +
                  "A fixed machine value rather than a sensor reading or operator input, since the " +
                  "dough ball has no scale of its own at this point in the line.")]
-        [Min(0f)] public float DoughBallWeightGrams = 500f;
+        [Min(0f)] public float DoughBallWeightGrams = 10000f; // 50-times 250g
 
         [Header("Mixing")]
         [Tooltip("Default mixing duration used until the operator overrides it via " +

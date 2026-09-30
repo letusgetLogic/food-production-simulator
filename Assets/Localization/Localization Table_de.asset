@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364472
-    m_Localized: Portionierer
+    m_Localized: Teigportionierer
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364473
@@ -427,15 +427,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310211
-    m_Localized: Neigung nach unten...
+    m_Localized: Nach unten neigen...
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310212
-    m_Localized: geneigt
+    m_Localized: "Die \xD6ffnung neigt sich nach unten"
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310213
     m_Localized: Neigt sich nach oben...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3610294664769536
+    m_Localized: Teigpresse
     m_Metadata:
       m_Items: []
   references:

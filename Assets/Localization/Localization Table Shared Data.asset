@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: text.dough_portioning
     m_Metadata:
       m_Items: []
+  - m_Id: 3610294664769536
+    m_Key: text.dough_press
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459634364437
     m_Key: text.dough_ready
     m_Metadata:

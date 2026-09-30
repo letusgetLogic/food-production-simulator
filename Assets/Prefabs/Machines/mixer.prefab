@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 9162206479014454460}
   - component: {fileID: 5540828205102917704}
   m_Layer: 0
-  m_Name: dough-mixer-machine (1)
+  m_Name: mixer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

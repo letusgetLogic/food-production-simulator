@@ -64,12 +64,6 @@ namespace Game.Production
         /// <summary>Actual bake duration the product went through (in seconds), set by the baking station.</summary>
         public float? ActualBakeTimeSeconds;
 
-        /// <summary>Pizza base diameter (in cm) the press was set to when this product was pressed. No dimension sensor yet - operator setting only.</summary>
-        public float? FormedDiameterCm;
-
-        /// <summary>Pizza base thickness (in mm) the press was set to when this product was pressed. No dimension sensor yet - operator setting only.</summary>
-        public float? FormedThicknessMm;
-
         /// <summary>Creates a new product instance in its initial state.</summary>
         public ProductInstance(string instanceId, SO_RecipeDefinition recipe, ProductState initialState = ProductState.RawDough)
         {

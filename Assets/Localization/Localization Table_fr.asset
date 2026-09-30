@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364472
-    m_Localized: Portionneur
+    m_Localized: "portionneur de p\xE2te"
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364473
@@ -431,11 +431,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310212
-    m_Localized: "Inclin\xE9"
+    m_Localized: L'ouverture s'incline vers le bas
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310213
     m_Localized: S'inclinant vers le haut...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3610294664769536
+    m_Localized: "Presse \xE0 p\xE2te"
     m_Metadata:
       m_Items: []
   references:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Production.SO_DoughMixerConfig
   MaxBatchWeightKg: 5
   MixingSpeedRpm: 60
-  DoughBallWeightGrams: 500
+  DoughBallWeightGrams: 10000
   DefaultMixingDurationSeconds: 20
   StartupDurationSeconds: 2
   ShutdownDurationSeconds: 1.5

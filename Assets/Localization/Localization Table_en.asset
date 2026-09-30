@@ -251,7 +251,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364472
-    m_Localized: Portioner
+    m_Localized: Dough Portioner
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364473
@@ -431,11 +431,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310212
-    m_Localized: Tilted
+    m_Localized: Opening tilts downward
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310213
     m_Localized: Tilting upward...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3610294664769536
+    m_Localized: Dough Press
     m_Metadata:
       m_Items: []
   references:
