@@ -51,6 +51,52 @@ namespace Game.Production
         public void NotifyContentChanged(string content) => ContentChanged?.Invoke(content);
        
 
+        /// <summary>
+        /// True while the machine reports a non-blocking warning (HMI amber), e.g. "buffer almost full"
+        /// or "temperature deviation". Independent of <see cref="CurrentState"/>: a machine can be
+        /// Running and have a warning at the same time. Deliberately NOT a MachineState value so the
+        /// transition table stays untouched.
+        /// </summary>
+        public bool HasWarning { get; private set; }
+
+        /// <summary>Code-like reason of the current warning (empty when <see cref="HasWarning"/> is false).</summary>
+        public string WarningReason { get; private set; } = string.Empty;
+
+        /// <summary>Raised whenever <see cref="HasWarning"/> or <see cref="WarningReason"/> changes. Parameters: (hasWarning, reason).</summary>
+        public event Action<bool, string> WarningChanged;
+
+        /// <summary>
+        /// Sets or clears the warning. Repeated identical calls are ignored, so concrete machines may
+        /// call this every frame.
+        /// </summary>
+        protected void SetWarning(bool hasWarning, string reason = "")
+        {
+            string normalizedReason = hasWarning ? (reason ?? string.Empty) : string.Empty;
+            if (HasWarning == hasWarning && WarningReason == normalizedReason)
+            {
+                return;
+            }
+
+            HasWarning = hasWarning;
+            WarningReason = normalizedReason;
+            WarningChanged?.Invoke(hasWarning, normalizedReason);
+        }
+
+        /// <summary>
+        /// Convenience for controllers (line controller, tunnel stations): starts the machine from
+        /// Ready, or from Stopped via <see cref="ResetToIdle"/>. Ignored in every other state, so it
+        /// never bypasses Fault/Maintenance.
+        /// </summary>
+        public void RequestRun()
+        {
+            if (_currentState == MachineState.Stopped)
+            {
+                ResetToIdle();
+            }
+
+            StartRun();
+        }
+
         /// <inheritdoc />
         public void StartRun()
         {

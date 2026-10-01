@@ -78,6 +78,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1.8
       objectReference: {fileID: 0}
+    - target: {fileID: 4824704915827756058, guid: 94ebbd08537b64b4ebcccb775d47f1db, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4824704915827756058, guid: 94ebbd08537b64b4ebcccb775d47f1db, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5546987060525375637, guid: 94ebbd08537b64b4ebcccb775d47f1db, type: 3}
       propertyPath: m_Name
       value: conveyor-long (1) Variant

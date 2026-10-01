@@ -13,11 +13,32 @@ namespace Game.Production
     {
         private readonly Dictionary<string, MachineState> _states = new Dictionary<string, MachineState>();
         private readonly Dictionary<string, string> _displayNames = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _warnings = new Dictionary<string, string>();
 
         public event Action<string, string, MachineState> MachineStateChanged; // (machineId, displayName, state)
 
         public IReadOnlyDictionary<string, MachineState> CurrentStates => _states;
         public IReadOnlyDictionary<string, string> DisplayNames => _displayNames;
+
+        // (machineId, hasWarning, reason) - non-blocking warnings (HMI amber), see MachineBase.SetWarning.
+        public event Action<string, bool, string> MachineWarningChanged;
+
+        /// <summary>Machines that currently have a warning, with their reason code.</summary>
+        public IReadOnlyDictionary<string, string> CurrentWarnings => _warnings;
+
+        public void ReportWarning(string machineId, bool hasWarning, string reason)
+        {
+            if (hasWarning)
+            {
+                _warnings[machineId] = reason;
+            }
+            else
+            {
+                _warnings.Remove(machineId);
+            }
+
+            MachineWarningChanged?.Invoke(machineId, hasWarning, reason);
+        }
 
         public void ReportState(string machineId, string displayName, MachineState state)
         {
@@ -32,6 +53,7 @@ namespace Game.Production
             // Reload is disabled in the editor.
             _states.Clear();
             _displayNames.Clear();
+            _warnings.Clear();
         }
     }
 }

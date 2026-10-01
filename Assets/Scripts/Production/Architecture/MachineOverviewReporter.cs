@@ -20,6 +20,7 @@ namespace Game.Production
         private readonly Dictionary<string, Action<MachineState, MachineState>> _handlers = new();
 
         private readonly Dictionary<string, Action> _nameHandlers = new();
+        private readonly Dictionary<string, Action<bool, string>> _warningHandlers = new();
 
         private void Awake()
         {
@@ -58,6 +59,11 @@ namespace Game.Production
                 machine.StateChanged += handler;
                 _handlers.Add(machineId, handler);
 
+                Action<bool, string> warningHandler = (hasWarning, reason) =>
+                    _channel.ReportWarning(machineId, hasWarning, reason);
+                machine.WarningChanged += warningHandler;
+                _warningHandlers.Add(machineId, warningHandler);
+
                 _languageChannel.LanguageChanged += nameHandler;
                 _nameHandlers.Add(machineId, nameHandler);
 
@@ -72,6 +78,11 @@ namespace Game.Production
                 if (entry.Value != null && _handlers.TryGetValue(entry.Key, out var handler))
                 {
                     entry.Value.StateChanged -= handler;
+                }
+
+                if (entry.Value != null && _warningHandlers.TryGetValue(entry.Key, out var warningHandler))
+                {
+                    entry.Value.WarningChanged -= warningHandler;
                 }
             }
 

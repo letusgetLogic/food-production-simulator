@@ -70,6 +70,15 @@ namespace Game.Production
         /// </summary>
         public void SetHeating(bool isHeating) => _isHeating = isHeating;
 
+        /// <summary>Temperature the zone drifts toward while <see cref="SetHeating"/> is active.</summary>
+        public float HeatingTargetTemperature => _heatingTargetTemperature;
+
+        /// <summary>
+        /// Called by the owning machine (operator setpoint from the HMI). The target may also lie
+        /// below ambient - the same simulation then models a cooling/freezing zone.
+        /// </summary>
+        public void SetHeatingTarget(float targetTemperature) => _heatingTargetTemperature = targetTemperature;
+
         /// <summary>
         /// Per the ISensor contract, IsWithinNormalRange is a fachliche
         /// Bewertung that belongs to the machine, not the sensor. The machine

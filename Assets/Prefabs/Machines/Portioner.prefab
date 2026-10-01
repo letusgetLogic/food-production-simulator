@@ -625,6 +625,7 @@ MonoBehaviour:
   _hopper: {fileID: 8748822333453470499}
   _levelSensor: {fileID: 4440957555940292330}
   _liftArm: {fileID: 1183814226300659972}
+  _platformCenter: {fileID: 3668001869896119233}
   _potSensor: {fileID: 5496217291285320054}
   _platformRenderer: {fileID: 398939469541082372}
   _platformEmptyColor: {r: 0.55, g: 0.55, b: 0.55, a: 1}
@@ -632,6 +633,7 @@ MonoBehaviour:
   _portionPrefab: {fileID: 5965095994577794019, guid: 81e364fa11608ef4b9d99fdc9b7eb971, type: 3}
   _portionSpawnPoint: {fileID: 7961940776735870696}
   _outputSensor: {fileID: 3080985287306495703}
+  _downstream: {fileID: 0}
   _contents: []
   references:
     version: 2
@@ -694,8 +696,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8302437143650467295}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 0.1, y: 3.2, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -703,7 +705,7 @@ Transform:
   - {fileID: 6212296713314640709}
   - {fileID: 6497426697182654802}
   m_Father: {fileID: 273529982481650088}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1183814226300659972
 MonoBehaviour:
   m_ObjectHideFlags: 0

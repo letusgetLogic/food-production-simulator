@@ -20,11 +20,6 @@ namespace Game.Production
         [Min(0.01f)] public float MinPressSpeed = 0.05f;
         [Min(0.01f)] public float MaxPressSpeed = 2f;
 
-        [Tooltip("Normalized clip time (0..1) at which the piston touches the dough.")]
-        [Range(0f, 1f)] public float ContactStartNormalized = 0.2f;
-        [Tooltip("Normalized clip time (0..1) at which the piston is fully down - dough is completely pressed.")]
-        [Range(0f, 1f)] public float ContactEndNormalized = 0.45f;
-
         [Header("Forming Parameters (operator, from the recipe terminal)")]
         public float DefaultTargetDiameterCm = 28f;
         public float DefaultTargetThicknessMm = 3f;
@@ -33,15 +28,13 @@ namespace Game.Production
         public float MinThicknessMm = 2f;
         public float MaxThicknessMm = 8f;
 
-        [Header("Visual Deformation")]
-        [Tooltip("Scale multiplier applied to the dough at the default diameter/thickness. " +
-                 "X/Z = width, Y = height. Other operator values scale this proportionally.")]
-        public Vector3 FormedScaleMultiplier = new Vector3(1.3f, 0.4f, 1.3f);
-
         [Header("Detection")]
         [Tooltip("Layers the products live on (DoughSphere is on layer 6).")]
         public LayerMask ProductLayer = ~0;
         [Tooltip("Half extents of the detection box around the press point.")]
         public Vector3 PressZoneHalfExtents = new Vector3(0.25f, 0.25f, 0.25f);
+        [Tooltip("The dough is taken as soon as its centre is this close (horizontally) to the press point - " +
+                 "i.e. when the belt has brought it to the centre under the piston.")]
+        [Min(0.005f)] public float CenterToleranceMeters = 0.03f;
     }
 }

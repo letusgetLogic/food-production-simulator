@@ -16,11 +16,13 @@ namespace Game.Production
     ///   3. The stroke speed is regulated by <see cref="SetPressSpeed"/> (operator/HMI). The clip is
     ///      sampled manually on the legacy Animation component, so the speed also defines the cycle time:
     ///      cycle = clipLength / pressSpeed. Changing the speed mid-stroke takes effect immediately.
-    ///   4. While the piston is in contact, the dough is flattened (scale). At the end of the stroke
-    ///      the product becomes FormedPizza and the operator's diameter/thickness are recorded.
-    ///   5. The product is released at <see cref="_outputPoint"/> (start of the outgoing belt). If the
-    ///      optional output sensor is occupied, the product stays in the press and no new portion is
-    ///      taken - the incoming belt backs up physically (domino effect).
+    ///   4. When the piston top touches the dough, the pizza prefab switches its own visual to
+    ///      FormedPizza (PizzaStateVisual + ProductStateTrigger on the piston top). At the end of the
+    ///      stroke the machine confirms FormedPizza and records the operator's diameter/thickness.
+    ///   5. The formed pizza is released where it is (non-kinematic again) and the belt under the press
+    ///      carries it on - no teleport to an output point. Already pressed products (FormedPizza and
+    ///      later) passing through the press zone are ignored. If the optional output sensor is occupied,
+    ///      the pizza stays in the press until it is free.
     ///
     /// Deliberately does NOT implement IProductProcessor: products are handed over by physics
     /// (belt), not through TryBeginProcessing/TryCollectProcessedProduct.
@@ -64,11 +66,14 @@ namespace Game.Production
         [Tooltip("Position under the piston where the dough is pressed (on the belt surface).")]
         [SerializeField] private Transform _pressPoint;
 
-        [Header("Output")]
-        [Tooltip("Start of the outgoing belt. The formed pizza is released here.")]
-        [SerializeField] private Transform _outputPoint;
+        [Tooltip("Trigger collider under the piston top (child 'TriggerZone' of the piston). The stroke starts as soon as the " +
+                 "pizza's ContactCollider touches it. Auto-filled from children if empty. Without it, the press falls back to " +
+                 "'product centre within CenterToleranceMeters of the press point'.")]
+        [SerializeField] private Collider _pistonTriggerZone;
 
-        [Tooltip("Optional: PresenceSensor (trigger) at the output point. While occupied, the pizza stays in the press (backpressure).")]
+
+        [Header("Output")]
+        [Tooltip("Optional: PresenceSensor (trigger) downstream of the press on the belt. While occupied, the formed pizza stays in the press (backpressure).")]
         [SerializeField] private PresenceSensor _outputSensor;
 
         [Header("HMI Content")]
@@ -82,11 +87,7 @@ namespace Game.Production
 
         private ProductToken _heldProduct;
         private Rigidbody _heldBody;
-        private Renderer[] _heldRenderers;
-        private Vector3 _startScale;
-        private float _groundY;
         private float _strokeTime;
-        private float _squash;
         private bool _isPressing;
 
         private AnimationState _pressState;
@@ -234,13 +235,13 @@ namespace Game.Production
                 _heldBody.isKinematic = true;
             }
 
-            token.transform.SetPositionAndRotation(_pressPoint.position, _pressPoint.rotation);
-            _heldRenderers = token.GetComponentsInChildren<Renderer>();
-            _startScale = token.transform.localScale;
-            _groundY = GetBoundsMinY();
+            // Centre under the piston, but keep the height the product has on the belt - so it can
+            // simply ride on after pressing instead of dropping from the press point.
+            Vector3 centre = _pressPoint.position;
+            centre.y = token.transform.position.y;
+            token.transform.SetPositionAndRotation(centre, _pressPoint.rotation);
 
             _strokeTime = 0f;
-            _squash = 0f;
             _isPressing = true;
             Report(PressInfo.Pressing, force: true);
         }
@@ -250,15 +251,6 @@ namespace Game.Production
             _strokeTime += deltaTime * _pressSpeed;
             float clampedTime = Mathf.Min(_strokeTime, ClipLength);
             SamplePiston(clampedTime);
-
-            // Dough only gets flatter, never springs back while the piston rises again.
-            float normalized = clampedTime / ClipLength;
-            float contact = Mathf.InverseLerp(_config.ContactStartNormalized, _config.ContactEndNormalized, normalized);
-            if (contact > _squash)
-            {
-                _squash = contact;
-                ApplyDeformation();
-            }
 
             if (_strokeTime >= ClipLength)
             {
@@ -290,59 +282,16 @@ namespace Game.Production
                 return;
             }
 
-            if (_outputPoint != null)
-            {
-                _heldProduct.transform.position = _outputPoint.position;
-            }
-            else
-            {
-                Debug.LogWarning($"{name}: no output point assigned - pizza is released in the press.", this);
-            }
-
+            // Released in place: the belt under the press carries the formed pizza on.
             if (_heldBody != null)
             {
                 _heldBody.isKinematic = false;
+                _heldBody.linearVelocity = Vector3.zero;
+                _heldBody.angularVelocity = Vector3.zero;
             }
 
             _heldProduct = null;
             _heldBody = null;
-            _heldRenderers = null;
-        }
-
-        private void ApplyDeformation()
-        {
-            float widthFactor = _targetDiameterCm / _config.DefaultTargetDiameterCm;
-            float heightFactor = _targetThicknessMm / _config.DefaultTargetThicknessMm;
-            Vector3 multiplier = _config.FormedScaleMultiplier;
-            Vector3 formedScale = Vector3.Scale(_startScale, new Vector3(
-                multiplier.x * widthFactor,
-                multiplier.y * heightFactor,
-                multiplier.z * widthFactor));
-
-            Transform product = _heldProduct.transform;
-            product.localScale = Vector3.Lerp(_startScale, formedScale, _squash);
-
-            // Keep the underside on the belt while the dough flattens.
-            float offset = _groundY - GetBoundsMinY();
-            product.position += Vector3.up * offset;
-        }
-
-        private float GetBoundsMinY()
-        {
-            if (_heldRenderers == null || _heldRenderers.Length == 0)
-            {
-                return _heldProduct.transform.position.y;
-            }
-
-            float minY = float.MaxValue;
-            foreach (Renderer r in _heldRenderers)
-            {
-                if (r != null)
-                {
-                    minY = Mathf.Min(minY, r.bounds.min.y);
-                }
-            }
-            return minY;
         }
 
         private ProductToken FindProductInPressZone()
@@ -352,31 +301,94 @@ namespace Game.Production
                 return null;
             }
 
+            return _pistonTriggerZone != null ? FindProductAtTriggerZone() : FindCentredProductInPressZone();
+        }
+
+        /// <summary>
+        /// The pizza's ContactCollider (its trigger collider) touches the piston's TriggerZone.
+        /// </summary>
+        private ProductToken FindProductAtTriggerZone()
+        {
+            Bounds zone = _pistonTriggerZone.bounds;
             int count = Physics.OverlapBoxNonAlloc(
-                _pressPoint.position, _config.PressZoneHalfExtents, _overlapBuffer,
-                _pressPoint.rotation, _config.ProductLayer, QueryTriggerInteraction.Ignore);
+                zone.center, zone.extents, _overlapBuffer, Quaternion.identity,
+                _config.ProductLayer, QueryTriggerInteraction.Collide);
 
             for (int i = 0; i < count; i++)
             {
-                ProductToken token = _overlapBuffer[i].GetComponentInParent<ProductToken>();
-                if (token != null && token.Product != null)
+                Collider hit = _overlapBuffer[i];
+                if (hit == _pistonTriggerZone || !hit.isTrigger)
                 {
-                    // Products still being carried by a worker are ignored.
-                    Rigidbody body = token.GetComponent<Rigidbody>();
-                    if (body != null && body.isKinematic)
-                    {
-                        continue;
-                    }
+                    continue; // only the product's ContactCollider counts
+                }
+
+                ProductToken token = ProductColliderUtility.FindToken(hit);
+                if (IsPressable(token))
+                {
                     return token;
                 }
             }
             return null;
         }
 
+        /// <summary>Fallback without TriggerZone: product centre close enough to the press point.</summary>
+        private ProductToken FindCentredProductInPressZone()
+        {
+            int count = Physics.OverlapBoxNonAlloc(
+                _pressPoint.position, _config.PressZoneHalfExtents, _overlapBuffer,
+                _pressPoint.rotation, _config.ProductLayer, QueryTriggerInteraction.Ignore);
+
+            for (int i = 0; i < count; i++)
+            {
+                ProductToken token = ProductColliderUtility.FindToken(_overlapBuffer[i]);
+                if (!IsPressable(token))
+                {
+                    continue;
+                }
+
+                Vector3 offset = token.transform.position - _pressPoint.position;
+                offset.y = 0f;
+                if (offset.magnitude <= _config.CenterToleranceMeters)
+                {
+                    return token;
+                }
+            }
+            return null;
+        }
+
+        private static bool IsPressable(ProductToken token)
+        {
+            if (token == null || token.Product == null)
+            {
+                return false;
+            }
+
+            // Already pressed (or further) - just passing out of the press on the belt.
+            if (token.Product.CurrentState > ProductState.PortionedDough)
+            {
+                return false;
+            }
+
+            // Products carried by a worker / already held are ignored.
+            return !(token.TryGetComponent(out Rigidbody body) && body.isKinematic);
+        }
+
         // ---- Piston animation (legacy Animation, manually sampled) ----
 
         private void AutoAssignAnimation()
         {
+            if (_pistonTriggerZone == null)
+            {
+                foreach (Transform child in GetComponentsInChildren<Transform>(true))
+                {
+                    if (child.name == "TriggerZone" && child.TryGetComponent(out Collider zone))
+                    {
+                        _pistonTriggerZone = zone;
+                        break;
+                    }
+                }
+            }
+
             if (_pistonAnimation == null)
             {
                 _pistonAnimation = GetComponentInChildren<Animation>(true);
@@ -524,12 +536,6 @@ namespace Game.Production
             Gizmos.matrix = Matrix4x4.TRS(_pressPoint.position, _pressPoint.rotation, Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, _config.PressZoneHalfExtents * 2f);
             Gizmos.matrix = Matrix4x4.identity;
-
-            if (_outputPoint != null)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireSphere(_outputPoint.position, 0.1f);
-            }
         }
     }
 }

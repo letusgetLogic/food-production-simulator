@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd5201f033024ec47b53f8e88bf9833b, type: 3}
+  m_Name: AccumulationZoneConfig_PressBuffer
+  m_EditorClassIdentifier: Game.Production::Game.Production.SO_AccumulationZoneConfig
+  _capacity: 4
+  _slotLengthMeters: 0.5
+  _stopToleranceMeters: 0.01
+  _maxTransferDistanceMeters: 1.5
+  _warningFillRatio: 0.75
+  _fullFaultDelaySeconds: 20

@@ -31,7 +31,7 @@ namespace Game.Production
     /// No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/
     /// SetPortioningDuration() are set by the operator at the HMI, reading the recipe off the panel.
     /// </summary>
-    public class PortionerMachine : MachineBase
+    public class PortionerMachine : MachineBase, IDownstreamLink
     {
         /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
         public enum PortionerInfo
@@ -67,6 +67,7 @@ namespace Game.Production
 
         [Header("Lift / Pot")]
         [SerializeField] private PortionerLiftArm _liftArm;
+        [SerializeField] private GameObject _platformCenter;
 
         [Tooltip("PotSensor inside the pot on the lift platform.")]
         [SerializeField] private PotSensor _potSensor;
@@ -85,6 +86,10 @@ namespace Game.Production
 
         [Tooltip("Optional: PresenceSensor at the spawn point. While it detects something, no new portion is produced (backpressure).")]
         [SerializeField] private PresenceSensor _outputSensor;
+
+        [Tooltip("Optional: belt below the spawn point. While it cannot accept (paused because the buffer before the press is full), " +
+                 "no new portion is produced - the portioner pauses and continues by itself. Set by ConveyorLineController when auto-wiring.")]
+        [SerializeField] private MachineBase _downstream;
 
         [Header("HMI Content")]
         [SerializeField] private List<Content<PortionerInfo>> _contents = new List<Content<PortionerInfo>>();
@@ -113,6 +118,8 @@ namespace Game.Production
 
         public bool IsPotLoaded => _potSensor != null && _potSensor.CurrentValue;
 
+        private HoldInteractable _currentPlaced;
+
         /// <summary>
         /// "Level sensor still detects content": uses the LevelSensor reading if one is assigned,
         /// otherwise falls back to the hopper's own amount.
@@ -121,7 +128,11 @@ namespace Game.Production
             ? _levelSensor.CurrentValue > 0f
             : _hopper != null && _hopper.HasDough;
 
-        public bool IsOutputBlocked => _outputSensor != null && _outputSensor.CurrentValue;
+        public bool IsOutputBlocked => (_outputSensor != null && _outputSensor.CurrentValue)
+            || (_downstream != null && !InfeedReadinessUtility.IsReady(_downstream, null));
+
+        /// <inheritdoc />
+        public void SetDownstream(MachineBase downstream) => _downstream = downstream;
 
         private void Awake()
         {
@@ -282,22 +293,24 @@ namespace Game.Production
             return true;
         }
 
+        /// <summary>
+        /// PotSensor Enter/Exit Trigger
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="next"></param>
         private void HandlePotPresenceChanged(HoldInteractable current, HoldInteractable next)
         {
-            if (next != null)
+            if (next != null && current == null)
             {
                 next.OnReleased += SetPotOnLift;
             }
 
-            if (current != null)
+            if (current != null && next == null)
             {
                 current.OnReleased -= SetPotOnLift;
             }
 
-            _current = current;
-            _next = next;
-
-            bool isPresent = _next != null;
+            bool isPresent = next != null;
             ApplyPlatformColor(isPresent);
 
             // While the lift is moving, the presence change is just the content leaving the pot.
@@ -536,22 +549,13 @@ namespace Game.Production
             yield return new WaitForSeconds(_config.ShutdownDurationSeconds);
             SetState(MachineState.Stopped);
         }
-        private HoldInteractable _current;
-        private HoldInteractable _next;
-        private void SetPotOnLift()
-        {
-            if (_next == null && _current)
-            {
-                _current.transform.SetParent(null);
-            }
 
-            if (_next != null && _current == null)
-            {
-                var rb = _next.GetComponent<Rigidbody>();
-                if (rb) rb.isKinematic = true;
-                _next.transform.SetParent(_liftArm.transform, false);
-                _next.transform.localPosition = Vector3.zero;
-            }
+        private void SetPotOnLift(HoldInteractable pot)
+        {
+            var rb = pot.GetComponent<Rigidbody>();
+            if (rb) rb.isKinematic = true;
+            pot.transform.SetParent(_platformCenter.transform, true);
+            pot.transform.localPosition = Vector3.zero;
         }
 
     }

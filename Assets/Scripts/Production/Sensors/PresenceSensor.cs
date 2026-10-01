@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Production
@@ -29,8 +30,19 @@ namespace Game.Production
     {
         [SerializeField] private string _sensorId;
 
-        private int _overlapCount;
+        [Tooltip("Only react to products (colliders that belong to a ProductToken). Off = any collider with a Rigidbody " +
+                 "(e.g. a pot). Prevents machine parts such as an animated piston from blocking the sensor.")]
+        [SerializeField] private bool _productsOnly = true;
+
+        // Colliders currently inside the zone. A set instead of a counter: Unity sends no OnTriggerExit when a
+        // collider is disabled or destroyed inside the zone (e.g. the pizza switching its visual from
+        // PortionedDough to FormedPizza), which would leave a counter stuck at "occupied" forever.
+        private readonly HashSet<Collider> _overlaps = new HashSet<Collider>();
+        private readonly List<Collider> _stale = new List<Collider>();
         private bool _currentValue;
+
+        /// <summary>Number of colliders currently detected (debug / inspector).</summary>
+        public int OverlapCount => _overlaps.Count;
 
         public string SensorId => _sensorId;
         public bool IsWithinNormalRange { get; private set; } = true;
@@ -49,16 +61,42 @@ namespace Game.Production
 
         public event Action<bool, bool> OnValueChanged;
 
-        private void OnTriggerEnter(Collider other) => _overlapCount++;
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_productsOnly || ProductColliderUtility.FindToken(other) != null)
+            {
+                _overlaps.Add(other);
+            }
+        }
 
-        private void OnTriggerExit(Collider other) => _overlapCount = Mathf.Max(0, _overlapCount - 1);
+        private void OnTriggerExit(Collider other) => _overlaps.Remove(other);
+
+        private void OnDisable() => _overlaps.Clear();
 
         private void Update() => UpdateReading();
 
         public void UpdateReading()
         {
-            CurrentValue = _overlapCount > 0;
+            PruneStaleColliders();
+            CurrentValue = _overlaps.Count > 0;
             LastReadingTimestamp = Time.time;
+        }
+
+        private void PruneStaleColliders()
+        {
+            _stale.Clear();
+            foreach (Collider c in _overlaps)
+            {
+                if (c == null || !c.enabled || !c.gameObject.activeInHierarchy)
+                {
+                    _stale.Add(c);
+                }
+            }
+
+            foreach (Collider c in _stale)
+            {
+                _overlaps.Remove(c);
+            }
         }
 
         /// <summary>

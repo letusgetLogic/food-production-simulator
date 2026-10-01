@@ -15,7 +15,7 @@ namespace Game.Core
 
         private Transform _tf;
         private bool _isHeld;
-        public event Action OnReleased; 
+        public event Action<HoldInteractable> OnReleased; 
 
         private void Start()
         {
@@ -54,6 +54,8 @@ namespace Game.Core
         {
             _isHeld = true;
 
+            transform.SetParent(null);
+
             if (_rigidbody != null)
             {
                 _rigidbody.isKinematic = true;
@@ -86,7 +88,7 @@ namespace Game.Core
                 _rigidbody.isKinematic = false;
             }
 
-            OnReleased?.Invoke();
+            OnReleased?.Invoke(this);
         }
 
         private void FixedUpdate()
