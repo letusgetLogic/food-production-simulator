@@ -24,7 +24,7 @@ namespace Game.Production
     /// Deliberately does NOT implement IProductProcessor (products are handed over by physics).
     /// No RecipeDefinition binding in code: dwell/temperature are operator settings from the HMI.
     /// </summary>
-    public class ContinuousProcessStation : MachineBase, IInfeedReadiness
+    public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IMachineParameterSource
     {
         /// <summary>Content messages this station reports via NotifyContentChanged.</summary>
         public enum ProcessInfo
@@ -75,6 +75,10 @@ namespace Game.Production
         private float _wrongProductWarningTimer;
         private int _completedCount;
         private int _wrongProductCount;
+        private float _lastDwellSeconds = -1f;
+        private float _lastExposureCelsius = float.NaN;
+        private List<MachineParameter> _parameters;
+        private List<MachineReadout> _readouts;
 
         private ProcessInfo? _lastReportedInfo;
         private string _lastReportedDetail;
@@ -96,6 +100,13 @@ namespace Game.Production
         public bool IsReadyForInfeed => CurrentState == MachineState.Running && _belt != null && _belt.IsMoving;
 
         private bool UsesTemperature => _config.UsesTemperature && _temperatureSensor != null;
+
+        /// <summary>True when this station controls a zone temperature (oven, cooling, freezer - not packaging).</summary>
+        public bool UsesTemperatureControl => UsesTemperature;
+
+        /// <summary>Input -> output state of this station (e.g. ToppedPizza -> BakedPizza).</summary>
+        public ProductState InputState => _config.InputState;
+        public ProductState OutputState => _config.OutputState;
 
         // ---- Unity lifecycle ----
 
@@ -243,7 +254,9 @@ namespace Game.Production
 
             if (UsesTemperature && exposure.y > 0f)
             {
-                product.MeasuredTemperatureCelsius = exposure.x / exposure.y;
+                float average = exposure.x / exposure.y;
+                product.MeasuredTemperatureCelsius = average;
+                RecordStageTemperature(product, average);
             }
 
             if (_config.RecordDwellAsBakeTime)
@@ -252,8 +265,54 @@ namespace Game.Production
             }
 
             _completedCount++;
+            _lastDwellSeconds = secondsInside;
+            _lastExposureCelsius = UsesTemperature && exposure.y > 0f ? exposure.x / exposure.y : float.NaN;
             ProductProcessed?.Invoke(product);
             Report(ProcessInfo.ProductCompleted, $"{secondsInside:0.0} s", force: true);
+        }
+
+        /// <summary>Keeps each tunnel's temperature on the product (MeasuredTemperature is overwritten by the next tunnel).</summary>
+        private void RecordStageTemperature(ProductInstance product, float average)
+        {
+            switch (_config.OutputState)
+            {
+                case ProductState.BakedPizza:
+                    product.BakeTemperatureCelsius = average;
+                    break;
+                case ProductState.CooledPizza:
+                    product.CoolingTemperatureCelsius = average;
+                    break;
+                case ProductState.FrozenPizza:
+                    product.FreezingTemperatureCelsius = average;
+                    break;
+            }
+        }
+
+        // ---- Training fault: heater / cooling unit failure ----
+
+        private bool _heaterFailed;
+
+        /// <summary>True while a simulated heater (oven) or cooling unit (cooling/freezer) failure is active.</summary>
+        public bool HasHeaterFailure => _heaterFailed;
+
+        /// <summary>
+        /// FaultSystem training case: the heater (or cooling unit) fails. Temperature control switches off,
+        /// the zone drifts to ambient, the station reports a deviation (amber) and, once the temperature leaves
+        /// the valid range, faults with TemperatureOutOfRange - exactly like a real defect. Only maintenance
+        /// repairs it (cleared in OnEnterMaintenance).
+        /// </summary>
+        public void SimulateHeaterFailure()
+        {
+            if (!UsesTemperature)
+            {
+                return;
+            }
+
+            _heaterFailed = true;
+            if (_temperatureSensor != null)
+            {
+                _temperatureSensor.SetHeating(false);
+            }
         }
 
         private void AccumulateExposure(float deltaTime)
@@ -340,8 +399,123 @@ namespace Game.Production
         {
             if (_temperatureSensor != null)
             {
-                _temperatureSensor.SetHeating(isActive && _config.UsesTemperature);
+                _temperatureSensor.SetHeating(isActive && _config.UsesTemperature && !_heaterFailed);
             }
+        }
+
+        // ---- HMI terminal values (IMachineParameterSource) ----
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineParameter> Parameters
+        {
+            get
+            {
+                if (_parameters == null)
+                {
+                    BuildHmiValues();
+                }
+                return _parameters;
+            }
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineReadout> Readouts
+        {
+            get
+            {
+                if (_readouts == null)
+                {
+                    BuildHmiValues();
+                }
+                return _readouts;
+            }
+        }
+
+        private void BuildHmiValues()
+        {
+            // TODO localization: labels are English fallbacks until keys exist in the table.
+            _parameters = new List<MachineParameter>
+            {
+                new MachineParameter("dwellTime", _config.RecordDwellAsBakeTime ? "Bake time" : "Dwell time", "s",
+                    _config.MinDwellSeconds, _config.MaxDwellSeconds, _config.DwellStepSeconds, "0.0",
+                    () => _dwellSeconds, SetDwellTime),
+            };
+
+            if (_config.UsesTemperature)
+            {
+                _parameters.Add(new MachineParameter("targetTemperature", "Temperature", "\u00b0C",
+                    _config.MinTargetTemperatureCelsius, _config.MaxTargetTemperatureCelsius,
+                    _config.TemperatureStepCelsius, "0",
+                    () => _targetTemperature, SetTargetTemperature));
+            }
+
+            _readouts = new List<MachineReadout>
+            {
+                new MachineReadout("temperature", "Temperature", "\u00b0C",
+                    () => UsesTemperature ? _temperatureSensor.CurrentValue.ToString("0") : "--",
+                    EvaluateTemperature, MachineReadoutSlot.Temperature),
+                new MachineReadout("cycleTime", "Dwell time", "s",
+                    () => _dwellSeconds.ToString("0.0"),
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.CycleTime),
+                new MachineReadout("setpoint", "Setpoint", "",
+                    () => _config.UsesTemperature
+                        ? $"{_targetTemperature:0} \u00b0C / {_dwellSeconds:0.#} s"
+                        : $"{_dwellSeconds:0.#} s",
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.Setpoint),
+                new MachineReadout("productsInside", "Products inside", "pcs",
+                    () => ProductsInside.ToString(),
+                    () => ProductsInside > 0 ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("lastDwell", _config.RecordDwellAsBakeTime ? "Last bake time" : "Last dwell time", "s",
+                    () => _lastDwellSeconds >= 0f ? _lastDwellSeconds.ToString("0.0") : "--",
+                    EvaluateLastDwell),
+                new MachineReadout("lastExposure", "Last product temp.", "\u00b0C",
+                    () => float.IsNaN(_lastExposureCelsius) ? "--" : _lastExposureCelsius.ToString("0"),
+                    () => float.IsNaN(_lastExposureCelsius) ? MachineValueLevel.Inactive
+                        : _lastExposureCelsius < _config.MinValidTemperatureCelsius
+                          || _lastExposureCelsius > _config.MaxValidTemperatureCelsius
+                            ? MachineValueLevel.Warning : MachineValueLevel.Normal),
+                new MachineReadout("completed", "Products completed", "pcs",
+                    () => _completedCount.ToString()),
+                new MachineReadout("wrongProducts", "Wrong products", "pcs",
+                    () => _wrongProductCount.ToString(),
+                    () => _wrongProductCount > 0 ? MachineValueLevel.Warning : MachineValueLevel.Normal),
+                new MachineReadout("belt", "Belt", "",
+                    () => _belt == null ? "--" : _belt.IsMoving ? $"{_belt.CurrentSpeedMetersPerSecond:0.00} m/s" : _belt.CurrentState.ToString(),
+                    () => _belt == null ? MachineValueLevel.Inactive
+                        : _belt.CurrentState == MachineState.Fault ? MachineValueLevel.Alarm
+                        : _belt.IsMoving ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+            };
+        }
+
+        private MachineValueLevel EvaluateTemperature()
+        {
+            if (!UsesTemperature)
+            {
+                return MachineValueLevel.Inactive;
+            }
+
+            float temperature = _temperatureSensor.CurrentValue;
+            if (temperature < _config.MinValidTemperatureCelsius || temperature > _config.MaxValidTemperatureCelsius)
+            {
+                return CurrentState == MachineState.Running ? MachineValueLevel.Alarm : MachineValueLevel.Inactive;
+            }
+
+            return Mathf.Abs(temperature - _targetTemperature) > _config.WarningToleranceCelsius
+                ? MachineValueLevel.Warning
+                : MachineValueLevel.Normal;
+        }
+
+        private MachineValueLevel EvaluateLastDwell()
+        {
+            if (_lastDwellSeconds < 0f)
+            {
+                return MachineValueLevel.Inactive;
+            }
+
+            // More than 10 % off the setpoint (e.g. belt stood still = overbaked) -> amber.
+            return Mathf.Abs(_lastDwellSeconds - _dwellSeconds) > _dwellSeconds * 0.1f
+                ? MachineValueLevel.Warning
+                : MachineValueLevel.Normal;
         }
 
         // ---- Content messages ----
@@ -449,6 +623,7 @@ namespace Game.Production
 
         protected override void OnEnterMaintenance()
         {
+            _heaterFailed = false; // maintenance repairs a simulated heater failure
             SetTemperatureControl(false);
             _outOfRangeTimer = 0f;
             Report(ProcessInfo.Maintenance, force: true);

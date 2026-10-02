@@ -1,0 +1,8 @@
+18:30:10 >> stop
+18:30:11 >> wait 5
+18:30:16 >> tests
+18:30:16 EditMode tests started
+18:30:16 >> wait 20
+18:30:17 [Log] Saving results to: C:/Users/hoang/AppData/LocalLow/DefaultCompany/Food Production Simulator\TestResults.xml
+18:30:17 TESTS FINISHED: passed=48 failed=0 skipped=0 inconclusive=0
+18:30:17 [Log] Executing IPostBuildCleanup for: Unity.PerformanceTesting.Editor.TestRunBuilder.

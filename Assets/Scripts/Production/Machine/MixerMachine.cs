@@ -27,7 +27,7 @@ using UnityEngine.UI;
 
 namespace Game.Production
 {
-    public class MixerMachine : MachineBase
+    public class MixerMachine : MachineBase, IMachineParameterSource
     {
         private enum RunningState
         {
@@ -58,6 +58,9 @@ namespace Game.Production
         private Coroutine _stoppingRoutine;
         private Coroutine _mixingTimerCoroutine;
         private Coroutine _drumRotationCoroutine;
+        private int _batchesProduced;
+        private List<MachineParameter> _parameters;
+        private List<MachineReadout> _readouts;
         private SO_RecipeDefinition _pendingRecipe;
 
         /// <summary>Raised once the mixing timer elapses (i.e. a run has finished).</summary>
@@ -128,6 +131,77 @@ namespace Game.Production
                 default:
                     return false;
             }
+        }
+
+        // ---- HMI terminal values (IMachineParameterSource) ----
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineParameter> Parameters
+        {
+            get
+            {
+                if (_parameters == null)
+                {
+                    BuildHmiValues();
+                }
+                return _parameters;
+            }
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineReadout> Readouts
+        {
+            get
+            {
+                if (_readouts == null)
+                {
+                    BuildHmiValues();
+                }
+                return _readouts;
+            }
+        }
+
+        private bool IsMixing => _mixingTimerCoroutine != null && CurrentState == MachineState.Running;
+
+        private void BuildHmiValues()
+        {
+            // A changed mixing duration applies to the next batch; a batch already mixing keeps its timer.
+            // TODO localization: labels are English fallbacks until keys exist in the table.
+            _parameters = new List<MachineParameter>
+            {
+                new MachineParameter("mixingDuration", "Mixing time", "s",
+                    _config.MinMixingDurationSeconds, _config.MaxMixingDurationSeconds,
+                    _config.MixingDurationStepSeconds, "0",
+                    () => MixingDurationSeconds, SetMixingDuration),
+            };
+
+            _readouts = new List<MachineReadout>
+            {
+                new MachineReadout("cycleTime", "Cycle time", "s",
+                    () => MixingDurationSeconds.ToString("0"),
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.CycleTime),
+                new MachineReadout("setpoint", "Setpoint", "s",
+                    () => MixingDurationSeconds.ToString("0"),
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.Setpoint),
+                new MachineReadout("remaining", "Remaining", "s",
+                    () => IsMixing ? Mathf.Max(0f, runTimer).ToString("0") : "--",
+                    () => IsMixing ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("progress", "Mixing", "%",
+                    () => IsMixing && MixingDurationSeconds > 0f
+                        ? (Mathf.Clamp01(1f - runTimer / MixingDurationSeconds) * 100f).ToString("0")
+                        : (_isMixingComplete ? "100" : "--"),
+                    () => IsMixing || _isMixingComplete ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("batchReady", "Batch ready to tilt", "",
+                    () => _isMixingComplete ? "Yes" : "No",
+                    () => _isMixingComplete ? MachineValueLevel.Warning : MachineValueLevel.Inactive),
+                new MachineReadout("drum", "Drum", "",
+                    () => _isTilted ? "Tilted" : "Upright",
+                    () => _isTilted ? MachineValueLevel.Warning : MachineValueLevel.Normal),
+                new MachineReadout("batchWeight", "Batch weight", "kg",
+                    () => (_config.DoughBallWeightGrams / 1000f).ToString("0.0")),
+                new MachineReadout("batchesProduced", "Batches produced", "pcs",
+                    () => _batchesProduced.ToString()),
+            };
         }
 
         /// <summary>Operator-facing HMI setting, analogous to SetPressSpeed on PressMachine.</summary>
@@ -236,6 +310,7 @@ namespace Game.Production
             };
 
             SpawnDoughSphere(dough);
+            _batchesProduced++;
 
             _isMixingComplete = false;
             _isTilted = true;

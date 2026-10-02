@@ -50,20 +50,46 @@ namespace Game.HMI
 
         public void SetState(MachineState state)
         {
+            _lastState = state;
+            bool showWarning = _hasWarning && state != MachineState.Fault && state != MachineState.Maintenance;
+
             if (_stateText != null)
             {
-                _stateText.text = _theme != null
+                string stateName = _theme != null
                     ? _theme.GetMachineStateDisplayName(state)
                     : state.ToString();
+                _stateText.text = showWarning && !string.IsNullOrEmpty(_warningReason)
+                    ? $"{stateName} – {_warningReason}"
+                    : stateName;
             }
 
             if (_stateLamp != null)
             {
-                _stateLamp.color = _theme != null ? _theme.GetMachineStateColor(state) : Color.grey;
+                Color warningColor = _theme != null ? _theme.Warning : new Color(0.98f, 0.72f, 0.16f);
+                _stateLamp.color = showWarning ? warningColor
+                    : _theme != null ? _theme.GetMachineStateColor(state) : Color.grey;
             }
         }
 
         public void SetButton() => _button.interactable = true;
+
+        private MachineState? _lastState;
+        private bool _hasWarning;
+        private string _warningReason = string.Empty;
+
+        /// <summary>
+        /// Non-blocking warning (MachineBase.SetWarning): lamp turns amber and the reason is shown next to
+        /// the state, unless the machine is in Fault (red wins).
+        /// </summary>
+        public void SetWarning(bool hasWarning, string reason)
+        {
+            _hasWarning = hasWarning;
+            _warningReason = hasWarning ? reason ?? string.Empty : string.Empty;
+            if (_lastState.HasValue)
+            {
+                SetState(_lastState.Value);
+            }
+        }
 
         /// <summary>Placeholder state used until a machine is bound to this row.</summary>
         public void SetUnknownState()

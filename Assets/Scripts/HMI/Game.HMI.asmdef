@@ -4,6 +4,7 @@
     "references": [
         "Game.Core",
         "Game.Production",
+        "Game.Quality",
         "Unity.TextMeshPro",
         "Unity.Localization"
     ],

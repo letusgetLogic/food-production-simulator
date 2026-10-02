@@ -34,7 +34,7 @@ namespace Game.Production
     /// with the clips toggle-on / toggle-off / toggle. The machine drives the "toggle" state's time
     /// itself (speed 0 + Sample), so no AnimatorController is needed.
     /// </summary>
-    public class PressMachine : MachineBase
+    public class PressMachine : MachineBase, IMachineParameterSource
     {
         /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
         public enum PressInfo
@@ -52,6 +52,10 @@ namespace Game.Production
             OutputBlocked,
             WrongProduct
         }
+
+        public const string FaultReasonWrongProduct = "WrongProduct";
+        public const string RejectReasonWrongProduct = "WrongProduct";
+        public const string RejectReasonPressInterrupted = "PressInterrupted";
 
         [SerializeField] private SO_PressConfig _config;
 
@@ -98,6 +102,10 @@ namespace Game.Production
         private Coroutine _startingRoutine;
         private Coroutine _stoppingRoutine;
 
+        private int _formedCount;
+        private List<MachineParameter> _parameters;
+        private List<MachineReadout> _readouts;
+
         /// <summary>Raised when a pizza base has been formed (before it is released to the output).</summary>
         public event Action<ProductInstance> ProductFormed;
 
@@ -107,6 +115,9 @@ namespace Game.Production
         public bool IsPressing => _isPressing;
         public bool IsHoldingProduct => _heldProduct != null;
         public bool IsOutputBlocked => _outputSensor != null && _outputSensor.CurrentValue;
+
+        /// <summary>Number of pizza bases formed since scene start.</summary>
+        public int FormedCount => _formedCount;
 
         /// <summary>Duration of one forming cycle at the current speed (for the HMI "Zykluszeit" readout).</summary>
         public float CycleTimeSeconds => ClipLength / _pressSpeed;
@@ -208,6 +219,77 @@ namespace Game.Production
             _targetThicknessMm = Mathf.Clamp(thicknessMm, _config.MinThicknessMm, _config.MaxThicknessMm);
         }
 
+        // ---- HMI terminal values (IMachineParameterSource) ----
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineParameter> Parameters
+        {
+            get
+            {
+                if (_parameters == null)
+                {
+                    BuildHmiValues();
+                }
+                return _parameters;
+            }
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineReadout> Readouts
+        {
+            get
+            {
+                if (_readouts == null)
+                {
+                    BuildHmiValues();
+                }
+                return _readouts;
+            }
+        }
+
+        private void BuildHmiValues()
+        {
+            // The operator sets the cycle time; it maps onto the press speed (cycle = clipLength / speed),
+            // so its limits follow from the speed limits in SO_PressConfig.
+            float minCycle = ClipLength / _config.MaxPressSpeed;
+            float maxCycle = ClipLength / _config.MinPressSpeed;
+
+            // TODO localization: labels are English fallbacks until keys exist in the table.
+            _parameters = new List<MachineParameter>
+            {
+                new MachineParameter("cycleTime", "Cycle time", "s",
+                    minCycle, maxCycle, _config.CycleTimeStepSeconds, "0.0",
+                    () => CycleTimeSeconds, SetCycleTime),
+                new MachineParameter("diameter", "Diameter", "cm",
+                    _config.MinDiameterCm, _config.MaxDiameterCm, _config.DiameterStepCm, "0.0",
+                    () => _targetDiameterCm, SetTargetDiameter),
+                new MachineParameter("thickness", "Thickness", "mm",
+                    _config.MinThicknessMm, _config.MaxThicknessMm, _config.ThicknessStepMm, "0.0",
+                    () => _targetThicknessMm, SetTargetThickness),
+            };
+
+            _readouts = new List<MachineReadout>
+            {
+                new MachineReadout("cycleTime", "Cycle time", "s",
+                    () => CycleTimeSeconds.ToString("0.0"),
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.CycleTime),
+                new MachineReadout("setpoint", "Setpoint", "",
+                    () => $"\u00d8{_targetDiameterCm:0.#} cm / {_targetThicknessMm:0.#} mm",
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.Setpoint),
+                new MachineReadout("stroke", "Stroke", "%",
+                    () => _isPressing ? (StrokeProgress01 * 100f).ToString("0") : "--",
+                    () => _isPressing ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("productInPress", "Dough in press", "",
+                    () => IsHoldingProduct ? "Yes" : "No",
+                    () => IsHoldingProduct ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("formedCount", "Bases formed", "pcs",
+                    () => _formedCount.ToString()),
+                new MachineReadout("output", "Output", "",
+                    () => IsOutputBlocked ? "Blocked" : "Free",
+                    () => IsOutputBlocked ? MachineValueLevel.Warning : MachineValueLevel.Normal),
+            };
+        }
+
         // ---- Forming cycle ----
 
         private void TryTakeProduct()
@@ -221,6 +303,9 @@ namespace Game.Production
 
             if (token.Product.CurrentState != ProductState.PortionedDough)
             {
+                // Marked as scrap so it is ignored after maintenance and rides out of the press
+                // instead of faulting the press again on every restart.
+                token.Product.Reject(RejectReasonWrongProduct);
                 Report(PressInfo.WrongProduct, force: true);
                 TriggerFault($"WrongProduct:{token.Product.CurrentState}");
                 return;
@@ -268,6 +353,7 @@ namespace Game.Production
             product.FormedDiameterCm = _targetDiameterCm;
             product.FormedThicknessMm = _targetThicknessMm;
 
+            _formedCount++;
             ProductFormed?.Invoke(product);
             Report(PressInfo.Formed, force: true);
 
@@ -363,8 +449,8 @@ namespace Game.Production
                 return false;
             }
 
-            // Already pressed (or further) - just passing out of the press on the belt.
-            if (token.Product.CurrentState > ProductState.PortionedDough)
+            // Already pressed (or further), or already scrap - just passing out of the press on the belt.
+            if (token.Product.CurrentState > ProductState.PortionedDough || token.Product.IsRejected)
             {
                 return false;
             }
@@ -494,11 +580,31 @@ namespace Game.Production
 
         protected override void OnEnterFault(string reason)
         {
-            // Minimal safeguard only, same as the other stations - real fault handling is still
-            // open (FaultSystem, Week 2). A stroke in progress freezes and resumes after restart.
+            // FaultSystem rule "product held in a fault":
+            //  - stroke in progress -> piston retracts, the half-pressed dough is released as scrap
+            //    (RejectReason PressInterrupted) and rides out; it is never pressed a second time.
+            //  - stroke finished, only waiting for a free output -> the formed base stays held and is
+            //    released after the restart (it is a good product).
             if (_lastReportedInfo != PressInfo.WrongProduct)
             {
                 Report(PressInfo.Fault, force: true);
+            }
+
+            if (_isPressing && _heldProduct != null)
+            {
+                _isPressing = false;
+                SamplePiston(0f);
+                _heldProduct.Product?.Reject(RejectReasonPressInterrupted);
+
+                if (_heldBody != null)
+                {
+                    _heldBody.isKinematic = false;
+                    _heldBody.linearVelocity = Vector3.zero;
+                    _heldBody.angularVelocity = Vector3.zero;
+                }
+
+                _heldProduct = null;
+                _heldBody = null;
             }
 
             if (_startingRoutine != null)

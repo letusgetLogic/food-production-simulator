@@ -31,7 +31,7 @@ namespace Game.Production
     /// No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/
     /// SetPortioningDuration() are set by the operator at the HMI, reading the recipe off the panel.
     /// </summary>
-    public class PortionerMachine : MachineBase, IDownstreamLink
+    public class PortionerMachine : MachineBase, IDownstreamLink, IMachineParameterSource
     {
         /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
         public enum PortionerInfo
@@ -111,10 +111,28 @@ namespace Game.Production
         private Coroutine _startingRoutine;
         private Coroutine _stoppingRoutine;
 
+        private int _portionsProduced;
+        private float _lastPortionWeightGrams = -1f;
+        private List<MachineParameter> _parameters;
+        private List<MachineReadout> _readouts;
+
         /// <summary>Raised whenever a portion has been instantiated at the spawn point.</summary>
         public event Action<ProductInstance> PortionDispatched;
 
         public bool IsPortioning => _isProcessing;
+
+        public float TargetWeightGrams => _targetWeightGrams;
+        public float ToleranceGrams => _toleranceGrams;
+        public float PortioningDurationSeconds => _portioningDurationSeconds;
+        public int PortionsProduced => _portionsProduced;
+
+        /// <summary>Weight of the last dispatched portion, or a negative value if none was produced yet.</summary>
+        public float LastPortionWeightGrams => _lastPortionWeightGrams;
+
+        /// <summary>0..1 progress of the portion currently being produced.</summary>
+        public float PortioningProgress01 => _isProcessing && _portioningDurationSeconds > 0f
+            ? Mathf.Clamp01(1f - _processingTimer / _portioningDurationSeconds)
+            : 0f;
 
         public bool IsPotLoaded => _potSensor != null && _potSensor.CurrentValue;
 
@@ -401,6 +419,9 @@ namespace Game.Production
                 return;
             }
 
+            _portionsProduced++;
+            _lastPortionWeightGrams = portionWeight;
+
             PortionDispatched?.Invoke(portion);
             Report(PortionerInfo.PortionDispatched, force: true);
         }
@@ -439,6 +460,110 @@ namespace Game.Production
         public void SetToleranceGrams(float grams)
         {
             _toleranceGrams = Mathf.Max(0f, grams);
+        }
+
+        // ---- HMI terminal values (IMachineParameterSource) ----
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineParameter> Parameters
+        {
+            get
+            {
+                if (_parameters == null)
+                {
+                    BuildHmiValues();
+                }
+                return _parameters;
+            }
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<MachineReadout> Readouts
+        {
+            get
+            {
+                if (_readouts == null)
+                {
+                    BuildHmiValues();
+                }
+                return _readouts;
+            }
+        }
+
+        private void BuildHmiValues()
+        {
+            // TODO localization: labels are English fallbacks until keys exist in the table.
+            _parameters = new List<MachineParameter>
+            {
+                new MachineParameter("targetWeight", "Target weight", "g",
+                    _config.MinTargetWeightGrams, _config.MaxTargetWeightGrams, _config.TargetWeightStepGrams, "0",
+                    () => _targetWeightGrams, SetTargetWeight),
+                new MachineParameter("tolerance", "Tolerance", "\u00b1 g",
+                    0f, _config.MaxToleranceGrams, _config.ToleranceStepGrams, "0",
+                    () => _toleranceGrams, SetToleranceGrams),
+                new MachineParameter("portioningDuration", "Portioning time", "s",
+                    _config.MinPortioningDurationSeconds, _config.MaxPortioningDurationSeconds,
+                    _config.PortioningDurationStepSeconds, "0.0",
+                    () => _portioningDurationSeconds, SetPortioningDuration),
+            };
+
+            _readouts = new List<MachineReadout>
+            {
+                new MachineReadout("hopperLevel", "Hopper level", "%",
+                    () => _hopper != null ? (_hopper.NormalizedLevel * 100f).ToString("0") : "--",
+                    EvaluateHopperLevel, MachineReadoutSlot.FillLevel),
+                new MachineReadout("cycleTime", "Cycle time", "s",
+                    () => _portioningDurationSeconds.ToString("0.0"),
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.CycleTime),
+                new MachineReadout("setpoint", "Setpoint", "g",
+                    () => $"{_targetWeightGrams:0} \u00b1 {_toleranceGrams:0}",
+                    () => MachineValueLevel.Normal, MachineReadoutSlot.Setpoint),
+                new MachineReadout("hopperContent", "Dough in hopper", "kg",
+                    () => _hopper != null ? (_hopper.CurrentAmountGrams / 1000f).ToString("0.00") : "--",
+                    EvaluateHopperLevel),
+                new MachineReadout("progress", "Portioning", "%",
+                    () => _isProcessing ? (PortioningProgress01 * 100f).ToString("0") : "--",
+                    () => _isProcessing ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("lastPortion", "Last portion", "g",
+                    () => _lastPortionWeightGrams >= 0f ? _lastPortionWeightGrams.ToString("0") : "--",
+                    EvaluateLastPortion),
+                new MachineReadout("portionsProduced", "Portions produced", "pcs",
+                    () => _portionsProduced.ToString()),
+                new MachineReadout("pot", "Pot on lift", "",
+                    () => IsPotLoaded ? "Yes" : "No",
+                    () => IsPotLoaded ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
+                new MachineReadout("output", "Output", "",
+                    () => IsOutputBlocked ? "Blocked" : "Free",
+                    () => IsOutputBlocked ? MachineValueLevel.Warning : MachineValueLevel.Normal),
+            };
+        }
+
+        private MachineValueLevel EvaluateHopperLevel()
+        {
+            if (_hopper == null)
+            {
+                return MachineValueLevel.Inactive;
+            }
+
+            if (_hopper.CurrentAmountGrams >= _targetWeightGrams)
+            {
+                return MachineValueLevel.Normal;
+            }
+
+            // Running without enough dough for one portion: the line starves -> amber.
+            return CurrentState == MachineState.Running ? MachineValueLevel.Warning : MachineValueLevel.Inactive;
+        }
+
+        private MachineValueLevel EvaluateLastPortion()
+        {
+            if (_lastPortionWeightGrams < 0f)
+            {
+                return MachineValueLevel.Inactive;
+            }
+
+            return Mathf.Abs(_lastPortionWeightGrams - _targetWeightGrams) <= _toleranceGrams
+                ? MachineValueLevel.Normal
+                : MachineValueLevel.Warning;
         }
 
         // ---- Content messages ----
