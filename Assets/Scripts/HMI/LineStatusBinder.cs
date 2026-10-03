@@ -83,6 +83,11 @@ namespace Game.HMI
                     continue;
                 }
 
+                panel.SetFigureLabels(
+                    LocText.Get("hmi.throughput_per_minute", "Throughput / min"),
+                    LocText.Get("hmi.produced", "Produced"),
+                    LocText.Get("hmi.scrap", "Scrap"),
+                    LocText.Get("hmi.active_faults", "Active faults"));
                 panel.SetAlarms(_alarms);
 
                 if (_qualityInspector != null)

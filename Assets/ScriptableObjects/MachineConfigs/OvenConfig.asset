@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4bd58117e893c45ad7faa2664d3ad5, type: 3}
+  m_Name: OvenConfig
+  m_EditorClassIdentifier: Game.Production::Game.Production.SO_ContinuousProcessConfig
+  InputState: 5
+  OutputState: 6
+  RecordDwellAsBakeTime: 1
+  WrongProductWarningSeconds: 3
+  StartupDurationSeconds: 1
+  ShutdownDurationSeconds: 1
+  DefaultDwellSeconds: 15
+  MinDwellSeconds: 5
+  MaxDwellSeconds: 60
+  DwellStepSeconds: 0.5
+  UsesTemperature: 1
+  DefaultTargetTemperatureCelsius: 280
+  MinTargetTemperatureCelsius: 150
+  MaxTargetTemperatureCelsius: 320
+  TemperatureStepCelsius: 5
+  WarningToleranceCelsius: 10
+  MinValidTemperatureCelsius: 250
+  MaxValidTemperatureCelsius: 320
+  OutOfRangeFaultGraceSeconds: 5
+  RequireTemperatureBeforeRun: 1
+  HeatUpTimeoutSeconds: 60
+  KeepTemperatureWhileStopped: 1

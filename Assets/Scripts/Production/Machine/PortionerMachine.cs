@@ -31,7 +31,7 @@ namespace Game.Production
     /// No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/
     /// SetPortioningDuration() are set by the operator at the HMI, reading the recipe off the panel.
     /// </summary>
-    public class PortionerMachine : MachineBase, IDownstreamLink, IMachineParameterSource
+    public class PortionerMachine : MachineBase, IDownstreamLink, IMachineParameterSource, ISaveableState
     {
         /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
         public enum PortionerInfo
@@ -530,10 +530,10 @@ namespace Game.Production
                 new MachineReadout("portionsProduced", "Portions produced", "pcs",
                     () => _portionsProduced.ToString()),
                 new MachineReadout("pot", "Pot on lift", "",
-                    () => IsPotLoaded ? "Yes" : "No",
+                    () => IsPotLoaded ? LocText.Get("hmi.yes", "Yes") : LocText.Get("hmi.no", "No"),
                     () => IsPotLoaded ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
                 new MachineReadout("output", "Output", "",
-                    () => IsOutputBlocked ? "Blocked" : "Free",
+                    () => IsOutputBlocked ? LocText.Get("hmi.blocked", "Blocked") : LocText.Get("hmi.free", "Free"),
                     () => IsOutputBlocked ? MachineValueLevel.Warning : MachineValueLevel.Normal),
             };
         }
@@ -588,7 +588,7 @@ namespace Game.Production
         private string Info(PortionerInfo info)
         {
             string localized = _contents.Find(c => c.State == info)?.Info;
-            return string.IsNullOrEmpty(localized) ? FallbackText(info) : localized;
+            return string.IsNullOrEmpty(localized) ? LocText.Info("portioner", info, FallbackText(info)) : localized;
         }
 
         /// <summary>Used until the localization keys exist in the table.</summary>
@@ -683,5 +683,21 @@ namespace Game.Production
             pot.transform.localPosition = Vector3.zero;
         }
 
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values)
+        {
+            values.Set("portionsProduced", _portionsProduced);
+            values.Set("lastPortionWeight", _lastPortionWeightGrams);
+        }
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values)
+        {
+            _portionsProduced = values.GetInt("portionsProduced", _portionsProduced);
+            _lastPortionWeightGrams = values.GetFloat("lastPortionWeight", _lastPortionWeightGrams);
+        }
     }
 }

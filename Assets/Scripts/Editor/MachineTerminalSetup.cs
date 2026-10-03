@@ -84,7 +84,7 @@ namespace Game.EditorTools
             }
 
             Debug.Log("[MachineTerminalSetup]\n" + message);
-            EditorUtility.DisplayDialog("Setup Machine Terminals", message + "\n\nSzene speichern nicht vergessen (Strg+S).", "OK");
+            SetupUi.Dialog("Setup Machine Terminals", message + "\n\nSzene speichern nicht vergessen (Strg+S).", "OK");
         }
 
         private static void WireMachineTerminal(MachineBase machine, List<string> log, List<string> problems)

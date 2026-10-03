@@ -27,7 +27,7 @@ using UnityEngine.UI;
 
 namespace Game.Production
 {
-    public class MixerMachine : MachineBase, IMachineParameterSource
+    public class MixerMachine : MachineBase, IMachineParameterSource, ISaveableState
     {
         private enum RunningState
         {
@@ -192,10 +192,10 @@ namespace Game.Production
                         : (_isMixingComplete ? "100" : "--"),
                     () => IsMixing || _isMixingComplete ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
                 new MachineReadout("batchReady", "Batch ready to tilt", "",
-                    () => _isMixingComplete ? "Yes" : "No",
+                    () => _isMixingComplete ? LocText.Get("hmi.yes", "Yes") : LocText.Get("hmi.no", "No"),
                     () => _isMixingComplete ? MachineValueLevel.Warning : MachineValueLevel.Inactive),
                 new MachineReadout("drum", "Drum", "",
-                    () => _isTilted ? "Tilted" : "Upright",
+                    () => _isTilted ? LocText.Get("hmi.tilted", "Tilted") : LocText.Get("hmi.upright", "Upright"),
                     () => _isTilted ? MachineValueLevel.Warning : MachineValueLevel.Normal),
                 new MachineReadout("batchWeight", "Batch weight", "kg",
                     () => (_config.DoughBallWeightGrams / 1000f).ToString("0.0")),
@@ -387,5 +387,14 @@ namespace Game.Production
             yield return new WaitForSeconds(_config.ShutdownDurationSeconds);
             SetState(MachineState.Stopped);
         }
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values) => values.Set("batchesProduced", _batchesProduced);
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values) =>
+            _batchesProduced = values.GetInt("batchesProduced", _batchesProduced);
     }
 }

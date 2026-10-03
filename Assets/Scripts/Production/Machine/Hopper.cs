@@ -62,15 +62,6 @@ namespace Game.Production
             : 0f;
 
         /// <summary>
-        /// Adds bulk dough without a physical ball. Only kept for the legacy PortionerElevator.
-        /// </summary>
-        [Obsolete("Dough now enters the hopper as physical DoughSphere objects via the intake trigger.")]
-        public void AddDough(float amountGrams)
-        {
-            _looseGrams += Mathf.Max(0f, amountGrams);
-        }
-
-        /// <summary>
         /// Removes <paramref name="amountGrams"/> from the content, oldest ball first. Shrinks the
         /// balls accordingly and destroys every ball that reaches 0 g. Returns the amount actually
         /// removed (less than requested if the hopper runs empty).

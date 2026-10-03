@@ -14,6 +14,25 @@ namespace Game.Production
         private readonly Dictionary<string, MachineState> _states = new Dictionary<string, MachineState>();
         private readonly Dictionary<string, string> _displayNames = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _warnings = new Dictionary<string, string>();
+        private readonly HashSet<string> _hiddenUnlessFault = new HashSet<string>();
+
+        /// <summary>
+        /// Marks a machine (e.g. a conveyor belt) as "only show in the overview while it is in Fault"
+        /// (HMI decision 01.10.). Call before the first ReportState.
+        /// </summary>
+        public void SetHiddenUnlessFault(string machineId, bool hidden)
+        {
+            if (hidden)
+            {
+                _hiddenUnlessFault.Add(machineId);
+            }
+            else
+            {
+                _hiddenUnlessFault.Remove(machineId);
+            }
+        }
+
+        public bool IsHiddenUnlessFault(string machineId) => _hiddenUnlessFault.Contains(machineId);
 
         public event Action<string, string, MachineState> MachineStateChanged; // (machineId, displayName, state)
 
@@ -54,6 +73,7 @@ namespace Game.Production
             _states.Clear();
             _displayNames.Clear();
             _warnings.Clear();
+            _hiddenUnlessFault.Clear();
         }
     }
 }

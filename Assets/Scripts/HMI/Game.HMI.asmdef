@@ -5,6 +5,8 @@
         "Game.Core",
         "Game.Production",
         "Game.Quality",
+        "Game.Persistence",
+        "Unity.InputSystem",
         "Unity.TextMeshPro",
         "Unity.Localization"
     ],

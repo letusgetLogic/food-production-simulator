@@ -67,6 +67,9 @@ namespace Game.Production
                 _languageChannel.LanguageChanged += nameHandler;
                 _nameHandlers.Add(machineId, nameHandler);
 
+                // Belts only appear in the overview while they are in Fault.
+                _channel.SetHiddenUnlessFault(machineId, machine is ConveyorBelt);
+
                 _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
             }
         }

@@ -34,7 +34,7 @@ namespace Game.Production
     /// with the clips toggle-on / toggle-off / toggle. The machine drives the "toggle" state's time
     /// itself (speed 0 + Sample), so no AnimatorController is needed.
     /// </summary>
-    public class PressMachine : MachineBase, IMachineParameterSource
+    public class PressMachine : MachineBase, IMachineParameterSource, ISaveableState
     {
         /// <summary>Content messages this machine reports via NotifyContentChanged.</summary>
         public enum PressInfo
@@ -280,12 +280,12 @@ namespace Game.Production
                     () => _isPressing ? (StrokeProgress01 * 100f).ToString("0") : "--",
                     () => _isPressing ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
                 new MachineReadout("productInPress", "Dough in press", "",
-                    () => IsHoldingProduct ? "Yes" : "No",
+                    () => IsHoldingProduct ? LocText.Get("hmi.yes", "Yes") : LocText.Get("hmi.no", "No"),
                     () => IsHoldingProduct ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
                 new MachineReadout("formedCount", "Bases formed", "pcs",
                     () => _formedCount.ToString()),
                 new MachineReadout("output", "Output", "",
-                    () => IsOutputBlocked ? "Blocked" : "Free",
+                    () => IsOutputBlocked ? LocText.Get("hmi.blocked", "Blocked") : LocText.Get("hmi.free", "Free"),
                     () => IsOutputBlocked ? MachineValueLevel.Warning : MachineValueLevel.Normal),
             };
         }
@@ -534,7 +534,7 @@ namespace Game.Production
         private string Info(PressInfo info)
         {
             string localized = _contents.Find(c => c.State == info)?.Info;
-            return string.IsNullOrEmpty(localized) ? FallbackText(info) : localized;
+            return string.IsNullOrEmpty(localized) ? LocText.Info("press", info, FallbackText(info)) : localized;
         }
 
         /// <summary>Used until the localization keys exist in the table.</summary>
@@ -643,5 +643,13 @@ namespace Game.Production
             Gizmos.DrawWireCube(Vector3.zero, _config.PressZoneHalfExtents * 2f);
             Gizmos.matrix = Matrix4x4.identity;
         }
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values) => values.Set("formedCount", _formedCount);
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values) => _formedCount = values.GetInt("formedCount", _formedCount);
     }
 }

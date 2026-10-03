@@ -28,6 +28,11 @@ namespace Game.Production
         public float MinThicknessMm = 2f;
         public float MaxThicknessMm = 8f;
 
+        [Header("HMI Setpoint Steps (operator input at the machine terminal)")]
+        [Min(0.01f)] public float CycleTimeStepSeconds = 0.1f;
+        [Min(0.01f)] public float DiameterStepCm = 0.5f;
+        [Min(0.01f)] public float ThicknessStepMm = 0.5f;
+
         [Header("Detection")]
         [Tooltip("Layers the products live on (DoughSphere is on layer 6).")]
         public LayerMask ProductLayer = ~0;

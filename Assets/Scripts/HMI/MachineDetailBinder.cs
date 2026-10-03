@@ -12,14 +12,34 @@ namespace Game.HMI
         [SerializeField] private MachineDetailPanel _detailPanel;
         [SerializeField] private MachineBase _machineInstance;
 
+        [Tooltip("How often setpoints/actual values are pulled from the machine (seconds, unscaled).")]
+        [SerializeField] private float _refreshIntervalSeconds = 0.2f;
+
         private MachineBase _boundMachine;
         private Action<MachineState, MachineState> _stateHandler;
+        private float _nextRefreshTime;
 
-        private void Awake()
+        // Start instead of Awake: the machine on the same GameObject must have run its own Awake
+        // (config defaults, clip length) before its setpoints are read.
+        private void Start()
         {
             if (_machineInstance)
             {
                 Bind(_machineInstance);
+            }
+        }
+
+        private void Update()
+        {
+            if (_boundMachine == null || _detailPanel == null || Time.unscaledTime < _nextRefreshTime)
+            {
+                return;
+            }
+
+            _nextRefreshTime = Time.unscaledTime + _refreshIntervalSeconds;
+            if (_detailPanel.isActiveAndEnabled)
+            {
+                _detailPanel.RefreshValues();
             }
         }
 
@@ -53,6 +73,8 @@ namespace Game.HMI
                 _detailPanel.CompleteMaintenanceRequested += () => _boundMachine.CompleteMaintenance();
                 _detailPanel.ResetToIdleRequested += () => _boundMachine.ResetToIdle();
             }
+
+            _detailPanel.SetValueSource(machine as IMachineParameterSource);
         }
 
         private void Unbind()
@@ -65,7 +87,11 @@ namespace Game.HMI
                 _boundMachine.ContentChanged -= _detailPanel.SetContent;
             }
 
-            _detailPanel.ClearDelegates();
+            if (_detailPanel != null)
+            {
+                _detailPanel.ClearDelegates();
+                _detailPanel.SetValueSource(null);
+            }
 
             _boundMachine = null;
             _stateHandler = null;

@@ -76,7 +76,7 @@ namespace Game.EditorTools
             if (outfeedRoot == null) missing.Add("conveyor-long (1) Variant");
             if (missing.Count > 0)
             {
-                EditorUtility.DisplayDialog("Setup Portioner-Former Line",
+                SetupUi.Dialog("Setup Portioner-Former Line",
                     "Nicht gefunden:\n- " + string.Join("\n- ", missing) + "\n\nNichts wurde geändert.", "OK");
                 return;
             }
@@ -110,7 +110,7 @@ namespace Game.EditorTools
             var outputSensor = pressSo.FindProperty("_outputSensor").objectReferenceValue as PresenceSensor;
             if (pressPoint == null)
             {
-                EditorUtility.DisplayDialog("Setup Portioner-Former Line", "Former hat keinen PressPoint zugewiesen.", "OK");
+                SetupUi.Dialog("Setup Portioner-Former Line", "Former hat keinen PressPoint zugewiesen.", "OK");
                 return;
             }
             if (outputSensor != null)
@@ -190,7 +190,7 @@ namespace Game.EditorTools
 
             string summary = "Fertig. Szene speichern (Strg+S) nicht vergessen.\n\n- " + string.Join("\n- ", log);
             Debug.Log("[Setup Portioner-Former Line]\n" + summary, controller);
-            EditorUtility.DisplayDialog("Setup Portioner-Former Line", summary, "OK");
+            SetupUi.Dialog("Setup Portioner-Former Line", summary, "OK");
             Selection.activeObject = controller.gameObject;
         }
 

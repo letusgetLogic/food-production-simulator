@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4bd58117e893c45ad7faa2664d3ad5, type: 3}
+  m_Name: CoolingConfig
+  m_EditorClassIdentifier: Game.Production::Game.Production.SO_ContinuousProcessConfig
+  InputState: 6
+  OutputState: 7
+  RecordDwellAsBakeTime: 0
+  WrongProductWarningSeconds: 3
+  StartupDurationSeconds: 1
+  ShutdownDurationSeconds: 1
+  DefaultDwellSeconds: 10
+  MinDwellSeconds: 3
+  MaxDwellSeconds: 40
+  DwellStepSeconds: 0.5
+  UsesTemperature: 1
+  DefaultTargetTemperatureCelsius: 20
+  MinTargetTemperatureCelsius: 5
+  MaxTargetTemperatureCelsius: 30
+  TemperatureStepCelsius: 5
+  WarningToleranceCelsius: 5
+  MinValidTemperatureCelsius: 0
+  MaxValidTemperatureCelsius: 35
+  OutOfRangeFaultGraceSeconds: 5
+  RequireTemperatureBeforeRun: 1
+  HeatUpTimeoutSeconds: 60
+  KeepTemperatureWhileStopped: 1

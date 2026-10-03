@@ -68,6 +68,7 @@ namespace Game.EditorTools
         private const float DriveCenterY = 0.1f;
         private const float TunnelHeight = 0.7f;
         private const float TerminalHeightAboveFloor = 1.14f;
+        private const float HandoverStepMeters = 0.003f;
 
         private static readonly Spec Oven = new Spec
         {
@@ -174,7 +175,7 @@ namespace Game.EditorTools
             ConveyorBelt upstreamBelt = upstream != null ? GetOwnedBelt(upstream) : null;
             if (upstreamBelt == null)
             {
-                EditorUtility.DisplayDialog(spec.Title,
+                SetupUi.Dialog(spec.Title,
                     $"Vorgelagerte Station '{spec.UpstreamStationName}' mit eigenem Band nicht gefunden.\n" +
                     "Erst die Station davor einbauen. Nichts wurde geändert.", "OK");
                 return;
@@ -187,25 +188,33 @@ namespace Game.EditorTools
             BeltGeometry upstreamGeo = Measure(upstreamBeltRoot, flow);
 
             // ---- New belt right behind it ----
+            // Every belt sits a few millimetres lower than the one before, so a product at the handover
+            // never runs against the edge of the next belt surface. Invisible, see also BeltPhysicsSetup.
+            Vector3 beltPosition = upstreamBeltRoot.position + flow * upstreamGeo.Length + Vector3.down * HandoverStepMeters;
             Transform beltRoot = FindRoot(spec.BeltRootName);
-            if (beltRoot == null)
+            if (beltRoot != null)
+            {
+                Undo.RecordObject(beltRoot, "Place " + spec.BeltRootName);
+                beltRoot.SetPositionAndRotation(beltPosition, upstreamBeltRoot.rotation);
+            }
+            else
             {
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(BeltPrefabPath);
                 if (prefab == null)
                 {
-                    EditorUtility.DisplayDialog(spec.Title, "Band-Prefab nicht gefunden: " + BeltPrefabPath, "OK");
+                    SetupUi.Dialog(spec.Title, "Band-Prefab nicht gefunden: " + BeltPrefabPath, "OK");
                     return;
                 }
 
                 var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
                 Undo.RegisterCreatedObjectUndo(instance, "Create " + spec.BeltRootName);
                 instance.name = spec.BeltRootName;
-                instance.transform.SetPositionAndRotation(
-                    upstreamBeltRoot.position + flow * upstreamGeo.Length, upstreamBeltRoot.rotation);
+                instance.transform.SetPositionAndRotation(beltPosition, upstreamBeltRoot.rotation);
                 beltRoot = instance.transform;
                 log.Add($"Band '{spec.BeltRootName}' hinter '{upstreamBeltRoot.name}' gesetzt");
             }
 
+            BeltPhysicsSetup.ApplyToBelt(beltRoot);
             var transportConfig = AssetDatabase.LoadAssetAtPath<SO_ConveyorConfig>(TransportConfigPath);
             ConveyorBelt belt = SetupBelt(beltRoot, flow, transportConfig, out BeltGeometry geo);
             log.Add($"Band: {geo.Length:0.00} m x {geo.Width:0.00} m");
@@ -323,7 +332,7 @@ namespace Game.EditorTools
             string summary = "Fertig. Szene speichern (Strg+S) nicht vergessen.\n\n- " + string.Join("\n- ", log) +
                              "\n\nPrüfen: Steht das neue Band frei (keine Wand im Weg)?";
             Debug.Log($"[{spec.Title}]\n" + summary, machine);
-            EditorUtility.DisplayDialog(spec.Title, summary, "OK");
+            SetupUi.Dialog(spec.Title, summary, "OK");
             Selection.activeObject = station.gameObject;
         }
 

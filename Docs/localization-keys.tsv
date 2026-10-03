@@ -1,0 +1,223 @@
+hmi.game_saved	Game saved	Spiel gespeichert	Partie sauvegardée	Partida guardada
+hmi.save_failed	Saving failed	Speichern fehlgeschlagen	Échec de la sauvegarde	Error al guardar
+hmi.load_failed	Loading failed	Laden fehlgeschlagen	Échec du chargement	Error al cargar
+hmi.paused	PAUSED	PAUSE	PAUSE	PAUSA
+hmi.resume	Resume	Fortsetzen	Reprendre	Continuar
+hmi.save_game	Save game	Spiel speichern	Sauvegarder	Guardar partida
+hmi.load_game	Load game	Spiel laden	Charger	Cargar partida
+hmi.controls	Controls	Steuerung	Commandes	Controles
+hmi.quit	Quit	Beenden	Quitter	Salir
+hmi.controls_text	"WASD / arrow keys - move
+Mouse - look around
+Shift - sprint
+E - interact / pick up
+Q - put down
+Left click - buttons on screens and terminals
+Esc - close screen / pause
+F5 - quick save, F9 - quick load
+F1 - debug panel (development)"	"WASD / Pfeiltasten – bewegen
+Maus – umsehen
+Shift – sprinten
+E – benutzen / aufheben
+Q – ablegen
+Linksklick – Knöpfe an Bildschirmen und Terminals
+Esc – Bildschirm schließen / Pause
+F5 – Schnellspeichern, F9 – Schnellladen
+F1 – Debug-Panel (Entwicklung)"	"ZQSD / flèches – se déplacer
+Souris – regarder
+Maj – courir
+E – utiliser / ramasser
+A – poser
+Clic gauche – boutons des écrans et terminaux
+Échap – fermer l’écran / pause
+F5 – sauvegarde rapide, F9 – chargement rapide
+F1 – panneau de débogage (développement)"	"WASD / flechas – moverse
+Ratón – mirar
+Mayús – correr
+E – usar / recoger
+Q – soltar
+Clic izquierdo – botones de pantallas y terminales
+Esc – cerrar pantalla / pausa
+F5 – guardado rápido, F9 – carga rápida
+F1 – panel de depuración (desarrollo)"
+hmi.line_statistics	LINE STATISTICS	LINIENSTATISTIK	STATISTIQUES DE LA LIGNE	ESTADÍSTICAS DE LA LÍNEA
+hmi.back	Back	Zurück	Retour	Volver
+hmi.scrap_by_cause	SCRAP BY CAUSE	AUSSCHUSS NACH URSACHE	REBUTS PAR CAUSE	DESECHOS POR CAUSA
+hmi.faults_by_type	FAULTS BY TYPE	STÖRUNGEN NACH ART	DÉFAUTS PAR TYPE	FALLOS POR TIPO
+hmi.downtime_by_machine	DOWNTIME BY MACHINE	STILLSTAND JE MASCHINE	ARRÊTS PAR MACHINE	PARADAS POR MÁQUINA
+hmi.run_time	Run time	Laufzeit	Durée de marche	Tiempo de funcionamiento
+hmi.good	Good	Gut	Bons	Buenas
+hmi.scrap	Scrap	Ausschuss	Rebuts	Desechos
+hmi.throughput_per_minute	Throughput / min	Durchsatz / min	Débit / min	Rendimiento / min
+hmi.availability	Availability	Verfügbarkeit	Disponibilité	Disponibilidad
+hmi.none	none	keine	aucun	ninguno
+hmi.bake_time	Bake time	Backzeit	Temps de cuisson	Tiempo de horneado
+hmi.dwell_time	Dwell time	Verweilzeit	Temps de séjour	Tiempo de permanencia
+hmi.temperature	Temperature	Temperatur	Température	Temperatura
+hmi.setpoint	Setpoint	Sollwert	Consigne	Consigna
+hmi.products_inside	Products inside	Produkte im Tunnel	Produits dans le tunnel	Productos en el túnel
+hmi.last_bake_time	Last bake time	Letzte Backzeit	Dernier temps de cuisson	Último tiempo de horneado
+hmi.last_dwell_time	Last dwell time	Letzte Verweilzeit	Dernier temps de séjour	Último tiempo de permanencia
+hmi.last_product_temp	Last product temp.	Letzte Produkttemp.	Dernière temp. produit	Última temp. producto
+hmi.products_completed	Products completed	Fertige Produkte	Produits terminés	Productos terminados
+hmi.wrong_products	Wrong products	Falsche Produkte	Produits incorrects	Productos incorrectos
+hmi.belt	Belt	Band	Convoyeur	Cinta
+hmi.sauce	Sauce	Sauce	Sauce	Salsa
+hmi.topping	Topping	Belag	Garniture	Ingredientes
+hmi.sauce_tank	Sauce tank	Saucentank	Réservoir de sauce	Depósito de salsa
+hmi.topping_hopper	Topping hopper	Belagbehälter	Trémie de garniture	Tolva de ingredientes
+hmi.last_sauce	Last sauce	Letzte Sauce	Dernière sauce	Última salsa
+hmi.last_topping	Last topping	Letzter Belag	Dernière garniture	Últimos ingredientes
+hmi.pizzas_dosed	Pizzas dosed	Dosierte Pizzen	Pizzas dosées	Pizzas dosificadas
+hmi.passed_undosed	Passed undosed	Undosiert durchgelaufen	Passées sans dosage	Pasadas sin dosificar
+hmi.moving	Moving	Läuft	En marche	En marcha
+hmi.mixing_time	Mixing time	Mischzeit	Temps de pétrissage	Tiempo de amasado
+hmi.cycle_time	Cycle time	Zykluszeit	Temps de cycle	Tiempo de ciclo
+hmi.remaining	Remaining	Restzeit	Temps restant	Tiempo restante
+hmi.mixing	Mixing	Mischen	Pétrissage	Amasado
+hmi.batch_ready_to_tilt	Batch ready to tilt	Charge bereit zum Kippen	Lot prêt à basculer	Lote listo para volcar
+hmi.yes	Yes	Ja	Oui	Sí
+hmi.no	No	Nein	Non	No
+hmi.drum	Drum	Trommel	Cuve	Cuba
+hmi.tilted	Tilted	Gekippt	Basculée	Volcada
+hmi.upright	Upright	Aufrecht	Droite	Vertical
+hmi.batch_weight	Batch weight	Chargengewicht	Poids du lot	Peso del lote
+hmi.batches_produced	Batches produced	Produzierte Chargen	Lots produits	Lotes producidos
+hmi.target_weight	Target weight	Zielgewicht	Poids cible	Peso objetivo
+hmi.tolerance	Tolerance	Toleranz	Tolérance	Tolerancia
+hmi.portioning_time	Portioning time	Portionierzeit	Temps de portionnage	Tiempo de porcionado
+hmi.hopper_level	Hopper level	Trichter-Füllstand	Niveau de la trémie	Nivel de la tolva
+hmi.dough_in_hopper	Dough in hopper	Teig im Trichter	Pâte dans la trémie	Masa en la tolva
+hmi.portioning	Portioning	Portionieren	Portionnage	Porcionado
+hmi.last_portion	Last portion	Letzte Portion	Dernière portion	Última porción
+hmi.portions_produced	Portions produced	Produzierte Portionen	Portions produites	Porciones producidas
+hmi.pot_on_lift	Pot on lift	Topf auf Lift	Cuve sur le lève-cuve	Cuba en el elevador
+hmi.output	Output	Auslauf	Sortie	Salida
+hmi.blocked	Blocked	Blockiert	Bloquée	Bloqueada
+hmi.free	Free	Frei	Libre	Libre
+hmi.diameter	Diameter	Durchmesser	Diamètre	Diámetro
+hmi.thickness	Thickness	Dicke	Épaisseur	Grosor
+hmi.stroke	Stroke	Hub	Course	Carrera
+hmi.dough_in_press	Dough in press	Teig in Presse	Pâte dans la presse	Masa en la prensa
+hmi.bases_formed	Bases formed	Geformte Böden	Fonds formés	Bases formadas
+hmi.setpoints	SETPOINTS	SOLLWERTE	CONSIGNES	CONSIGNAS
+hmi.actual_values	ACTUAL VALUES	ISTWERTE	VALEURS RÉELLES	VALORES REALES
+unit.pcs	pcs	Stk.	pcs	uds.
+warning.buffer_filling	Buffer filling	Puffer füllt sich	Tampon en remplissage	Búfer llenándose
+warning.buffer_full	Buffer full	Puffer voll	Tampon plein	Búfer lleno
+warning.held_by_downstream	Held by downstream	Wartet auf nächste Station	En attente du poste suivant	En espera de la estación siguiente
+warning.temperature_deviation	Temperature deviation	Temperaturabweichung	Écart de température	Desviación de temperatura
+warning.wrong_product	Wrong product	Falsches Produkt	Mauvais produit	Producto incorrecto
+warning.low_level	Low level	Füllstand niedrig	Niveau bas	Nivel bajo
+fault.sauce_empty.msg	Sauce tank empty	Saucentank leer	Réservoir de sauce vide	Depósito de salsa vacío
+fault.sauce_empty.remedy	Refill the sauce tank at the dosing station (refill button), acknowledge, complete maintenance, start.	Saucentank an der Dosierstation auffüllen (Nachfüllknopf), quittieren, Wartung abschließen, starten.	Remplir le réservoir de sauce à la station de dosage (bouton de remplissage), acquitter, terminer la maintenance, démarrer.	Rellenar el depósito de salsa en la estación de dosificación (botón de recarga), confirmar, finalizar el mantenimiento, arrancar.
+fault.topping_empty.msg	Topping hopper empty	Belagbehälter leer	Trémie de garniture vide	Tolva de ingredientes vacía
+fault.topping_empty.remedy	Refill the topping hopper at the dosing station (refill button), acknowledge, complete maintenance, start.	Belagbehälter an der Dosierstation auffüllen (Nachfüllknopf), quittieren, Wartung abschließen, starten.	Remplir la trémie de garniture à la station de dosage (bouton de remplissage), acquitter, terminer la maintenance, démarrer.	Rellenar la tolva de ingredientes en la estación de dosificación (botón de recarga), confirmar, finalizar el mantenimiento, arrancar.
+fault.buffer_full.msg	Press buffer full	Pressen-Puffer voll	Tampon de la presse plein	Búfer de la prensa lleno
+fault.buffer_full.remedy	Check the press (running? cycle time too long?). Then acknowledge the buffer belt and restart.	Presse prüfen (läuft sie? Zykluszeit zu lang?). Dann Pufferband quittieren und neu starten.	Vérifier la presse (en marche ? temps de cycle trop long ?). Puis acquitter le convoyeur tampon et redémarrer.	Revisar la prensa (¿en marcha? ¿tiempo de ciclo demasiado largo?). Después confirmar la cinta búfer y volver a arrancar.
+fault.jam.msg	Conveyor jam	Stau auf dem Band	Bourrage du convoyeur	Atasco en la cinta
+fault.jam.remedy	Remove the stuck product from the belt, acknowledge, complete maintenance, start the belt.	Festsitzendes Produkt vom Band entfernen, quittieren, Wartung abschließen, Band starten.	Retirer le produit coincé du convoyeur, acquitter, terminer la maintenance, démarrer le convoyeur.	Retirar el producto atascado de la cinta, confirmar, finalizar el mantenimiento, arrancar la cinta.
+fault.temperature_out_of_range.msg	Temperature out of range	Temperatur außerhalb des Bereichs	Température hors plage	Temperatura fuera de rango
+fault.temperature_out_of_range.remedy	Heater/cooling unit defect. Acknowledge, complete maintenance (repairs the unit), start and wait for temperature.	Heizung/Kühlaggregat defekt. Quittieren, Wartung abschließen (repariert das Aggregat), starten und auf Temperatur warten.	Chauffage/groupe froid défectueux. Acquitter, terminer la maintenance (répare le groupe), démarrer et attendre la température.	Calefacción/unidad de frío averiada. Confirmar, finalizar el mantenimiento (repara la unidad), arrancar y esperar a la temperatura.
+fault.heat_up_timeout.msg	Setpoint temperature not reached	Solltemperatur nicht erreicht	Température de consigne non atteinte	Temperatura de consigna no alcanzada
+fault.heat_up_timeout.remedy	Check the temperature setpoint. Acknowledge, complete maintenance, start again.	Temperatur-Sollwert prüfen. Quittieren, Wartung abschließen, erneut starten.	Vérifier la consigne de température. Acquitter, terminer la maintenance, redémarrer.	Revisar la consigna de temperatura. Confirmar, finalizar el mantenimiento, volver a arrancar.
+fault.wrong_product.msg	Wrong product in press	Falsches Produkt in der Presse	Mauvais produit dans la presse	Producto incorrecto en la prensa
+fault.wrong_product.remedy	The product is marked as scrap and will be ignored. Acknowledge, complete maintenance, start.	Das Produkt ist als Ausschuss markiert und wird ignoriert. Quittieren, Wartung abschließen, starten.	Le produit est marqué comme rebut et sera ignoré. Acquitter, terminer la maintenance, démarrer.	El producto está marcado como desecho y se ignorará. Confirmar, finalizar el mantenimiento, arrancar.
+fault.belt_fault.msg	Station belt fault	Bandstörung der Station	Défaut du convoyeur de la station	Fallo de la cinta de la estación
+fault.belt_fault.remedy	Fix the belt fault first (see belt alarm), then acknowledge the station.	Zuerst die Bandstörung beheben (siehe Band-Alarm), dann die Station quittieren.	Corriger d'abord le défaut du convoyeur (voir l'alarme du convoyeur), puis acquitter la station.	Primero solucionar el fallo de la cinta (ver alarma de la cinta), después confirmar la estación.
+defect.not_finished	Not finished	Nicht fertig	Non terminé	Sin terminar
+defect.rejected	Rejected	Von Station aussortiert	Écarté par un poste	Descartado por una estación
+defect.underweight	Underweight	Untergewicht	Poids insuffisant	Peso insuficiente
+defect.overweight	Overweight	Übergewicht	Poids excessif	Exceso de peso
+defect.diameter	Diameter	Durchmesser	Diamètre	Diámetro
+defect.thickness	Thickness	Dicke	Épaisseur	Grosor
+defect.sauce_low	Sauce low	Zu wenig Sauce	Trop peu de sauce	Poca salsa
+defect.sauce_high	Sauce high	Zu viel Sauce	Trop de sauce	Demasiada salsa
+defect.topping_low	Topping low	Zu wenig Belag	Trop peu de garniture	Pocos ingredientes
+defect.topping_high	Topping high	Zu viel Belag	Trop de garniture	Demasiados ingredientes
+defect.underbaked	Underbaked	Zu kurz gebacken	Pas assez cuite	Poco horneada
+defect.overbaked	Overbaked	Zu lange gebacken	Trop cuite	Demasiado horneada
+defect.bake_temperature	Bake temperature	Backtemperatur	Température de cuisson	Temperatura de horneado
+defect.cooling_temperature	Cooling temperature	Kühltemperatur	Température de refroidissement	Temperatura de enfriamiento
+defect.cold_chain	Cold chain	Kühlkette unterbrochen	Chaîne du froid rompue	Cadena de frío interrumpida
+defect.missing	Missing measurement	Messwert fehlt	Mesure manquante	Falta la medición
+defect.weight	Weight	Gewicht	Poids	Peso
+defect.sauce	Sauce	Sauce	Sauce	Salsa
+defect.topping	Topping	Belag	Garniture	Ingredientes
+defect.bake_time	Bake time	Backzeit	Temps de cuisson	Tiempo de horneado
+conveyor.ready	Ready	Bereit	Prêt	Listo
+conveyor.starting	Starting	Startet	Démarrage	Arrancando
+conveyor.running	Running	Läuft	En marche	En marcha
+conveyor.stopping	Stopping	Stoppt	Arrêt en cours	Deteniéndose
+conveyor.stopped	Stopped	Gestoppt	Arrêté	Detenido
+conveyor.fault	Fault	Störung	Défaut	Fallo
+conveyor.maintenance	Maintenance	Wartung	Maintenance	Mantenimiento
+conveyor.held_by_downstream	Paused - next station cannot accept	Pausiert – nächste Station kann nicht aufnehmen	En pause – le poste suivant ne peut pas recevoir	En pausa – la estación siguiente no puede recibir
+conveyor.buffer_filling	Buffer filling	Puffer füllt sich	Tampon en remplissage	Búfer llenándose
+conveyor.buffer_full	Buffer full	Puffer voll	Tampon plein	Búfer lleno
+conveyor.jammed	Jam detected	Stau erkannt	Bourrage détecté	Atasco detectado
+process.ready	Ready	Bereit	Prêt	Listo
+process.starting	Starting	Startet	Démarrage	Arrancando
+process.running	Running	Läuft	En marche	En marcha
+process.stopping	Stopping	Stoppt	Arrêt en cours	Deteniéndose
+process.stopped	Stopped	Gestoppt	Arrêté	Detenido
+process.fault	Fault	Störung	Défaut	Fallo
+process.maintenance	Maintenance	Wartung	Maintenance	Mantenimiento
+process.reaching_temperature	Reaching temperature	Temperatur wird erreicht	Mise en température	Alcanzando temperatura
+process.product_completed	Product completed	Produkt fertig	Produit terminé	Producto terminado
+process.wrong_product	Wrong product passed through	Falsches Produkt durchgelaufen	Mauvais produit passé	Ha pasado un producto incorrecto
+process.temperature_deviation	Temperature deviation	Temperaturabweichung	Écart de température	Desviación de temperatura
+process.temperature_out_of_range	Temperature out of range	Temperatur außerhalb des Bereichs	Température hors plage	Temperatura fuera de rango
+process.heat_up_timeout	Setpoint not reached	Sollwert nicht erreicht	Consigne non atteinte	Consigna no alcanzada
+process.belt_fault	Belt fault	Bandstörung	Défaut du convoyeur	Fallo de la cinta
+dosing.ready	Ready	Bereit	Prêt	Listo
+dosing.starting	Starting	Startet	Démarrage	Arrancando
+dosing.running	Running	Läuft	En marche	En marcha
+dosing.stopping	Stopping	Stoppt	Arrêt en cours	Deteniéndose
+dosing.stopped	Stopped	Gestoppt	Arrêté	Detenido
+dosing.fault	Fault	Störung	Défaut	Fallo
+dosing.maintenance	Maintenance	Wartung	Maintenance	Mantenimiento
+dosing.sauce_applied	Sauce applied	Sauce aufgetragen	Sauce appliquée	Salsa aplicada
+dosing.topping_applied	Pizza topped (sauce / topping)	Pizza belegt (Sauce / Belag)	Pizza garnie (sauce / garniture)	Pizza cubierta (salsa / ingredientes)
+dosing.sauce_low	Sauce tank low	Saucentank fast leer	Réservoir de sauce presque vide	Depósito de salsa casi vacío
+dosing.topping_low	Topping hopper low	Belagbehälter fast leer	Trémie de garniture presque vide	Tolva de ingredientes casi vacía
+dosing.sauce_empty	Sauce tank empty - refill	Saucentank leer – auffüllen	Réservoir de sauce vide – remplir	Depósito de salsa vacío – rellenar
+dosing.topping_empty	Topping hopper empty - refill	Belagbehälter leer – auffüllen	Trémie de garniture vide – remplir	Tolva de ingredientes vacía – rellenar
+dosing.sauce_refilled	Sauce tank refilled	Saucentank aufgefüllt	Réservoir de sauce rempli	Depósito de salsa rellenado
+dosing.topping_refilled	Topping hopper refilled	Belagbehälter aufgefüllt	Trémie de garniture remplie	Tolva de ingredientes rellenada
+dosing.wrong_product	Product passed without dosing	Produkt ohne Dosierung durchgelaufen	Produit passé sans dosage	Producto pasado sin dosificar
+dosing.belt_fault	Belt fault	Bandstörung	Défaut du convoyeur	Fallo de la cinta
+portioner.ready	Ready	Bereit	Prêt	Listo
+portioner.starting	Starting	Startet	Démarrage	Arrancando
+portioner.running	Running	Läuft	En marche	En marcha
+portioner.stopping	Stopping	Stoppt	Arrêt en cours	Deteniéndose
+portioner.stopped	Stopped	Gestoppt	Arrêté	Detenido
+portioner.fault	Fault	Störung	Défaut	Fallo
+portioner.maintenance	Maintenance	Wartung	Maintenance	Mantenimiento
+portioner.pot_loaded	Pot loaded	Topf geladen	Cuve chargée	Cuba cargada
+portioner.pot_empty	Pot empty	Topf leer	Cuve vide	Cuba vacía
+portioner.tipping	Lifting pot	Topf wird angehoben	Levée de la cuve	Elevando la cuba
+portioner.tipped	Pot tipped into hopper	Topf in Trichter gekippt	Cuve vidée dans la trémie	Cuba volcada en la tolva
+portioner.lift_returned	Lift in loading position	Lift in Ladeposition	Lève-cuve en position de chargement	Elevador en posición de carga
+portioner.hopper_empty	Hopper empty	Trichter leer	Trémie vide	Tolva vacía
+portioner.portioning	Portioning	Portioniert	Portionnage	Porcionando
+portioner.portion_dispatched	Portion dispatched	Portion ausgegeben	Portion distribuée	Porción expedida
+portioner.output_blocked	Output blocked	Auslauf blockiert	Sortie bloquée	Salida bloqueada
+portioner.lift_lowering	Lowering lift	Lift fährt herunter	Descente du lève-cuve	Bajando el elevador
+portioner.not_enough_dough	Not enough dough for a portion	Nicht genug Teig für eine Portion	Pas assez de pâte pour une portion	Masa insuficiente para una porción
+portioner.hopper_draining	Draining hopper	Trichter wird geleert	Vidange de la trémie	Vaciando la tolva
+press.ready	Ready	Bereit	Prêt	Listo
+press.starting	Starting	Startet	Démarrage	Arrancando
+press.running	Running	Läuft	En marche	En marcha
+press.stopping	Stopping	Stoppt	Arrêt en cours	Deteniéndose
+press.stopped	Stopped	Gestoppt	Arrêté	Detenido
+press.fault	Fault	Störung	Défaut	Fallo
+press.maintenance	Maintenance	Wartung	Maintenance	Mantenimiento
+press.waiting_for_dough	Waiting for dough	Wartet auf Teig	En attente de pâte	Esperando masa
+press.pressing	Pressing	Presst	Pressage	Prensando
+press.formed	Pizza base formed	Pizzaboden geformt	Fond de pizza formé	Base de pizza formada
+press.output_blocked	Output blocked	Auslauf blockiert	Sortie bloquée	Salida bloqueada
+press.wrong_product	Wrong product in press	Falsches Produkt in der Presse	Mauvais produit dans la presse	Producto incorrecto en la prensa
+text.freezer	Shock freezer	Schockfroster	Surgélateur	Abatidor de temperatura
+hmi.produced	Produced	Produziert	Produits	Producidas
+hmi.active_faults	Active faults	Aktive Störungen	Défauts actifs	Fallos activos

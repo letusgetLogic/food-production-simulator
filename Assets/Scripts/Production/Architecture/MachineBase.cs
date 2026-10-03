@@ -25,7 +25,13 @@ namespace Game.Production
     {
         [SerializeField]
         private LocalizedString _nameKey;
-        public string NameKey => _nameKey.TableEntryReference.Key;
+        /// <summary>
+        /// Identifies the machine type for numbering ("Oven 1", "Oven 2"). The name keys are referenced by
+        /// key id (key name empty), so fall back to the id - otherwise all machines shared one counter.
+        /// </summary>
+        public string NameKey => string.IsNullOrEmpty(_nameKey.TableEntryReference.Key)
+            ? _nameKey.TableEntryReference.KeyId.ToString()
+            : _nameKey.TableEntryReference.Key;
         private MachineState _currentState = MachineState.Ready;
 
         /// <inheritdoc />
@@ -46,6 +52,13 @@ namespace Game.Production
         /// Cleared once maintenance completes.
         /// </summary>
         protected string LastFaultReason { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// Public read access to the current fault reason (code, e.g. "Jam", "SauceEmpty",
+        /// "WrongProduct:MixedDough"). Valid while in Fault or Maintenance, empty otherwise.
+        /// Used by the FaultMonitor/HMI to look up the fault definition.
+        /// </summary>
+        public string FaultReason => LastFaultReason;
 
         public event Action<string> ContentChanged;
         public void NotifyContentChanged(string content) => ContentChanged?.Invoke(content);

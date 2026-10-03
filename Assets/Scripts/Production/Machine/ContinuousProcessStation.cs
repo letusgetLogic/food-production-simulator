@@ -24,7 +24,7 @@ namespace Game.Production
     /// Deliberately does NOT implement IProductProcessor (products are handed over by physics).
     /// No RecipeDefinition binding in code: dwell/temperature are operator settings from the HMI.
     /// </summary>
-    public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IMachineParameterSource
+    public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState
     {
         /// <summary>Content messages this station reports via NotifyContentChanged.</summary>
         public enum ProcessInfo
@@ -535,7 +535,7 @@ namespace Game.Production
         private string Info(ProcessInfo info)
         {
             string localized = _contents.Find(c => c.State == info)?.Info;
-            return string.IsNullOrEmpty(localized) ? FallbackText(info) : localized;
+            return string.IsNullOrEmpty(localized) ? LocText.Info("process", info, FallbackText(info)) : localized;
         }
 
         /// <summary>Used until the localization keys exist in the table.</summary>
@@ -674,6 +674,35 @@ namespace Game.Production
             {
                 StopCoroutine(routine);
                 routine = null;
+            }
+        }
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values)
+        {
+            values.Set("completed", _completedCount);
+            values.Set("wrongProducts", _wrongProductCount);
+            values.Set("lastDwell", _lastDwellSeconds);
+            values.Set("hasLastExposure", !float.IsNaN(_lastExposureCelsius));
+            values.Set("lastExposure", float.IsNaN(_lastExposureCelsius) ? 0f : _lastExposureCelsius);
+            values.Set("heaterFailed", _heaterFailed);
+        }
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values)
+        {
+            _completedCount = values.GetInt("completed", _completedCount);
+            _wrongProductCount = values.GetInt("wrongProducts", _wrongProductCount);
+            _lastDwellSeconds = values.GetFloat("lastDwell", _lastDwellSeconds);
+            _lastExposureCelsius = values.GetBool("hasLastExposure", false)
+                ? values.GetFloat("lastExposure", 0f)
+                : float.NaN;
+
+            if (values.GetBool("heaterFailed", false))
+            {
+                SimulateHeaterFailure();
             }
         }
     }

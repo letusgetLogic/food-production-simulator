@@ -58,6 +58,17 @@ namespace Game.Production
 
         private float _autoInjectTimer;
         private float _accumulatedDowntimeSeconds;
+        private float _lineDownSeconds;
+        private readonly Dictionary<string, float> _downtimeByMachine = new Dictionary<string, float>();
+
+        /// <summary>
+        /// Seconds during which at least one machine was in Fault/Maintenance (line availability = 1 - this / run time).
+        /// Unlike <see cref="TotalDowntimeSeconds"/>, overlapping faults are counted once.
+        /// </summary>
+        public float LineDownSeconds => _lineDownSeconds;
+
+        /// <summary>Cleared downtime per machine display name (running faults not included).</summary>
+        public IReadOnlyDictionary<string, float> DowntimeByMachine => _downtimeByMachine;
 
         /// <summary>Raised whenever a fault starts, moves to maintenance or is cleared.</summary>
         public event Action FaultsChanged;
@@ -128,6 +139,11 @@ namespace Game.Production
 
         private void Update()
         {
+            if (_activeList.Count > 0)
+            {
+                _lineDownSeconds += Time.deltaTime;
+            }
+
             if (_autoInjectIntervalSeconds <= 0f)
             {
                 return;
@@ -147,6 +163,50 @@ namespace Game.Production
 
         public ActiveFault GetActiveFault(MachineBase machine) =>
             machine != null && _active.TryGetValue(machine, out ActiveFault fault) ? fault : null;
+
+        // ---- Save/Load ----
+
+        /// <summary>Statistics for the save file (active faults are restored through the machines themselves).</summary>
+        public void CaptureStatistics(SaveValues values)
+        {
+            values.Set("total", TotalFaultCount);
+            values.Set("downtime", _accumulatedDowntimeSeconds);
+            values.Set("lineDown", _lineDownSeconds);
+            foreach (KeyValuePair<string, float> entry in _downtimeByMachine)
+            {
+                values.Set("machine." + entry.Key, entry.Value);
+            }
+            foreach (KeyValuePair<string, int> entry in _countsByCode)
+            {
+                values.Set("code." + entry.Key, entry.Value);
+            }
+        }
+
+        /// <summary>
+        /// Restores the statistics. Call after the saved faults were re-raised: those raised counts are
+        /// replaced by the saved totals, so nothing is counted twice.
+        /// </summary>
+        public void RestoreStatistics(SaveValues values)
+        {
+            TotalFaultCount = values.GetInt("total", TotalFaultCount);
+            _accumulatedDowntimeSeconds = values.GetFloat("downtime", _accumulatedDowntimeSeconds);
+            _lineDownSeconds = values.GetFloat("lineDown", _lineDownSeconds);
+            _countsByCode.Clear();
+            _downtimeByMachine.Clear();
+            for (int i = 0; i < values.Keys.Count; i++)
+            {
+                string key = values.Keys[i];
+                if (key.StartsWith("code.", StringComparison.Ordinal))
+                {
+                    _countsByCode[key.Substring(5)] = (int)Math.Round(values.Values[i]);
+                }
+                else if (key.StartsWith("machine.", StringComparison.Ordinal))
+                {
+                    _downtimeByMachine[key.Substring(8)] = values.Values[i];
+                }
+            }
+            FaultsChanged?.Invoke();
+        }
 
         // ---- Injection (training / debug) ----
 
@@ -241,6 +301,8 @@ namespace Game.Production
                     {
                         float duration = cleared.DurationSeconds;
                         _accumulatedDowntimeSeconds += duration;
+                        _downtimeByMachine.TryGetValue(cleared.MachineName, out float machineDowntime);
+                        _downtimeByMachine[cleared.MachineName] = machineDowntime + duration;
                         _active.Remove(machine);
                         RebuildList();
                         FaultCleared?.Invoke(machine, duration);

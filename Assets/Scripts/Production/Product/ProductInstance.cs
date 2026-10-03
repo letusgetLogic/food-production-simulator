@@ -70,6 +70,38 @@ namespace Game.Production
         /// <summary>Pizza base thickness (in mm) the press was set to when this product was pressed. No dimension sensor yet - operator setting only.</summary>
         public float? FormedThicknessMm;
 
+        /// <summary>Average oven temperature (in °C) the product was exposed to. Written by the baking station.</summary>
+        public float? BakeTemperatureCelsius;
+
+        /// <summary>Average cooling tunnel temperature (in °C) the product was exposed to.</summary>
+        public float? CoolingTemperatureCelsius;
+
+        /// <summary>Average shock freezer temperature (in °C) the product was exposed to.</summary>
+        public float? FreezingTemperatureCelsius;
+
+        /// <summary>Sauce amount (in grams) actually dosed by the dosing station.</summary>
+        public float? DosedSauceGrams;
+
+        /// <summary>Topping amount (in grams) actually dosed by the dosing station.</summary>
+        public float? DosedToppingGrams;
+
+        /// <summary>Scrap reason set by a station via <see cref="Reject"/>; null while the product is not rejected.</summary>
+        public string RejectReason;
+
+        /// <summary>True once a station has marked this product as scrap. The final verdict is made by the QualitySystem.</summary>
+        public bool IsRejected => !string.IsNullOrEmpty(RejectReason);
+
+        /// <summary>Marks the product as scrap (e.g. press stroke aborted by a fault). Keeps the first reason.</summary>
+        public void Reject(string reason)
+        {
+            if (IsRejected)
+            {
+                return;
+            }
+
+            RejectReason = string.IsNullOrEmpty(reason) ? "Unspecified" : reason;
+        }
+
         /// <summary>Creates a new product instance in its initial state.</summary>
         public ProductInstance(string instanceId, SO_RecipeDefinition recipe, ProductState initialState = ProductState.RawDough)
         {

@@ -30,6 +30,15 @@ namespace Game.HMI
         {
             _button = GetComponent<Button>();
             _button.interactable = false;
+
+            // Long state texts ("Running – TemperatureDeviation") shrink instead of wrapping into two lines.
+            if (_stateText != null)
+            {
+                _stateText.textWrappingMode = TextWrappingModes.NoWrap;
+                _stateText.enableAutoSizing = true;
+                _stateText.fontSizeMax = _stateText.fontSize;
+                _stateText.fontSizeMin = Mathf.Max(10f, _stateText.fontSize * 0.5f);
+            }
             SetMachineName(_machineName);
             SetUnknownState();
         }
@@ -58,8 +67,11 @@ namespace Game.HMI
                 string stateName = _theme != null
                     ? _theme.GetMachineStateDisplayName(state)
                     : state.ToString();
-                _stateText.text = showWarning && !string.IsNullOrEmpty(_warningReason)
-                    ? $"{stateName} – {_warningReason}"
+                // Warning reason is a code ("TemperatureDeviation") -> sheet key "warning.temperature_deviation".
+                string reasonText = string.IsNullOrEmpty(_warningReason) ? string.Empty
+                    : LocText.Get("warning." + LocText.Snake(_warningReason), _warningReason);
+                _stateText.text = showWarning && reasonText.Length > 0
+                    ? $"{stateName} – {reasonText}"
                     : stateName;
             }
 

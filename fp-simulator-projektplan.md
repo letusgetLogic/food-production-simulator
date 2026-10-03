@@ -11,7 +11,7 @@
 | Team | 4 Accounts: 1 PM (kein Code) + 3 Entwickler (C#) |
 | Unity-Erfahrung | Fortgeschritten (Prefabs, ScriptableObjects bekannt) |
 | MVP-Umfang | Eine Produktionslinie, ein Pizza-Rezept (Margherita), 8 Stationen (Teigmischer bis Verpackung), Förderbänder, Kern-Sensorik, 3–5 Fehlerfälle, einfaches HMI, Produktionsstatistik |
-| Bewegung/Navigation | Punkt-zu-Punkt via interaktiver Pfeile (Hotspot-Navigation), kein freies WASD-Movement |
+| Bewegung/Navigation | Freies 3D-Movement (First-Person) mit Aim-Point-Interaktion (Entscheidung Tag 3; Pfeil-Navigation verworfen) |
 | Assets | Placeholder (Start) → Store-Assets + KI-generierte Inhalte (laufend ersetzt) |
 | Zusatzfeatures | Save/Load, plattformspezifisches UX, Balancing-/Debug-Tools, Tutorial/Onboarding |
 | AI-Plan | Alle 4 Accounts: Claude Free, nur Chat (claude.ai), kein Claude Code, kein API-Zugang |
@@ -19,7 +19,17 @@
 
 **Änderungen gegenüber der Vorversion:** Das Design-Dokument ersetzt das generische "Ketten/Economy/Progression"-Konzept durch eine spezifische industrielle Produktionslinie mit Maschinen-Zustandsautomaten, Sensorik, Rezept-/Produkt-Zustandsmodell und Fehlersystem. Economy- und Freischalt-Progression entfallen; an ihre Stelle tritt die Produktionsstatistik (produzierte Einheiten/Ausschuss) aus dem HMI. Die Bewegung erfolgt über klickbare Navigations-Pfeile statt freier Spielerbewegung – das reduziert den Aufwand für den Player-Controller und passt architektonisch gut zur späteren VR-Teleport-Navigation (Wiederverwendung des gleichen Hotspot-Konzepts).
 
-**Hinweis zu AI-Limits:** unverändert gegenüber der Vorversion – siehe Abschnitt 5.
+**Hinweis zu AI-Limits:** unverändert gegenüber der Vorversion – siehe Abschnitt 4.
+
+**Änderungen im Projektverlauf (Stand 01.10.2026):**
+- **Bewegung:** Pfeil-Navigation mit Kamera-Übergängen verworfen → freies First-Person-Movement + Aim-Interaktion (Dev C, Tag 3). Woche-5-VR-Plan entsprechend auf Teleport/Locomotion für freies Movement umgestellt.
+- **Assemblies:** `Game.Sensors` entfällt (Zyklus mit `Game.Production`); Sensoren und Produkt-Typen (`ProductToken` etc.) liegen in `Game.Production`. Neu: `Game.Editor` (nur Editor-Tools).
+- **Materialfluss:** `IConveyor`/`ILoadReceiver`/Slot-Conveyor entfallen. Förderbänder sind `ConveyorBelt : MachineBase` (melden Störungen ans HMI), Produkte werden physikalisch (Rigidbody) transportiert. Bänder laufen kontinuierlich; vor taktenden Maschinen sitzt ein Puffer-Band mit Einzelplatz-Zonen (`AccumulationZone`, 4 Plätze); ist er voll, pausieren Zulaufband und Portionierer automatisch, bleibt er zu lange voll → Fault. Warnungen (amber) als separates Signal auf `MachineBase`, kein neuer `MachineState`.
+- **Nicht jede Strecke ist ein Band:** Mixer → Portionierer per Topf (Arbeiter trägt ihn, Lift kippt ihn in den Trichter).
+- **Stationen:** Formanlage heißt im Code `PressMachine`; Mixer, Portionierer und Presse sind Quell-/Physikstationen ohne `IProductProcessor`. Ofen/Kühlung/Froster werden als Durchlaufstationen gebaut (`ContinuousProcessStation`: Verweilzeit = Zonenlänge / Bandgeschwindigkeit).
+- **Rezept:** wird nicht an Maschinen gebunden; eigene Rezept-Terminals an Säulen, Bediener stellt Werte manuell ein.
+- **Konvention:** ScriptableObject-Klassen mit Präfix `SO_`.
+- **Fortschritt 01.10.:** Produktion Mixer → Portionierer → Presse läuft durchgängig bis `FormedPizza`. Offen: Maschinen-Terminals für Portionierer und Presse, danach Dosierstation.
 
 ---
 
@@ -33,20 +43,20 @@ Kapazität Kernphase (Tag 1–20): 3 Entwickler × 20 Tage = 60 PT. Kapazität P
 |---|---|---|---|
 | 1 | Projekt-Setup & Architektur | Repo, Unity-Projekt, Assembly Definitions, Coding-Konventionen, Paket-Setup (URP, Input System) | 3 |
 | 2 | Interaction-Abstraction-Layer | `IInteractable`/`IInteractor` für Navigations-Pfeile und HMI-Bedienelemente, entkoppelt vom konkreten Input | 2 |
-| 3 | Navigation (Pfeil-Hotspots) | Klickbare Bereichs-Pfeile, Kamera-Übergänge zwischen Stationen – Grundlage für spätere VR-Teleport-Navigation | 3 |
-| 4 | Conveyor-System | `IConveyor`: Transport der Produktobjekte zwischen Stationen, Blockade-Erkennung | 3 |
+| 3 | Bewegung & Interaktion | Freies First-Person-Movement, Aim-Point-Interaktion, Tragen von Objekten (Topf) – ersetzt die ursprünglich geplante Pfeil-Navigation | 3 |
+| 4 | Conveyor-System | `ConveyorBelt` (`MachineBase`): physikalischer Transport, Puffer-Band vor taktenden Maschinen, Linien-Controller, Stau-/Puffer-Fault | 3 |
 | 5 | Machine-System | `IMachine` + generische State Machine (Idle/Starting/Running/Stopping/Stopped, Fault/Maintenance) | 5 |
-| 6 | Sensor-System | `ISensor`: Presence-, Weight-, Temperature-, Level-, Motor-, Jam-Sensor | 3 |
+| 6 | Sensor-System | `ISensor`: Presence-, Weight-, Temperature-, Level-, Pot-Sensor (Jam-Erkennung im Band selbst) | 3 |
 | 7 | Recipe-System | ScriptableObject-Rezeptdefinition (Margherita: Mengen, Zeiten, Temperaturen) | 3 |
 | 8 | Product-State-System | `IProductProcessor`: Zustandskette RawDough → … → PackagedPizza | 4 |
-| 9 | 8 Produktionsstationen | Teigmischer, Portionierer, Formanlage, Dosierstation, Ofen, Kühleinheit, Schockfroster, Verpackung als `IMachine`-Implementierungen | 7 |
+| 9 | 8 Produktionsstationen | Teigmischer, Portionierer, Formanlage (Presse), Dosierstation, Ofen, Kühleinheit, Schockfroster, Verpackung als `MachineBase`-Implementierungen (Ofen/Kühlung/Froster als Durchlaufstationen) – Stand 01.10.: Teigmischer, Portionierer, Presse fertig | 7 |
 | 10 | Fault-System | 3–5 Fehlerfälle: Material fehlt, Förderband blockiert, Ofentemp. zu niedrig, falsches Gewicht, Sensorfehler | 3 |
 | 11 | Quality-Check | `IQualityCheck`: Gewichts-/Temperaturprüfung → Ausschuss/Ausschleusen | 1 |
 | 12 | HMI/UI-System | Industrielles Bedienpanel: Status, Maschinenzustände, Temperaturen, Füllstände, Produktionsgeschwindigkeit, produzierte Einheiten, Ausschuss, aktive Fehler | 5 |
 | 13 | Save/Load-System | JSON-Serialisierung von Linien-, Maschinen- und Statistikzustand | 3 |
 | 14 | Balancing-/Debug-Tools | Editor-Tuning via ScriptableObjects, Debug-Menü (Fehler/Sensorwerte manuell auslösen) | 3 |
 | 15 | Plattform-UX (Browser) | WebGL-Build-Konfiguration, Loading-Screen, UI-Skalierung | 3 |
-| 16 | Tutorial/Onboarding | Einführung in Navigation und HMI-Ablesen | 2 |
+| 16 | Tutorial/Onboarding | Einführung in Bewegung/Interaktion und HMI-Ablesen | 2 |
 | 17 | Asset-Integration | Store-Assets + KI-generierte Inhalte (Fabrikhalle, Maschinenmodelle), Placeholder ersetzen | 3 |
 | 18 | Audio (Basis) | Maschinengeräusche, Alarm-Sound | 1 |
 | 19 | QA/Bugfixing (laufend) | Rollierende Qualitätssicherung während Phase 1 | 3 |
@@ -59,7 +69,7 @@ Kapazität Kernphase (Tag 1–20): 3 Entwickler × 20 Tage = 60 PT. Kapazität P
 
 | # | Feature | Beschreibung | Aufwand (PT) |
 |---|---|---|---|
-| 21 | VR-Interaction-Proof-of-Concept | XR Interaction Toolkit an Interaction-Abstraction anbinden; Navigations-Pfeile als VR-Teleport-Ziele adaptieren | 6 |
+| 21 | VR-Interaction-Proof-of-Concept | XR Interaction Toolkit an Interaction-Abstraction anbinden; VR-Locomotion/Teleport für das freie Movement | 6 |
 | 22 | Performance/WebGL-Optimierung | Draw-Call-Reduktion, Batching, LODs, Ladezeiten | 4 |
 | 23 | Polish-Pass | Maschinen-VFX, Alarm-Lichter, Sound-Feinschliff, Fabrikambiente | 6 |
 | 24 | Erweiterte QA/Bugfixing | Fehlerfall-Szenarien, Cross-Browser-Test, VR-Grundfunktionstest | 6 |
@@ -75,8 +85,8 @@ Kapazität Kernphase (Tag 1–20): 3 Entwickler × 20 Tage = 60 PT. Kapazität P
 |---|---|---|
 | **PM** | Projektmanager (kein Code) | Rezept-/Fehlerfall-Design, Balancing, Asset-Sourcing, Playtesting/QA, Status-Datei-Pflege, Doku |
 | **Dev A** | Maschinen & Produktionsstationen | Machine-System (State Machine), 8 Produktionsstationen, Fault-Integration |
-| **Dev B** | Daten & Materialfluss | Conveyor-, Sensor-, Recipe-, Product-State-System, Save/Load |
-| **Dev C** | Navigation, HMI & Plattform | Pfeil-Navigation, HMI/UI, Plattform-UX, Audio, Tutorial |
+| **Dev B** | Daten & Materialfluss | Förderbänder/Puffer, Sensor-, Recipe-, Product-State-System, Save/Load |
+| **Dev C** | Bewegung, HMI & Plattform | First-Person-Movement/Aim-Interaktion, HMI/UI, Plattform-UX, Audio, Tutorial |
 
 ---
 
@@ -127,7 +137,7 @@ Kapazität Kernphase (Tag 1–20): 3 Entwickler × 20 Tage = 60 PT. Kapazität P
 | Tag | PM | Dev A | Dev B | Dev C |
 |---|---|---|---|---|
 | 21 | VR-Testgerät/Setup organisieren, VR-Testplan entwerfen | XR Interaction Toolkit einbinden, Define-Symbol `PLATFORM_VR`, Struktur für parallele XR-Bindings | Analyse Save/Load-Kompatibilität für VR-Build | Performance-Baseline messen (Profiler, Draw Calls) |
-| 22 | Balancing-Feedback aus MVP-Playtest sammeln | XR-Bindings für `IInteractable`/`IInteractor` (HMI-Buttons in VR bedienbar) | Navigations-Pfeile als VR-Teleport-Ziele adaptieren | Draw-Call-Reduktion (Batching, Material-Konsolidierung) |
+| 22 | Balancing-Feedback aus MVP-Playtest sammeln | XR-Bindings für `IInteractable`/`IInteractor` (HMI-Buttons in VR bedienbar) | VR-Locomotion/Teleport für das freie Movement adaptieren | Draw-Call-Reduktion (Batching, Material-Konsolidierung) |
 | 23 | VR-Testplan verfeinern, interne VR-Testrunde vorbereiten | XR-Interaktion mit Machine-System testen | Save/Load-Kompatibilität Desktop/VR sicherstellen | LOD-Setup Fabrikhalle, Post-Processing-Anpassung |
 | 24 | Interne VR-Testrunde durchführen, Notizen sammeln | Bugfixing XR-Interaktionen | Teleport-/Interaktions-Feintuning nach Test | WebGL-Ladezeiten optimieren |
 | 25 | Wochen-Review, Status-Datei-Update, VR-PoC-Ergebnisse dokumentieren | Integrationstag: VR-PoC-Build erzeugen | Regressionstest Desktop-Version | Regressionstest Desktop-Version |
@@ -168,16 +178,18 @@ Da alle 4 Accounts auf dem Free-Plan ohne Claude Code/API laufen, ist jede Inter
   - `_camelCase` für private Felder (Präfix mit Unterstrich).
   - Keine Hungarian Notation.
   - XML-Doc-Kommentare (`///`) auf Englisch für öffentliche APIs.
-- **Kern-Interfaces (aus dem Design-Dokument):** `IMachine`, `ISensor`, `IProductProcessor`, `IConveyor`, `IQualityCheck` – zusätzlich `IInteractable`/`IInteractor` für Navigation und HMI-Bedienung.
-- **Struktur:** Assembly Definitions je Modul, z. B. `Game.Core` (Interfaces, Interaction-Layer, Navigation), `Game.Production` (MachineSystem, ConveyorSystem, RecipeSystem, ProductSystem, die 8 Stationen), `Game.Sensors` (SensorSystem), `Game.Quality` (QualitySystem, FaultSystem), `Game.HMI` (UI/Bedienpanel), `Game.Platform` (WebGL, Save/Load, Debug-Tools).
-- **Interaction-Abstraction:** Kein Code darf direkt gegen Desktop-Input oder XR-Input koppeln. Navigations-Pfeile und HMI-Bedienelemente laufen über `IInteractable`/`IInteractor`, damit Woche 5 die VR-Teleport-/Grab-Bindings ohne Redesign andocken kann. **`IInteractable` sitzt nicht auf der Maschine als Ganzes**, sondern auf einzelnen Maschinenteilen (z. B. Bedienknöpfen, Wartungszugängen) und auf HMI-Elementen – die Maschine selbst (`MachineBase`) bleibt ohne `InteractableBase`.
-- **Assembly-Abhängigkeitsrichtung (verbindlich):** `Game.Core → Game.Sensors → Game.Production → Game.Quality → Game.HMI` – jede Assembly referenziert nur "nach unten", nie zurück. Gemeinsam benötigte Typen wandern in die niedrigere Schicht (`Game.Core`), statt eine Rückreferenz einzuführen.
-- **Produktidentität auf physischen Objekten:** `ProductToken` (Bindeglied physisches Objekt ↔ `ProductInstance`) liegt in `Game.Core`, nicht in `Game.Production` – dadurch bleibt `Game.Sensors` unabhängig von `Game.Production` (kein Zirkelbezug). Sensoren liefern ausschließlich rohe, produktneutrale Messwerte; die Korrelation von Messwert und Produktidentität (`ProductToken` vom aktuellen GameObject an der Station holen) übernimmt die jeweilige Station in `Game.Production`, nicht der Sensor selbst.
-- **Maschinen-Zustandsautomat:** Einheitlich `Idle → Starting → Running → Stopping → Stopped`, bei Störung `Fault → Maintenance → Running`, implementiert in einer generischen Basisklasse, von der alle 8 Stationen erben. Rückweg aus `Stopped`/`Fault`/`Maintenance` läuft **immer** über explizite Bediener-/HMI-Aktion (`ResetToIdle()`, `AcknowledgeFault()`, `CompleteMaintenance()`) – kein Selbst-Reset.
-- **Naming-Sonderregel `IMachine`:** Keine Unity-Magic-Method-Namen in der API (z. B. `Start` → `StartMachine()`), da diese sonst mit dem MonoBehaviour-Lifecycle kollidieren – vor jeder neuen Interface-Methode gegenprüfen.
+- **ScriptableObjects:** Klassen mit Präfix `SO_` (z. B. `SO_PressConfig`, `SO_ConveyorConfig`).
+- **Kern-Interfaces:** `IMachine`, `ISensor`, `IProductProcessor` (nur für klassische Ein-/Ausgabestationen), `IQualityCheck` – zusätzlich `IInteractable`/`IInteractor` für Interaktion und HMI-Bedienung. `IConveyor` entfällt (Förderbänder sind `MachineBase`).
+- **Struktur:** Assembly Definitions je Modul: `Game.Core` (Interaction-Layer, Channels, Lokalisierung), `Game.Production` (Maschinen, Förderbänder/Puffer, Sensoren, Rezept, Produkt-Typen, die 8 Stationen), `Game.Quality` (QualitySystem, FaultSystem), `Game.HMI` (UI/Bedienpanel), `Game.Platform` (Movement, Input, WebGL, später Save/Load, Debug-Tools), `Game.Editor` (nur Editor-Tools, z. B. Linien-Setup).
+- **Interaction-Abstraction:** Kein Code darf direkt gegen Desktop-Input oder XR-Input koppeln. Interaktive Objekte und HMI-Bedienelemente laufen über `IInteractable`/`IInteractor`, damit Woche 5 die VR-Grab-/Teleport-Bindings ohne Redesign andocken kann. **`IInteractable` sitzt nicht auf der Maschine als Ganzes**, sondern auf einzelnen Maschinenteilen (z. B. Bedienknöpfen, Wartungszugängen) und auf HMI-Elementen – die Maschine selbst (`MachineBase`) bleibt ohne `InteractableBase`.
+- **Assembly-Abhängigkeitsrichtung (verbindlich):** `Game.Production → Game.Core`, `Game.Quality → Core, Production`, `Game.HMI → Core, Production`, `Game.Platform → Core` – nie zurück. Gemeinsam benötigte Typen wandern in die niedrigere Schicht, statt eine Rückreferenz einzuführen; HMI ↔ Platform koppeln nur über ScriptableObject-Channels in `Game.Core`.
+- **Produktidentität auf physischen Objekten:** `ProductToken` (Bindeglied physisches Objekt ↔ `ProductInstance`) liegt zusammen mit den Sensoren in `Game.Production`. Sensoren liefern ausschließlich Rohwerte (Anwesenheit, Gewicht, Temperatur, Füllstand); die Bewertung und die Korrelation mit der Produktidentität übernimmt die Station. `PresenceSensor` reagiert standardmäßig nur auf Produkte („Products Only“).
+- **Maschinen-Zustandsautomat:** Einheitlich `Ready → Starting → Running → Stopping → Stopped`, bei Störung `Fault → Maintenance → Ready`, implementiert in `MachineBase`, von der alle Stationen und Förderbänder erben. Rückweg aus `Stopped`/`Fault`/`Maintenance` läuft **immer** über explizite Bediener-/HMI-Aktion (`ResetToIdle()`, `AcknowledgeFault()`, `CompleteMaintenance()`) – kein Selbst-Reset. Warnungen (HMI amber) sind ein separates Signal (`SetWarning()`/`WarningChanged`), kein eigener Zustand.
+- **Naming-Sonderregel `IMachine`:** Keine Unity-Magic-Method-Namen in der API (aktuell `StartRun()`/`StopRun()`/`RequestRun()`), da diese sonst mit dem MonoBehaviour-Lifecycle kollidieren – vor jeder neuen Interface-Methode gegenprüfen.
 - **Produktzustand:** `RawDough → MixedDough → PortionedDough → FormedPizza → SaucedPizza → ToppedPizza → BakedPizza → CooledPizza → FrozenPizza → PackagedPizza` als zentrales Datenmodell (`IProductProcessor`), das jede Station validiert und weiterreicht.
-- **Conveyor-Datenmodell:** `IConveyor` transportiert ausschließlich die physische Last (`GameObject`), **keine** `ProductInstance` direkt – die Produktidentität wird über `ProductToken` (Bindeglied physisches Objekt ↔ `ProductInstance`) und stationsseitige Sensoren aufgelöst.
-- **Fehlerzustand vs. Normalbetrieb bei Förderbändern:** `IsJammed` (physischer Defekt, Fault-relevant) ist strikt von `IsBackedUp` (normale Rückstauung durch eine gestoppte Folgestation, kein Fehler) zu trennen, damit das FaultSystem nicht bei jedem normalen Maschinenstopp fälschlich einen Fehler meldet.
+- **Förderbänder:** `ConveyorBelt : MachineBase`. Produkte sind Rigidbodies, das Band setzt deren horizontale Geschwindigkeit (nur für Produkte, deren Mitte über dem Band liegt); Teig liegt nie auf einem Band, das unter ihm durchläuft. Rückstau ist **kein** Fehler (Band pausiert, Warning); Fault nur bei echtem Stau (`Jam`) oder zu lange vollem Puffer (`BufferFull`). Puffer vor taktenden Maschinen über `AccumulationZone` (Einzelplatz-Zonen), Linien-Start/-Stop/-Geschwindigkeit über `ConveyorLineController`.
+- **Terminal-Werte (Sollwerte/Ist-Werte):** Maschinen implementieren `IMachineParameterSource` (`Game.Production`) und liefern `MachineParameter` (Sollwert mit Min/Max/Schritt aus ihrem `SO_*Config`) und `MachineReadout` (Ist-Wert mit `MachineValueLevel` für die HMI-Farbe, optional `MachineReadoutSlot` für die festen Kacheln). Das HMI (`MachineParameterListView`) baut die Zeilen zur Laufzeit und kennt keine konkreten Maschinentypen. Rezeptwerte werden weiterhin nicht im Code gebunden – der Bediener stellt sie am Terminal ein.
+- **Durchlaufstationen** (Dosierstation, Ofen, Kühlung, Froster): Station besitzt ihr eigenes Band (`_belt`, wird mit der Station gestartet/gestoppt), Verarbeitung beim Durchfahren einer `ProcessZone`; Aufnahmebereitschaft über `IInfeedReadiness`, das vorgelagerte Band wartet. Im `ConveyorLineController` steht die Station, nicht ihr Band.
 - **Komponenten-Komposition statt Mehrfachvererbung:** Da C# keine Mehrfachvererbung erlaubt und `MachineBase`/`InteractableBase` beide eigene MonoBehaviour-Basisklassen sind, gilt generell: Interaktive Elemente werden als **separate Komponente auf einem eigenen (Kind-)GameObject** eingebunden, nie als gemeinsame Basisklasse mit `MachineBase`. Konkret: einzelne Maschinenteile (Bedienknöpfe, Wartungszugänge) und HMI-Elemente tragen `InteractableBase`, die übergeordnete Maschine (`MachineBase`) nicht.
 - **Input:** Ausschließlich das neue Unity Input System (`com.unity.inputsystem`), Active Input Handling = "Input System Package (New)"/"Both" – kein Legacy `UnityEngine.Input` in neuem Code.
 - **Daten:** Rezepte, Prozessparameter und Toleranzen als ScriptableObjects, nicht hartkodiert – Grundlage für die Balancing-/Debug-Tools.
@@ -196,20 +208,22 @@ Da alle 4 Accounts auf dem Free-Plan ohne Claude Code/API laufen, ist jede Inter
 ## Architektur-Konventionen (verbindlich)
 - Sprache: Englisch für Code/Kommentare/Bezeichner
 - Naming: PascalCase (Klassen/Methoden/Properties/Events), camelCase (Parameter/Locals), _camelCase (private Felder)
-- Kern-Interfaces: IMachine, ISensor, IProductProcessor, IConveyor, IQualityCheck, IInteractable/IInteractor
-- Assembly-Struktur: Game.Core, Game.Production, Game.Sensors, Game.Quality, Game.HMI, Game.Platform
-- Machine-State-Machine: Idle/Starting/Running/Stopping/Stopped, bei Fehler Fault/Maintenance/Running
+- ScriptableObject-Klassen mit Präfix SO_
+- Kern-Interfaces: IMachine, ISensor, IProductProcessor, IQualityCheck, IInteractable/IInteractor (kein IConveyor mehr)
+- Assembly-Struktur: Game.Core, Game.Production (inkl. Sensoren/Produkt), Game.Quality, Game.HMI, Game.Platform, Game.Editor
+- Machine-State-Machine: Ready/Starting/Running/Stopping/Stopped, bei Fehler Fault/Maintenance/Ready; Warning als separates Signal
 - Rückweg aus Stopped/Fault/Maintenance immer über explizite Bediener-/HMI-Aktion (ResetToIdle/AcknowledgeFault/CompleteMaintenance) - kein Selbst-Reset
-- IMachine-API ohne Unity-Magic-Method-Namen (Start -> StartMachine())
+- IMachine-API ohne Unity-Magic-Method-Namen (StartRun/StopRun/RequestRun)
 - Produktzustand: RawDough -> ... -> PackagedPizza (zentrales Datenmodell)
-- IConveyor transportiert nur physische Last (GameObject), keine ProductInstance - Produktidentität über ProductToken + Sensoren
-- IsJammed (Fault) getrennt von IsBackedUp (normale Rückstauung, kein Fehler)
+- Förderbänder = ConveyorBelt : MachineBase, physikalischer Transport; Rückstau = Warning, Jam/BufferFull = Fault
+- Terminal-Werte über IMachineParameterSource (Sollwerte mit Min/Max/Schritt aus SO_*Config, Ist-Werte mit MachineValueLevel); HMI kennt keine konkreten Maschinentypen
+- Durchlaufstationen (Dosierung/Ofen/Kühlung/Froster) besitzen ihr eigenes Band, Verarbeitung per ProcessZone, IInfeedReadiness für Rückstau
 - Komposition statt Mehrfachvererbung: interaktive Elemente als separate Komponente auf eigenem (Kind-)GameObject, nie gemeinsame Basisklasse mit MachineBase
 - IInteractable sitzt auf Maschinenteilen (Knöpfe, Wartungszugänge) und HMI-Elementen, nicht auf der Maschine als Ganzes
-- Assembly-Abhängigkeitsrichtung: Game.Core -> Game.Sensors -> Game.Production -> Game.Quality -> Game.HMI, nur "nach unten" referenzieren
-- ProductToken liegt in Game.Core (nicht Game.Production) - Sensoren liefern nur rohe Messwerte, Stationen korrelieren Messwert+Produktidentität selbst
+- Assembly-Abhängigkeitsrichtung: Production -> Core; Quality/HMI -> Core, Production; Platform -> Core - nur "nach unten" referenzieren
+- ProductToken liegt in Game.Production - Sensoren liefern nur rohe Messwerte, Stationen korrelieren Messwert+Produktidentität selbst
 - Input: nur neues Input System (com.unity.inputsystem), kein Legacy UnityEngine.Input
-- Navigation: Punkt-zu-Punkt via interaktiver Pfeile, kein freies Movement
+- Bewegung: freies First-Person-Movement mit Aim-Interaktion (keine Pfeil-Navigation)
 - Content als ScriptableObjects, keine Hardcoded-Werte
 - Save-Format: JSON, versioniert
 
@@ -227,11 +241,11 @@ Heutiges Ziel laut Plan: [aus Abschnitt 3 des Projektplans einfügen]
 - [Bug/Problem]: [Priorität, Reproduktionsschritte falls bekannt]
 
 ## Referenz: Tag-für-Tag-Plan (Kurzfassung)
-Woche 1 (T1-5): Fundament – Setup, Interfaces, Machine-State-Machine, Navigation-Pfeile, erste 4 Maschinen
+Woche 1 (T1-5): Fundament – Setup, Interfaces, Machine-State-Machine, Bewegung/Interaktion, erste 4 Maschinen
 Woche 2 (T6-10): Restliche 4 Maschinen, FaultSystem mit 3-5 Fehlerfällen, QualitySystem, HMI-Statistik
 Woche 3 (T11-15): Save/Load, Debug-/Balancing-Tools, Plattform-UX, Meilenstein-Build
 Woche 4 (T16-20): Stabilisierung, Bugfixing, MVP-Abnahme
-Woche 5 (T21-25): VR-Proof-of-Concept (XR-Bindings, Pfeile als Teleport-Ziele), Performance-Optimierung
+Woche 5 (T21-25): VR-Proof-of-Concept (XR-Bindings, Teleport/Locomotion für freies Movement), Performance-Optimierung
 Woche 6 (T26-30): Polish, erweiterte QA, Balancing-Tuning, Release
 
 ## Heutige Aufgabe (konkret)
@@ -244,7 +258,7 @@ Woche 6 (T26-30): Polish, erweiterte QA, Balancing-Tuning, Release
 
 - 6 Wochen = 30 Arbeitstage (Mo–Fr), vollständiger Tag-für-Tag-Plan über alle 30 Tage: Kernproduktion (Tag 1–20) + VR-Vorbereitung/Polish/Puffer (Tag 21–30).
 - Fokus liegt gemäß Design-Dokument ausschließlich auf einer Tiefkühlpizza-Linie mit einem Rezept (Margherita) – Mehrfach-Rezepte, mehrere Linien, Wartung, Energieverbrauch, Lagerverwaltung, Schichtbetrieb und wirtschaftliche Simulation sind explizit spätere Erweiterungen (siehe Design-Dokument Abschnitt 10) und nicht Teil dieses Plans.
-- Bewegung ausschließlich über klickbare Navigations-Pfeile (Hotspot-Konzept) – kein freier Player-Controller. Dies reduziert Aufwand in Phase 1 und vereinfacht die spätere VR-Teleport-Anbindung in Woche 5.
+- Bewegung über freies First-Person-Movement mit Aim-Interaktion (ursprünglich Pfeil-Navigation, an Tag 3 geändert). Die VR-Anbindung in Woche 5 braucht dafür Locomotion/Teleport statt fester Teleport-Ziele.
 - PM trägt keine PT-Last in der Feature-Tabelle, arbeitet aber vollzeitig projektbegleitend (Content, Balancing, Assets, QA, Doku).
 - Free-Plan-Limits sind inoffizielle Schätzwerte – Budget-Hinweise entsprechend konservativ und als Heuristik zu verstehen, nicht als exakte Kennzahl.
 - „VR-erweiterbar" bedeutet hier: sauber abstrahierte Interaction-/Navigation-Schicht + ein validierender Proof-of-Concept in Woche 5, kein vollständiges VR-Feature-Set.

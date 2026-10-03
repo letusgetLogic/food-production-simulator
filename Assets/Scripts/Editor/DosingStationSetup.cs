@@ -55,7 +55,7 @@ namespace Game.EditorTools
             ConveyorBelt belt = outfeedRoot != null ? outfeedRoot.GetComponentInChildren<ConveyorBelt>(true) : null;
             if (belt == null)
             {
-                EditorUtility.DisplayDialog("Setup Dosing Station",
+                SetupUi.Dialog("Setup Dosing Station",
                     $"Auslaufband '{OutfeedRootName}' mit ConveyorBelt (BeltDrive) nicht gefunden.\n" +
                     "Erst 'Setup Portioner-Former Line' ausführen. Nichts wurde geändert.", "OK");
                 return;
@@ -150,7 +150,7 @@ namespace Game.EditorTools
             string summary = "Fertig. Szene speichern (Strg+S) nicht vergessen.\n\n- " + string.Join("\n- ", log) +
                              "\n\nTerminal und Knöpfe sind grob platziert - bei Bedarf im Scene View nachschieben.";
             Debug.Log("[Setup Dosing Station]\n" + summary, machine);
-            EditorUtility.DisplayDialog("Setup Dosing Station", summary, "OK");
+            SetupUi.Dialog("Setup Dosing Station", summary, "OK");
             Selection.activeObject = station.gameObject;
         }
 

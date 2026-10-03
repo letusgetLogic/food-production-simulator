@@ -1,0 +1,210 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 783ff84c9c3a3604dbc6911db3528114, type: 3}
+  m_Name: FaultCatalog
+  m_EditorClassIdentifier: Game.Production::Game.Production.SO_FaultCatalog
+  _faults:
+  - Code: SauceEmpty
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Sauce tank empty
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Refill the sauce tank at the dosing station (refill button),
+      acknowledge, complete maintenance, start.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: ToppingEmpty
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Topping hopper empty
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Refill the topping hopper at the dosing station (refill button),
+      acknowledge, complete maintenance, start.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: BufferFull
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Press buffer full
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Check the press (running? cycle time too long?). Then acknowledge
+      the buffer belt and restart.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: Jam
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Conveyor jam
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Remove the stuck product from the belt, acknowledge, complete
+      maintenance, start the belt.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: TemperatureOutOfRange
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Temperature out of range
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Heater/cooling unit defect. Acknowledge, complete maintenance
+      (repairs the unit), start and wait for temperature.
+    IsTrainingCase: 1
+    CanBeInjected: 1
+  - Code: HeatUpTimeout
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Setpoint temperature not reached
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Check the temperature setpoint. Acknowledge, complete maintenance,
+      start again.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: WrongProduct
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Wrong product in press
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: The product is marked as scrap and will be ignored. Acknowledge,
+      complete maintenance, start.
+    IsTrainingCase: 1
+    CanBeInjected: 0
+  - Code: BeltFault
+    MessageKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackMessage: Station belt fault
+    RemedyKey:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    FallbackRemedy: Fix the belt fault first (see belt alarm), then acknowledge the
+      station.
+    IsTrainingCase: 0
+    CanBeInjected: 0
+  references:
+    version: 2
+    RefIds: []

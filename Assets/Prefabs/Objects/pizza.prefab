@@ -204,6 +204,7 @@ MonoBehaviour:
     CurrentState: 0
     Recipe: {fileID: 0}
     RecipeId: 
+    RejectReason: 
 --- !u!54 &2591648493044266656
 Rigidbody:
   m_ObjectHideFlags: 0

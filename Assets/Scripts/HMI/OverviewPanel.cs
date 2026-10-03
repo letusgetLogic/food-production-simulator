@@ -32,14 +32,29 @@ namespace Game.HMI
             {
                 string displayName = _channel.DisplayNames.TryGetValue(entry.Key, out var name) ? name : entry.Key;
                 MachineStateRowView row = GetOrCreateRow(entry.Key, displayName);
-                row.SetState(entry.Value);
+                row.SetWarning(_channel.CurrentWarnings.TryGetValue(entry.Key, out string reason), reason);
+                ApplyState(entry.Key, row, entry.Value);
                 row.SetButton();
             }
 
             _channel.MachineStateChanged += HandleMachineStateChanged;
+            _channel.MachineWarningChanged += HandleMachineWarningChanged;
         }
 
-        private void OnDisable() => _channel.MachineStateChanged -= HandleMachineStateChanged;
+        private void OnDisable()
+        {
+            _channel.MachineStateChanged -= HandleMachineStateChanged;
+            _channel.MachineWarningChanged -= HandleMachineWarningChanged;
+        }
+
+        /// <summary>Labels of the four figure tiles (localized by the caller).</summary>
+        public void SetFigureLabels(string throughput, string produced, string scrap, string activeFaults)
+        {
+            _throughputTile?.SetLabel(throughput);
+            _producedUnitsTile?.SetLabel(produced);
+            _scrapUnitsTile?.SetLabel(scrap);
+            _activeFaultsTile?.SetLabel(activeFaults);
+        }
 
         public void SetThroughput(float unitsPerMinute, HmiValueSeverity severity) =>
             _throughputTile?.SetValue(unitsPerMinute, severity);
@@ -59,8 +74,31 @@ namespace Game.HMI
                 count, count > 0 ? HmiValueSeverity.Alarm : HmiValueSeverity.Normal);
         }
 
-        private void HandleMachineStateChanged(string machineId, string displayName, MachineState state) =>
-            GetOrCreateRow(machineId, displayName).SetState(state);
+        private void HandleMachineStateChanged(string machineId, string displayName, MachineState state)
+        {
+            MachineStateRowView row = GetOrCreateRow(machineId, displayName);
+            row.SetMachineName(displayName);
+            ApplyState(machineId, row, state);
+        }
+
+        private void HandleMachineWarningChanged(string machineId, bool hasWarning, string reason)
+        {
+            if (_rowsById.TryGetValue(machineId, out MachineStateRowView row))
+            {
+                row.SetWarning(hasWarning, reason);
+            }
+        }
+
+        /// <summary>Belts (hidden unless fault) only get a visible row while they are in Fault.</summary>
+        private void ApplyState(string machineId, MachineStateRowView row, MachineState state)
+        {
+            row.SetState(state);
+            bool visible = !_channel.IsHiddenUnlessFault(machineId) || state == MachineState.Fault;
+            if (row.gameObject.activeSelf != visible)
+            {
+                row.gameObject.SetActive(visible);
+            }
+        }
 
         private MachineStateRowView GetOrCreateRow(string machineId, string displayName)
         {

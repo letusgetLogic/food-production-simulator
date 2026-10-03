@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
+using Game.DebugTools;
 using Game.HMI;
+using Game.Persistence;
 using Game.Production;
 using Game.Quality;
 using UnityEditor;
@@ -18,6 +21,7 @@ namespace Game.EditorTools
     ///  - root "LineSystems" with FaultMonitor (FaultSystem), QualityInspector (QualitySystem) and
     ///    LineStatusBinder (feeds the overview panels: throughput, produced, scrap, alarms)
     ///  - assets FaultCatalog (the MVP fault cases) and QualitySpec_Margherita on first run (later runs keep edits)
+    ///  - SaveLoadController (product prefab = portioner's pizza) and DebugPanel (F1/F5/F9) on "LineSystems"
     ///  - root "LineEnd" (LineEndSink, trigger) behind the last station of the line: products that reach it are
     ///    judged and removed. The tunnel setups move it automatically when a new station is added.
     /// </summary>
@@ -118,13 +122,35 @@ namespace Game.EditorTools
             binderSo.ApplyModifiedProperties();
             log.Add("FaultMonitor, QualityInspector, LineStatusBinder verbunden");
 
+            // ---- Save/Load + debug panel (Woche 3) ----
+            SaveLoadController saveLoad = GetOrAdd<SaveLoadController>(systems.gameObject);
+            var saveSo = new SerializedObject(saveLoad);
+            saveSo.FindProperty("_faultMonitor").objectReferenceValue = monitor;
+            saveSo.FindProperty("_qualityInspector").objectReferenceValue = inspector;
+            ProductToken productPrefab = FindPortionPrefab();
+            saveSo.FindProperty("_productPrefab").objectReferenceValue = productPrefab;
+            saveSo.ApplyModifiedProperties();
+            log.Add(productPrefab != null
+                ? "SaveLoadController angelegt (Produkt-Prefab: " + productPrefab.name + ")"
+                : "WARNUNG: SaveLoadController ohne Produkt-Prefab - Produkte werden nicht gespeichert");
+
+            DebugPanel debugPanel = GetOrAdd<DebugPanel>(systems.gameObject);
+            var debugSo = new SerializedObject(debugPanel);
+            debugSo.FindProperty("_faultMonitor").objectReferenceValue = monitor;
+            debugSo.FindProperty("_qualityInspector").objectReferenceValue = inspector;
+            debugSo.FindProperty("_saveLoad").objectReferenceValue = saveLoad;
+            debugSo.FindProperty("_lineController").objectReferenceValue = Object.FindFirstObjectByType<ConveyorLineController>();
+            debugSo.FindProperty("_uiFocusChannel").objectReferenceValue = FindAsset<SO_UiFocusChannel>();
+            debugSo.ApplyModifiedProperties();
+            log.Add("DebugPanel angelegt (F1 Panel, F5 Speichern, F9 Laden)");
+
             Undo.CollapseUndoOperations(undoGroup);
             EditorSceneManager.MarkSceneDirty(systems.gameObject.scene);
             AssetDatabase.SaveAssets();
 
             string summary = "Fertig. Szene speichern (Strg+S) nicht vergessen.\n\n- " + string.Join("\n- ", log);
             Debug.Log($"[{Title}]\n" + summary, systems);
-            EditorUtility.DisplayDialog(Title, summary, "OK");
+            SetupUi.Dialog(Title, summary, "OK");
             Selection.activeObject = systems.gameObject;
         }
 
@@ -172,7 +198,7 @@ namespace Game.EditorTools
 
             Undo.RecordObject(lineEnd, "Place LineEnd");
             lineEnd.SetPositionAndRotation(
-                drive.position + drive.forward * (length * 0.5f + 0.35f),
+                drive.position + drive.forward * (length * 0.5f),
                 Quaternion.LookRotation(drive.forward, Vector3.up));
             lineEnd.localScale = Vector3.one;
 
@@ -181,12 +207,40 @@ namespace Game.EditorTools
             {
                 Undo.RecordObject(box, "Size LineEnd");
                 box.isTrigger = true;
-                box.size = new Vector3(width + 0.6f, 1.6f, 0.7f);
-                box.center = new Vector3(0f, -0.4f, 0f);
+                // Only below the belt surface: a product is caught after it has fallen off the belt end,
+                // never while it is still on the last station's belt (its zone may not be finished yet).
+                box.size = new Vector3(width + 0.6f, 1.2f, 1.4f);
+                box.center = new Vector3(0f, -0.7f, 0.35f);
             }
 
             log?.Add($"'LineEnd' hinter '{lastStation}' gesetzt");
             return true;
+        }
+
+        /// <summary>The portioner's pizza prefab - every saved product is re-spawned from it.</summary>
+        private static ProductToken FindPortionPrefab()
+        {
+            PortionerMachine portioner = Object.FindFirstObjectByType<PortionerMachine>();
+            if (portioner == null)
+            {
+                return null;
+            }
+
+            SerializedProperty prop = new SerializedObject(portioner).FindProperty("_portionPrefab");
+            return prop != null ? prop.objectReferenceValue as ProductToken : null;
+        }
+
+        private static T FindAsset<T>() where T : Object
+        {
+            foreach (string guid in AssetDatabase.FindAssets("t:" + typeof(T).Name))
+            {
+                T asset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid));
+                if (asset != null)
+                {
+                    return asset;
+                }
+            }
+            return null;
         }
 
         private static T GetOrAdd<T>(GameObject go) where T : Component

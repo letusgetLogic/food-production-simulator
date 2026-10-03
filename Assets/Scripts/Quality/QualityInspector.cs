@@ -70,6 +70,11 @@ namespace Game.Quality
         public QualityResult LastResult => _history.Count > 0 ? _history[_history.Count - 1] : null;
         public SO_QualitySpec Spec => _spec;
 
+        private float _restoredRunTimeSeconds;
+
+        /// <summary>Production time of this shift: time since scene start plus the run time of a loaded save.</summary>
+        public float RunTimeSeconds => _restoredRunTimeSeconds + Time.timeSinceLevelLoad;
+
         /// <summary>Good units per minute over the spec's throughput window.</summary>
         public float ThroughputPerMinute
         {
@@ -86,7 +91,7 @@ namespace Game.Quality
         {
             if (_lineEnd != null)
             {
-                _lineEnd.ProductArrived += Evaluate;
+                _lineEnd.ProductArrived += HandleProductArrived;
             }
         }
 
@@ -94,9 +99,11 @@ namespace Game.Quality
         {
             if (_lineEnd != null)
             {
-                _lineEnd.ProductArrived -= Evaluate;
+                _lineEnd.ProductArrived -= HandleProductArrived;
             }
         }
+
+        private void HandleProductArrived(ProductInstance product) => Evaluate(product);
 
         /// <summary>Judges a product. Public so other sinks (e.g. a manual reject bin) can feed it too.</summary>
         public QualityResult Evaluate(ProductInstance product)
@@ -259,6 +266,35 @@ namespace Game.Quality
             }
 
             ProductEvaluated?.Invoke(result);
+        }
+
+        // ---- Save/Load ----
+
+        /// <summary>Counters for the save file (history and throughput window start empty after loading).</summary>
+        public void CaptureStatistics(SaveValues values)
+        {
+            values.Set("good", GoodCount);
+            values.Set("runTime", RunTimeSeconds);
+            values.Set("scrap", ScrapCount);
+            foreach (KeyValuePair<string, int> entry in _defectCounts)
+            {
+                values.Set("defect." + entry.Key, entry.Value);
+            }
+        }
+
+        public void RestoreStatistics(SaveValues values)
+        {
+            GoodCount = values.GetInt("good", GoodCount);
+            _restoredRunTimeSeconds = Mathf.Max(0f, values.GetFloat("runTime", 0f) - Time.timeSinceLevelLoad);
+            ScrapCount = values.GetInt("scrap", ScrapCount);
+            _defectCounts.Clear();
+            for (int i = 0; i < values.Keys.Count; i++)
+            {
+                if (values.Keys[i].StartsWith("defect.", StringComparison.Ordinal))
+                {
+                    _defectCounts[values.Keys[i].Substring(7)] = (int)Math.Round(values.Values[i]);
+                }
+            }
         }
 
         private void TrimThroughputWindow()

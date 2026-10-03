@@ -33,6 +33,8 @@ namespace Game.Production
         [Min(0.1f)] public float DefaultDwellSeconds = 15f;
         [Min(0.1f)] public float MinDwellSeconds = 5f;
         [Min(0.1f)] public float MaxDwellSeconds = 60f;
+        [Tooltip("Step of the dwell time setpoint at the machine terminal.")]
+        [Min(0.1f)] public float DwellStepSeconds = 0.5f;
 
         [Header("Temperature")]
         [Tooltip("Off = station without temperature control (TemperatureSensor may be left empty).")]
@@ -40,6 +42,8 @@ namespace Game.Production
         public float DefaultTargetTemperatureCelsius = 280f;
         public float MinTargetTemperatureCelsius = 150f;
         public float MaxTargetTemperatureCelsius = 320f;
+        [Tooltip("Step of the temperature setpoint at the machine terminal.")]
+        [Min(0.1f)] public float TemperatureStepCelsius = 5f;
         [Tooltip("Deviation from the setpoint above which the station reports a warning (HMI amber).")]
         [Min(0f)] public float WarningToleranceCelsius = 10f;
         [Tooltip("Below this the process is invalid (oven: 250 °C). Fault after the grace time.")]

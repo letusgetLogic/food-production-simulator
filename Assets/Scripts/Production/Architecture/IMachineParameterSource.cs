@@ -42,8 +42,10 @@ namespace Game.Production
             string format, Func<float> getter, Action<float> setter)
         {
             Id = id;
-            Label = label;
-            Unit = unit;
+            _label = label;
+            _unit = unit;
+            _labelKey = LocText.KeyFromText("hmi", label);
+            _unitKey = LocText.KeyFromText("unit", unit);
             Min = Mathf.Min(min, max);
             Max = Mathf.Max(min, max);
             Step = Mathf.Max(0f, step);
@@ -52,9 +54,19 @@ namespace Game.Production
             _setter = setter;
         }
 
+        private readonly string _label;
+        private readonly string _unit;
+        private readonly string _labelKey;
+        private readonly string _unitKey;
+
         public string Id { get; }
-        public string Label { get; }
-        public string Unit { get; }
+
+        /// <summary>Localized label (key "hmi.&lt;english_label&gt;", English fallback).</summary>
+        public string Label => LocText.Get(_labelKey, _label);
+
+        /// <summary>Localized unit (key "unit.&lt;unit&gt;" for units with letters, e.g. "pcs").</summary>
+        public string Unit => LocText.Get(_unitKey, _unit);
+
         public float Min { get; }
         public float Max { get; }
         public float Step { get; }
@@ -90,16 +102,28 @@ namespace Game.Production
             Func<MachineValueLevel> level = null, MachineReadoutSlot slot = MachineReadoutSlot.None)
         {
             Id = id;
-            Label = label;
-            Unit = unit;
+            _label = label;
+            _unit = unit;
+            _labelKey = LocText.KeyFromText("hmi", label);
+            _unitKey = LocText.KeyFromText("unit", unit);
             Slot = slot;
             _text = text;
             _level = level;
         }
 
+        private readonly string _label;
+        private readonly string _unit;
+        private readonly string _labelKey;
+        private readonly string _unitKey;
+
         public string Id { get; }
-        public string Label { get; }
-        public string Unit { get; }
+
+        /// <summary>Localized label (key "hmi.&lt;english_label&gt;", English fallback).</summary>
+        public string Label => LocText.Get(_labelKey, _label);
+
+        /// <summary>Localized unit (key "unit.&lt;unit&gt;" for units with letters, e.g. "pcs").</summary>
+        public string Unit => LocText.Get(_unitKey, _unit);
+
         public MachineReadoutSlot Slot { get; }
 
         public string Text => _text != null ? _text() : "--";

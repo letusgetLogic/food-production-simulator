@@ -36,6 +36,8 @@ namespace Game.HMI
         private sealed class ParameterRow
         {
             public MachineParameter Parameter;
+            public TextMeshProUGUI LabelText;
+            public TextMeshProUGUI UnitText;
             public TextMeshProUGUI ValueText;
             public Button DecreaseButton;
             public Button IncreaseButton;
@@ -44,6 +46,8 @@ namespace Game.HMI
         private sealed class ReadoutRow
         {
             public MachineReadout Readout;
+            public TextMeshProUGUI LabelText;
+            public TextMeshProUGUI UnitText;
             public TextMeshProUGUI ValueText;
             public Image SeverityBar;
         }
@@ -70,7 +74,7 @@ namespace Game.HMI
 
             if (parameters != null && parameters.Count > 0)
             {
-                CreateHeader(_setpointsHeader);
+                CreateHeader(LocText.Get("hmi.setpoints", _setpointsHeader));
                 height += _headerHeight;
                 rowCount++;
 
@@ -84,7 +88,7 @@ namespace Game.HMI
 
             if (readouts != null && readouts.Count > 0)
             {
-                CreateHeader(_actualValuesHeader);
+                CreateHeader(LocText.Get("hmi.actual_values", _actualValuesHeader));
                 height += _headerHeight;
                 rowCount++;
 
@@ -134,8 +138,11 @@ namespace Game.HMI
         /// <summary>Pulls the current values from the machine. Called periodically by the binder.</summary>
         public void Refresh()
         {
+            // Labels/units are re-read every refresh so a language switch shows up without rebuilding.
             foreach (ParameterRow row in _parameterRows)
             {
+                row.LabelText.text = row.Parameter.Label;
+                row.UnitText.text = row.Parameter.Unit;
                 row.ValueText.text = row.Parameter.FormattedValue;
 
                 float value = row.Parameter.Value;
@@ -145,6 +152,8 @@ namespace Game.HMI
 
             foreach (ReadoutRow row in _readoutRows)
             {
+                row.LabelText.text = row.Readout.Label;
+                row.UnitText.text = row.Readout.Unit;
                 row.ValueText.text = row.Readout.Text;
                 row.SeverityBar.color = ResolveColor(row.Readout.Level);
             }
@@ -211,6 +220,8 @@ namespace Game.HMI
             return new ParameterRow
             {
                 Parameter = parameter,
+                LabelText = label,
+                UnitText = unit,
                 ValueText = value,
                 DecreaseButton = decrease,
                 IncreaseButton = increase
@@ -235,7 +246,14 @@ namespace Game.HMI
             TextMeshProUGUI unit = CreateText(row, "Unit", readout.Unit, _fontSize * 0.85f, LabelColor, TextAlignmentOptions.MidlineLeft);
             AddFixed(unit.gameObject, _unitWidth + _buttonWidth);
 
-            return new ReadoutRow { Readout = readout, ValueText = value, SeverityBar = bar };
+            return new ReadoutRow
+            {
+                Readout = readout,
+                LabelText = label,
+                UnitText = unit,
+                ValueText = value,
+                SeverityBar = bar
+            };
         }
 
         private RectTransform CreateRow(string rowName, float height)

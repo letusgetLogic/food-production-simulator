@@ -30,6 +30,11 @@ namespace Game.Production
                  "MixerMachine.SetMixingDuration at the HMI.")]
         [Min(0f)] public float DefaultMixingDurationSeconds = 20f;
 
+        [Header("HMI Setpoint Limits (operator input at the machine terminal)")]
+        [Min(0f)] public float MinMixingDurationSeconds = 5f;
+        [Min(1f)] public float MaxMixingDurationSeconds = 120f;
+        [Min(0.1f)] public float MixingDurationStepSeconds = 1f;
+
         [Header("State Transition Timing")]
         [Tooltip("Each machine subclass defines its own Starting->Running and " +
                  "Stopping->Stopped timing. Wired into MixerMachine via the " +

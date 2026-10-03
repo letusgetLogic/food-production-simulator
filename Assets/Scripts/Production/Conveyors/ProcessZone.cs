@@ -5,9 +5,13 @@ using UnityEngine;
 namespace Game.Production
 {
     /// <summary>
-    /// Trigger volume of a tunnel station (oven chamber, cooling tunnel, freezer). Only tracks which
-    /// products are inside and for how long - no evaluation, no state changes (that is the station's
-    /// job, same separation as sensors vs. machines).
+    /// Trigger volume of a tunnel station (oven chamber, cooling tunnel, freezer, packaging) or a dosing unit.
+    /// Only tracks which products are inside and for how long - no evaluation, no state changes (that is
+    /// the station's job, same separation as sensors vs. machines).
+    ///
+    /// A product counts as inside while its CENTRE lies within the zone's footprint (not from the first
+    /// collider contact to the last one). So the measured time inside is zone length / belt speed - the
+    /// dwell time the station sets - independent of the product's diameter.
     ///
     /// The zone's local Z axis must point in travel direction; <see cref="LengthMeters"/> (box size Z
     /// in world units) is what the station uses to turn a dwell time into a belt speed.
@@ -15,16 +19,18 @@ namespace Game.Production
     [RequireComponent(typeof(BoxCollider))]
     public class ProcessZone : MonoBehaviour
     {
+        // Products with at least one collider in the trigger (candidates).
         private readonly Dictionary<ProductToken, int> _colliderCounts = new Dictionary<ProductToken, int>();
+        // Products whose centre is inside, with the time it entered.
         private readonly Dictionary<ProductToken, float> _entryTimes = new Dictionary<ProductToken, float>();
         private readonly List<ProductToken> _scratch = new List<ProductToken>();
 
         private BoxCollider _volume;
 
-        /// <summary>Raised when a product enters the zone.</summary>
+        /// <summary>Raised when a product's centre enters the zone.</summary>
         public event Action<ProductToken> ProductEntered;
 
-        /// <summary>Raised when a product leaves the zone: (product, secondsInside).</summary>
+        /// <summary>Raised when a product's centre leaves the zone: (product, secondsInside).</summary>
         public event Action<ProductToken, float> ProductExited;
 
         public IReadOnlyCollection<ProductToken> Products => _entryTimes.Keys;
@@ -49,11 +55,11 @@ namespace Game.Production
             _volume.isTrigger = true;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // Products destroyed inside the zone (e.g. removed by the worker) never get an exit event.
             _scratch.Clear();
-            foreach (ProductToken token in _entryTimes.Keys)
+            foreach (ProductToken token in _colliderCounts.Keys)
             {
                 if (token == null)
                 {
@@ -63,8 +69,43 @@ namespace Game.Production
 
             foreach (ProductToken token in _scratch)
             {
-                _entryTimes.Remove(token);
                 _colliderCounts.Remove(token);
+                _entryTimes.Remove(token);
+            }
+
+            _scratch.Clear();
+            _scratch.AddRange(_colliderCounts.Keys);
+            foreach (ProductToken token in _scratch)
+            {
+                UpdateCentre(token, IsCentreInside(token));
+            }
+        }
+
+        private bool IsCentreInside(ProductToken token)
+        {
+            Vector3 local = _volume.transform.InverseTransformPoint(token.transform.position) - _volume.center;
+            Vector3 half = _volume.size * 0.5f;
+            return Mathf.Abs(local.x) <= half.x && Mathf.Abs(local.z) <= half.z;
+        }
+
+        private void UpdateCentre(ProductToken token, bool isInside)
+        {
+            bool wasInside = _entryTimes.ContainsKey(token);
+            if (isInside == wasInside)
+            {
+                return;
+            }
+
+            if (isInside)
+            {
+                _entryTimes[token] = Time.time;
+                ProductEntered?.Invoke(token);
+            }
+            else
+            {
+                float secondsInside = GetSecondsInside(token);
+                _entryTimes.Remove(token);
+                ProductExited?.Invoke(token, secondsInside);
             }
         }
 
@@ -78,12 +119,6 @@ namespace Game.Production
 
             _colliderCounts.TryGetValue(token, out int count);
             _colliderCounts[token] = count + 1;
-
-            if (count == 0)
-            {
-                _entryTimes[token] = Time.time;
-                ProductEntered?.Invoke(token);
-            }
         }
 
         private void OnTriggerExit(Collider other)
@@ -100,10 +135,8 @@ namespace Game.Production
                 return;
             }
 
-            float secondsInside = GetSecondsInside(token);
             _colliderCounts.Remove(token);
-            _entryTimes.Remove(token);
-            ProductExited?.Invoke(token, secondsInside);
+            UpdateCentre(token, false); // picked up or pushed out sideways
         }
 
         private void OnDrawGizmosSelected()

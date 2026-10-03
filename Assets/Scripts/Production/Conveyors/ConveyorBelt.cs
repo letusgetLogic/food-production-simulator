@@ -67,7 +67,7 @@ namespace Game.Production
         [SerializeField] private MachineBase _downstream;
 
         [Tooltip("Transport belt only, optional: PresenceSensor at the discharge end. The belt pauses only while this sensor " +
-                 "sees a product AND the downstream element cannot accept. Without it, the belt pauses as soon as downstream cannot accept.")]
+                 "sees a product AND the downstream element cannot accept. Without it, a product centre within 0.35 m of the belt end counts as waiting.")]
         [SerializeField] private PresenceSensor _dischargeSensor;
 
         [Header("HMI Content")]
@@ -167,6 +167,9 @@ namespace Game.Production
         {
             if (CurrentState != MachineState.Running)
             {
+                // Belt surfaces are frictionless (PM_BeltSurface) - a standing belt has to hold its products.
+                PruneDestroyedProducts();
+                DriveProducts(Vector3.zero);
                 return;
             }
 
@@ -229,7 +232,9 @@ namespace Game.Production
 
         private void UpdateHeldState()
         {
-            bool isProductWaiting = _dischargeSensor == null || _dischargeSensor.CurrentValue;
+            bool isProductWaiting = _dischargeSensor != null
+                ? _dischargeSensor.CurrentValue
+                : IsProductAtDischargeEnd();
             bool shouldHold = _downstream != null && isProductWaiting
                 && !InfeedReadinessUtility.IsReady(_downstream, null);
 
@@ -241,6 +246,42 @@ namespace Game.Production
             _isHeld = shouldHold;
             Report(_isHeld ? ConveyorInfo.HeldByDownstream : ConveyorInfo.Running);
         }
+
+        /// <summary>
+        /// Without a discharge sensor: is a product's centre within <see cref="DischargeZoneMeters"/> of the
+        /// belt end? Then the belt pauses while downstream cannot accept. Before 02.10. the belt paused as soon
+        /// as downstream could not accept, even when empty - a fault in the freezer froze oven and dosing at once.
+        /// </summary>
+        private bool IsProductAtDischargeEnd()
+        {
+            if (_surface == null || _colliderCounts.Count == 0)
+            {
+                return false;
+            }
+
+            Vector3 travel = TravelDirection;
+            Bounds bounds = _surface.bounds;
+            float halfLength = Mathf.Abs(bounds.extents.x * travel.x) + Mathf.Abs(bounds.extents.y * travel.y)
+                               + Mathf.Abs(bounds.extents.z * travel.z);
+
+            foreach (ProductToken token in _colliderCounts.Keys)
+            {
+                if (token == null || !IsDrivenByThisBelt(token))
+                {
+                    continue;
+                }
+
+                float along = Vector3.Dot(token.transform.position - bounds.center, travel);
+                if (along >= halfLength - DischargeZoneMeters)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>Length of the virtual discharge sensor at the belt end (belts without a PresenceSensor).</summary>
+        private const float DischargeZoneMeters = 0.35f;
 
         private void UpdateBufferFault(float deltaTime)
         {
@@ -469,7 +510,7 @@ namespace Game.Production
 
             _lastReportedInfo = info;
             string localized = _contents.Find(c => c.State == info)?.Info;
-            NotifyContentChanged(string.IsNullOrEmpty(localized) ? FallbackText(info) : localized);
+            NotifyContentChanged(string.IsNullOrEmpty(localized) ? LocText.Info("conveyor", info, FallbackText(info)) : localized);
         }
 
         /// <summary>Used until the localization keys exist in the table.</summary>

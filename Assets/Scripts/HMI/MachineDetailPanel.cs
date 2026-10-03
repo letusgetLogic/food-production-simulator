@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.Production;
 using TMPro;
 using UnityEngine;
@@ -33,6 +34,11 @@ namespace Game.HMI
         [Header("Content")]
         [SerializeField] private TextMeshProUGUI _content;
 
+        [Header("Setpoints / actual values")]
+        [Tooltip("Optional. Built at runtime from the bound machine's IMachineParameterSource. " +
+                 "Created by Tools / Food Production / Setup Machine Terminals.")]
+        [SerializeField] private MachineParameterListView _parameterList;
+
         [Header("Operator commands")]
         [SerializeField] private GameObject _commandRow;
         [SerializeField] private Button _startButton;
@@ -43,6 +49,9 @@ namespace Game.HMI
 
         private bool _controlEnabled = true;
         private MachineState _currentState;
+
+        private IMachineParameterSource _valueSource;
+        private readonly List<MachineReadout> _tileReadouts = new List<MachineReadout>();
 
         public event Action StartRequested;
         public event Action StopRequested;
@@ -117,6 +126,89 @@ namespace Game.HMI
             }
 
             UpdateCommandAvailability(_currentState);
+
+            if (_parameterList != null)
+            {
+                _parameterList.SetEditable(controlEnabled);
+            }
+        }
+
+        /// <summary>
+        /// Binds the machine's setpoints and actual values. Readouts with a slot go into the fixed tiles
+        /// (temperature, fill level, cycle time, setpoint) if this panel has them, everything else into
+        /// the parameter list. Pass null to clear (tiles fall back to "--").
+        /// </summary>
+        public void SetValueSource(IMachineParameterSource source)
+        {
+            _valueSource = source;
+            _tileReadouts.Clear();
+
+            ResetTile(_temperatureTile);
+            ResetTile(_fillLevelTile);
+            ResetTile(_cycleTimeTile);
+            ResetTile(_setpointTile);
+
+            var listReadouts = new List<MachineReadout>();
+            if (source?.Readouts != null)
+            {
+                foreach (MachineReadout readout in source.Readouts)
+                {
+                    if (GetTile(readout.Slot) != null)
+                    {
+                        _tileReadouts.Add(readout);
+                    }
+                    else if (readout.Slot == MachineReadoutSlot.None)
+                    {
+                        listReadouts.Add(readout);
+                    }
+                    // Slotted readouts without a tile (e.g. on a small ambient display) are dropped:
+                    // they only summarize values that are listed elsewhere anyway.
+                }
+            }
+
+            if (_parameterList != null)
+            {
+                _parameterList.Build(source?.Parameters, listReadouts);
+                _parameterList.SetEditable(_controlEnabled);
+            }
+
+            RefreshValues();
+        }
+
+        /// <summary>Pulls the current values from the bound source. Called periodically by the binder.</summary>
+        public void RefreshValues()
+        {
+            if (_valueSource == null)
+            {
+                return;
+            }
+
+            foreach (MachineReadout readout in _tileReadouts)
+            {
+                GetTile(readout.Slot)?.SetValue(readout.Text, (HmiValueSeverity)(int)readout.Level);
+            }
+
+            if (_parameterList != null && _parameterList.isActiveAndEnabled)
+            {
+                _parameterList.Refresh();
+            }
+        }
+
+        private StatusTileView GetTile(MachineReadoutSlot slot) => slot switch
+        {
+            MachineReadoutSlot.Temperature => _temperatureTile,
+            MachineReadoutSlot.FillLevel => _fillLevelTile,
+            MachineReadoutSlot.CycleTime => _cycleTimeTile,
+            MachineReadoutSlot.Setpoint => _setpointTile,
+            _ => null
+        };
+
+        private static void ResetTile(StatusTileView tile)
+        {
+            if (tile != null)
+            {
+                tile.SetPlaceholder();
+            }
         }
 
         public void SetTemperature(float celsius, HmiValueSeverity severity) =>

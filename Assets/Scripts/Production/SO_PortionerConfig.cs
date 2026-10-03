@@ -22,5 +22,15 @@ namespace Game.Production
 
         [Tooltip("Default acceptable deviation from the target weight in grams.")]
         public float DefaultToleranceGrams = 15f;
+
+        [Header("HMI Setpoint Limits (operator input at the machine terminal)")]
+        [Min(1f)] public float MinTargetWeightGrams = 100f;
+        [Min(1f)] public float MaxTargetWeightGrams = 500f;
+        [Min(0.1f)] public float TargetWeightStepGrams = 5f;
+        [Min(0f)] public float MaxToleranceGrams = 50f;
+        [Min(0.1f)] public float ToleranceStepGrams = 1f;
+        [Min(0.1f)] public float MinPortioningDurationSeconds = 1f;
+        [Min(0.1f)] public float MaxPortioningDurationSeconds = 20f;
+        [Min(0.1f)] public float PortioningDurationStepSeconds = 0.5f;
     }
 }

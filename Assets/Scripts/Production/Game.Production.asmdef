@@ -4,7 +4,8 @@
     "references": [
         "Game.Core",
         "AYellowpaper.SerializeInterfaces",
-        "Unity.Localization"
+        "Unity.Localization",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -6,7 +6,11 @@
         "Game.Production",
         "Game.HMI",
         "Game.Quality",
-        "Unity.TextMeshPro"
+        "Game.Persistence",
+        "Game.DebugTools",
+        "Unity.TextMeshPro",
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner"
     ],
     "includePlatforms": [
         "Editor"

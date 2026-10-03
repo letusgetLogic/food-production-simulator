@@ -39,7 +39,7 @@ namespace Game.Production
     /// Deliberately does NOT implement IProductProcessor (products are handed over by physics).
     /// No RecipeDefinition binding in code: amounts are operator settings from the HMI.
     /// </summary>
-    public class DosingMachine : MachineBase, IInfeedReadiness, IMachineParameterSource
+    public class DosingMachine : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState
     {
         /// <summary>Content messages this station reports via NotifyContentChanged.</summary>
         public enum DosingInfo
@@ -426,7 +426,7 @@ namespace Game.Production
                     () => _wrongProductCount.ToString(),
                     () => _wrongProductCount > 0 ? MachineValueLevel.Warning : MachineValueLevel.Normal),
                 new MachineReadout("belt", "Belt", "",
-                    () => _belt == null ? "--" : _belt.IsMoving ? "Moving" : _belt.CurrentState.ToString(),
+                    () => _belt == null ? "--" : _belt.IsMoving ? LocText.Get("hmi.moving", "Moving") : _belt.CurrentState.ToString(),
                     () => _belt == null ? MachineValueLevel.Inactive
                         : _belt.CurrentState == MachineState.Fault ? MachineValueLevel.Alarm
                         : _belt.IsMoving ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
@@ -470,7 +470,7 @@ namespace Game.Production
         private string Info(DosingInfo info)
         {
             string localized = _contents.Find(c => c.State == info)?.Info;
-            return string.IsNullOrEmpty(localized) ? FallbackText(info) : localized;
+            return string.IsNullOrEmpty(localized) ? LocText.Info("dosing", info, FallbackText(info)) : localized;
         }
 
         /// <summary>Used until the localization keys exist in the table.</summary>
@@ -586,6 +586,30 @@ namespace Game.Production
             Gizmos.matrix = box.transform.localToWorldMatrix;
             Gizmos.DrawWireCube(box.center, box.size);
             Gizmos.matrix = Matrix4x4.identity;
+        }
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values)
+        {
+            values.Set("sauceLevel", _sauceLevelGrams);
+            values.Set("toppingLevel", _toppingLevelGrams);
+            values.Set("lastSauce", _lastSauceGrams);
+            values.Set("lastTopping", _lastToppingGrams);
+            values.Set("completed", _completedCount);
+            values.Set("wrongProducts", _wrongProductCount);
+        }
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values)
+        {
+            _sauceLevelGrams = Mathf.Clamp(values.GetFloat("sauceLevel", _sauceLevelGrams), 0f, _config.SauceTankCapacityGrams);
+            _toppingLevelGrams = Mathf.Clamp(values.GetFloat("toppingLevel", _toppingLevelGrams), 0f, _config.ToppingHopperCapacityGrams);
+            _lastSauceGrams = values.GetFloat("lastSauce", _lastSauceGrams);
+            _lastToppingGrams = values.GetFloat("lastTopping", _lastToppingGrams);
+            _completedCount = values.GetInt("completed", _completedCount);
+            _wrongProductCount = values.GetInt("wrongProducts", _wrongProductCount);
         }
     }
 }

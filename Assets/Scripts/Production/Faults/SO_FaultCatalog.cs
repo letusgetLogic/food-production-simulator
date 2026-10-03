@@ -34,14 +34,20 @@ namespace Game.Production
         [Tooltip("Can be injected by the FaultMonitor for training (scenario / debug menu).")]
         public bool CanBeInjected;
 
-        public string Message => Localized(MessageKey, FallbackMessage, Code);
-        public string Remedy => Localized(RemedyKey, FallbackRemedy, string.Empty);
+        /// <summary>Alarm text: inspector key, else sheet key "fault.&lt;code&gt;.msg", else English fallback.</summary>
+        public string Message => Localized(MessageKey, SheetKey("msg"), FallbackMessage, Code);
+
+        /// <summary>Remedy text: inspector key, else sheet key "fault.&lt;code&gt;.remedy", else English fallback.</summary>
+        public string Remedy => Localized(RemedyKey, SheetKey("remedy"), FallbackRemedy, string.Empty);
+
+        private string SheetKey(string suffix) =>
+            string.IsNullOrEmpty(Code) ? null : $"fault.{LocText.Snake(Code)}.{suffix}";
 
         public bool Matches(string reason) =>
             !string.IsNullOrEmpty(Code) && !string.IsNullOrEmpty(reason)
             && reason.StartsWith(Code, StringComparison.Ordinal);
 
-        private static string Localized(LocalizedString key, string fallback, string lastResort)
+        private static string Localized(LocalizedString key, string sheetKey, string fallback, string lastResort)
         {
             if (key != null && !key.IsEmpty)
             {
@@ -52,7 +58,7 @@ namespace Game.Production
                 }
             }
 
-            return string.IsNullOrEmpty(fallback) ? lastResort : fallback;
+            return LocText.Get(sheetKey, string.IsNullOrEmpty(fallback) ? lastResort : fallback);
         }
     }
 
