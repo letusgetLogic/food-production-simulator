@@ -41,6 +41,8 @@
 
 - **Sprachwahl im Pausemenü:** Knopf „Language: Deutsch“ schaltet reihum durch alle Locales (de → es → en → fr) und meldet den Wechsel über `SO_LanguageSwitcherChannel` (Maschinennamen im HMI folgen). Feld `_languageChannel` am `PauseMenu`, wird von *Setup Statistics Page + Pause Menu* gesetzt (ausgeführt, Szene gespeichert). Neuer Key `hmi.language`. `Game.HMI` referenziert jetzt `Unity.ResourceManager`. Im Play Mode geprüft
 - **Aufgeräumt:** `IProductProcessor` gelöscht (Kommentare angepasst), `SampleScene` aus den Build Settings entfernt (Datei und `DummyMachine` bleiben vorerst im Projekt)
+- **Laufende Bänder:** `ConveyorSurfaceScroll` (Game.Production) scrollt eine Streifen-Textur auf einem Quad 2 mm über der Bandoberfläche (Cube-Collider), Tempo = `CurrentSpeedMetersPerSecond`, steht bei Halt/Rückstau/Fault. Puffer-Band: ein Segment je Platz (`IsSegmentMoving`). Menü *Setup Moving Belt Visuals* (ausgeführt, 9 Bänder, 12 Segmente); Puffer-Band nutzt jetzt das flache Mesh `conveyor-long-stripe` statt der Rollen
+- **Pizzakarton:** Kind `PackagedBox` im Pizza-Prefab (Karton aus Primitiven, Materialien `Assets/Materials/Packaging`), Eintrag `PackagedPizza` im `PizzaStateVisual`, eigener BoxCollider (ohne fällt das Produkt durchs Band, weil die Pizza-Visuals samt MeshCollidern ausgeblendet sind). Menü *Setup Pizza Box Visual*. Kenney-`pizza-box` verworfen (offener Deckel). Linie Dosierung → LineEnd: 2/2 OK, EditMode-Tests 49/49
 - **Hinweis Automatisierung:** `tests` und `play` nicht direkt hintereinander in `commands.txt` – der Test-Runner läuft asynchron, ein Play-Start dazwischen bricht ihn ab. Dabei wurde einmal `timeScale 0` in `ProjectSettings/TimeManager.asset` gespeichert (zurückgesetzt); im normalen Ablauf (Pause offen → Play Mode beenden) bleibt `timeScale` 1
 
 ## Testlauf 02.10. Abend (Unity 6000.3.17f1, per EditorCommandRunner)
@@ -122,6 +124,8 @@ Woche 3 (Tag [bitte eintragen]) – alle 8 Stationen, FaultSystem und QualitySys
 - *Setup Fault + Quality System* – inkl. SaveLoadController und DebugPanel (02.10., ausgeführt)
 - *Setup Statistics Page + Pause Menu* (02.10., ausgeführt)
 - *Setup Belt Surface Physics* – reibungsfreies Physik-Material auf allen Bandoberflächen (02.10., ausgeführt)
+- *Setup Moving Belt Visuals* – laufende Streifen-Oberfläche (`ConveyorSurfaceScroll`) auf allen Bändern, Puffer-Band je Platz eigenes Segment, Rollen-Mesh → flaches Band (05.10., ausgeführt)
+- *Setup Pizza Box Visual* – geschlossener Karton (Primitive, Material `Assets/Materials/Packaging`) als Visual für `PackagedPizza` im Pizza-Prefab, mit eigenem BoxCollider (05.10., ausgeführt)
 
 ### Basis (Woche 1)
 - `MachineBase`/`IMachine` mit validierter Übergangstabelle, `StateChanged`-Event, `MachineOverviewReporter` → `SO_MachineOverviewChannel`
@@ -145,8 +149,8 @@ Woche 3 (Tag [bitte eintragen]) – alle 8 Stationen, FaultSystem und QualitySys
   - Bandstörung in einem Tunnel erzeugt zwei Alarme (Band `Jam` + Station `BeltFault`) – gewollt, aber im Playtest bewerten
   - Lage der neuen Bänder: `TunnelStationSetup` setzt jedes Band um eine Bandlänge versetzt hinter das vorherige – setzt gleiche Pivot-Lage aller Band-Prefabs voraus (gleiches Prefab, sollte passen)
   - Bandgeschwindigkeiten der Tunnel (0,21–0,40 m/s) liegen im Bereich von `ConveyorConfig_Transport` (Default 0,05–2 m/s) – Asset-Werte im Editor prüfen
-- **Visuell:** `PizzaStateVisual` zeigt für Cooled/Frozen/Packaged noch das Baked-Modell (kein Karton-Modell); Tunnel/Verpackung/Dosierung sind Primitive-Platzhalter
-- **Bänder optisch statisch:** `ConveyorPlankVisual` ist nicht angeschlossen; die Streifen sind Teil der Band-Meshes – braucht eigene Planken-Objekte oder Textur-Scrolling (im Editor klären)
+- **Visuell:** Cooled/Frozen zeigen noch das Baked-Modell (Packaged hat jetzt den Karton, 05.10.); Tunnel/Verpackung/Dosierung sind Primitive-Platzhalter
+- **Laufende Bänder (05.10.):** Band-Oberflächen scrollen per Textur (`ConveyorSurfaceScroll`), `ConveyorPlankVisual` bleibt ungenutzt (löschbar). Puffer-Band hat dafür das flache Band-Mesh statt der Rollen. Neue Bänder aus den Tunnel-Setups bekommen die Oberfläche erst nach erneutem *Setup Moving Belt Visuals*
 - **Lokalisierung:** Keys liegen fertig übersetzt in `Docs/localization-keys.csv`, sind aber **noch nicht im Google Sheet** (Pull mit „Remove Missing Pulled Keys“ würde sonst nichts bringen). Baskisch (eu) ist nicht im Sheet konfiguriert. Noch ohne Key: Defekt-Codes des QualitySystems (nur Konsole/DebugPanel), Zustandsnamen im `SO_HmiTheme`
 - **`DummyMachine`** bleibt, weil `SampleScene` sie noch nutzt (SampleScene ist nicht mehr in den Build Settings – Szene und Klasse können gelöscht werden, wenn niemand sie braucht)
 - **Cross-Team-Sync:** Änderungen an fremdem Code bestätigen lassen – Dev A: `MachineBase` (Warning, `RequestRun`, `FaultReason`), `PressMachine` (Fault-Verhalten, Reject), `PortionerMachine` (`_downstream`); Dev B: `PresenceSensor`, `TemperatureSensor.SetHeatingTarget()`, `ProductInstance` (neue Felder); Dev C: `OverviewPanel`, `MachineStateRowView`, `LineStatusBinder`, Prefab-Texte
