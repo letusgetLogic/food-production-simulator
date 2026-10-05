@@ -15,7 +15,7 @@ namespace Game.HMI
 {
     /// <summary>
     /// Pause menu (Woche 3, Plattform-UX): Escape while no other UI is open pauses the game
-    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Language / Controls / Quit.
+    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Language / Controls / Tutorial / Quit.
     /// Escape again (or Resume) closes it - Escape is routed through <see cref="SO_UiFocusChannel.CloseRequested"/>
     /// like every other UI, so an open HMI is closed first and only the next Escape opens the menu.
     ///
@@ -47,6 +47,7 @@ namespace Game.HMI
         private TextMeshProUGUI _loadLabel;
         private TextMeshProUGUI _helpLabel;
         private TextMeshProUGUI _languageLabel;
+        private TextMeshProUGUI _tutorialLabel;
         private TextMeshProUGUI _quitLabel;
         private Button _loadButton;
 
@@ -255,6 +256,16 @@ namespace Game.HMI
             }
         }
 
+        private void RestartTutorial()
+        {
+            TutorialController tutorial = FindFirstObjectByType<TutorialController>();
+            Close();
+            if (tutorial != null)
+            {
+                tutorial.Restart();
+            }
+        }
+
         private void ToggleHelp()
         {
             _helpRoot.SetActive(!_helpRoot.activeSelf);
@@ -309,6 +320,7 @@ namespace Game.HMI
             _loadButton = AddButton(panel.transform, "Load", LoadGame, out _loadLabel);
             AddButton(panel.transform, "Language", NextLanguage, out _languageLabel);
             AddButton(panel.transform, "Controls", ToggleHelp, out _helpLabel);
+            AddButton(panel.transform, "Tutorial", RestartTutorial, out _tutorialLabel);
 
             _helpRoot = HmiUiFactory.CreateRect("Help", panel.transform).gameObject;
             HmiUiFactory.AddVerticalLayout(_helpRoot, 0f, 4);
@@ -343,6 +355,7 @@ namespace Game.HMI
             _saveLabel.text = LocText.Get("hmi.save_game", "Save game");
             _loadLabel.text = LocText.Get("hmi.load_game", "Load game");
             _languageLabel.text = $"{LocText.Get("hmi.language", "Language")}: {CurrentLanguageName()}";
+            _tutorialLabel.text = LocText.Get("hmi.tutorial", "Restart tutorial");
             _helpLabel.text = LocText.Get("hmi.controls", "Controls");
             if (_quitLabel != null)
             {

@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a12e79c421ee0458709f440466e8bc, type: 3}
+  m_Name: TutorialSequence_FirstBatch
+  m_EditorClassIdentifier: Game.HMI::Game.HMI.SO_TutorialSequence
+  _steps:
+  - TitleKey: tutorial.welcome.title
+    TitleFallback: Welcome to the line
+    TextKey: tutorial.welcome.text
+    TextFallback: Today you run a frozen pizza line - from the dough mixer to the
+      packed pizza. Walk with W A S D and look around with the mouse.
+    Condition: 1
+    Amount: 2
+  - TitleKey: tutorial.mixer_start.title
+    TitleFallback: Start the dough mixer
+    TextKey: tutorial.mixer_start.text
+    TextFallback: 'Go to a dough mixer and start it: green start button on the mixer,
+      or its terminal ({0}).'
+    Condition: 3
+    Amount: 0
+  - TitleKey: tutorial.mixer_wait.title
+    TitleFallback: Mixing
+    TextKey: tutorial.mixer_wait.text
+    TextFallback: The mixer needs a moment. Make sure the pot stands under the drum
+      - pick it up with {0}, put it down with {1}.
+    Condition: 4
+    Amount: 0
+  - TitleKey: tutorial.mixer_tilt.title
+    TitleFallback: Tilt the drum
+    TextKey: tutorial.mixer_tilt.text
+    TextFallback: Mixing is done. Press the tilt button on the mixer with {0} - the
+      dough ball drops into the pot.
+    Condition: 5
+    Amount: 0
+  - TitleKey: tutorial.pot_carry.title
+    TitleFallback: Pick up the pot
+    TextKey: tutorial.pot_carry.text
+    TextFallback: Aim at the pot with the dough and pick it up with {0}.
+    Condition: 6
+    Amount: 0
+  - TitleKey: tutorial.pot_lift.title
+    TitleFallback: Load the portioner
+    TextKey: tutorial.pot_lift.text
+    TextFallback: Carry the pot to the portioner and put it down on the lift with
+      {1}.
+    Condition: 7
+    Amount: 0
+  - TitleKey: tutorial.lift_up.title
+    TitleFallback: Raise the lift
+    TextKey: tutorial.lift_up.text
+    TextFallback: Press the lift-up button with {0}. The pot tips and the dough falls
+      into the hopper.
+    Condition: 8
+    Amount: 0
+  - TitleKey: tutorial.portion.title
+    TitleFallback: Portioning
+    TextKey: tutorial.portion.text
+    TextFallback: The portioner cuts the dough into portions (target 250 g). If it
+      is stopped, start it at its terminal.
+    Condition: 9
+    Amount: 0
+  - TitleKey: tutorial.press.title
+    TitleFallback: Forming
+    TextKey: tutorial.press.text
+    TextFallback: The portions wait in the buffer and run into the press, which forms
+      the pizza base. Watch the first stroke.
+    Condition: 10
+    Amount: 0
+  - TitleKey: tutorial.hmi.title
+    TitleFallback: Watch the line
+    TextKey: tutorial.hmi.text
+    TextFallback: Open the line terminal next to the press with {0}. Green = running,
+      amber = warning, red = fault.
+    Condition: 2
+    Amount: 0
+  - TitleKey: tutorial.first_pizza.title
+    TitleFallback: The first pizza
+    TextKey: tutorial.first_pizza.text
+    TextFallback: 'Follow your pizza: sauce and topping, oven, cooling, shock freezer,
+      packaging. Quality is checked at the end of the line.'
+    Condition: 11
+    Amount: 0
+  - TitleKey: tutorial.done.title
+    TitleFallback: First batch done!
+    TextKey: tutorial.done.text
+    TextFallback: Faults will happen - the HMI shows the cause and the remedy. Esc
+      opens the pause menu with controls, save and load.
+    Condition: 0
+    Amount: 12
