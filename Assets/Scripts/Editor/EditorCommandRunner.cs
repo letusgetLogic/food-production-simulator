@@ -31,6 +31,7 @@ namespace Game.EditorTools
     ///   dump RootName [depth]            hierarchy below an object with positions/components
     ///   call Object Component Method [arg]   invoke a method via reflection (arg: number, bool or text)
     ///   get Object Component member      log a field/property value
+    ///   set Object Component member value   set a field/property (number, bool, enum or text) - test setups, e.g. a tank level
     ///   move Object x y z                teleport an object (e.g. pot onto the portioner lift)
     ///   screenshot name                  game view screenshot to Automation/name.png (Play Mode)
     ///   tests                            run all EditMode tests, results in the log
@@ -211,6 +212,9 @@ namespace Game.EditorTools
                     case "get":
                         Get(args);
                         break;
+                    case "set":
+                        Set(args);
+                        break;
                     case "screenshot":
                         string file = Path.Combine(Folder, (args.ElementAtOrDefault(1) ?? "shot") + ".png");
                         ScreenCapture.CaptureScreenshot(file);
@@ -387,6 +391,35 @@ namespace Game.EditorTools
                 value = "[" + string.Join(", ", list.Cast<object>().Select(o => o?.ToString())) + "]";
             }
             Write($"{type.Name}.{member} = {value ?? "null"}");
+        }
+
+        private static void Set(List<string> args)
+        {
+            Component component = FindComponent(args);
+            if (component == null)
+            {
+                return;
+            }
+
+            string member = args.ElementAtOrDefault(3);
+            string raw = args.ElementAtOrDefault(4);
+            Type type = component.GetType();
+            PropertyInfo property = type.GetProperty(member, AnyMember);
+            FieldInfo field = property == null ? type.GetField(member, AnyMember) : null;
+            if (property != null && property.CanWrite)
+            {
+                property.SetValue(component, Convert(raw, property.PropertyType));
+            }
+            else if (field != null)
+            {
+                field.SetValue(component, Convert(raw, field.FieldType));
+            }
+            else
+            {
+                Write($"MEMBER NOT WRITABLE: {member}");
+                return;
+            }
+            Write($"{type.Name}.{member} := {raw}");
         }
 
         private static object Convert(string raw, Type type)

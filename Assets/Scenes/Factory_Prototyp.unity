@@ -1457,7 +1457,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
     m_TableEntryReference:
-      m_KeyId: 22459634364508
+      m_KeyId: 5456202205442048
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -4745,6 +4745,67 @@ Transform:
   - {fileID: 1854691732}
   m_Father: {fileID: 1800181193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &726451956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 726451958}
+  - component: {fileID: 726451957}
+  m_Layer: 0
+  m_Name: Tutorial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &726451957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726451956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdff9b154f516864e9dd658fc6bd9f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.HMI::Game.HMI.TutorialController
+  _sequence: {fileID: 11400000, guid: 90ec0dc36d47d7e49af8c585e779d70f, type: 2}
+  _player: {fileID: 1558945967}
+  _mixers:
+  - {fileID: 1896338605}
+  - {fileID: 1243988567}
+  _portioner: {fileID: 1485617550}
+  _press: {fileID: 7973278724987438226}
+  _qualityInspector: {fileID: 1003702534}
+  _uiFocusChannel: {fileID: 11400000, guid: fe1388f20d580224d8fa86bb9334908b, type: 2}
+  _holdChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
+  _startAutomatically: 1
+  _nextKey: 28
+  _hideKey: 22
+  _theme: {fileID: 11400000, guid: a0c154e929c6db34cb23230949504346, type: 2}
+  _styleSource: {fileID: 5475873597819366034}
+  _sortingOrder: 400
+  _fontSize: 22
+--- !u!4 &726451958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726451956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &732167262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1357753250171906107, guid: 4a7a5043328a8f64992bb69d8e32d019, type: 3}
@@ -5850,6 +5911,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 198671489}
     m_Modifications:
+    - target: {fileID: 3007606123591137444, guid: 38a0318bc299a164d8e5f483bebf2606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4340643029644184526, guid: 38a0318bc299a164d8e5f483bebf2606, type: 3}
       propertyPath: _machine
       value: 
@@ -7092,19 +7157,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.586
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.092199
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99574065
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalRotation.z
@@ -7116,7 +7181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 169.42
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -7493,6 +7558,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38a0318bc299a164d8e5f483bebf2606, type: 3}
+--- !u!114 &1243988567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9162206479014454460, guid: ff2ed6e0f984b754e8643125a076ac91, type: 3}
+  m_PrefabInstance: {fileID: 953595054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b029379fe6ba3d4e9bbf97450f6151e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Production.DoughMixerMachine
 --- !u!1 &1256624174
 GameObject:
   m_ObjectHideFlags: 0
@@ -9067,6 +9143,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8899788586094158687, guid: ebc3187152a220749bb7f217f1044017, type: 3}
   m_PrefabInstance: {fileID: 2049546889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1558945967 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5752976782753392762, guid: 340225a00e888764cb47b0023e2a05a2, type: 3}
+  m_PrefabInstance: {fileID: 1183123916}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1595385760 stripped
 Transform:
@@ -10845,6 +10926,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8965402602909877442, guid: ff2ed6e0f984b754e8643125a076ac91, type: 3}
   m_PrefabInstance: {fileID: 1890328630}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1896338605 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9162206479014454460, guid: ff2ed6e0f984b754e8643125a076ac91, type: 3}
+  m_PrefabInstance: {fileID: 1890328630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b029379fe6ba3d4e9bbf97450f6151e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Production.DoughMixerMachine
 --- !u!1 &1908970699
 GameObject:
   m_ObjectHideFlags: 0
@@ -10879,7 +10971,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
     m_TableEntryReference:
-      m_KeyId: 22459634364430
+      m_KeyId: 5442882299703351
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -14076,3 +14168,4 @@ SceneRoots:
   - {fileID: 1393907269}
   - {fileID: 1256624176}
   - {fileID: 1183324263}
+  - {fileID: 726451958}

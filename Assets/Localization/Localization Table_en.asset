@@ -442,6 +442,933 @@ MonoBehaviour:
     m_Localized: Dough Press
     m_Metadata:
       m_Items: []
+  - m_Id: 5442882215817216
+    m_Localized: Game saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120384
+    m_Localized: Saving failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120385
+    m_Localized: Loading failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120386
+    m_Localized: PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120387
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120388
+    m_Localized: Save game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120389
+    m_Localized: Load game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120390
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120391
+    m_Localized: Controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120392
+    m_Localized: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120393
+    m_Localized: 'WASD / arrow keys - move
+
+      Mouse - look around
+
+      Shift
+      - sprint
+
+      E - interact / pick up
+
+      Q - put down
+
+      Left click
+      - buttons on screens and terminals
+
+      Esc - close screen / pause
+
+      {0}
+      - quick save, {1} - quick load
+
+      {2} - debug panel (development)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120394
+    m_Localized: LINE STATISTICS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120395
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120396
+    m_Localized: SCRAP BY CAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120397
+    m_Localized: FAULTS BY TYPE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120398
+    m_Localized: DOWNTIME BY MACHINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120399
+    m_Localized: Run time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120400
+    m_Localized: Good
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120401
+    m_Localized: Scrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120402
+    m_Localized: Throughput / min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120403
+    m_Localized: Availability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120404
+    m_Localized: none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120405
+    m_Localized: Bake time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120406
+    m_Localized: Dwell time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120407
+    m_Localized: Temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120408
+    m_Localized: Setpoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120409
+    m_Localized: Products inside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120410
+    m_Localized: Last bake time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120411
+    m_Localized: Last dwell time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120412
+    m_Localized: Last product temp.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120413
+    m_Localized: Products completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120414
+    m_Localized: Wrong products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120415
+    m_Localized: Belt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120416
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120417
+    m_Localized: Topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120418
+    m_Localized: Sauce tank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120419
+    m_Localized: Topping hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120420
+    m_Localized: Last sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120421
+    m_Localized: Last topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120422
+    m_Localized: Pizzas dosed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120423
+    m_Localized: Passed undosed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120424
+    m_Localized: Moving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120425
+    m_Localized: Mixing time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120426
+    m_Localized: Cycle time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120427
+    m_Localized: Remaining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120428
+    m_Localized: Mixing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120429
+    m_Localized: Batch ready to tilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120430
+    m_Localized: Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120431
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120432
+    m_Localized: Drum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120433
+    m_Localized: Tilted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120434
+    m_Localized: Upright
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120435
+    m_Localized: Batch weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120436
+    m_Localized: Batches produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120437
+    m_Localized: Target weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120438
+    m_Localized: Tolerance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120439
+    m_Localized: Portioning time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120440
+    m_Localized: Hopper level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120441
+    m_Localized: Dough in hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120442
+    m_Localized: Portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120443
+    m_Localized: Last portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120444
+    m_Localized: Portions produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120445
+    m_Localized: Pot on lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120446
+    m_Localized: Output
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120447
+    m_Localized: Blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120448
+    m_Localized: Free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120449
+    m_Localized: Diameter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120450
+    m_Localized: Thickness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120451
+    m_Localized: Stroke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120452
+    m_Localized: Dough in press
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120453
+    m_Localized: Bases formed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120454
+    m_Localized: SETPOINTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120455
+    m_Localized: ACTUAL VALUES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120456
+    m_Localized: pcs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120457
+    m_Localized: Buffer filling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120458
+    m_Localized: Buffer full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120459
+    m_Localized: Held by downstream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120460
+    m_Localized: Temperature deviation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120461
+    m_Localized: Wrong product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120462
+    m_Localized: Low level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120463
+    m_Localized: Sauce tank empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120464
+    m_Localized: Refill the sauce tank at the dosing station (refill button), acknowledge,
+      complete maintenance, start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120465
+    m_Localized: Topping hopper empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120466
+    m_Localized: Refill the topping hopper at the dosing station (refill button),
+      acknowledge, complete maintenance, start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120467
+    m_Localized: Press buffer full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120468
+    m_Localized: Check the press (running? cycle time too long?). Then acknowledge
+      the buffer belt and restart.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120469
+    m_Localized: Conveyor jam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120470
+    m_Localized: Remove the stuck product from the belt, acknowledge, complete maintenance,
+      start the belt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120471
+    m_Localized: Temperature out of range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120472
+    m_Localized: Heater/cooling unit defect. Acknowledge, complete maintenance (repairs
+      the unit), start and wait for temperature.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120473
+    m_Localized: Setpoint temperature not reached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120474
+    m_Localized: Check the temperature setpoint. Acknowledge, complete maintenance,
+      start again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508992
+    m_Localized: Wrong product in press
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508993
+    m_Localized: The product is marked as scrap and will be ignored. Acknowledge,
+      complete maintenance, start.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508994
+    m_Localized: Station belt fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508995
+    m_Localized: Fix the belt fault first (see belt alarm), then acknowledge the
+      station.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508996
+    m_Localized: Not finished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508997
+    m_Localized: Rejected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508998
+    m_Localized: Underweight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508999
+    m_Localized: Overweight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509000
+    m_Localized: Diameter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509001
+    m_Localized: Thickness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509002
+    m_Localized: Sauce low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509003
+    m_Localized: Sauce high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509004
+    m_Localized: Topping low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509005
+    m_Localized: Topping high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509006
+    m_Localized: Underbaked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509007
+    m_Localized: Overbaked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509008
+    m_Localized: Bake temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509009
+    m_Localized: Cooling temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509010
+    m_Localized: Cold chain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509011
+    m_Localized: Missing measurement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509012
+    m_Localized: Weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509013
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509014
+    m_Localized: Topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509015
+    m_Localized: Bake time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509016
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509017
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509018
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509019
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509020
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509021
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509022
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509023
+    m_Localized: Paused - next station cannot accept
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509024
+    m_Localized: Buffer filling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509025
+    m_Localized: Buffer full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509026
+    m_Localized: Jam detected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509027
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509028
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509029
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509030
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509031
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509032
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509033
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703296
+    m_Localized: Reaching temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703297
+    m_Localized: Product completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703298
+    m_Localized: Wrong product passed through
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703299
+    m_Localized: Temperature deviation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703300
+    m_Localized: Temperature out of range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703301
+    m_Localized: Setpoint not reached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703302
+    m_Localized: Belt fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703303
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703304
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703305
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703306
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703307
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703308
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703309
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703310
+    m_Localized: Sauce applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703311
+    m_Localized: Pizza topped (sauce / topping)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703312
+    m_Localized: Sauce tank low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703313
+    m_Localized: Topping hopper low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703314
+    m_Localized: Sauce tank empty - refill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703315
+    m_Localized: Topping hopper empty - refill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703316
+    m_Localized: Sauce tank refilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703317
+    m_Localized: Topping hopper refilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703318
+    m_Localized: Product passed without dosing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703319
+    m_Localized: Belt fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703320
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703321
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703322
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703323
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703324
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703325
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703326
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703327
+    m_Localized: Pot loaded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703328
+    m_Localized: Pot empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703329
+    m_Localized: Lifting pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703330
+    m_Localized: Pot tipped into hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703331
+    m_Localized: Lift in loading position
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703332
+    m_Localized: Hopper empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703333
+    m_Localized: Portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703334
+    m_Localized: Portion dispatched
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703335
+    m_Localized: Output blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703336
+    m_Localized: Lowering lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703337
+    m_Localized: Not enough dough for a portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703338
+    m_Localized: Draining hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703339
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703340
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703341
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703342
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703343
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703344
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703345
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703346
+    m_Localized: Waiting for dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703347
+    m_Localized: Pressing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703348
+    m_Localized: Pizza base formed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703349
+    m_Localized: Output blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703350
+    m_Localized: Wrong product in press
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703351
+    m_Localized: Shock freezer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703352
+    m_Localized: Produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703353
+    m_Localized: Active faults
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703354
+    m_Localized: Welcome to the line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703355
+    m_Localized: Today you run a frozen pizza line - from the dough mixer to the
+      packed pizza. Walk with W A S D and look around with the mouse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703356
+    m_Localized: Read the recipe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703357
+    m_Localized: Aim at the recipe terminal and press {0}. It lists the Margherita
+      values every machine needs. Close it with Esc.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703358
+    m_Localized: Start the dough mixer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703359
+    m_Localized: 'Go to a dough mixer and start it: green start button on the mixer,
+      or its terminal ({0}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703360
+    m_Localized: Mixing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703361
+    m_Localized: The mixer needs a moment. Make sure the pot stands under the drum
+      - pick it up with {0}, put it down with {1}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703362
+    m_Localized: Tilt the drum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703363
+    m_Localized: Mixing is done. Press the tilt button on the mixer with {0} - the
+      dough ball drops into the pot.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703364
+    m_Localized: Pick up the pot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703365
+    m_Localized: Aim at the pot with the dough and pick it up with {0}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703366
+    m_Localized: Load the portioner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703367
+    m_Localized: Carry the pot to the portioner and put it down on the lift with
+      {1}.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703368
+    m_Localized: Raise the lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703369
+    m_Localized: Press the lift-up button with {0}. The pot tips and the dough falls
+      into the hopper.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703370
+    m_Localized: Portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703371
+    m_Localized: The portioner cuts the dough into portions (target 250 g). If it
+      is stopped, start it at its terminal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703372
+    m_Localized: Forming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703373
+    m_Localized: The portions wait in the buffer and run into the press, which forms
+      the pizza base. Watch the first stroke.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703374
+    m_Localized: Watch the line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703375
+    m_Localized: Open the line terminal next to the press with {0}. Green = running,
+      amber = warning, red = fault.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703376
+    m_Localized: The first pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703377
+    m_Localized: 'Follow your pizza: sauce and topping, oven, cooling, shock freezer,
+      packaging. Quality is checked at the end of the line.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703378
+    m_Localized: First batch done!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703379
+    m_Localized: Faults will happen - the HMI shows the cause and the remedy. Esc
+      opens the pause menu with controls, save and load.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703380
+    m_Localized: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703381
+    m_Localized: '[{2}] next step   [{3}] hide'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703382
+    m_Localized: Restart tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5456202205442048
+    m_Localized: Dosing station
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

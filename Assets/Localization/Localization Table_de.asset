@@ -415,7 +415,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310208
-    m_Localized: Es geht los...
+    m_Localized: Es startet...
     m_Metadata:
       m_Items: []
   - m_Id: 772956297310209
@@ -440,6 +440,917 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3610294664769536
     m_Localized: Teigpresse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882215817216
+    m_Localized: Spiel gespeichert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120384
+    m_Localized: Speichern fehlgeschlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120385
+    m_Localized: Laden fehlgeschlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120386
+    m_Localized: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120387
+    m_Localized: Fortsetzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120388
+    m_Localized: Spiel speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120389
+    m_Localized: Spiel laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120390
+    m_Localized: Sprache
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120391
+    m_Localized: Steuerung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120392
+    m_Localized: Beenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120393
+    m_Localized: "WASD / Pfeiltasten \u2013 bewegen\nMaus \u2013 umsehen\nShift \u2013
+      sprinten\nE \u2013 benutzen / aufheben\nQ \u2013 ablegen\nLinksklick \u2013
+      Kn\xF6pfe an Bildschirmen und Terminals\nEsc \u2013 Bildschirm schlie\xDFen
+      / Pause\n{0} \u2013 Schnellspeichern, {1} \u2013 Schnellladen\n{2} \u2013 Debug-Panel
+      (Entwicklung)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120394
+    m_Localized: LINIENSTATISTIK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120395
+    m_Localized: "Zur\xFCck"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120396
+    m_Localized: AUSSCHUSS NACH URSACHE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120397
+    m_Localized: "ST\xD6RUNGEN NACH ART"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120398
+    m_Localized: STILLSTAND JE MASCHINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120399
+    m_Localized: Laufzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120400
+    m_Localized: Gut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120401
+    m_Localized: Ausschuss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120402
+    m_Localized: Durchsatz / min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120403
+    m_Localized: "Verf\xFCgbarkeit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120404
+    m_Localized: keine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120405
+    m_Localized: Backzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120406
+    m_Localized: Verweilzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120407
+    m_Localized: Temperatur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120408
+    m_Localized: Sollwert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120409
+    m_Localized: Produkte im Tunnel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120410
+    m_Localized: Letzte Backzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120411
+    m_Localized: Letzte Verweilzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120412
+    m_Localized: Letzte Produkttemp.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120413
+    m_Localized: Fertige Produkte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120414
+    m_Localized: Falsche Produkte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120415
+    m_Localized: Band
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120416
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120417
+    m_Localized: Belag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120418
+    m_Localized: Saucentank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120419
+    m_Localized: "Belagbeh\xE4lter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120420
+    m_Localized: Letzte Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120421
+    m_Localized: Letzter Belag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120422
+    m_Localized: Dosierte Pizzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120423
+    m_Localized: Undosiert durchgelaufen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120424
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120425
+    m_Localized: Mischzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120426
+    m_Localized: Zykluszeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120427
+    m_Localized: Restzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120428
+    m_Localized: Mischen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120429
+    m_Localized: Charge bereit zum Kippen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120430
+    m_Localized: Ja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120431
+    m_Localized: Nein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120432
+    m_Localized: Trommel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120433
+    m_Localized: Gekippt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120434
+    m_Localized: Aufrecht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120435
+    m_Localized: Chargengewicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120436
+    m_Localized: Produzierte Chargen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120437
+    m_Localized: Zielgewicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120438
+    m_Localized: Toleranz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120439
+    m_Localized: Portionierzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120440
+    m_Localized: "Trichter-F\xFCllstand"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120441
+    m_Localized: Teig im Trichter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120442
+    m_Localized: Portionieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120443
+    m_Localized: Letzte Portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120444
+    m_Localized: Produzierte Portionen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120445
+    m_Localized: Topf auf Lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120446
+    m_Localized: Auslauf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120447
+    m_Localized: Blockiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120448
+    m_Localized: Frei
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120449
+    m_Localized: Durchmesser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120450
+    m_Localized: Dicke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120451
+    m_Localized: Hub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120452
+    m_Localized: Teig in Presse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120453
+    m_Localized: "Geformte B\xF6den"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120454
+    m_Localized: SOLLWERTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120455
+    m_Localized: ISTWERTE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120456
+    m_Localized: Stk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120457
+    m_Localized: "Puffer f\xFCllt sich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120458
+    m_Localized: Puffer voll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120459
+    m_Localized: "Wartet auf n\xE4chste Station"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120460
+    m_Localized: Temperaturabweichung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120461
+    m_Localized: Falsches Produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120462
+    m_Localized: "F\xFCllstand niedrig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120463
+    m_Localized: Saucentank leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120464
+    m_Localized: "Saucentank an der Dosierstation auff\xFCllen (Nachf\xFCllknopf),
+      quittieren, Wartung abschlie\xDFen, starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120465
+    m_Localized: "Belagbeh\xE4lter leer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120466
+    m_Localized: "Belagbeh\xE4lter an der Dosierstation auff\xFCllen (Nachf\xFCllknopf),
+      quittieren, Wartung abschlie\xDFen, starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120467
+    m_Localized: Pressen-Puffer voll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120468
+    m_Localized: "Presse pr\xFCfen (l\xE4uft sie? Zykluszeit zu lang?). Dann Pufferband
+      quittieren und neu starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120469
+    m_Localized: Stau auf dem Band
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120470
+    m_Localized: "Festsitzendes Produkt vom Band entfernen, quittieren, Wartung abschlie\xDFen,
+      Band starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120471
+    m_Localized: "Temperatur au\xDFerhalb des Bereichs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120472
+    m_Localized: "Heizung/K\xFChlaggregat defekt. Quittieren, Wartung abschlie\xDFen
+      (repariert das Aggregat), starten und auf Temperatur warten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120473
+    m_Localized: Solltemperatur nicht erreicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120474
+    m_Localized: "Temperatur-Sollwert pr\xFCfen. Quittieren, Wartung abschlie\xDFen,
+      erneut starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508992
+    m_Localized: Falsches Produkt in der Presse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508993
+    m_Localized: "Das Produkt ist als Ausschuss markiert und wird ignoriert. Quittieren,
+      Wartung abschlie\xDFen, starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508994
+    m_Localized: "Bandst\xF6rung der Station"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508995
+    m_Localized: "Zuerst die Bandst\xF6rung beheben (siehe Band-Alarm), dann die
+      Station quittieren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508996
+    m_Localized: Nicht fertig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508997
+    m_Localized: Von Station aussortiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508998
+    m_Localized: Untergewicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508999
+    m_Localized: "\xDCbergewicht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509000
+    m_Localized: Durchmesser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509001
+    m_Localized: Dicke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509002
+    m_Localized: Zu wenig Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509003
+    m_Localized: Zu viel Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509004
+    m_Localized: Zu wenig Belag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509005
+    m_Localized: Zu viel Belag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509006
+    m_Localized: Zu kurz gebacken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509007
+    m_Localized: Zu lange gebacken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509008
+    m_Localized: Backtemperatur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509009
+    m_Localized: "K\xFChltemperatur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509010
+    m_Localized: "K\xFChlkette unterbrochen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509011
+    m_Localized: Messwert fehlt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509012
+    m_Localized: Gewicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509013
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509014
+    m_Localized: Belag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509015
+    m_Localized: Backzeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509016
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509017
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509018
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509019
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509020
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509021
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509022
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509023
+    m_Localized: "Pausiert \u2013 n\xE4chste Station kann nicht aufnehmen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509024
+    m_Localized: "Puffer f\xFCllt sich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509025
+    m_Localized: Puffer voll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509026
+    m_Localized: Stau erkannt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509027
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509028
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509029
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509030
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509031
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509032
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509033
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703296
+    m_Localized: Temperatur wird erreicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703297
+    m_Localized: Produkt fertig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703298
+    m_Localized: Falsches Produkt durchgelaufen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703299
+    m_Localized: Temperaturabweichung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703300
+    m_Localized: "Temperatur au\xDFerhalb des Bereichs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703301
+    m_Localized: Sollwert nicht erreicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703302
+    m_Localized: "Bandst\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703303
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703304
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703305
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703306
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703307
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703308
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703309
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703310
+    m_Localized: Sauce aufgetragen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703311
+    m_Localized: Pizza belegt (Sauce / Belag)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703312
+    m_Localized: Saucentank fast leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703313
+    m_Localized: "Belagbeh\xE4lter fast leer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703314
+    m_Localized: "Saucentank leer \u2013 auff\xFCllen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703315
+    m_Localized: "Belagbeh\xE4lter leer \u2013 auff\xFCllen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703316
+    m_Localized: "Saucentank aufgef\xFCllt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703317
+    m_Localized: "Belagbeh\xE4lter aufgef\xFCllt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703318
+    m_Localized: Produkt ohne Dosierung durchgelaufen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703319
+    m_Localized: "Bandst\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703320
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703321
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703322
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703323
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703324
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703325
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703326
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703327
+    m_Localized: Topf geladen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703328
+    m_Localized: Topf leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703329
+    m_Localized: Topf wird angehoben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703330
+    m_Localized: Topf in Trichter gekippt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703331
+    m_Localized: Lift in Ladeposition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703332
+    m_Localized: Trichter leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703333
+    m_Localized: Portioniert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703334
+    m_Localized: Portion ausgegeben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703335
+    m_Localized: Auslauf blockiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703336
+    m_Localized: "Lift f\xE4hrt herunter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703337
+    m_Localized: "Nicht genug Teig f\xFCr eine Portion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703338
+    m_Localized: Trichter wird geleert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703339
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703340
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703341
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703342
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703343
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703344
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703345
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703346
+    m_Localized: Wartet auf Teig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703347
+    m_Localized: Presst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703348
+    m_Localized: Pizzaboden geformt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703349
+    m_Localized: Auslauf blockiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703350
+    m_Localized: Falsches Produkt in der Presse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703351
+    m_Localized: Schockfroster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703352
+    m_Localized: Produziert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703353
+    m_Localized: "Aktive St\xF6rungen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703354
+    m_Localized: Willkommen an der Linie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703355
+    m_Localized: "Heute f\xE4hrst du eine Tiefk\xFChlpizza-Linie \u2013 vom Teigmischer
+      bis zur verpackten Pizza. Laufe mit W A S D und schau dich mit der Maus um."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703356
+    m_Localized: Rezept ablesen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703357
+    m_Localized: "Ziele auf das Rezept-Terminal und dr\xFCcke {0}. Dort stehen die
+      Margherita-Werte f\xFCr jede Maschine. Mit Esc schlie\xDFen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703358
+    m_Localized: Teigmischer starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703359
+    m_Localized: "Geh zu einem Teigmischer und starte ihn: gr\xFCner Start-Knopf
+      am Mischer oder sein Terminal ({0})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703360
+    m_Localized: Mischen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703361
+    m_Localized: "Der Mischer braucht einen Moment. Sorge daf\xFCr, dass der Topf
+      unter der Trommel steht \u2013 aufnehmen mit {0}, abstellen mit {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703362
+    m_Localized: Trommel kippen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703363
+    m_Localized: "Fertig gemischt. Dr\xFCck mit {0} den Kipp-Knopf am Mischer \u2013
+      die Teigkugel f\xE4llt in den Topf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703364
+    m_Localized: Topf aufnehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703365
+    m_Localized: Ziele auf den Topf mit dem Teig und nimm ihn mit {0} auf.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703366
+    m_Localized: Portionierer beschicken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703367
+    m_Localized: Trag den Topf zum Portionierer und stell ihn mit {1} auf den Lift.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703368
+    m_Localized: Lift hochfahren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703369
+    m_Localized: "Dr\xFCck mit {0} den Knopf \u201ELift hoch\u201C. Der Topf kippt
+      und der Teig f\xE4llt in den Trichter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703370
+    m_Localized: Portionieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703371
+    m_Localized: Der Portionierer teilt den Teig in Portionen (Ziel 250 g). Steht
+      er, starte ihn an seinem Terminal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703372
+    m_Localized: Formen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703373
+    m_Localized: Die Portionen warten im Puffer und laufen in die Presse, die den
+      Pizzaboden formt. Schau dir den ersten Hub an.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703374
+    m_Localized: Linie beobachten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703375
+    m_Localized: "\xD6ffne mit {0} das Linien-Terminal neben der Presse. Gr\xFCn
+      = l\xE4uft, Gelb = Warnung, Rot = St\xF6rung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703376
+    m_Localized: Die erste Pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703377
+    m_Localized: "Folge deiner Pizza: Sauce und Belag, Ofen, K\xFChlung, Schockfroster,
+      Verpackung. Am Linienende wird die Qualit\xE4t gepr\xFCft."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703378
+    m_Localized: Erste Charge geschafft!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703379
+    m_Localized: "St\xF6rungen kommen vor \u2013 das HMI zeigt Ursache und Abhilfe.
+      Esc \xF6ffnet das Pausemen\xFC mit Steuerung, Speichern und Laden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703380
+    m_Localized: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703381
+    m_Localized: "[{2}] n\xE4chster Schritt   [{3}] ausblenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703382
+    m_Localized: Tutorial neu starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5456202205442048
+    m_Localized: Dosierstation
     m_Metadata:
       m_Items: []
   references:

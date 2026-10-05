@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -53,6 +54,22 @@ namespace Game.Production
             }
 
             return entry.GetLocalizedString();
+        }
+
+        /// <summary>
+        /// Text of a <see cref="LocalizedString"/> without blocking: the translation if its table is already loaded,
+        /// otherwise <paramref name="fallback"/>. Never use <c>LocalizedString.GetLocalizedString()</c> in game code -
+        /// it waits synchronously (WaitForCompletion), which throws in WebGL while the table is still loading.
+        /// </summary>
+        public static string Now(LocalizedString text, string fallback)
+        {
+            if (text == null || text.IsEmpty)
+            {
+                return fallback;
+            }
+
+            var operation = text.GetLocalizedStringAsync();
+            return operation.IsDone && !string.IsNullOrEmpty(operation.Result) ? operation.Result : fallback;
         }
 
         /// <summary>Content message of a machine: key "&lt;prefix&gt;.&lt;enum_value_in_snake_case&gt;".</summary>

@@ -15,6 +15,774 @@ MonoBehaviour:
   m_TableCollectionName: Localization Table
   m_TableCollectionNameGuidString: 8dde0fd5ff2680540a08d198e1b46953
   m_Entries:
+  - m_Id: 5442882295509024
+    m_Key: conveyor.buffer_filling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509025
+    m_Key: conveyor.buffer_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509021
+    m_Key: conveyor.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509023
+    m_Key: conveyor.held_by_downstream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509026
+    m_Key: conveyor.jammed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509022
+    m_Key: conveyor.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509016
+    m_Key: conveyor.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509018
+    m_Key: conveyor.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509017
+    m_Key: conveyor.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509020
+    m_Key: conveyor.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509019
+    m_Key: conveyor.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509008
+    m_Key: defect.bake_temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509015
+    m_Key: defect.bake_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509010
+    m_Key: defect.cold_chain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509009
+    m_Key: defect.cooling_temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509000
+    m_Key: defect.diameter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509011
+    m_Key: defect.missing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508996
+    m_Key: defect.not_finished
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509007
+    m_Key: defect.overbaked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508999
+    m_Key: defect.overweight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508997
+    m_Key: defect.rejected
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509013
+    m_Key: defect.sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509003
+    m_Key: defect.sauce_high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509002
+    m_Key: defect.sauce_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509001
+    m_Key: defect.thickness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509014
+    m_Key: defect.topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509005
+    m_Key: defect.topping_high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509004
+    m_Key: defect.topping_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509006
+    m_Key: defect.underbaked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508998
+    m_Key: defect.underweight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509012
+    m_Key: defect.weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703319
+    m_Key: dosing.belt_fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703308
+    m_Key: dosing.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703309
+    m_Key: dosing.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703303
+    m_Key: dosing.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703305
+    m_Key: dosing.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703310
+    m_Key: dosing.sauce_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703314
+    m_Key: dosing.sauce_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703312
+    m_Key: dosing.sauce_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703316
+    m_Key: dosing.sauce_refilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703304
+    m_Key: dosing.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703307
+    m_Key: dosing.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703306
+    m_Key: dosing.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703311
+    m_Key: dosing.topping_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703315
+    m_Key: dosing.topping_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703313
+    m_Key: dosing.topping_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703317
+    m_Key: dosing.topping_refilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703318
+    m_Key: dosing.wrong_product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508994
+    m_Key: fault.belt_fault.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508995
+    m_Key: fault.belt_fault.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120467
+    m_Key: fault.buffer_full.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120468
+    m_Key: fault.buffer_full.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120473
+    m_Key: fault.heat_up_timeout.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120474
+    m_Key: fault.heat_up_timeout.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120469
+    m_Key: fault.jam.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120470
+    m_Key: fault.jam.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120463
+    m_Key: fault.sauce_empty.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120464
+    m_Key: fault.sauce_empty.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120471
+    m_Key: fault.temperature_out_of_range.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120472
+    m_Key: fault.temperature_out_of_range.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120465
+    m_Key: fault.topping_empty.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120466
+    m_Key: fault.topping_empty.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508992
+    m_Key: fault.wrong_product.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508993
+    m_Key: fault.wrong_product.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703353
+    m_Key: hmi.active_faults
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120455
+    m_Key: hmi.actual_values
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120403
+    m_Key: hmi.availability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120395
+    m_Key: hmi.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120405
+    m_Key: hmi.bake_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120453
+    m_Key: hmi.bases_formed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120429
+    m_Key: hmi.batch_ready_to_tilt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120435
+    m_Key: hmi.batch_weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120436
+    m_Key: hmi.batches_produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120415
+    m_Key: hmi.belt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120447
+    m_Key: hmi.blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120391
+    m_Key: hmi.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120393
+    m_Key: hmi.controls_text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120426
+    m_Key: hmi.cycle_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120449
+    m_Key: hmi.diameter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120441
+    m_Key: hmi.dough_in_hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120452
+    m_Key: hmi.dough_in_press
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120398
+    m_Key: hmi.downtime_by_machine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120432
+    m_Key: hmi.drum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120406
+    m_Key: hmi.dwell_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120397
+    m_Key: hmi.faults_by_type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120448
+    m_Key: hmi.free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882215817216
+    m_Key: hmi.game_saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120400
+    m_Key: hmi.good
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120440
+    m_Key: hmi.hopper_level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120390
+    m_Key: hmi.language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120410
+    m_Key: hmi.last_bake_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120411
+    m_Key: hmi.last_dwell_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120443
+    m_Key: hmi.last_portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120412
+    m_Key: hmi.last_product_temp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120420
+    m_Key: hmi.last_sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120421
+    m_Key: hmi.last_topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120394
+    m_Key: hmi.line_statistics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120385
+    m_Key: hmi.load_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120389
+    m_Key: hmi.load_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120428
+    m_Key: hmi.mixing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120425
+    m_Key: hmi.mixing_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120424
+    m_Key: hmi.moving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120431
+    m_Key: hmi.no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120404
+    m_Key: hmi.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120446
+    m_Key: hmi.output
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120423
+    m_Key: hmi.passed_undosed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120386
+    m_Key: hmi.paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120422
+    m_Key: hmi.pizzas_dosed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120442
+    m_Key: hmi.portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120439
+    m_Key: hmi.portioning_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120444
+    m_Key: hmi.portions_produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120445
+    m_Key: hmi.pot_on_lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703352
+    m_Key: hmi.produced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120413
+    m_Key: hmi.products_completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120409
+    m_Key: hmi.products_inside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120392
+    m_Key: hmi.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120427
+    m_Key: hmi.remaining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120387
+    m_Key: hmi.resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120399
+    m_Key: hmi.run_time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120416
+    m_Key: hmi.sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120418
+    m_Key: hmi.sauce_tank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120384
+    m_Key: hmi.save_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120388
+    m_Key: hmi.save_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120401
+    m_Key: hmi.scrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120396
+    m_Key: hmi.scrap_by_cause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120408
+    m_Key: hmi.setpoint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120454
+    m_Key: hmi.setpoints
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120451
+    m_Key: hmi.stroke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120437
+    m_Key: hmi.target_weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120407
+    m_Key: hmi.temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120450
+    m_Key: hmi.thickness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120402
+    m_Key: hmi.throughput_per_minute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120433
+    m_Key: hmi.tilted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120438
+    m_Key: hmi.tolerance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120417
+    m_Key: hmi.topping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120419
+    m_Key: hmi.topping_hopper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703382
+    m_Key: hmi.tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120434
+    m_Key: hmi.upright
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120414
+    m_Key: hmi.wrong_products
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120430
+    m_Key: hmi.yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310210
+    m_Key: mixer.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310209
+    m_Key: mixer.processing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 770484103229440
+    m_Key: mixer.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310208
+    m_Key: mixer.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310211
+    m_Key: mixer.tilt_downward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310213
+    m_Key: mixer.tilt_upward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 772956297310212
+    m_Key: mixer.tilted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703325
+    m_Key: portioner.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703338
+    m_Key: portioner.hopper_draining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703332
+    m_Key: portioner.hopper_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703336
+    m_Key: portioner.lift_lowering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703331
+    m_Key: portioner.lift_returned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703326
+    m_Key: portioner.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703337
+    m_Key: portioner.not_enough_dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703335
+    m_Key: portioner.output_blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703334
+    m_Key: portioner.portion_dispatched
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703333
+    m_Key: portioner.portioning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703328
+    m_Key: portioner.pot_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703327
+    m_Key: portioner.pot_loaded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703320
+    m_Key: portioner.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703322
+    m_Key: portioner.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703321
+    m_Key: portioner.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703324
+    m_Key: portioner.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703323
+    m_Key: portioner.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703330
+    m_Key: portioner.tipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703329
+    m_Key: portioner.tipping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703344
+    m_Key: press.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703348
+    m_Key: press.formed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703345
+    m_Key: press.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703349
+    m_Key: press.output_blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703347
+    m_Key: press.pressing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703339
+    m_Key: press.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703341
+    m_Key: press.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703340
+    m_Key: press.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703343
+    m_Key: press.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703342
+    m_Key: press.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703346
+    m_Key: press.waiting_for_dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703350
+    m_Key: press.wrong_product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703302
+    m_Key: process.belt_fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509032
+    m_Key: process.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703301
+    m_Key: process.heat_up_timeout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509033
+    m_Key: process.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703297
+    m_Key: process.product_completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703296
+    m_Key: process.reaching_temperature
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509027
+    m_Key: process.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509029
+    m_Key: process.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509028
+    m_Key: process.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509031
+    m_Key: process.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509030
+    m_Key: process.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703299
+    m_Key: process.temperature_deviation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703300
+    m_Key: process.temperature_out_of_range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703298
+    m_Key: process.wrong_product
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459571449856
     m_Key: text.acknowledge_fault
     m_Metadata:
@@ -119,6 +887,10 @@ MonoBehaviour:
     m_Key: text.dough_rolling
     m_Metadata:
       m_Items: []
+  - m_Id: 5456202205442048
+    m_Key: text.dosing_station
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459634364439
     m_Key: text.duration
     m_Metadata:
@@ -135,6 +907,14 @@ MonoBehaviour:
     m_Key: text.error
     m_Metadata:
       m_Items: []
+  - m_Id: 22459634364446
+    m_Key: text.error_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364445
+    m_Key: text.error_unknown
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459634364443
     m_Key: text.errors
     m_Metadata:
@@ -143,16 +923,12 @@ MonoBehaviour:
     m_Key: text.errors_active
     m_Metadata:
       m_Items: []
-  - m_Id: 22459634364445
-    m_Key: text.error_unknown
-    m_Metadata:
-      m_Items: []
-  - m_Id: 22459634364446
-    m_Key: text.error_empty
-    m_Metadata:
-      m_Items: []
   - m_Id: 22459634364447
     m_Key: text.fill_level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703351
+    m_Key: text.freezer
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364448
@@ -299,12 +1075,12 @@ MonoBehaviour:
     m_Key: text.recipe
     m_Metadata:
       m_Items: []
-  - m_Id: 22459634364484
-    m_Key: text.recipe_loaded
-    m_Metadata:
-      m_Items: []
   - m_Id: 22459634364485
     m_Key: text.recipe_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364484
+    m_Key: text.recipe_loaded
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364486
@@ -335,10 +1111,6 @@ MonoBehaviour:
     m_Key: text.save
     m_Metadata:
       m_Items: []
-  - m_Id: 22459634364493
-    m_Key: text.setpoint
-    m_Metadata:
-      m_Items: []
   - m_Id: 22459634364494
     m_Key: text.scrap
     m_Metadata:
@@ -353,6 +1125,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 22459634364497
     m_Key: text.sensor_value
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22459634364493
+    m_Key: text.setpoint
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364498
@@ -411,32 +1187,144 @@ MonoBehaviour:
     m_Key: text.warning
     m_Metadata:
       m_Items: []
-  - m_Id: 770484103229440
-    m_Key: mixer.ready
+  - m_Id: 5442882299703379
+    m_Key: tutorial.done.text
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310208
-    m_Key: mixer.starting
+  - m_Id: 5442882299703378
+    m_Key: tutorial.done.title
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310209
-    m_Key: mixer.processing
+  - m_Id: 5442882299703377
+    m_Key: tutorial.first_pizza.text
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310210
-    m_Key: mixer.done
+  - m_Id: 5442882299703376
+    m_Key: tutorial.first_pizza.title
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310211
-    m_Key: mixer.tilt_downward
+  - m_Id: 5442882299703381
+    m_Key: tutorial.footer
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310212
-    m_Key: mixer.tilted
+  - m_Id: 5442882299703380
+    m_Key: tutorial.header
     m_Metadata:
       m_Items: []
-  - m_Id: 772956297310213
-    m_Key: mixer.tilt_upward
+  - m_Id: 5442882299703375
+    m_Key: tutorial.hmi.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703374
+    m_Key: tutorial.hmi.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703369
+    m_Key: tutorial.lift_up.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703368
+    m_Key: tutorial.lift_up.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703359
+    m_Key: tutorial.mixer_start.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703358
+    m_Key: tutorial.mixer_start.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703363
+    m_Key: tutorial.mixer_tilt.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703362
+    m_Key: tutorial.mixer_tilt.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703361
+    m_Key: tutorial.mixer_wait.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703360
+    m_Key: tutorial.mixer_wait.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703371
+    m_Key: tutorial.portion.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703370
+    m_Key: tutorial.portion.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703365
+    m_Key: tutorial.pot_carry.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703364
+    m_Key: tutorial.pot_carry.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703367
+    m_Key: tutorial.pot_lift.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703366
+    m_Key: tutorial.pot_lift.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703373
+    m_Key: tutorial.press.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703372
+    m_Key: tutorial.press.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703357
+    m_Key: tutorial.recipe.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703356
+    m_Key: tutorial.recipe.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703355
+    m_Key: tutorial.welcome.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703354
+    m_Key: tutorial.welcome.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120456
+    m_Key: unit.pcs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120457
+    m_Key: warning.buffer_filling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120458
+    m_Key: warning.buffer_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120459
+    m_Key: warning.held_by_downstream
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120462
+    m_Key: warning.low_level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120460
+    m_Key: warning.temperature_deviation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120461
+    m_Key: warning.wrong_product
     m_Metadata:
       m_Items: []
   m_Metadata:

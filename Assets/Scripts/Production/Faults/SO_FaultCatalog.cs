@@ -51,7 +51,7 @@ namespace Game.Production
         {
             if (key != null && !key.IsEmpty)
             {
-                string text = key.GetLocalizedString();
+                string text = LocText.Now(key, null); // non-blocking (WebGL)
                 if (!string.IsNullOrEmpty(text))
                 {
                     return text;

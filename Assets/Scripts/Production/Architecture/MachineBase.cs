@@ -36,7 +36,8 @@ namespace Game.Production
 
         /// <inheritdoc />
         public string Id => $"{_nameKey}_{_number}";
-        public string Name => _nameKey.GetLocalizedString();
+        /// <summary>Localized display name; the GameObject name until the table is loaded (no blocking load - WebGL).</summary>
+        public string Name => LocText.Now(_nameKey, name);
         private int _number;
         public int Number => _number;
         public void SetNumber(int number) => _number = number;

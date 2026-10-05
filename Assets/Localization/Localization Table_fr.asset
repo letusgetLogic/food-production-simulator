@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 22459571449856
-    m_Localized: "Reconna\xEEtre la faute"
+    m_Localized: "Reconna\xEEtre sa faute"
     m_Metadata:
       m_Items: []
   - m_Id: 22459630170112
@@ -440,6 +440,919 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3610294664769536
     m_Localized: "Presse \xE0 p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882215817216
+    m_Localized: "Partie sauvegard\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120384
+    m_Localized: "\xC9chec de la sauvegarde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120385
+    m_Localized: "\xC9chec du chargement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120386
+    m_Localized: PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120387
+    m_Localized: Reprendre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120388
+    m_Localized: Sauvegarder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120389
+    m_Localized: Charger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120390
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120391
+    m_Localized: Commandes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120392
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120393
+    m_Localized: "ZQSD / fl\xE8ches \u2013 se d\xE9placer\nSouris \u2013 regarder\nMaj
+      \u2013 courir\nE \u2013 utiliser / ramasser\nA \u2013 poser\nClic gauche \u2013
+      boutons des \xE9crans et terminaux\n\xC9chap \u2013 fermer l\u2019\xE9cran
+      / pause\n{0} \u2013 sauvegarde rapide, {1} \u2013 chargement rapide\n{2} \u2013
+      panneau de d\xE9bogage (d\xE9veloppement)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120394
+    m_Localized: STATISTIQUES DE LA LIGNE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120395
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120396
+    m_Localized: REBUTS PAR CAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120397
+    m_Localized: "D\xC9FAUTS PAR TYPE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120398
+    m_Localized: "ARR\xCATS PAR MACHINE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120399
+    m_Localized: "Dur\xE9e de marche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120400
+    m_Localized: Bons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120401
+    m_Localized: Rebuts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120402
+    m_Localized: "D\xE9bit / min"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120403
+    m_Localized: "Disponibilit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120404
+    m_Localized: aucun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120405
+    m_Localized: Temps de cuisson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120406
+    m_Localized: "Temps de s\xE9jour"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120407
+    m_Localized: "Temp\xE9rature"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120408
+    m_Localized: Consigne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120409
+    m_Localized: Produits dans le tunnel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120410
+    m_Localized: Dernier temps de cuisson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120411
+    m_Localized: "Dernier temps de s\xE9jour"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120412
+    m_Localized: "Derni\xE8re temp. produit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120413
+    m_Localized: "Produits termin\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120414
+    m_Localized: Produits incorrects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120415
+    m_Localized: Convoyeur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120416
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120417
+    m_Localized: Garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120418
+    m_Localized: "R\xE9servoir de sauce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120419
+    m_Localized: "Tr\xE9mie de garniture"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120420
+    m_Localized: "Derni\xE8re sauce"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120421
+    m_Localized: "Derni\xE8re garniture"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120422
+    m_Localized: "Pizzas dos\xE9es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120423
+    m_Localized: "Pass\xE9es sans dosage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120424
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120425
+    m_Localized: "Temps de p\xE9trissage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120426
+    m_Localized: Temps de cycle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120427
+    m_Localized: Temps restant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120428
+    m_Localized: "P\xE9trissage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120429
+    m_Localized: "Lot pr\xEAt \xE0 basculer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120430
+    m_Localized: Oui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120431
+    m_Localized: Non
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120432
+    m_Localized: Cuve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120433
+    m_Localized: "Bascul\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120434
+    m_Localized: Droite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120435
+    m_Localized: Poids du lot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120436
+    m_Localized: Lots produits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120437
+    m_Localized: Poids cible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120438
+    m_Localized: "Tol\xE9rance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120439
+    m_Localized: Temps de portionnage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120440
+    m_Localized: "Niveau de la tr\xE9mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120441
+    m_Localized: "P\xE2te dans la tr\xE9mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120442
+    m_Localized: Portionnage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120443
+    m_Localized: "Derni\xE8re portion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120444
+    m_Localized: Portions produites
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120445
+    m_Localized: "Cuve sur le l\xE8ve-cuve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120446
+    m_Localized: Sortie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120447
+    m_Localized: "Bloqu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120448
+    m_Localized: Libre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120449
+    m_Localized: "Diam\xE8tre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120450
+    m_Localized: "\xC9paisseur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120451
+    m_Localized: Course
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120452
+    m_Localized: "P\xE2te dans la presse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120453
+    m_Localized: "Fonds form\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120454
+    m_Localized: CONSIGNES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120455
+    m_Localized: "VALEURS R\xC9ELLES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120456
+    m_Localized: pcs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120457
+    m_Localized: Tampon en remplissage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120458
+    m_Localized: Tampon plein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120459
+    m_Localized: En attente du poste suivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120460
+    m_Localized: "\xC9cart de temp\xE9rature"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120461
+    m_Localized: Mauvais produit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120462
+    m_Localized: Niveau bas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120463
+    m_Localized: "R\xE9servoir de sauce vide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120464
+    m_Localized: "Remplir le r\xE9servoir de sauce \xE0 la station de dosage (bouton
+      de remplissage), acquitter, terminer la maintenance, d\xE9marrer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120465
+    m_Localized: "Tr\xE9mie de garniture vide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120466
+    m_Localized: "Remplir la tr\xE9mie de garniture \xE0 la station de dosage (bouton
+      de remplissage), acquitter, terminer la maintenance, d\xE9marrer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120467
+    m_Localized: Tampon de la presse plein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120468
+    m_Localized: "V\xE9rifier la presse (en marche ? temps de cycle trop long ?).
+      Puis acquitter le convoyeur tampon et red\xE9marrer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120469
+    m_Localized: Bourrage du convoyeur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120470
+    m_Localized: "Retirer le produit coinc\xE9 du convoyeur, acquitter, terminer
+      la maintenance, d\xE9marrer le convoyeur."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120471
+    m_Localized: "Temp\xE9rature hors plage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120472
+    m_Localized: "Chauffage/groupe froid d\xE9fectueux. Acquitter, terminer la maintenance
+      (r\xE9pare le groupe), d\xE9marrer et attendre la temp\xE9rature."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120473
+    m_Localized: "Temp\xE9rature de consigne non atteinte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120474
+    m_Localized: "V\xE9rifier la consigne de temp\xE9rature. Acquitter, terminer
+      la maintenance, red\xE9marrer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508992
+    m_Localized: Mauvais produit dans la presse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508993
+    m_Localized: "Le produit est marqu\xE9 comme rebut et sera ignor\xE9. Acquitter,
+      terminer la maintenance, d\xE9marrer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508994
+    m_Localized: "D\xE9faut du convoyeur de la station"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508995
+    m_Localized: "Corriger d'abord le d\xE9faut du convoyeur (voir l'alarme du convoyeur),
+      puis acquitter la station."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508996
+    m_Localized: "Non termin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508997
+    m_Localized: "\xC9cart\xE9 par un poste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508998
+    m_Localized: Poids insuffisant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508999
+    m_Localized: Poids excessif
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509000
+    m_Localized: "Diam\xE8tre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509001
+    m_Localized: "\xC9paisseur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509002
+    m_Localized: Trop peu de sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509003
+    m_Localized: Trop de sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509004
+    m_Localized: Trop peu de garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509005
+    m_Localized: Trop de garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509006
+    m_Localized: Pas assez cuite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509007
+    m_Localized: Trop cuite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509008
+    m_Localized: "Temp\xE9rature de cuisson"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509009
+    m_Localized: "Temp\xE9rature de refroidissement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509010
+    m_Localized: "Cha\xEEne du froid rompue"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509011
+    m_Localized: Mesure manquante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509012
+    m_Localized: Poids
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509013
+    m_Localized: Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509014
+    m_Localized: Garniture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509015
+    m_Localized: Temps de cuisson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509016
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509017
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509018
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509019
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509020
+    m_Localized: "Arr\xEAt\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509021
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509022
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509023
+    m_Localized: "En pause \u2013 le poste suivant ne peut pas recevoir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509024
+    m_Localized: Tampon en remplissage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509025
+    m_Localized: Tampon plein
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509026
+    m_Localized: "Bourrage d\xE9tect\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509027
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509028
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509029
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509030
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509031
+    m_Localized: "Arr\xEAt\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509032
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509033
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703296
+    m_Localized: "Mise en temp\xE9rature"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703297
+    m_Localized: "Produit termin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703298
+    m_Localized: "Mauvais produit pass\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703299
+    m_Localized: "\xC9cart de temp\xE9rature"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703300
+    m_Localized: "Temp\xE9rature hors plage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703301
+    m_Localized: Consigne non atteinte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703302
+    m_Localized: "D\xE9faut du convoyeur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703303
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703304
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703305
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703306
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703307
+    m_Localized: "Arr\xEAt\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703308
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703309
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703310
+    m_Localized: "Sauce appliqu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703311
+    m_Localized: Pizza garnie (sauce / garniture)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703312
+    m_Localized: "R\xE9servoir de sauce presque vide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703313
+    m_Localized: "Tr\xE9mie de garniture presque vide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703314
+    m_Localized: "R\xE9servoir de sauce vide \u2013 remplir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703315
+    m_Localized: "Tr\xE9mie de garniture vide \u2013 remplir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703316
+    m_Localized: "R\xE9servoir de sauce rempli"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703317
+    m_Localized: "Tr\xE9mie de garniture remplie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703318
+    m_Localized: "Produit pass\xE9 sans dosage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703319
+    m_Localized: "D\xE9faut du convoyeur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703320
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703321
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703322
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703323
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703324
+    m_Localized: "Arr\xEAt\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703325
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703326
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703327
+    m_Localized: "Cuve charg\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703328
+    m_Localized: Cuve vide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703329
+    m_Localized: "Lev\xE9e de la cuve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703330
+    m_Localized: "Cuve vid\xE9e dans la tr\xE9mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703331
+    m_Localized: "L\xE8ve-cuve en position de chargement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703332
+    m_Localized: "Tr\xE9mie vide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703333
+    m_Localized: Portionnage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703334
+    m_Localized: "Portion distribu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703335
+    m_Localized: "Sortie bloqu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703336
+    m_Localized: "Descente du l\xE8ve-cuve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703337
+    m_Localized: "Pas assez de p\xE2te pour une portion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703338
+    m_Localized: "Vidange de la tr\xE9mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703339
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703340
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703341
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703342
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703343
+    m_Localized: "Arr\xEAt\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703344
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703345
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703346
+    m_Localized: "En attente de p\xE2te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703347
+    m_Localized: Pressage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703348
+    m_Localized: "Fond de pizza form\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703349
+    m_Localized: "Sortie bloqu\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703350
+    m_Localized: Mauvais produit dans la presse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703351
+    m_Localized: "Surg\xE9lateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703352
+    m_Localized: Produits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703353
+    m_Localized: "D\xE9fauts actifs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703354
+    m_Localized: Bienvenue sur la ligne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703355
+    m_Localized: "Aujourd'hui, tu pilotes une ligne de pizzas surgel\xE9es \u2013
+      du p\xE9trin \xE0 la pizza emball\xE9e. D\xE9place-toi avec Z Q S D et regarde
+      autour de toi avec la souris."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703356
+    m_Localized: Lire la recette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703357
+    m_Localized: "Vise le terminal de recette et appuie sur {0}. Il indique les valeurs
+      Margherita pour chaque machine. Ferme-le avec \xC9chap."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703358
+    m_Localized: "D\xE9marrer le p\xE9trin"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703359
+    m_Localized: "Va \xE0 un p\xE9trin et d\xE9marre-le : bouton vert sur le p\xE9trin
+      ou son terminal ({0})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703360
+    m_Localized: "P\xE9trissage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703361
+    m_Localized: "Le p\xE9trin a besoin d'un moment. V\xE9rifie que la cuve est sous
+      le tambour \u2013 prends-la avec {0}, pose-la avec {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703362
+    m_Localized: Basculer le tambour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703363
+    m_Localized: "Le p\xE9trissage est termin\xE9. Appuie sur le bouton de basculement
+      avec {0} \u2013 la boule de p\xE2te tombe dans la cuve."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703364
+    m_Localized: Prendre la cuve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703365
+    m_Localized: "Vise la cuve avec la p\xE2te et prends-la avec {0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703366
+    m_Localized: Charger la portionneuse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703367
+    m_Localized: "Porte la cuve jusqu'\xE0 la portionneuse et pose-la sur l'\xE9l\xE9vateur
+      avec {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703368
+    m_Localized: "Monter l'\xE9l\xE9vateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703369
+    m_Localized: "Appuie sur le bouton de mont\xE9e avec {0}. La cuve bascule et
+      la p\xE2te tombe dans la tr\xE9mie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703370
+    m_Localized: Portionnement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703371
+    m_Localized: "La portionneuse d\xE9coupe la p\xE2te en portions (cible 250 g).
+      Si elle est arr\xEAt\xE9e, d\xE9marre-la depuis son terminal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703372
+    m_Localized: Formage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703373
+    m_Localized: "Les portions attendent dans le tampon puis passent sous la presse,
+      qui forme la p\xE2te \xE0 pizza. Observe la premi\xE8re course."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703374
+    m_Localized: Surveiller la ligne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703375
+    m_Localized: "Ouvre le terminal de ligne \xE0 c\xF4t\xE9 de la presse avec {0}.
+      Vert = en marche, orange = avertissement, rouge = d\xE9faut."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703376
+    m_Localized: "La premi\xE8re pizza"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703377
+    m_Localized: "Suis ta pizza : sauce et garniture, four, refroidissement, surg\xE9lation,
+      emballage. La qualit\xE9 est contr\xF4l\xE9e en fin de ligne."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703378
+    m_Localized: "Premier lot termin\xE9 !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703379
+    m_Localized: "Des pannes arriveront \u2013 l'IHM affiche la cause et la solution.
+      \xC9chap ouvre le menu pause avec les commandes, la sauvegarde et le chargement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703380
+    m_Localized: Tutoriel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703381
+    m_Localized: "[{2}] \xE9tape suivante   [{3}] masquer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703382
+    m_Localized: Relancer le tutoriel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5456202205442048
+    m_Localized: Station de dosage
     m_Metadata:
       m_Items: []
   references:

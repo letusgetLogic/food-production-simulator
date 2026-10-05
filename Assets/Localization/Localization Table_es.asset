@@ -442,6 +442,918 @@ MonoBehaviour:
     m_Localized: Prensa para masa
     m_Metadata:
       m_Items: []
+  - m_Id: 5442882215817216
+    m_Localized: Partida guardada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120384
+    m_Localized: Error al guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120385
+    m_Localized: Error al cargar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120386
+    m_Localized: PAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120387
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120388
+    m_Localized: Guardar partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120389
+    m_Localized: Cargar partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120390
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120391
+    m_Localized: Controles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120392
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120393
+    m_Localized: "WASD / flechas \u2013 moverse\nRat\xF3n \u2013 mirar\nMay\xFAs
+      \u2013 correr\nE \u2013 usar / recoger\nQ \u2013 soltar\nClic izquierdo \u2013
+      botones de pantallas y terminales\nEsc \u2013 cerrar pantalla / pausa\n{0}
+      \u2013 guardado r\xE1pido, {1} \u2013 carga r\xE1pida\n{2} \u2013 panel de
+      depuraci\xF3n (desarrollo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120394
+    m_Localized: "ESTAD\xCDSTICAS DE LA L\xCDNEA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120395
+    m_Localized: Volver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120396
+    m_Localized: DESECHOS POR CAUSA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120397
+    m_Localized: FALLOS POR TIPO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120398
+    m_Localized: "PARADAS POR M\xC1QUINA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120399
+    m_Localized: Tiempo de funcionamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120400
+    m_Localized: Buenas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120401
+    m_Localized: Desechos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120402
+    m_Localized: Rendimiento / min
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120403
+    m_Localized: Disponibilidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120404
+    m_Localized: ninguno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120405
+    m_Localized: Tiempo de horneado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120406
+    m_Localized: Tiempo de permanencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120407
+    m_Localized: Temperatura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120408
+    m_Localized: Consigna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120409
+    m_Localized: "Productos en el t\xFAnel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120410
+    m_Localized: "\xDAltimo tiempo de horneado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120411
+    m_Localized: "\xDAltimo tiempo de permanencia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120412
+    m_Localized: "\xDAltima temp. producto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120413
+    m_Localized: Productos terminados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120414
+    m_Localized: Productos incorrectos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120415
+    m_Localized: Cinta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120416
+    m_Localized: Salsa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120417
+    m_Localized: Ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120418
+    m_Localized: "Dep\xF3sito de salsa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120419
+    m_Localized: Tolva de ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120420
+    m_Localized: "\xDAltima salsa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120421
+    m_Localized: "\xDAltimos ingredientes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120422
+    m_Localized: Pizzas dosificadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120423
+    m_Localized: Pasadas sin dosificar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120424
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120425
+    m_Localized: Tiempo de amasado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120426
+    m_Localized: Tiempo de ciclo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120427
+    m_Localized: Tiempo restante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120428
+    m_Localized: Amasado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120429
+    m_Localized: Lote listo para volcar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120430
+    m_Localized: "S\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120431
+    m_Localized: No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120432
+    m_Localized: Cuba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120433
+    m_Localized: Volcada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120434
+    m_Localized: Vertical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120435
+    m_Localized: Peso del lote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120436
+    m_Localized: Lotes producidos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120437
+    m_Localized: Peso objetivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120438
+    m_Localized: Tolerancia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120439
+    m_Localized: Tiempo de porcionado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120440
+    m_Localized: Nivel de la tolva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120441
+    m_Localized: Masa en la tolva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120442
+    m_Localized: Porcionado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120443
+    m_Localized: "\xDAltima porci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120444
+    m_Localized: Porciones producidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120445
+    m_Localized: Cuba en el elevador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120446
+    m_Localized: Salida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120447
+    m_Localized: Bloqueada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120448
+    m_Localized: Libre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120449
+    m_Localized: "Di\xE1metro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120450
+    m_Localized: Grosor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120451
+    m_Localized: Carrera
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120452
+    m_Localized: Masa en la prensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120453
+    m_Localized: Bases formadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120454
+    m_Localized: CONSIGNAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120455
+    m_Localized: VALORES REALES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120456
+    m_Localized: uds.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120457
+    m_Localized: "B\xFAfer llen\xE1ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120458
+    m_Localized: "B\xFAfer lleno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120459
+    m_Localized: "En espera de la estaci\xF3n siguiente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120460
+    m_Localized: "Desviaci\xF3n de temperatura"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120461
+    m_Localized: Producto incorrecto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120462
+    m_Localized: Nivel bajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120463
+    m_Localized: "Dep\xF3sito de salsa vac\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120464
+    m_Localized: "Rellenar el dep\xF3sito de salsa en la estaci\xF3n de dosificaci\xF3n
+      (bot\xF3n de recarga), confirmar, finalizar el mantenimiento, arrancar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120465
+    m_Localized: "Tolva de ingredientes vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120466
+    m_Localized: "Rellenar la tolva de ingredientes en la estaci\xF3n de dosificaci\xF3n
+      (bot\xF3n de recarga), confirmar, finalizar el mantenimiento, arrancar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120467
+    m_Localized: "B\xFAfer de la prensa lleno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120468
+    m_Localized: "Revisar la prensa (\xBFen marcha? \xBFtiempo de ciclo demasiado
+      largo?). Despu\xE9s confirmar la cinta b\xFAfer y volver a arrancar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120469
+    m_Localized: Atasco en la cinta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120470
+    m_Localized: Retirar el producto atascado de la cinta, confirmar, finalizar el
+      mantenimiento, arrancar la cinta.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120471
+    m_Localized: Temperatura fuera de rango
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120472
+    m_Localized: "Calefacci\xF3n/unidad de fr\xEDo averiada. Confirmar, finalizar
+      el mantenimiento (repara la unidad), arrancar y esperar a la temperatura."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120473
+    m_Localized: Temperatura de consigna no alcanzada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882287120474
+    m_Localized: Revisar la consigna de temperatura. Confirmar, finalizar el mantenimiento,
+      volver a arrancar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508992
+    m_Localized: Producto incorrecto en la prensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508993
+    m_Localized: "El producto est\xE1 marcado como desecho y se ignorar\xE1. Confirmar,
+      finalizar el mantenimiento, arrancar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508994
+    m_Localized: "Fallo de la cinta de la estaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508995
+    m_Localized: "Primero solucionar el fallo de la cinta (ver alarma de la cinta),
+      despu\xE9s confirmar la estaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508996
+    m_Localized: Sin terminar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508997
+    m_Localized: "Descartado por una estaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508998
+    m_Localized: Peso insuficiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295508999
+    m_Localized: Exceso de peso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509000
+    m_Localized: "Di\xE1metro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509001
+    m_Localized: Grosor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509002
+    m_Localized: Poca salsa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509003
+    m_Localized: Demasiada salsa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509004
+    m_Localized: Pocos ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509005
+    m_Localized: Demasiados ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509006
+    m_Localized: Poco horneada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509007
+    m_Localized: Demasiado horneada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509008
+    m_Localized: Temperatura de horneado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509009
+    m_Localized: Temperatura de enfriamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509010
+    m_Localized: "Cadena de fr\xEDo interrumpida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509011
+    m_Localized: "Falta la medici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509012
+    m_Localized: Peso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509013
+    m_Localized: Salsa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509014
+    m_Localized: Ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509015
+    m_Localized: Tiempo de horneado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509016
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509017
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509018
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509019
+    m_Localized: "Deteni\xE9ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509020
+    m_Localized: Detenido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509021
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509022
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509023
+    m_Localized: "En pausa \u2013 la estaci\xF3n siguiente no puede recibir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509024
+    m_Localized: "B\xFAfer llen\xE1ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509025
+    m_Localized: "B\xFAfer lleno"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509026
+    m_Localized: Atasco detectado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509027
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509028
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509029
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509030
+    m_Localized: "Deteni\xE9ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509031
+    m_Localized: Detenido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509032
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882295509033
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703296
+    m_Localized: Alcanzando temperatura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703297
+    m_Localized: Producto terminado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703298
+    m_Localized: Ha pasado un producto incorrecto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703299
+    m_Localized: "Desviaci\xF3n de temperatura"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703300
+    m_Localized: Temperatura fuera de rango
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703301
+    m_Localized: Consigna no alcanzada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703302
+    m_Localized: Fallo de la cinta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703303
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703304
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703305
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703306
+    m_Localized: "Deteni\xE9ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703307
+    m_Localized: Detenido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703308
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703309
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703310
+    m_Localized: Salsa aplicada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703311
+    m_Localized: Pizza cubierta (salsa / ingredientes)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703312
+    m_Localized: "Dep\xF3sito de salsa casi vac\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703313
+    m_Localized: "Tolva de ingredientes casi vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703314
+    m_Localized: "Dep\xF3sito de salsa vac\xEDo \u2013 rellenar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703315
+    m_Localized: "Tolva de ingredientes vac\xEDa \u2013 rellenar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703316
+    m_Localized: "Dep\xF3sito de salsa rellenado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703317
+    m_Localized: Tolva de ingredientes rellenada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703318
+    m_Localized: Producto pasado sin dosificar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703319
+    m_Localized: Fallo de la cinta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703320
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703321
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703322
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703323
+    m_Localized: "Deteni\xE9ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703324
+    m_Localized: Detenido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703325
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703326
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703327
+    m_Localized: Cuba cargada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703328
+    m_Localized: "Cuba vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703329
+    m_Localized: Elevando la cuba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703330
+    m_Localized: Cuba volcada en la tolva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703331
+    m_Localized: "Elevador en posici\xF3n de carga"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703332
+    m_Localized: "Tolva vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703333
+    m_Localized: Porcionando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703334
+    m_Localized: "Porci\xF3n expedida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703335
+    m_Localized: Salida bloqueada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703336
+    m_Localized: Bajando el elevador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703337
+    m_Localized: "Masa insuficiente para una porci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703338
+    m_Localized: Vaciando la tolva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703339
+    m_Localized: Listo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703340
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703341
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703342
+    m_Localized: "Deteni\xE9ndose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703343
+    m_Localized: Detenido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703344
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703345
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703346
+    m_Localized: Esperando masa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703347
+    m_Localized: Prensando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703348
+    m_Localized: Base de pizza formada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703349
+    m_Localized: Salida bloqueada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703350
+    m_Localized: Producto incorrecto en la prensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703351
+    m_Localized: Abatidor de temperatura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703352
+    m_Localized: Producidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703353
+    m_Localized: Fallos activos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703354
+    m_Localized: "Bienvenido a la l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703355
+    m_Localized: "Hoy manejas una l\xEDnea de pizzas congeladas: de la amasadora
+      a la pizza envasada. Camina con W A S D y mira alrededor con el rat\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703356
+    m_Localized: Lee la receta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703357
+    m_Localized: "Apunta al terminal de recetas y pulsa {0}. Muestra los valores
+      de la Margarita para cada m\xE1quina. Ci\xE9rralo con Esc."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703358
+    m_Localized: Arranca la amasadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703359
+    m_Localized: "Ve a una amasadora y arr\xE1ncala: bot\xF3n verde de la m\xE1quina
+      o su terminal ({0})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703360
+    m_Localized: Amasado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703361
+    m_Localized: "La amasadora necesita un momento. Aseg\xFArate de que la olla est\xE9
+      bajo el tambor: c\xF3gela con {0} y d\xE9jala con {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703362
+    m_Localized: Inclina el tambor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703363
+    m_Localized: "El amasado ha terminado. Pulsa el bot\xF3n de inclinaci\xF3n con
+      {0}: la bola de masa cae en la olla."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703364
+    m_Localized: Coge la olla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703365
+    m_Localized: "Apunta a la olla con la masa y c\xF3gela con {0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703366
+    m_Localized: Carga la porcionadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703367
+    m_Localized: "Lleva la olla a la porcionadora y d\xE9jala en el elevador con
+      {1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703368
+    m_Localized: Sube el elevador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703369
+    m_Localized: "Pulsa el bot\xF3n de subida con {0}. La olla se inclina y la masa
+      cae en la tolva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703370
+    m_Localized: Porcionado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703371
+    m_Localized: "La porcionadora divide la masa en porciones (objetivo 250 g). Si
+      est\xE1 parada, arr\xE1ncala en su terminal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703372
+    m_Localized: Formado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703373
+    m_Localized: "Las porciones esperan en el b\xFAfer y pasan a la prensa, que forma
+      la base. Observa la primera carrera."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703374
+    m_Localized: "Vigila la l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703375
+    m_Localized: "Abre el terminal de l\xEDnea junto a la prensa con {0}. Verde =
+      en marcha, \xE1mbar = aviso, rojo = aver\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703376
+    m_Localized: La primera pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703377
+    m_Localized: "Sigue tu pizza: salsa e ingredientes, horno, enfriado, ultracongelador,
+      envasado. La calidad se comprueba al final de la l\xEDnea."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703378
+    m_Localized: "\xA1Primer lote terminado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703379
+    m_Localized: "Habr\xE1 aver\xEDas: el HMI muestra la causa y la soluci\xF3n.
+      Esc abre el men\xFA de pausa con controles, guardar y cargar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703380
+    m_Localized: Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703381
+    m_Localized: '[{2}] siguiente paso   [{3}] ocultar'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5442882299703382
+    m_Localized: Reiniciar tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5456202205442048
+    m_Localized: "Estaci\xF3n de dosificaci\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
