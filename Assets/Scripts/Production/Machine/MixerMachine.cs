@@ -2,7 +2,7 @@
 // (formerly DoughMixerMachine — renamed, see PROJECT STATUS)
 //
 // Source station, same as PortionerMachine: produces a product from raw material instead of
-// processing an existing ProductInstance. Deliberately does not implement IProductProcessor.
+// processing an existing ProductInstance.
 //
 // Confirmed decisions:
 // 1) Tilting is an explicit operator action on the HMI (tilt button), no auto-tilt on IsProcessingComplete

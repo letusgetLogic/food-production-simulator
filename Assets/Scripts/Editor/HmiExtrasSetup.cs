@@ -85,6 +85,7 @@ namespace Game.EditorTools
             pauseSo.FindProperty("_theme").objectReferenceValue = theme;
             pauseSo.FindProperty("_saveLoad").objectReferenceValue = saveLoad;
             pauseSo.FindProperty("_styleSource").objectReferenceValue = styleSource;
+            pauseSo.FindProperty("_languageChannel").objectReferenceValue = FindAsset<SO_LanguageSwitcherChannel>();
             pauseSo.ApplyModifiedProperties();
             if (focusChannel == null)
             {

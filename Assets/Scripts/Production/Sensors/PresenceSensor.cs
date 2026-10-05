@@ -21,7 +21,7 @@ namespace Game.Production
     ///
     /// IsWithinNormalRange: the sensor does NOT judge this itself - it only
     /// reports the raw reading via CurrentValue. The owning machine (e.g. the
-    /// mixer's IProductProcessor/IMachine logic) decides what "normal" means
+    /// mixer's IMachine logic) decides what "normal" means
     /// in its context and writes the verdict back via SetWithinNormalRange.
     /// Defaults to true until a machine says otherwise.
     /// </summary>

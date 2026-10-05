@@ -13,6 +13,8 @@ namespace Game.DebugTools
     /// Debug and balancing panel (Woche 3), drawn with IMGUI so it needs no scene UI and works in WebGL.
     ///
     /// F1 toggles the panel (takes UI focus: cursor free, player look blocked), F5 quick-saves, F9 quick-loads.
+    /// In WebGL builds the browser owns F1 (help) and F5 (reload), so the web keys are used there instead
+    /// (default: key left of 1 = ^ on German keyboards, K save, L load).
     /// Sections: time scale, line start/stop/reset, fault injection, dosing refill, active faults,
     /// quality statistics, save/load. Only meant for development and playtests - <see cref="_enabledInBuilds"/>
     /// switches it off in player builds.
@@ -29,6 +31,11 @@ namespace Game.DebugTools
         [SerializeField] private Key _toggleKey = Key.F1;
         [SerializeField] private Key _quickSaveKey = Key.F5;
         [SerializeField] private Key _quickLoadKey = Key.F9;
+
+        [Header("Keys in WebGL builds (browser reserves F1/F5)")]
+        [SerializeField] private Key _webToggleKey = Key.Backquote;
+        [SerializeField] private Key _webQuickSaveKey = Key.K;
+        [SerializeField] private Key _webQuickLoadKey = Key.L;
 
         [Header("Availability")]
         [Tooltip("Allow the panel in player builds (playtests). Off = editor and development builds only.")]
@@ -50,6 +57,11 @@ namespace Game.DebugTools
 
         private bool IsAvailable => Application.isEditor || Debug.isDebugBuild || _enabledInBuilds;
 
+        private static bool IsWeb => Application.platform == RuntimePlatform.WebGLPlayer;
+        private Key ToggleKey => IsWeb ? _webToggleKey : _toggleKey;
+        private Key QuickSaveKey => IsWeb ? _webQuickSaveKey : _quickSaveKey;
+        private Key QuickLoadKey => IsWeb ? _webQuickLoadKey : _quickLoadKey;
+
         private void Start()
         {
             if (!IsAvailable)
@@ -59,6 +71,10 @@ namespace Game.DebugTools
             }
 
             // Explicit Unity null checks (unassigned serialized fields are "fake null" in the editor).
+            ShortcutHints.DebugPanel = KeyLabel(ToggleKey);
+            ShortcutHints.QuickSave = KeyLabel(QuickSaveKey);
+            ShortcutHints.QuickLoad = KeyLabel(QuickLoadKey);
+
             if (_faultMonitor == null) _faultMonitor = FindFirstObjectByType<FaultMonitor>();
             if (_qualityInspector == null) _qualityInspector = FindFirstObjectByType<QualityInspector>();
             if (_saveLoad == null) _saveLoad = FindFirstObjectByType<SaveLoadController>();
@@ -103,7 +119,7 @@ namespace Game.DebugTools
                 return;
             }
 
-            if (keyboard[_toggleKey].wasPressedThisFrame)
+            if (keyboard[ToggleKey].wasPressedThisFrame)
             {
                 if (_isOpen)
                 {
@@ -115,15 +131,22 @@ namespace Game.DebugTools
                 }
             }
 
-            if (keyboard[_quickSaveKey].wasPressedThisFrame && _saveLoad != null)
+            if (keyboard[QuickSaveKey].wasPressedThisFrame && _saveLoad != null)
             {
                 _saveLoad.Save();
             }
 
-            if (keyboard[_quickLoadKey].wasPressedThisFrame && _saveLoad != null && !_saveLoad.Load())
+            if (keyboard[QuickLoadKey].wasPressedThisFrame && _saveLoad != null && !_saveLoad.Load())
             {
                 ShowStatus("Nothing to load");
             }
+        }
+
+        /// <summary>Name of the key on the current keyboard layout (Backquote shows as ^ on a German keyboard).</summary>
+        private static string KeyLabel(Key key)
+        {
+            string name = Keyboard.current != null ? Keyboard.current[key].displayName : null;
+            return string.IsNullOrEmpty(name) ? key.ToString() : name;
         }
 
         private void Open()
@@ -177,7 +200,7 @@ namespace Game.DebugTools
             GUILayout.BeginArea(new Rect(10f, 10f, _width, height), GUI.skin.box);
             _scroll = GUILayout.BeginScrollView(_scroll);
 
-            GUILayout.Label("DEBUG / BALANCING   (F1 close · F5 save · F9 load)", _headerStyle);
+            GUILayout.Label($"DEBUG / BALANCING   ({ShortcutHints.DebugPanel} close · {ShortcutHints.QuickSave} save · {ShortcutHints.QuickLoad} load)", _headerStyle);
             DrawTime();
             DrawLine();
             DrawFaults();
@@ -448,13 +471,13 @@ namespace Game.DebugTools
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Save (F5)"))
+            if (GUILayout.Button($"Save ({ShortcutHints.QuickSave})"))
             {
                 _saveLoad.Save();
             }
 
             GUI.enabled = _saveLoad.HasSave();
-            if (GUILayout.Button("Load (F9)"))
+            if (GUILayout.Button($"Load ({ShortcutHints.QuickLoad})"))
             {
                 _saveLoad.Load();
             }

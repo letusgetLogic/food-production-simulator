@@ -32,8 +32,7 @@ namespace Game.Production
             public float StartTime;
             public bool IsInMaintenance;
 
-            public string MachineName => Machine == null ? "?"
-                : Machine.Number > 0 ? $"{Machine.Name} {Machine.Number}" : Machine.Name;
+            public string MachineName => DisplayName(Machine);
 
             public string Message => Definition != null ? Definition.Message : Reason;
             public string Remedy => Definition != null ? Definition.Remedy : string.Empty;
@@ -60,6 +59,7 @@ namespace Game.Production
         private float _accumulatedDowntimeSeconds;
         private float _lineDownSeconds;
         private readonly Dictionary<string, float> _downtimeByMachine = new Dictionary<string, float>();
+        private readonly Dictionary<string, MachineBase> _machinesById = new Dictionary<string, MachineBase>();
 
         /// <summary>
         /// Seconds during which at least one machine was in Fault/Maintenance (line availability = 1 - this / run time).
@@ -67,7 +67,11 @@ namespace Game.Production
         /// </summary>
         public float LineDownSeconds => _lineDownSeconds;
 
-        /// <summary>Cleared downtime per machine display name (running faults not included).</summary>
+        /// <summary>
+        /// Cleared downtime per machine id (<see cref="MachineId"/>, running faults not included).
+        /// Keyed by id, not by display name, so a language switch does not split one machine into two entries -
+        /// resolve the name for display with <see cref="DisplayNameOf"/>.
+        /// </summary>
         public IReadOnlyDictionary<string, float> DowntimeByMachine => _downtimeByMachine;
 
         /// <summary>Raised whenever a fault starts, moves to maintenance or is cleared.</summary>
@@ -117,6 +121,7 @@ namespace Game.Production
                 machine.StateChanged += handler;
                 _handlers.Add(machine, handler);
                 _machines.Add(machine);
+                _machinesById[MachineId(machine)] = machine;
 
                 if (machine.CurrentState == MachineState.Fault || machine.CurrentState == MachineState.Maintenance)
                 {
@@ -158,6 +163,33 @@ namespace Game.Production
         }
 
         // ---- Queries ----
+
+        /// <summary>
+        /// Language-independent machine id: the hierarchy path (same identity the save system uses -
+        /// machine GameObjects must not be renamed).
+        /// </summary>
+        public static string MachineId(MachineBase machine)
+        {
+            if (machine == null)
+            {
+                return "?";
+            }
+
+            string path = machine.name;
+            for (Transform parent = machine.transform.parent; parent != null; parent = parent.parent)
+            {
+                path = parent.name + "/" + path;
+            }
+            return path;
+        }
+
+        /// <summary>Localized display name with number, e.g. "Conveyor 3".</summary>
+        public static string DisplayName(MachineBase machine) => machine == null ? "?"
+            : machine.Number > 0 ? $"{machine.Name} {machine.Number}" : machine.Name;
+
+        /// <summary>Current display name of a machine id; unknown ids (machine removed) are shown as they are.</summary>
+        public string DisplayNameOf(string machineId) =>
+            _machinesById.TryGetValue(machineId, out MachineBase machine) && machine != null ? DisplayName(machine) : machineId;
 
         public FaultDefinition Describe(string reason) => _catalog != null ? _catalog.Find(reason) : null;
 
@@ -202,10 +234,33 @@ namespace Game.Production
                 }
                 else if (key.StartsWith("machine.", StringComparison.Ordinal))
                 {
-                    _downtimeByMachine[key.Substring(8)] = values.Values[i];
+                    string id = ResolveSavedMachineKey(key.Substring(8));
+                    _downtimeByMachine.TryGetValue(id, out float seconds);
+                    _downtimeByMachine[id] = seconds + values.Values[i];
                 }
             }
             FaultsChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Saves before 05.10. keyed the downtime by display name - map such keys to the machine id
+        /// (works when the save is loaded in the same language it was written in).
+        /// </summary>
+        private string ResolveSavedMachineKey(string key)
+        {
+            if (_machinesById.ContainsKey(key))
+            {
+                return key;
+            }
+
+            foreach (KeyValuePair<string, MachineBase> entry in _machinesById)
+            {
+                if (entry.Value != null && DisplayName(entry.Value) == key)
+                {
+                    return entry.Key;
+                }
+            }
+            return key;
         }
 
         // ---- Injection (training / debug) ----
@@ -301,8 +356,9 @@ namespace Game.Production
                     {
                         float duration = cleared.DurationSeconds;
                         _accumulatedDowntimeSeconds += duration;
-                        _downtimeByMachine.TryGetValue(cleared.MachineName, out float machineDowntime);
-                        _downtimeByMachine[cleared.MachineName] = machineDowntime + duration;
+                        string id = MachineId(machine);
+                        _downtimeByMachine.TryGetValue(id, out float machineDowntime);
+                        _downtimeByMachine[id] = machineDowntime + duration;
                         _active.Remove(machine);
                         RebuildList();
                         FaultCleared?.Invoke(machine, duration);

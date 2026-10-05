@@ -36,7 +36,7 @@ namespace Game.Production
     ///
     /// Upstream belts see this station through <see cref="IsReadyForInfeed"/>: while it is not running,
     /// the belt before it holds the pizzas instead of pushing them onto a stopped belt.
-    /// Deliberately does NOT implement IProductProcessor (products are handed over by physics).
+    /// Products are handed over by physics (belts), not through a processor interface.
     /// No RecipeDefinition binding in code: amounts are operator settings from the HMI.
     /// </summary>
     public class DosingMachine : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState

@@ -24,8 +24,7 @@ namespace Game.Production
     ///      later) passing through the press zone are ignored. If the optional output sensor is occupied,
     ///      the pizza stays in the press until it is free.
     ///
-    /// Deliberately does NOT implement IProductProcessor: products are handed over by physics
-    /// (belt), not through TryBeginProcessing/TryCollectProcessedProduct.
+    /// Products are handed over by physics (belt), not through a processor interface.
     ///
     /// No quality evaluation yet: there is no dimension sensor. Diameter/thickness are only
     /// recorded on the ProductInstance for the future QualitySystem (Woche 2).

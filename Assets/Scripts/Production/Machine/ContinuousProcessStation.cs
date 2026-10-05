@@ -21,7 +21,7 @@ namespace Game.Production
     ///  - Upstream belts see this station through <see cref="IsReadyForInfeed"/>, so their buffers fill
     ///    up instead of pushing products into a stopped tunnel.
     ///
-    /// Deliberately does NOT implement IProductProcessor (products are handed over by physics).
+    /// Products are handed over by physics (belts), not through a processor interface.
     /// No RecipeDefinition binding in code: dwell/temperature are operator settings from the HMI.
     /// </summary>
     public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState

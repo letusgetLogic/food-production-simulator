@@ -8,7 +8,8 @@
         "Game.Persistence",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
-        "Unity.Localization"
+        "Unity.Localization",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

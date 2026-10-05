@@ -1,5 +1,6 @@
 using Game.Production;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Game.Tests
 {
@@ -145,6 +146,27 @@ namespace Game.Tests
                      })
             {
                 Assert.IsNotNull(_catalog.Find(code), code);
+            }
+        }
+    }
+
+    public class FaultMonitorMachineIdTests
+    {
+        [Test]
+        public void MachineId_IsHierarchyPath_IndependentOfDisplayName()
+        {
+            var line = new GameObject("Line");
+            var go = new GameObject("Oven");
+            go.transform.SetParent(line.transform);
+            try
+            {
+                TestMachine machine = go.AddComponent<TestMachine>();
+                Assert.AreEqual("Line/Oven", FaultMonitor.MachineId(machine));
+                Assert.AreEqual("?", FaultMonitor.MachineId(null));
+            }
+            finally
+            {
+                Object.DestroyImmediate(line);
             }
         }
     }

@@ -6,6 +6,7 @@ hmi.paused,PAUSED,PAUSE,PAUSE,PAUSA
 hmi.resume,Resume,Fortsetzen,Reprendre,Continuar
 hmi.save_game,Save game,Spiel speichern,Sauvegarder,Guardar partida
 hmi.load_game,Load game,Spiel laden,Charger,Cargar partida
+hmi.language,Language,Sprache,Langue,Idioma
 hmi.controls,Controls,Steuerung,Commandes,Controles
 hmi.quit,Quit,Beenden,Quitter,Salir
 hmi.controls_text,"WASD / arrow keys - move
@@ -15,32 +16,32 @@ E - interact / pick up
 Q - put down
 Left click - buttons on screens and terminals
 Esc - close screen / pause
-F5 - quick save, F9 - quick load
-F1 - debug panel (development)","WASD / Pfeiltasten – bewegen
+{0} - quick save, {1} - quick load
+{2} - debug panel (development)","WASD / Pfeiltasten – bewegen
 Maus – umsehen
 Shift – sprinten
 E – benutzen / aufheben
 Q – ablegen
 Linksklick – Knöpfe an Bildschirmen und Terminals
 Esc – Bildschirm schließen / Pause
-F5 – Schnellspeichern, F9 – Schnellladen
-F1 – Debug-Panel (Entwicklung)","ZQSD / flèches – se déplacer
+{0} – Schnellspeichern, {1} – Schnellladen
+{2} – Debug-Panel (Entwicklung)","ZQSD / flèches – se déplacer
 Souris – regarder
 Maj – courir
 E – utiliser / ramasser
 A – poser
 Clic gauche – boutons des écrans et terminaux
 Échap – fermer l’écran / pause
-F5 – sauvegarde rapide, F9 – chargement rapide
-F1 – panneau de débogage (développement)","WASD / flechas – moverse
+{0} – sauvegarde rapide, {1} – chargement rapide
+{2} – panneau de débogage (développement)","WASD / flechas – moverse
 Ratón – mirar
 Mayús – correr
 E – usar / recoger
 Q – soltar
 Clic izquierdo – botones de pantallas y terminales
 Esc – cerrar pantalla / pausa
-F5 – guardado rápido, F9 – carga rápida
-F1 – panel de depuración (desarrollo)"
+{0} – guardado rápido, {1} – carga rápida
+{2} – panel de depuración (desarrollo)"
 hmi.line_statistics,LINE STATISTICS,LINIENSTATISTIK,STATISTIQUES DE LA LIGNE,ESTADÍSTICAS DE LA LÍNEA
 hmi.back,Back,Zurück,Retour,Volver
 hmi.scrap_by_cause,SCRAP BY CAUSE,AUSSCHUSS NACH URSACHE,REBUTS PAR CAUSE,DESECHOS POR CAUSA

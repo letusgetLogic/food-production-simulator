@@ -3385,6 +3385,7 @@ MonoBehaviour:
   _uiFocusChannel: {fileID: 11400000, guid: fe1388f20d580224d8fa86bb9334908b, type: 2}
   _theme: {fileID: 11400000, guid: a0c154e929c6db34cb23230949504346, type: 2}
   _saveLoad: {fileID: 1003702535}
+  _languageChannel: {fileID: 11400000, guid: 8563648a87a38b84fbcff5ea5e77fbfc, type: 2}
   _styleSource: {fileID: 5475873597819366034}
   _sortingOrder: 500
   _fontSize: 28
@@ -5642,6 +5643,9 @@ MonoBehaviour:
   _toggleKey: 94
   _quickSaveKey: 98
   _quickLoadKey: 102
+  _webToggleKey: 4
+  _webQuickSaveKey: 25
+  _webQuickLoadKey: 26
   _enabledInBuilds: 1
   _width: 460
   _uiScale: 1

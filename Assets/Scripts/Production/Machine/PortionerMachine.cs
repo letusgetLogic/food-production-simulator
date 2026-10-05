@@ -25,7 +25,7 @@ namespace Game.Production
     ///   4. <see cref="TryDrainHopper"/> (HopperDrainButton) lets the whole hopper content drop
     ///      out without creating products.
     ///
-    /// Deliberately does NOT implement IProductProcessor: the Portionierer is a source station
+    /// The Portionierer is a source station
     /// (bulk dough in, individual products out), same as MixerMachine.
     ///
     /// No direct RecipeDefinition binding in code: SetTargetWeight()/SetToleranceGrams()/

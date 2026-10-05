@@ -1,3 +1,4 @@
+using System.Collections;
 using Game.Core;
 using Game.Persistence;
 using Game.Production;
@@ -6,15 +7,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 namespace Game.HMI
 {
     /// <summary>
     /// Pause menu (Woche 3, Plattform-UX): Escape while no other UI is open pauses the game
-    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Controls / Quit.
+    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Language / Controls / Quit.
     /// Escape again (or Resume) closes it - Escape is routed through <see cref="SO_UiFocusChannel.CloseRequested"/>
     /// like every other UI, so an open HMI is closed first and only the next Escape opens the menu.
+    ///
+    /// The language button cycles through the available locales and notifies <see cref="_languageChannel"/>
+    /// (machine names in the HMI follow it).
     ///
     /// Builds its own overlay canvas from code (no prefab). Needs an EventSystem in the scene (the HMI has one).
     /// </summary>
@@ -23,6 +29,7 @@ namespace Game.HMI
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private SO_HmiTheme _theme;
         [SerializeField] private SaveLoadController _saveLoad;
+        [SerializeField] private SO_LanguageSwitcherChannel _languageChannel;
 
         [Tooltip("Font is copied from this text. Empty = TMP default font.")]
         [SerializeField] private TextMeshProUGUI _styleSource;
@@ -39,10 +46,12 @@ namespace Game.HMI
         private TextMeshProUGUI _saveLabel;
         private TextMeshProUGUI _loadLabel;
         private TextMeshProUGUI _helpLabel;
+        private TextMeshProUGUI _languageLabel;
         private TextMeshProUGUI _quitLabel;
         private Button _loadButton;
 
         private bool _isOpen;
+        private bool _isSwitchingLanguage;
         private bool _wasUiFocusedLastFrame;
         private float _previousTimeScale = 1f;
 
@@ -83,6 +92,7 @@ namespace Game.HMI
             {
                 _uiFocusChannel.CloseRequested += Close;
             }
+            LocText.TableChanged += HandleTableChanged;
         }
 
         private void OnDisable()
@@ -91,6 +101,7 @@ namespace Game.HMI
             {
                 _uiFocusChannel.CloseRequested -= Close;
             }
+            LocText.TableChanged -= HandleTableChanged;
         }
 
         private void OnDestroy()
@@ -193,6 +204,57 @@ namespace Game.HMI
             }
         }
 
+        private void NextLanguage()
+        {
+            if (!_isSwitchingLanguage)
+            {
+                StartCoroutine(SwitchToNextLocale());
+            }
+        }
+
+        private IEnumerator SwitchToNextLocale()
+        {
+            _isSwitchingLanguage = true;
+            yield return LocalizationSettings.InitializationOperation;
+
+            var locales = LocalizationSettings.AvailableLocales.Locales;
+            if (locales.Count > 1)
+            {
+                int index = locales.IndexOf(LocalizationSettings.SelectedLocale);
+                LocalizationSettings.SelectedLocale = locales[(index + 1) % locales.Count];
+                if (_languageChannel != null)
+                {
+                    _languageChannel.NotifyLanguageChanged();
+                }
+            }
+
+            _isSwitchingLanguage = false;
+            RefreshTexts();
+        }
+
+        /// <summary>Native name of the selected language, e.g. "Deutsch", "Français".</summary>
+        private static string CurrentLanguageName()
+        {
+            Locale locale = LocalizationSettings.HasSettings ? LocalizationSettings.SelectedLocale : null;
+            if (locale == null)
+            {
+                return "-";
+            }
+
+            System.Globalization.CultureInfo culture = locale.Identifier.CultureInfo;
+            string name = culture != null ? culture.NativeName : locale.LocaleName;
+            return string.IsNullOrEmpty(name) ? locale.Identifier.Code : char.ToUpper(name[0]) + name.Substring(1);
+        }
+
+        // Texts arrive asynchronously after a language switch.
+        private void HandleTableChanged()
+        {
+            if (_isOpen)
+            {
+                RefreshTexts();
+            }
+        }
+
         private void ToggleHelp()
         {
             _helpRoot.SetActive(!_helpRoot.activeSelf);
@@ -245,6 +307,7 @@ namespace Game.HMI
             AddButton(panel.transform, "Resume", Close, out _resumeLabel);
             AddButton(panel.transform, "Save", SaveGame, out _saveLabel);
             _loadButton = AddButton(panel.transform, "Load", LoadGame, out _loadLabel);
+            AddButton(panel.transform, "Language", NextLanguage, out _languageLabel);
             AddButton(panel.transform, "Controls", ToggleHelp, out _helpLabel);
 
             _helpRoot = HmiUiFactory.CreateRect("Help", panel.transform).gameObject;
@@ -279,6 +342,7 @@ namespace Game.HMI
             _resumeLabel.text = LocText.Get("hmi.resume", "Resume");
             _saveLabel.text = LocText.Get("hmi.save_game", "Save game");
             _loadLabel.text = LocText.Get("hmi.load_game", "Load game");
+            _languageLabel.text = $"{LocText.Get("hmi.language", "Language")}: {CurrentLanguageName()}";
             _helpLabel.text = LocText.Get("hmi.controls", "Controls");
             if (_quitLabel != null)
             {
@@ -286,7 +350,8 @@ namespace Game.HMI
             }
 
             _loadButton.interactable = _saveLoad != null && _saveLoad.HasSave();
-            _helpText.text = LocText.Get("hmi.controls_text",
+            // {0}/{1}/{2}: quick save, quick load, debug panel - keys differ per platform (see DebugPanel)
+            _helpText.text = string.Format(LocText.Get("hmi.controls_text",
                 "WASD / arrow keys - move\n" +
                 "Mouse - look around\n" +
                 "Shift - sprint\n" +
@@ -294,8 +359,9 @@ namespace Game.HMI
                 "Q - put down\n" +
                 "Left click - buttons on screens and terminals\n" +
                 "Esc - close screen / pause\n" +
-                "F5 - quick save, F9 - quick load\n" +
-                "F1 - debug panel (development)");
+                "{0} - quick save, {1} - quick load\n" +
+                "{2} - debug panel (development)"),
+                ShortcutHints.QuickSave, ShortcutHints.QuickLoad, ShortcutHints.DebugPanel);
         }
     }
 }

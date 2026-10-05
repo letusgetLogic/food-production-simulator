@@ -305,13 +305,15 @@ namespace Game.HMI
 
         private IEnumerable<KeyValuePair<string, float>> CurrentDowntimeByMachine()
         {
-            var result = new Dictionary<string, float>(_faultMonitor.DowntimeByMachine.ToDictionary(e => e.Key, e => e.Value));
+            // Summed per machine id, named afterwards in the current language (one entry per machine after a language switch)
+            var byId = new Dictionary<string, float>(_faultMonitor.DowntimeByMachine.ToDictionary(e => e.Key, e => e.Value));
             foreach (FaultMonitor.ActiveFault fault in _faultMonitor.ActiveFaults)
             {
-                result.TryGetValue(fault.MachineName, out float seconds);
-                result[fault.MachineName] = seconds + fault.DurationSeconds;
+                string id = FaultMonitor.MachineId(fault.Machine);
+                byId.TryGetValue(id, out float seconds);
+                byId[id] = seconds + fault.DurationSeconds;
             }
-            return result;
+            return byId.Select(e => new KeyValuePair<string, float>(_faultMonitor.DisplayNameOf(e.Key), e.Value));
         }
 
         private void SetTile(string id, string label, string value, HmiValueSeverity severity)

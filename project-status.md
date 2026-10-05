@@ -1,6 +1,6 @@
 # PROJECT STATUS – Food Production Simulator (Tiefkühlpizza-Linie)
 
-**Stand:** 02.10.2026 (Abend) · **Alles in `Factory_Prototyp` eingebaut, kompiliert, EditMode-Tests 48/48 grün, Play-Mode-Tests der Linie ab Presse bis Linienende bestanden** (siehe „Testlauf 02.10. Abend“). Automatisierung über `EditorCommandRunner` (`Automation/commands.txt` → `log.txt`, git-ignoriert).
+**Stand:** 05.10.2026 · **Alles in `Factory_Prototyp` eingebaut, kompiliert, EditMode-Tests 49/49 grün, Play-Mode-Tests der Linie ab Presse bis Linienende bestanden, Handplaytest der ganzen Linie bestanden** (siehe „Playtest 05.10.“ und „Testlauf 02.10. Abend“). Automatisierung über `EditorCommandRunner` (`Automation/commands.txt` → `log.txt`, git-ignoriert).
 
 ## Rolle in diesem Chat
 [Beim Start der Tages-Session hier eintragen: PM / Dev A / Dev B / Dev C – siehe Rollenbeschreibung unten]
@@ -32,6 +32,17 @@
 - **Durchlaufstationen** (Dosierung, Ofen, Kühlung, Froster, Verpackung) besitzen ihr eigenes Band (`_belt`) und melden Aufnahmebereitschaft über `IInfeedReadiness`; das vorgelagerte Band wartet
 - Input: nur neues Input System · Save-Format: JSON (`JsonUtility`), versioniert (`SaveData.CurrentVersion`, Migrationen in `SaveMigrations`). Maschinen werden über ihren Hierarchie-Pfad identifiziert – **Maschinen-GameObjects nicht umbenennen**, sonst passen alte Spielstände nicht mehr. Maschinen mit Laufzeit-Inhalt implementieren `ISaveableState`
 
+## Playtest 05.10. (von Hand)
+- **Bestanden:** Mixer → Topf tragen → Portionierer-Lift → Hopper → Portionen → komplette Linie bis Verpackung; Terminals mit der Maus bedienen; Esc/Pause, Debug-Panel, Statistik-Knopf. Keine Auffälligkeiten
+
+## Änderungen 05.10.
+- **WebGL-Tasten:** `DebugPanel` hat eigene Tasten für WebGL-Builds (`_webToggleKey` = Taste links neben der 1, auf deutscher Tastatur `^`; `_webQuickSaveKey` K; `_webQuickLoadKey` L). Desktop/Editor bleiben F1/F5/F9. Die aktiven Tasten (Name nach Tastaturlayout) stehen in `Game.Core.ShortcutHints` und werden im Debug-Panel und im Steuerungstext des Pausemenüs angezeigt. `hmi.controls_text` enthält dafür jetzt die Platzhalter `{0}` (Speichern), `{1}` (Laden), `{2}` (Debug) – in `Docs/localization-keys.csv/.tsv` in allen Sprachen angepasst
+- **Stillstand je Maschine nach Maschinen-ID:** `FaultMonitor.DowntimeByMachine` ist nach `FaultMonitor.MachineId()` (Hierarchie-Pfad, wie beim Speichern) geschlüsselt, der Name kommt erst bei der Anzeige über `DisplayNameOf()` – nach einem Sprachwechsel gibt es keinen doppelten Eintrag mehr. Alte Spielstände (nach Anzeigename geschlüsselt) werden beim Laden der Maschine zugeordnet, wenn sie in derselben Sprache geladen werden
+
+- **Sprachwahl im Pausemenü:** Knopf „Language: Deutsch“ schaltet reihum durch alle Locales (de → es → en → fr) und meldet den Wechsel über `SO_LanguageSwitcherChannel` (Maschinennamen im HMI folgen). Feld `_languageChannel` am `PauseMenu`, wird von *Setup Statistics Page + Pause Menu* gesetzt (ausgeführt, Szene gespeichert). Neuer Key `hmi.language`. `Game.HMI` referenziert jetzt `Unity.ResourceManager`. Im Play Mode geprüft
+- **Aufgeräumt:** `IProductProcessor` gelöscht (Kommentare angepasst), `SampleScene` aus den Build Settings entfernt (Datei und `DummyMachine` bleiben vorerst im Projekt)
+- **Hinweis Automatisierung:** `tests` und `play` nicht direkt hintereinander in `commands.txt` – der Test-Runner läuft asynchron, ein Play-Start dazwischen bricht ihn ab. Dabei wurde einmal `timeScale 0` in `ProjectSettings/TimeManager.asset` gespeichert (zurückgesetzt); im normalen Ablauf (Pause offen → Play Mode beenden) bleibt `timeScale` 1
+
 ## Testlauf 02.10. Abend (Unity 6000.3.17f1, per EditorCommandRunner)
 - Setup-Menüs ausgeführt: Oven, Cooling Tunnel, Shock Freezer, Packaging, Fault + Quality System, Statistics Page + Pause Menu, Belt Surface Physics. Linie: Dosierung x=31,75 → Ofen 27,75 → Kühlung 23,75 → Froster 19,75 → Verpackung 15,75 → `LineEnd` 13,75
 - **Bestanden:** Portion am Zulauf (DebugPanel „Spawn portion at infeed“) → Puffer → Presse → Dosierung → Ofen → Kühlung → Froster → Verpackung → LineEnd: 3/3 `PackagedPizza`, Qualität OK. Pizzaboden direkt an der Dosierung: 3/3 OK
@@ -42,7 +53,7 @@
 - **Nicht automatisiert getestet:** Mixer → Topf → Portionierer (Topf muss vom Spieler getragen und auf dem Lift abgestellt werden; ein Teleport per Automatisierung umgeht das Einrasten und die Teigkugel flog beim Kippen weg – Testartefakt, im echten Playtest prüfen). Bedienung der Terminals mit der Maus
 
 ## Aktueller Plan-Tag
-Woche 2 (Tag [bitte eintragen]) – Code für **alle 8 Stationen, FaultSystem und QualitySystem** ist geschrieben. In der Szene läuft weiterhin **Mixer → Portionierer → Presse → Dosierstation** (Endstand `ToppedPizza`). Nächster Schritt: Unity öffnen und die Setup-Menüs ausführen (siehe „Nächste Schritte“).
+Woche 3 (Tag [bitte eintragen]) – alle 8 Stationen, FaultSystem und QualitySystem laufen in der Szene, die ganze Linie ist von Hand durchgespielt. Nächste Schritte siehe unten.
 
 ## Fertige Features
 
@@ -101,7 +112,7 @@ Woche 2 (Tag [bitte eintragen]) – Code für **alle 8 Stationen, FaultSystem un
 - **Pausemenü** `PauseMenu` (Game.HMI): Esc, wenn kein anderes UI offen ist → Pause (Zeit steht), Fortsetzen / Spiel speichern / Spiel laden / Steuerung / Beenden (nicht in WebGL). Esc schließt wie jedes andere UI über `SO_UiFocusChannel.CloseRequested`. Eigenes Overlay-Canvas per Code
 - **EditMode-Tests** (`Assets/Tests/EditMode`, Test Runner → EditMode): MachineBase-Zustandsautomat und Warnungen, QualityInspector (Toleranzgrenzen, Ausschuss, fehlende Messwerte, Statistik-Rundlauf), SaveData/Migration/JSON-Rundlauf, `SaveValues`, `MachineParameter` (Klemmen, Raster, Nudge), `LocText`-Keys, Fehlerkatalog (alle Fault-Codes der Maschinen sind im Katalog)
 - Menü *Tools → Food Production → Setup Statistics Page + Pause Menu* (`HmiExtrasSetup.cs`): legt `Panel_Statistics` neben dem Overview-Panel an (gleiche Größe, im `HmiScreenController` registriert), Knopf „STATISTICS“ oben rechts im Overview-Panel und `PauseMenu` als Root-Objekt
-- `Docs/localization-keys.csv/.tsv` jetzt **189 Keys** (neu: Statistik, Pause, Steuerungstext, Defekt-Codes `defect.*`). Französischer Steuerungstext nennt AZERTY-Tasten (ZQSD, A)
+- `Docs/localization-keys.csv/.tsv` jetzt **190 Keys** (05.10.: `hmi.language`) (neu: Statistik, Pause, Steuerungstext, Defekt-Codes `defect.*`). Französischer Steuerungstext nennt AZERTY-Tasten (ZQSD, A)
 
 ### Editor-Tools (Menü *Tools → Food Production*, alle wiederholbar + Undo, danach Strg+S)
 - *Setup Portioner-Former Line* (01.10., ausgeführt)
@@ -121,27 +132,23 @@ Woche 2 (Tag [bitte eintragen]) – Code für **alle 8 Stationen, FaultSystem un
 - Lokalisierung: Google-Sheets-Pull, `LanguageSwitcher`, Locales en/fr/de/eu (+ es)
 
 ## Nächste Schritte (Reihenfolge)
-1. **Playtest von Hand** (PM): Mixer → Topf tragen → Portionierer-Lift → Hopper → Portionen; Terminals mit der Maus bedienen (Sollwerte ändern, Wirkung prüfen); Esc/Pause, F1-Debug, Statistik-Knopf
+1. ~~Playtest von Hand~~ – erledigt 05.10.
 2. **Localization-Keys einfügen:** `Docs/localization-keys.tsv` unten ins Google Sheet (Spalten A–E), in Unity *Pull*, Sprache umschalten. Danach am Schockfroster den Name-Key auf `text.freezer` umstellen
 3. Weitere Fehlerfälle von Hand: Saucentank leer laufen lassen, Presse stoppen (BufferFull), Stau
-4. Woche 3 Rest: Tutorial (geführte erste Charge), Sprachwahl im Pausemenü, Meilenstein-Build (WebGL – F1/F5 umlegen, Localization-Preload prüfen)
+4. Woche 3 Rest: Tutorial (geführte erste Charge), Meilenstein-Build (WebGL – Localization-Preload prüfen; Tasten sind umgelegt)
 
 ## Bekannte Probleme / offene Punkte
-- **Ungetestet:** Übergabe Mixer → Topf → Portionierer nach den Änderungen vom 02.10. (nur von Hand testbar), Terminal-Bedienung mit der Maus
 - **Bänder liegen leicht treppenförmig** (je Band 3 mm tiefer, Verpackung −12 mm) – Übergaben funktionieren, optisch prüfen
 - **Code-Review 02.10. (ohne Unity) – behoben in Paket 3:** Laden eines Spielstands hat vom Bediener gestoppte Maschinen nicht zuverlässig gestoppt (der Linien-Controller startet die Linie nach dem Neuladen nacheinander und hätte sie wieder angefahren) → `SaveLoadController` wartet jetzt, bis keine Startsequenz mehr läuft. Statistik-Seite baute sich nicht auf, wenn sie beim Aktivieren des HMI schon sichtbar war → Aufbau auch in `OnEnable`. Pausemenü legt ein EventSystem an, falls die Szene keins hat
 - **Code-Review – offen (Risiken, im Test prüfen):**
-  - **WebGL-Tasten:** F5 lädt im Browser ggf. die Seite neu, F1 öffnet die Browser-Hilfe → für den WebGL-Build Schnellspeichern/Debug auf andere Tasten legen (Felder `_quickSaveKey`, `_toggleKey` am `DebugPanel`)
   - **WebGL + Localization:** `MachineBase.Name` nutzt `GetLocalizedString()` synchron (bestand schon vorher); in WebGL nur sicher, wenn die Tabelle vorgeladen ist (Localization Settings → Preload). `LocText` lädt asynchron und ist davon nicht betroffen
-  - Stillstand je Maschine ist nach dem lokalisierten Anzeigenamen gruppiert – nach einem Sprachwechsel entstehen zwei Einträge pro Maschine
   - Bandstörung in einem Tunnel erzeugt zwei Alarme (Band `Jam` + Station `BeltFault`) – gewollt, aber im Playtest bewerten
   - Lage der neuen Bänder: `TunnelStationSetup` setzt jedes Band um eine Bandlänge versetzt hinter das vorherige – setzt gleiche Pivot-Lage aller Band-Prefabs voraus (gleiches Prefab, sollte passen)
   - Bandgeschwindigkeiten der Tunnel (0,21–0,40 m/s) liegen im Bereich von `ConveyorConfig_Transport` (Default 0,05–2 m/s) – Asset-Werte im Editor prüfen
 - **Visuell:** `PizzaStateVisual` zeigt für Cooled/Frozen/Packaged noch das Baked-Modell (kein Karton-Modell); Tunnel/Verpackung/Dosierung sind Primitive-Platzhalter
 - **Bänder optisch statisch:** `ConveyorPlankVisual` ist nicht angeschlossen; die Streifen sind Teil der Band-Meshes – braucht eigene Planken-Objekte oder Textur-Scrolling (im Editor klären)
 - **Lokalisierung:** Keys liegen fertig übersetzt in `Docs/localization-keys.csv`, sind aber **noch nicht im Google Sheet** (Pull mit „Remove Missing Pulled Keys“ würde sonst nichts bringen). Baskisch (eu) ist nicht im Sheet konfiguriert. Noch ohne Key: Defekt-Codes des QualitySystems (nur Konsole/DebugPanel), Zustandsnamen im `SO_HmiTheme`
-- **`DummyMachine`** bleibt, weil `SampleScene` sie noch nutzt (SampleScene ist zweite Szene in den Build Settings – ggf. entfernen)
-- **`IProductProcessor`** wird von keiner Station mehr implementiert (nur noch in Kommentaren) – kann gelöscht werden, wenn niemand es plant
+- **`DummyMachine`** bleibt, weil `SampleScene` sie noch nutzt (SampleScene ist nicht mehr in den Build Settings – Szene und Klasse können gelöscht werden, wenn niemand sie braucht)
 - **Cross-Team-Sync:** Änderungen an fremdem Code bestätigen lassen – Dev A: `MachineBase` (Warning, `RequestRun`, `FaultReason`), `PressMachine` (Fault-Verhalten, Reject), `PortionerMachine` (`_downstream`); Dev B: `PresenceSensor`, `TemperatureSensor.SetHeatingTarget()`, `ProductInstance` (neue Felder); Dev C: `OverviewPanel`, `MachineStateRowView`, `LineStatusBinder`, Prefab-Texte
 - **Formanlage/Presse** ohne Dimensionssensor – Durchmesser/Dicke sind Bediener-Einstellung, das QualitySystem prüft diese Einstellung
 - **Terminal-Position** neuer Stationen ist grob gesetzt (Seite −X, 1,14 m über Boden) – im Scene View prüfen
