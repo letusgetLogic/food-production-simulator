@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.HMI::Game.HMI.MachineDetailBinder
   _detailPanel: {fileID: 8769215241489171056}
   _machineInstance: {fileID: 9162206479014454460}
+  _refreshIntervalSeconds: 0.2
 --- !u!1 &5921648757338138765
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +758,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3245276404412894077, guid: 28cfb15a7c9055747910e26ef72613f9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f10f391df92b43f4ca37bfc9007ac2dd, type: 2}
     - target: {fileID: 5729052426202779456, guid: 28cfb15a7c9055747910e26ef72613f9, type: 3}
       propertyPath: m_Name
       value: drum
