@@ -11,6 +11,7 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/[Dd]evDocs/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
