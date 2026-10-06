@@ -72,6 +72,7 @@ Ziele des Hobby-Projektes:
 - Localization Google Sheet
 - Auseinandersetzung zwischen Code-Logik (Daten-Transfer) und Realität-Logik
 - Scriptable-Object-Channel-Singelton-Pattern
+- Lighting Fehler in WebGL - falsche Lichtberechnung auf großen Boden (zu dunkel) von Unity - Boden in kleinen Teilen 5x5m geteilt
 
 ------------------------------------------------------------------------
 
