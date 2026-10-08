@@ -22,7 +22,7 @@ namespace Game.EditorTools
     ///
     /// Commands:
     ///   refresh                          AssetDatabase.Refresh (recompiles changed scripts)
-    ///   menu Tools/Food Production/...   execute a menu item (setup dialogs are logged instead of shown)
+    ///   menu Tools/Food Production/...   execute a menu item
     ///   save                             save open scenes
     ///   play | stop                      enter / exit Play Mode
     ///   wait 5                           wait seconds (real time)
@@ -45,9 +45,6 @@ namespace Game.EditorTools
         private const double PollInterval = 0.25;
 
         private static double _nextPoll;
-
-        /// <summary>True while a command runs - setup dialogs are logged instead of shown.</summary>
-        public static bool IsSilent { get; private set; }
 
         private static string Folder => Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Automation");
         private static string CommandFile => Path.Combine(Folder, "commands.txt");
@@ -153,7 +150,6 @@ namespace Game.EditorTools
             List<string> args = Tokenize(command);
             string verb = args[0].ToLowerInvariant();
 
-            IsSilent = true;
             try
             {
                 switch (verb)
@@ -255,10 +251,6 @@ namespace Game.EditorTools
             catch (Exception exception)
             {
                 Write("COMMAND FAILED: " + exception);
-            }
-            finally
-            {
-                IsSilent = false;
             }
         }
 

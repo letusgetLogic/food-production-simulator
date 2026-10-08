@@ -161,14 +161,6 @@ namespace Game.Production
 
         private void OnEnable()
         {
-            foreach (Content<PortionerInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged += content.SetInfo;
-                }
-            }
-
             if (_potSensor != null)
             {
                 _potSensor.OnValueChanged += HandlePotPresenceChanged;
@@ -189,14 +181,6 @@ namespace Game.Production
 
         private void OnDisable()
         {
-            foreach (Content<PortionerInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged -= content.SetInfo;
-                }
-            }
-
             if (_potSensor != null)
             {
                 _potSensor.OnValueChanged -= HandlePotPresenceChanged;

@@ -14,15 +14,10 @@ namespace Game.HMI
     /// </summary>
     public class MachineDetailPanel : HmiPanelBase
     {
-        [Header("Navigation")]
-        [SerializeField] private GameObject _navButton;
-        [SerializeField] private TextMeshProUGUI _navButtonText;
-
         [Header("Scroll View")]
         [SerializeField] private RectTransform _scrollViewRect;
 
         [Header("Header")]
-        [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private MachineStateRowView _stateRow;
 
         [Header("Readouts")]
@@ -35,8 +30,7 @@ namespace Game.HMI
         [SerializeField] private TextMeshProUGUI _content;
 
         [Header("Setpoints / actual values")]
-        [Tooltip("Optional. Built at runtime from the bound machine's IMachineParameterSource. " +
-                 "Created by Tools / Food Production / Setup Machine Terminals.")]
+        [Tooltip("Optional. Built at runtime from the bound machine's IMachineParameterSource.")]
         [SerializeField] private MachineParameterListView _parameterList;
 
         [Header("Operator commands")]
@@ -70,27 +64,8 @@ namespace Game.HMI
             _resetToIdleButton?.onClick.AddListener(() => ResetToIdleRequested?.Invoke());
         }
 
-        private void OnEnable()
-        {
-            if (_navButton != null)
-                _navButton.SetActive(true);
-        }
-
-        private void OnDisable()
-        {
-            if (_navButton != null)
-                _navButton.SetActive(false);
-        }
-
         public void SetMachineName(string machineName)
         {
-            if (_navButtonText != null)
-                _navButtonText.text = machineName;
-
-            if (_machineNameText != null)
-            {
-                _machineNameText.text = machineName;
-            }
             if (_stateRow != null)
             {
                 _stateRow.SetMachineName(machineName);
@@ -107,9 +82,7 @@ namespace Game.HMI
         }
 
         /// <summary>
-        /// Toggles whether this instance may operate the machine (Terminal) or is
-        /// read-only (Tablet). The command row is hidden entirely rather than just
-        /// disabled, so a read-only viewer never sees buttons that look pressable.
+        /// Show only by interacting with machine's terminal.
         /// </summary>
         public void SetControlEnabled(bool controlEnabled)
         {

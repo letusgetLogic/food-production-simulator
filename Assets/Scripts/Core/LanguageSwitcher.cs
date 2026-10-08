@@ -4,10 +4,12 @@ using UnityEngine.Localization.Settings;
 
 namespace Game.Core
 {
+    /// <summary>
+    /// Sets the language (main menu, e.g. a button per locale). No notification needed: LocalizedStrings and
+    /// LocText follow LocalizationSettings.SelectedLocaleChanged themselves.
+    /// </summary>
     public class LanguageSwitcher : MonoBehaviour
     {
-        [SerializeField] private SO_LanguageSwitcherChannel _channel;
-
         public void SetLanguage(string code) => StartCoroutine(SetLocale(code));
 
         private IEnumerator SetLocale(string code)
@@ -17,7 +19,6 @@ namespace Game.Core
             if (locale != null)
             {
                 LocalizationSettings.SelectedLocale = locale;
-                _channel.NotifyLanguageChanged();
             }
         }
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using Game.Core;
 using Game.Persistence;
 using Game.Production;
@@ -7,20 +6,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Game.HMI
 {
     /// <summary>
-    /// Pause menu (Woche 3, Plattform-UX): Escape while no other UI is open pauses the game
-    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Language / Controls / Tutorial / Quit.
-    /// Escape again (or Resume) closes it - Escape is routed through <see cref="SO_UiFocusChannel.CloseRequested"/>
-    /// like every other UI, so an open HMI is closed first and only the next Escape opens the menu.
+    /// Pause menu (Woche 3, Plattform-UX): P while no other UI is open pauses the game
+    /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Controls / Tutorial / Main menu / Quit.
+    /// Save and load use the slot chosen in the main menu (<see cref="SaveLoadController.CurrentSlot"/>).
+    /// P again, Q (or Escape) or Resume closes it - Q/Escape are routed through <see cref="SO_UiFocusChannel.CloseRequested"/>
+    /// like every other UI. Not Escape to open: in the browser Escape leaves fullscreen.
     ///
-    /// The language button cycles through the available locales and notifies <see cref="_languageChannel"/>
-    /// (machine names in the HMI follow it).
+    /// The language is chosen in the main menu only (no switch while playing).
     ///
     /// Builds its own overlay canvas from code (no prefab). Needs an EventSystem in the scene (the HMI has one).
     /// </summary>
@@ -29,13 +27,15 @@ namespace Game.HMI
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private SO_HmiTheme _theme;
         [SerializeField] private SaveLoadController _saveLoad;
-        [SerializeField] private SO_LanguageSwitcherChannel _languageChannel;
 
         [Tooltip("Font is copied from this text. Empty = TMP default font.")]
         [SerializeField] private TextMeshProUGUI _styleSource;
 
         [SerializeField] private int _sortingOrder = 500;
         [SerializeField] private float _fontSize = 28f;
+
+        [Tooltip("Scene opened by the main menu button (must be in the build settings).")]
+        [SerializeField] private string _mainMenuScene = "MainMenu";
 
         private Canvas _canvas;
         private GameObject _helpRoot;
@@ -46,13 +46,12 @@ namespace Game.HMI
         private TextMeshProUGUI _saveLabel;
         private TextMeshProUGUI _loadLabel;
         private TextMeshProUGUI _helpLabel;
-        private TextMeshProUGUI _languageLabel;
         private TextMeshProUGUI _tutorialLabel;
+        private TextMeshProUGUI _mainMenuLabel;
         private TextMeshProUGUI _quitLabel;
         private Button _loadButton;
 
         private bool _isOpen;
-        private bool _isSwitchingLanguage;
         private bool _wasUiFocusedLastFrame;
         private float _previousTimeScale = 1f;
 
@@ -121,7 +120,16 @@ namespace Game.HMI
         private void Update()
         {
             Keyboard keyboard = Keyboard.current;
-            if (!_isOpen && keyboard != null && keyboard.escapeKey.wasPressedThisFrame && !_wasUiFocusedLastFrame)
+            if (keyboard == null || !keyboard.pKey.wasPressedThisFrame)
+            {
+                return;
+            }
+
+            if (_isOpen)
+            {
+                Close();
+            }
+            else if (!_wasUiFocusedLastFrame)
             {
                 Open();
             }
@@ -152,7 +160,7 @@ namespace Game.HMI
                 _uiFocusChannel.PushFocus();
             }
 
-            // Escape of this frame must not count as "UI was focused" for the next frame's check.
+            // The key press of this frame must not count as "UI was focused" for the next frame's check.
             _wasUiFocusedLastFrame = true;
         }
 
@@ -205,49 +213,20 @@ namespace Game.HMI
             }
         }
 
-        private void NextLanguage()
+        /// <summary>Back to the main menu. Unsaved progress is lost (the menu shows the saved slots).</summary>
+        private void OpenMainMenu()
         {
-            if (!_isSwitchingLanguage)
+            if (!Application.CanStreamedLevelBeLoaded(_mainMenuScene))
             {
-                StartCoroutine(SwitchToNextLocale());
-            }
-        }
-
-        private IEnumerator SwitchToNextLocale()
-        {
-            _isSwitchingLanguage = true;
-            yield return LocalizationSettings.InitializationOperation;
-
-            var locales = LocalizationSettings.AvailableLocales.Locales;
-            if (locales.Count > 1)
-            {
-                int index = locales.IndexOf(LocalizationSettings.SelectedLocale);
-                LocalizationSettings.SelectedLocale = locales[(index + 1) % locales.Count];
-                if (_languageChannel != null)
-                {
-                    _languageChannel.NotifyLanguageChanged();
-                }
+                _status.text = $"Scene \"{_mainMenuScene}\" is not in the build settings";
+                return;
             }
 
-            _isSwitchingLanguage = false;
-            RefreshTexts();
+            // Time and UI focus are restored in OnDestroy.
+            SceneManager.LoadScene(_mainMenuScene);
         }
 
-        /// <summary>Native name of the selected language, e.g. "Deutsch", "Français".</summary>
-        private static string CurrentLanguageName()
-        {
-            Locale locale = LocalizationSettings.HasSettings ? LocalizationSettings.SelectedLocale : null;
-            if (locale == null)
-            {
-                return "-";
-            }
-
-            System.Globalization.CultureInfo culture = locale.Identifier.CultureInfo;
-            string name = culture != null ? culture.NativeName : locale.LocaleName;
-            return string.IsNullOrEmpty(name) ? locale.Identifier.Code : char.ToUpper(name[0]) + name.Substring(1);
-        }
-
-        // Texts arrive asynchronously after a language switch.
+        // The string table loads asynchronously - texts of an already open menu follow.
         private void HandleTableChanged()
         {
             if (_isOpen)
@@ -318,9 +297,9 @@ namespace Game.HMI
             AddButton(panel.transform, "Resume", Close, out _resumeLabel);
             AddButton(panel.transform, "Save", SaveGame, out _saveLabel);
             _loadButton = AddButton(panel.transform, "Load", LoadGame, out _loadLabel);
-            AddButton(panel.transform, "Language", NextLanguage, out _languageLabel);
             AddButton(panel.transform, "Controls", ToggleHelp, out _helpLabel);
             AddButton(panel.transform, "Tutorial", RestartTutorial, out _tutorialLabel);
+            AddButton(panel.transform, "MainMenu", OpenMainMenu, out _mainMenuLabel);
 
             _helpRoot = HmiUiFactory.CreateRect("Help", panel.transform).gameObject;
             HmiUiFactory.AddVerticalLayout(_helpRoot, 0f, 4);
@@ -354,9 +333,9 @@ namespace Game.HMI
             _resumeLabel.text = LocText.Get("hmi.resume", "Resume");
             _saveLabel.text = LocText.Get("hmi.save_game", "Save game");
             _loadLabel.text = LocText.Get("hmi.load_game", "Load game");
-            _languageLabel.text = $"{LocText.Get("hmi.language", "Language")}: {CurrentLanguageName()}";
             _tutorialLabel.text = LocText.Get("hmi.tutorial", "Restart tutorial");
             _helpLabel.text = LocText.Get("hmi.controls", "Controls");
+            _mainMenuLabel.text = LocText.Get("menu.main_menu", "Main menu");
             if (_quitLabel != null)
             {
                 _quitLabel.text = LocText.Get("hmi.quit", "Quit");
@@ -371,7 +350,8 @@ namespace Game.HMI
                 "E - interact / pick up\n" +
                 "Q - put down\n" +
                 "Left click - buttons on screens and terminals\n" +
-                "Esc - close screen / pause\n" +
+                "Q - close screen\n" +
+                "P - pause menu\n" +
                 "{0} - quick save, {1} - quick load\n" +
                 "{2} - debug panel (development)"),
                 ShortcutHints.QuickSave, ShortcutHints.QuickLoad, ShortcutHints.DebugPanel);

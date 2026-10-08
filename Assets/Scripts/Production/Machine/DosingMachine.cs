@@ -140,14 +140,6 @@ namespace Game.Production
 
         private void OnEnable()
         {
-            foreach (Content<DosingInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged += content.SetInfo;
-                }
-            }
-
             if (_sauceZone != null)
             {
                 _sauceZone.ProductEntered += HandleSauceZoneEntered;
@@ -166,14 +158,6 @@ namespace Game.Production
 
         private void OnDisable()
         {
-            foreach (Content<DosingInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged -= content.SetInfo;
-                }
-            }
-
             if (_sauceZone != null)
             {
                 _sauceZone.ProductEntered -= HandleSauceZoneEntered;

@@ -21,8 +21,9 @@ namespace Game.HMI
     /// </summary>
     public class StatisticsPanel : HmiPanelBase
     {
+        [SerializeField] private HmiScreenController _screenController;
         [SerializeField] private SO_HmiTheme _theme;
-        [SerializeField] private SO_HmiInteractChannel _interactChannel;
+        [SerializeField] private SO_TerminalInteractChannel _interactChannel;
         [SerializeField] private QualityInspector _qualityInspector;
         [SerializeField] private FaultMonitor _faultMonitor;
 
@@ -150,10 +151,7 @@ namespace Game.HMI
             HmiUiFactory.SetWidth(back.gameObject, 140f);
             back.onClick.AddListener(() =>
             {
-                if (_interactChannel != null)
-                {
-                    _interactChannel.Request(_backPanelId, null);
-                }
+                _screenController.ShowPanel(_backPanelId);
             });
 
             // KPI tiles

@@ -35,6 +35,9 @@ namespace Game.Production
         /// <summary>Amount of olive oil required per dough batch, in milliliters.</summary>
         public float OliveOilMilliliters;
 
+        /// <summary>Mixing time per dough batch, in seconds.</summary>
+        public float MixingDurationSeconds;
+
         [Header("Portioning")]
 
         /// <summary>Target dough weight for a single portioned pizza base, in grams.</summary>
@@ -42,6 +45,22 @@ namespace Game.Production
 
         /// <summary>Acceptable deviation from <see cref="TargetPortionWeightGrams"/> before a quality fault is raised, in grams.</summary>
         public float PortionWeightToleranceGrams;
+
+        [Header("Forming (press)")]
+
+        /// <summary>Diameter of the pressed pizza base, in centimeters.</summary>
+        public float BaseDiameterCentimeters;
+
+        /// <summary>Thickness of the pressed pizza base, in millimeters.</summary>
+        public float BaseThicknessMillimeters;
+
+        [Header("Dosing")]
+
+        /// <summary>Sauce per pizza, in grams.</summary>
+        public float SauceGrams;
+
+        /// <summary>Topping per pizza, in grams.</summary>
+        public float ToppingGrams;
 
         [Header("Baking")]
 
@@ -56,6 +75,23 @@ namespace Game.Production
 
         /// <summary>Acceptable deviation from <see cref="TargetBakeTemperatureCelsius"/> before a quality fault is raised, in degrees Celsius.</summary>
         public float BakeTemperatureToleranceCelsius;
+
+        [Header("Cooling, freezing, packaging")]
+
+        /// <summary>Target product temperature in the cooling tunnel, in degrees Celsius.</summary>
+        public float CoolingTemperatureCelsius;
+
+        /// <summary>Dwell time in the cooling tunnel, in seconds.</summary>
+        public float CoolingDurationSeconds;
+
+        /// <summary>Target temperature in the shock freezer, in degrees Celsius.</summary>
+        public float FreezingTemperatureCelsius;
+
+        /// <summary>Dwell time in the shock freezer, in seconds.</summary>
+        public float FreezingDurationSeconds;
+
+        /// <summary>Dwell time in the packaging station, in seconds.</summary>
+        public float PackagingDurationSeconds;
 
         [Header("Final Product Quality")]
 

@@ -1327,6 +1327,78 @@ MonoBehaviour:
     m_Key: warning.wrong_product
     m_Metadata:
       m_Items: []
+  - m_Id: 6059829190144000
+    m_Key: recipe.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058560
+    m_Key: recipe.flour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058561
+    m_Key: recipe.water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058562
+    m_Key: recipe.yeast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058563
+    m_Key: recipe.salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058564
+    m_Key: recipe.olive_oil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184279601152
+    m_Key: menu.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544192
+    m_Key: menu.slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544193
+    m_Key: menu.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544194
+    m_Key: menu.unreadable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544195
+    m_Key: menu.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544196
+    m_Key: menu.new_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544197
+    m_Key: menu.delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544198
+    m_Key: menu.confirm_overwrite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544199
+    m_Key: menu.confirm_delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544200
+    m_Key: menu.main_menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144100
+    m_Key: hmi.line_overview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144101
+    m_Key: hmi.statistics
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

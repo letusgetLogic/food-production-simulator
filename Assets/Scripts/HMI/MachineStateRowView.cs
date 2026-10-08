@@ -1,6 +1,7 @@
 using Game.Production;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.HMI
@@ -14,7 +15,6 @@ namespace Game.HMI
     public class MachineStateRowView : MonoBehaviour
     {
         [SerializeField] private SO_HmiTheme _theme;
-        [SerializeField] private SO_HmiInteractChannel _interactChannel;
         [SerializeField] private TextMeshProUGUI _machineNameText;
         [SerializeField] private TextMeshProUGUI _stateText;
         [SerializeField] private Image _stateLamp;
@@ -52,9 +52,9 @@ namespace Game.HMI
             }
         }
 
-        public void SetMachine(string machineId)
+        public void SetButton(UnityAction action)
         {
-            _button.onClick.AddListener(() => _interactChannel.Request(machineId));
+            _button.onClick.AddListener(action);
         }
 
         public void SetState(MachineState state)

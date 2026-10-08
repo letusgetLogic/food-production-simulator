@@ -1,6 +1,7 @@
 using System;
 using Game.Core;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Game.Platform
@@ -58,8 +59,9 @@ namespace Game.Platform
                 RefreshTarget();
             }
 
-            // Standard desktop trigger: left mouse button click.
-            if (Mouse.current.leftButton.wasPressedThisFrame)
+            // Standard desktop trigger: left mouse button click. A click on UI (HMI screen, pause menu)
+            // belongs to the UI - otherwise the ray hits the terminal behind it and reopens the overview.
+            if (Mouse.current.leftButton.wasPressedThisFrame && !IsPointerOverUi())
             {
                 TryInteract();
             }
@@ -87,6 +89,13 @@ namespace Game.Platform
 
             SetTarget(newTarget);
         }
+
+        // Only while the cursor is free (UI focus): with a locked cursor the pointer sits on the
+        // crosshair, which may rest on a world-space terminal canvas the player wants to open.
+        private static bool IsPointerOverUi() =>
+            Cursor.lockState != CursorLockMode.Locked
+            && EventSystem.current != null
+            && EventSystem.current.IsPointerOverGameObject();
 
         public bool TryInteract()
         {

@@ -54,7 +54,10 @@ namespace Game.Platform
             _interactAction = _map.AddAction("Interact", InputActionType.Button, "<Keyboard>/e");
             _interactAction.performed += OnInteractPerformed;
 
-            _escapeAction = _map.AddAction("Escape", InputActionType.Button, "<Keyboard>/escape");
+            // Closes the focused UI. Q is the main key: in the browser Escape leaves fullscreen instead.
+            // Q only drops held items while no UI is focused (HoldItem is disabled during UI focus).
+            _escapeAction = _map.AddAction("Escape", InputActionType.Button, "<Keyboard>/q");
+            _escapeAction.AddBinding("<Keyboard>/escape");
             _escapeAction.performed += OnEscapePerformed;
 
             _releaseHoldAction = _map.AddAction("Release", InputActionType.Button, "<Keyboard>/q");

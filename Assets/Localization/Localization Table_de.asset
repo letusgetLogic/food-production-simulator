@@ -18,6 +18,14 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
+  - m_Id: 6059829190144100
+    m_Localized: "Linien\xFCbersicht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144101
+    m_Localized: STATISTIK
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459571449856
     m_Localized: Fehler quittieren
     m_Metadata:
@@ -485,9 +493,9 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "WASD / Pfeiltasten \u2013 bewegen\nMaus \u2013 umsehen\nShift \u2013
       sprinten\nE \u2013 benutzen / aufheben\nQ \u2013 ablegen\nLinksklick \u2013
-      Kn\xF6pfe an Bildschirmen und Terminals\nEsc \u2013 Bildschirm schlie\xDFen
-      / Pause\n{0} \u2013 Schnellspeichern, {1} \u2013 Schnellladen\n{2} \u2013 Debug-Panel
-      (Entwicklung)"
+      Kn\xF6pfe an Bildschirmen und Terminals\nQ \u2013 Bildschirm schlie\xDFen\nP
+      \u2013 Pause\n{0} \u2013 Schnellspeichern, {1} \u2013 Schnellladen\n{2} \u2013
+      Debug-Panel (Entwicklung)"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -1236,8 +1244,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703357
-    m_Localized: "Ziele auf das Rezept-Terminal und dr\xFCcke {0}. Dort stehen die
-      Margherita-Werte f\xFCr jede Maschine. Mit Esc schlie\xDFen."
+    m_Localized: "Ziele auf das Rezept-Terminal und drücke {0} – oder wechsle an einem Terminal zu „Rezept“. Dort stehen die Margherita-Werte für jede Maschine. Mit Q schließen."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703358
@@ -1334,7 +1341,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703379
     m_Localized: "St\xF6rungen kommen vor \u2013 das HMI zeigt Ursache und Abhilfe.
-      Esc \xF6ffnet das Pausemen\xFC mit Steuerung, Speichern und Laden."
+      P \xF6ffnet das Pausemen\xFC mit Steuerung, Speichern und Laden."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1351,6 +1358,70 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5456202205442048
     m_Localized: Dosierstation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144000
+    m_Localized: Diese Werte am Terminal der jeweiligen Maschine einstellen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058560
+    m_Localized: Mehl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058561
+    m_Localized: Wasser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058562
+    m_Localized: Hefe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058563
+    m_Localized: Salz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058564
+    m_Localized: "Oliven\xF6l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184279601152
+    m_Localized: Food Production Simulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544192
+    m_Localized: Spielstand {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544193
+    m_Localized: Leer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544194
+    m_Localized: Spielstand nicht lesbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544195
+    m_Localized: Weiter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544196
+    m_Localized: Neues Spiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544197
+    m_Localized: "L\xF6schen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544198
+    m_Localized: "Spielstand {0} \xFCberschreiben? Er wird jetzt gel\xF6scht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544199
+    m_Localized: "Spielstand {0} l\xF6schen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544200
+    m_Localized: "Hauptmen\xFC"
     m_Metadata:
       m_Items: []
   references:

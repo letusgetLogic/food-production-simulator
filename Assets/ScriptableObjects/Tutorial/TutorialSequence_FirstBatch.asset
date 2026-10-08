@@ -20,6 +20,13 @@ MonoBehaviour:
       packed pizza. Walk with W A S D and look around with the mouse.
     Condition: 1
     Amount: 2
+  - TitleKey: tutorial.recipe.title
+    TitleFallback: Read the recipe
+    TextKey: tutorial.recipe.text
+    TextFallback: 'Aim at the recipe terminal and press {0} - or switch to "Recipe" on any
+      terminal. It lists the Margherita values every machine needs. Close it with Q.'
+    Condition: 12
+    Amount: 0
   - TitleKey: tutorial.mixer_start.title
     TitleFallback: Start the dough mixer
     TextKey: tutorial.mixer_start.text
@@ -92,7 +99,7 @@ MonoBehaviour:
   - TitleKey: tutorial.done.title
     TitleFallback: First batch done!
     TextKey: tutorial.done.text
-    TextFallback: Faults will happen - the HMI shows the cause and the remedy. Esc
+    TextFallback: Faults will happen - the HMI shows the cause and the remedy. P
       opens the pause menu with controls, save and load.
     Condition: 0
     Amount: 12

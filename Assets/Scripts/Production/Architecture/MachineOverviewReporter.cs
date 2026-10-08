@@ -1,7 +1,8 @@
-using Game.Core;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 namespace Game.Production
 {
@@ -12,14 +13,12 @@ namespace Game.Production
     public class MachineOverviewReporter : MonoBehaviour
     {
         [SerializeField] private SO_MachineOverviewChannel _channel;
-        [SerializeField] private SO_LanguageSwitcherChannel _languageChannel;
 
         private readonly Dictionary<string, int> _machineTypes = new();
         private readonly Dictionary<string, MachineBase> _machinesById = new();
         public MachineBase GetMachineById(string machineId) => _machinesById.TryGetValue(machineId, out var machine) ? machine : null;
         private readonly Dictionary<string, Action<MachineState, MachineState>> _handlers = new();
 
-        private readonly Dictionary<string, Action> _nameHandlers = new();
         private readonly Dictionary<string, Action<bool, string>> _warningHandlers = new();
 
         private void Awake()
@@ -31,30 +30,16 @@ namespace Game.Production
                 if (machine.gameObject.activeInHierarchy == false)
                     continue;
 
-                int index = 0;
-                if (_machineTypes.ContainsKey(machine.NameKey))
-                {
-                    _machineTypes[machine.NameKey]++;
-                    index = _machineTypes[machine.NameKey];
-                }
-                else
-                {
-                    _machineTypes.Add(machine.NameKey, 1);
-                    index = _machineTypes[machine.NameKey];
-                }
-                machine.SetNumber(index);
+                _machineTypes.TryGetValue(machine.NameKey, out int count);
+                _machineTypes[machine.NameKey] = count + 1;
+                machine.SetNumber(count + 1);
                 _machinesById.Add(machine.Id, machine);
 
                 // Capture by value for the closure - not the loop variable.
                 string machineId = machine.Id;
-                string DisplayName() => $"{machine.Name} {index}";
 
                 Action<MachineState, MachineState> handler = (_, next) =>
-                    _channel.ReportState(machineId, DisplayName(), next);
-
-                // Language change handler to update the display name
-                Action nameHandler = () =>
-                    _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
+                    _channel.ReportState(machineId, machine.DisplayName, next);
 
                 machine.StateChanged += handler;
                 _handlers.Add(machineId, handler);
@@ -64,13 +49,28 @@ namespace Game.Production
                 machine.WarningChanged += warningHandler;
                 _warningHandlers.Add(machineId, warningHandler);
 
-                _languageChannel.LanguageChanged += nameHandler;
-                _nameHandlers.Add(machineId, nameHandler);
-
                 // Belts only appear in the overview while they are in Fault.
                 _channel.SetHiddenUnlessFault(machineId, machine is ConveyorBelt);
 
-                _channel.ReportState(machineId, DisplayName(), machine.CurrentState);
+                _channel.ReportState(machineId, machine.DisplayName, machine.CurrentState);
+            }
+        }
+
+        /// <summary>
+        /// Awake may run before the string tables are loaded (scene started directly in the editor - names are
+        /// the GameObject names then). The language only changes in the main menu, so one report after the
+        /// localization initialisation is enough; coming from the main menu it is already done.
+        /// </summary>
+        private IEnumerator Start()
+        {
+            yield return LocalizationSettings.InitializationOperation;
+
+            foreach (KeyValuePair<string, MachineBase> entry in _machinesById)
+            {
+                if (entry.Value != null)
+                {
+                    _channel.ReportState(entry.Key, entry.Value.DisplayName, entry.Value.CurrentState);
+                }
             }
         }
 
@@ -87,12 +87,6 @@ namespace Game.Production
                 {
                     entry.Value.WarningChanged -= warningHandler;
                 }
-            }
-
-            foreach (KeyValuePair<string, Action> entry in _nameHandlers)
-            {
-                if (_languageChannel != null)
-                    _languageChannel.LanguageChanged -= entry.Value;
             }
         }
 

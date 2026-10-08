@@ -129,14 +129,6 @@ namespace Game.Production
 
         private void OnEnable()
         {
-            foreach (Content<ProcessInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged += content.SetInfo;
-                }
-            }
-
             if (_processZone != null)
             {
                 _processZone.ProductEntered += HandleProductEntered;
@@ -151,14 +143,6 @@ namespace Game.Production
 
         private void OnDisable()
         {
-            foreach (Content<ProcessInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged -= content.SetInfo;
-                }
-            }
-
             if (_processZone != null)
             {
                 _processZone.ProductEntered -= HandleProductEntered;

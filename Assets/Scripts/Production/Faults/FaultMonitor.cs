@@ -184,8 +184,7 @@ namespace Game.Production
         }
 
         /// <summary>Localized display name with number, e.g. "Conveyor 3".</summary>
-        public static string DisplayName(MachineBase machine) => machine == null ? "?"
-            : machine.Number > 0 ? $"{machine.Name} {machine.Number}" : machine.Name;
+        public static string DisplayName(MachineBase machine) => machine == null ? "?" : machine.DisplayName;
 
         /// <summary>Current display name of a machine id; unknown ids (machine removed) are shown as they are.</summary>
         public string DisplayNameOf(string machineId) =>

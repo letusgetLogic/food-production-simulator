@@ -5,8 +5,7 @@ namespace Game.Production
     /// <summary>
     /// Purely visual, no logic: scrolls the stripe texture of a flat belt-surface quad along the travel
     /// direction, so a running belt looks like it moves. The quad lies just above the belt surface collider,
-    /// its texture V axis points in travel direction (set up by
-    /// <c>Tools / Food Production / Setup Moving Belt Visuals</c>).
+    /// its texture V axis points in travel direction.
     ///
     /// Reads only <see cref="ConveyorBelt.IsMoving"/> (or one slot zone of a buffer belt) and the current belt
     /// speed, so the stripes follow start/stop ramps, speed changes, hold-back and faults. The quad carries no

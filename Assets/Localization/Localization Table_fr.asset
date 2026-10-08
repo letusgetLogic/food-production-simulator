@@ -18,6 +18,14 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
+  - m_Id: 6059829190144100
+    m_Localized: Vue d'ensemble de la ligne
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144101
+    m_Localized: STATISTIQUES
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459571449856
     m_Localized: "Reconna\xEEtre sa faute"
     m_Metadata:
@@ -485,8 +493,8 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "ZQSD / fl\xE8ches \u2013 se d\xE9placer\nSouris \u2013 regarder\nMaj
       \u2013 courir\nE \u2013 utiliser / ramasser\nA \u2013 poser\nClic gauche \u2013
-      boutons des \xE9crans et terminaux\n\xC9chap \u2013 fermer l\u2019\xE9cran
-      / pause\n{0} \u2013 sauvegarde rapide, {1} \u2013 chargement rapide\n{2} \u2013
+      boutons des \xE9crans et terminaux\nA \u2013 fermer l\u2019\xE9cran\nP \u2013
+      pause\n{0} \u2013 sauvegarde rapide, {1} \u2013 chargement rapide\n{2} \u2013
       panneau de d\xE9bogage (d\xE9veloppement)"
     m_Metadata:
       m_Items: []
@@ -1237,8 +1245,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703357
-    m_Localized: "Vise le terminal de recette et appuie sur {0}. Il indique les valeurs
-      Margherita pour chaque machine. Ferme-le avec \xC9chap."
+    m_Localized: "Vise le terminal de recette et appuie sur {0} – ou passe à « Recette » sur un terminal. Il indique les valeurs Margherita pour chaque machine. Ferme-le avec A."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703358
@@ -1336,7 +1343,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703379
     m_Localized: "Des pannes arriveront \u2013 l'IHM affiche la cause et la solution.
-      \xC9chap ouvre le menu pause avec les commandes, la sauvegarde et le chargement."
+      P ouvre le menu pause avec les commandes, la sauvegarde et le chargement."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1353,6 +1360,70 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5456202205442048
     m_Localized: Station de dosage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144000
+    m_Localized: "R\xE8gle ces valeurs sur le terminal de chaque machine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058560
+    m_Localized: Farine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058561
+    m_Localized: Eau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058562
+    m_Localized: Levure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058563
+    m_Localized: Sel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058564
+    m_Localized: Huile d'olive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184279601152
+    m_Localized: Food Production Simulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544192
+    m_Localized: Sauvegarde {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544193
+    m_Localized: Vide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544194
+    m_Localized: Sauvegarde illisible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544195
+    m_Localized: Continuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544196
+    m_Localized: Nouvelle partie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544197
+    m_Localized: Supprimer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544198
+    m_Localized: "\xC9craser la sauvegarde {0} ? Elle sera supprim\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544199
+    m_Localized: Supprimer la sauvegarde {0} ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544200
+    m_Localized: Menu principal
     m_Metadata:
       m_Items: []
   references:

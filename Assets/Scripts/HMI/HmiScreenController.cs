@@ -1,7 +1,8 @@
-using System.Collections.Generic;
 using Game.Core;
-using UnityEngine;
 using Game.Production;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.HMI
 {
@@ -14,16 +15,20 @@ namespace Game.HMI
     public class HmiScreenController : MonoBehaviour
     {
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
-        [SerializeField] private SO_HmiInteractChannel _interactChannel;
+        [SerializeField] private SO_TerminalInteractChannel _interactChannel;
         [SerializeField] private MachineOverviewReporter _machineOverviewReporter;
         [SerializeField] private MachineDetailBinder _machineDetailBinder;
         [SerializeField] private GameObject _screenRoot;
+        [SerializeField] private NavMachineButton _navFirstMachineButton;
+        [SerializeField] private NavMachineButton _navSecondaryMachineButton;
         [SerializeField] private List<HmiPanelBase> _panels = new List<HmiPanelBase>();
         [SerializeField] private string _defaultPanelId = "overview";
         [SerializeField] private bool _openOnStart;
 
+        private const string MachinePanelId = "machine";
+
         public bool IsOpen { get; private set; }
-        public string ActivePanelId { get; private set; }
+        public string TerminalInteractId { get; private set; }
         private HmiPanelBase _machinePanel;
 
         private void Awake()
@@ -33,7 +38,7 @@ namespace Game.HMI
 
         private void Start()
         {
-            _machinePanel = _panels.Find(x => x.PanelId == "machine");
+            _machinePanel = _panels.Find(x => x.PanelId == MachinePanelId);
 
             if (_openOnStart)
             {
@@ -49,7 +54,6 @@ namespace Game.HMI
             if (_interactChannel)
             {
                 _interactChannel.DetailRequested += Open;
-                _interactChannel.DetailRequestedFromMachineRow += ShowMachinePanel;
             }
         }
 
@@ -66,14 +70,29 @@ namespace Game.HMI
             if (_interactChannel)
             {
                 _interactChannel.DetailRequested -= Open;
-                _interactChannel.DetailRequestedFromMachineRow -= ShowMachinePanel;
             }
         }
 
         public void Open() => Open(_defaultPanelId);
-
+       
         public void Open(string panelId, MachineBase machine = null)
         {
+            TerminalInteractId = panelId;
+
+            if (machine != null)
+            {
+                _navFirstMachineButton.Button.onClick.AddListener(() =>
+                {
+                    ShowPanel(MachinePanelId, machine);
+                    _navSecondaryMachineButton.gameObject.SetActive(false);
+                });
+            }
+        
+            _navFirstMachineButton.SetLabel(machine != null ? machine.DisplayName : "Machine");
+            _navFirstMachineButton.gameObject.SetActive(panelId == MachinePanelId);
+
+            _navSecondaryMachineButton.gameObject.SetActive(false);
+
             ShowPanel(panelId, machine);
 
             if (IsOpen)
@@ -109,58 +128,58 @@ namespace Game.HMI
                 Open();
             }
         }
-
-        public void ShowPanel(string panelId, MachineBase machine = null)
-        {
-            ActivePanelId = panelId;
-
-            for (int i = 0; i < _panels.Count; i++)
-            {
-                HmiPanelBase panel = _panels[i];
-                if (panel != null)
-                {
-                    panel.SetVisible(panel.PanelId == panelId);
-
-                    // Hide navButton of machine
-                    if (panelId != "machine")
-                    {
-                        if (_machinePanel)
-                            _machinePanel.gameObject.SetActive(false);
-                    }
-                    else
-                    {
-                        if (_machinePanel)
-                            _machinePanel.gameObject.SetActive(true);
-                        if (_machineDetailBinder)
-                            _machineDetailBinder.Bind(machine);
-
-                    }
-                }
-            }
-        }
-
+     
+        /// <summary>Row click in the overview: shows the machine panel bound to that machine.</summary>
         public void ShowMachinePanel(string machineId)
         {
-            ActivePanelId = "machine";
+            MachineBase machine = _machineOverviewReporter != null ? _machineOverviewReporter.GetMachineById(machineId) : null;
+   
+            if (TerminalInteractId == MachinePanelId)
+            {
+                _navSecondaryMachineButton.SetLabel(machine.DisplayName);
+                _navSecondaryMachineButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                _navFirstMachineButton.SetLabel(machine.DisplayName);
+                _navFirstMachineButton.gameObject.SetActive(true);
+            }
+            ShowPanel(MachinePanelId, machine);
+        }
+
+        /// <summary>
+        /// Nav-rail buttons (UnityEvent with a string argument - needs exactly this one-parameter signature,
+        /// a method with an optional second parameter is not found by the persistent call).
+        /// </summary>
+        public void ShowPanel(string panelId) => ShowPanel(panelId, null);
+
+        public void ShowPanel(string panelId, MachineBase machine)
+        {
+            if (TerminalInteractId != MachinePanelId)
+            {
+                _navFirstMachineButton.gameObject.SetActive(false);
+                _navSecondaryMachineButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (panelId != MachinePanelId)
+                {
+                    _navSecondaryMachineButton.gameObject.SetActive(false);
+                }
+            }
+            _machineDetailBinder.Bind(machine);
 
             for (int i = 0; i < _panels.Count; i++)
             {
                 HmiPanelBase panel = _panels[i];
                 if (panel != null)
                 {
-                    panel.SetVisible(panel.PanelId == machineId);
-
-                    if (_machinePanel)
-                        _machinePanel.gameObject.SetActive(true);
-
-                    MachineBase machine = _machineOverviewReporter.GetMachineById(machineId);
-                    if (_machineDetailBinder)
-                        _machineDetailBinder.Bind(machine);
+                    bool visible = panel.PanelId == panelId;
+                    panel.gameObject.SetActive(true);
+                    panel.SetVisible(visible);
                 }
-               
             }
         }
-
 
         public T GetPanel<T>() where T : HmiPanelBase
         {

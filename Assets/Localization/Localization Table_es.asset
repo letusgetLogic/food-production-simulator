@@ -18,6 +18,14 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
+  - m_Id: 6059829190144100
+    m_Localized: "Vista general de la l\xEDnea"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144101
+    m_Localized: "ESTAD\xCDSTICAS"
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459571449856
     m_Localized: Reconocer el error
     m_Metadata:
@@ -485,7 +493,7 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "WASD / flechas \u2013 moverse\nRat\xF3n \u2013 mirar\nMay\xFAs
       \u2013 correr\nE \u2013 usar / recoger\nQ \u2013 soltar\nClic izquierdo \u2013
-      botones de pantallas y terminales\nEsc \u2013 cerrar pantalla / pausa\n{0}
+      botones de pantallas y terminales\nQ \u2013 cerrar pantalla\nP \u2013 pausa\n{0}
       \u2013 guardado r\xE1pido, {1} \u2013 carga r\xE1pida\n{2} \u2013 panel de
       depuraci\xF3n (desarrollo)"
     m_Metadata:
@@ -1236,8 +1244,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703357
-    m_Localized: "Apunta al terminal de recetas y pulsa {0}. Muestra los valores
-      de la Margarita para cada m\xE1quina. Ci\xE9rralo con Esc."
+    m_Localized: "Apunta al terminal de recetas y pulsa {0}, o cambia a «Receta» en cualquier terminal. Muestra los valores de la Margarita para cada máquina. Ciérralo con Q."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703358
@@ -1335,7 +1342,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703379
     m_Localized: "Habr\xE1 aver\xEDas: el HMI muestra la causa y la soluci\xF3n.
-      Esc abre el men\xFA de pausa con controles, guardar y cargar."
+      P abre el men\xFA de pausa con controles, guardar y cargar."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1352,6 +1359,70 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5456202205442048
     m_Localized: "Estaci\xF3n de dosificaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829190144000
+    m_Localized: "Ajusta estos valores en el terminal de cada m\xE1quina."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058560
+    m_Localized: Harina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058561
+    m_Localized: Agua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058562
+    m_Localized: Levadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058563
+    m_Localized: Sal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6059829253058564
+    m_Localized: Aceite de oliva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184279601152
+    m_Localized: Food Production Simulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544192
+    m_Localized: Partida {0}
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544193
+    m_Localized: "Vac\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544194
+    m_Localized: No se puede leer la partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544195
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544196
+    m_Localized: Nueva partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544197
+    m_Localized: Borrar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544198
+    m_Localized: "\xBFSobrescribir la partida {0}? Se borrar\xE1 ahora."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544199
+    m_Localized: "\xBFBorrar la partida {0}?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6554184321544200
+    m_Localized: "Men\xFA principal"
     m_Metadata:
       m_Items: []
   references:

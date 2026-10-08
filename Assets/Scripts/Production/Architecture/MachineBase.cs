@@ -4,6 +4,10 @@ using UnityEngine.Localization;
 
 namespace Game.Production
 {
+    /// <summary>
+    /// Localized HMI message of a machine for one state. The language is only switched in the main menu, so the
+    /// text is resolved once (as soon as the string table is loaded) and then cached.
+    /// </summary>
     [Serializable]
     public class Content<T> where T : Enum
     {
@@ -11,9 +15,9 @@ namespace Game.Production
         public LocalizedString InfoKey;
 
         private string _info;
-        public string Info => _info;
 
-        public void SetInfo(string info) => _info = info;
+        /// <summary>The translated text, or null while the table is still loading or no key is set.</summary>
+        public string Info => _info ??= LocText.Now(InfoKey, null);
     }
 
     /// <summary>
@@ -35,9 +39,19 @@ namespace Game.Production
         private MachineState _currentState = MachineState.Ready;
 
         /// <inheritdoc />
-        public string Id => $"{_nameKey}_{_number}";
-        /// <summary>Localized display name; the GameObject name until the table is loaded (no blocking load - WebGL).</summary>
-        public string Name => LocText.Now(_nameKey, name);
+        public string Id => $"{NameKey}_{_number}";
+
+        private string _name;
+
+        /// <summary>
+        /// Localized name ("Ofen"). The language is only switched in the main menu, so it is resolved once and
+        /// cached; the GameObject name stands in while the string table is still loading (non-blocking - WebGL).
+        /// </summary>
+        public string Name => (_name ??= LocText.Now(_nameKey, null)) ?? name;
+
+        /// <summary>Name with the per-type number from the overview ("Ofen 1"), or only the name while unnumbered.</summary>
+        public string DisplayName => _number > 0 ? $"{Name} {_number}" : Name;
+
         private int _number;
         public int Number => _number;
         public void SetNumber(int number) => _number = number;

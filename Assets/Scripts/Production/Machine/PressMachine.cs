@@ -144,28 +144,6 @@ namespace Game.Production
             SamplePiston(0f); // retracted rest pose
         }
 
-        private void OnEnable()
-        {
-            foreach (Content<PressInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged += content.SetInfo;
-                }
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (Content<PressInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged -= content.SetInfo;
-                }
-            }
-        }
-
         private void Update()
         {
             if (CurrentState != MachineState.Running)

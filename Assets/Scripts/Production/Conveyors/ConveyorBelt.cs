@@ -141,28 +141,6 @@ namespace Game.Production
             }
         }
 
-        private void OnEnable()
-        {
-            foreach (Content<ConveyorInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged += content.SetInfo;
-                }
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (Content<ConveyorInfo> content in _contents)
-            {
-                if (!content.InfoKey.IsEmpty)
-                {
-                    content.InfoKey.StringChanged -= content.SetInfo;
-                }
-            }
-        }
-
         private void FixedUpdate()
         {
             if (CurrentState != MachineState.Running)

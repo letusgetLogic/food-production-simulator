@@ -483,7 +483,7 @@ namespace Game.DebugTools
             }
             GUI.enabled = true;
             GUILayout.EndHorizontal();
-            GUILayout.Label(_saveLoad.Storage.Describe(SaveLoadController.DefaultSlot), _smallStyle);
+            GUILayout.Label(_saveLoad.Storage.Describe(SaveLoadController.CurrentSlot), _smallStyle);
         }
 
         private void Section(string title)

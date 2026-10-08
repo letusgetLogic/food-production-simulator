@@ -16,6 +16,7 @@ namespace Game.HMI
         [SerializeField] private float _refreshIntervalSeconds = 0.2f;
 
         private MachineBase _boundMachine;
+        public MachineBase BoundMachine => _boundMachine;
         private Action<MachineState, MachineState> _stateHandler;
         private float _nextRefreshTime;
 
@@ -37,7 +38,7 @@ namespace Game.HMI
             }
 
             _nextRefreshTime = Time.unscaledTime + _refreshIntervalSeconds;
-            if (_detailPanel.isActiveAndEnabled)
+            if (_detailPanel.isActiveAndEnabled && _detailPanel.IsVisible)
             {
                 _detailPanel.RefreshValues();
             }
@@ -62,7 +63,7 @@ namespace Game.HMI
             machine.StateChanged += _stateHandler;
             machine.ContentChanged += _detailPanel.SetContent;
 
-            _detailPanel.SetMachineName(machine.Name);
+            _detailPanel.SetMachineName(machine.DisplayName);
             _detailPanel.SetState(machine.CurrentState);
 
             if (_boundMachine)

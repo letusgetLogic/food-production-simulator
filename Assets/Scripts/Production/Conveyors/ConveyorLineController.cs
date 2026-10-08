@@ -88,7 +88,14 @@ namespace Game.Production
                 }
 
                 MachineBase captured = element;
-                Action<MachineState, MachineState> handler = (_, next) => ElementStateChanged?.Invoke(captured, next);
+                Action<MachineState, MachineState> handler = (_, next) =>
+                {
+                    if (next == MachineState.Running && !(captured is ConveyorBelt))
+                    {
+                        RestartAdjacentBelts(captured);
+                    }
+                    ElementStateChanged?.Invoke(captured, next);
+                };
                 element.StateChanged += handler;
                 _stateHandlers.Add(element, handler);
             }
@@ -160,6 +167,52 @@ namespace Game.Production
                     result.Add(element);
                 }
             }
+        }
+
+        // ---- Restart after a fault ----
+
+        /// <summary>
+        /// A station (portioner, press, ...) was started again by the operator: the belts directly before
+        /// and after it run again too (playtest 06.10.: after acknowledging and restarting portioner and
+        /// press the belts in between stood still). Stopped/Ready belts are started; a buffer belt in Fault
+        /// "BufferFull" is cleared, because that fault only follows from the stopped station - the restart is
+        /// the operator action. Real belt faults (Jam) still need their own acknowledgement.
+        /// Not during the start/stop sequence, which keeps its own order.
+        /// </summary>
+        private void RestartAdjacentBelts(MachineBase station)
+        {
+            if (IsSequenceRunning)
+            {
+                return;
+            }
+
+            int index = _elements.IndexOf(station);
+            if (index < 0)
+            {
+                return;
+            }
+
+            // Downstream belts first, so nothing runs into a standing belt.
+            for (int i = index + 1; i < _elements.Count && _elements[i] is ConveyorBelt belt; i++)
+            {
+                RestartBelt(belt);
+            }
+
+            for (int i = index - 1; i >= 0 && _elements[i] is ConveyorBelt belt; i--)
+            {
+                RestartBelt(belt);
+            }
+        }
+
+        private static void RestartBelt(ConveyorBelt belt)
+        {
+            if (belt.CurrentState == MachineState.Fault && belt.FaultReason == ConveyorBelt.FaultReasonBufferFull)
+            {
+                belt.AcknowledgeFault();
+                belt.CompleteMaintenance();
+            }
+
+            belt.RequestRun();
         }
 
         // ---- Sequences ----

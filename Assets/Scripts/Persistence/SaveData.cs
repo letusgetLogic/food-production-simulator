@@ -31,6 +31,17 @@ namespace Game.Persistence
         public List<ProductSave> Products = new List<ProductSave>();
         public SaveValues FaultStatistics = new SaveValues();
         public SaveValues QualityStatistics = new SaveValues();
+
+        /// <summary>Other scene components with runtime state (ISaveableState, not machines) - e.g. the tutorial.</summary>
+        public List<ComponentSave> Components = new List<ComponentSave>();
+    }
+
+    [Serializable]
+    public class ComponentSave
+    {
+        /// <summary>Hierarchy path of the component's GameObject.</summary>
+        public string Path;
+        public SaveValues Content = new SaveValues();
     }
 
     [Serializable]
@@ -149,6 +160,7 @@ namespace Game.Persistence
             data.Products ??= new List<ProductSave>();
             data.FaultStatistics ??= new SaveValues();
             data.QualityStatistics ??= new SaveValues();
+            data.Components ??= new List<ComponentSave>(); // saves before 08.10. have none
             return true;
         }
     }

@@ -19,7 +19,9 @@ namespace Game.HMI
         HopperFilled,
         PortionProduced,
         PizzaFormed,
-        ProductInspected
+        ProductInspected,
+        /// <summary>The recipe page of the HMI is shown (appended - values are stored as numbers in the asset).</summary>
+        RecipeOpened
     }
 
     /// <summary>

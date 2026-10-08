@@ -29,6 +29,10 @@ namespace Game.HMI
         [SerializeField] private RectTransform _entryContainer;
         [SerializeField] private GameObject _emptyStateRoot;
 
+        [Tooltip("Sibling index of the first alarm in the container (below header and figure row). " +
+                 "The machine rows share the container, so alarms are kept in front of them.")]
+        [SerializeField] private int _firstEntrySiblingIndex = 2;
+
         private readonly List<AlarmEntryView> _pool = new List<AlarmEntryView>();
 
         public void SetAlarms(IReadOnlyList<HmiAlarmEntry> alarms)
@@ -41,6 +45,8 @@ namespace Game.HMI
             {
                 bool active = i < count;
                 _pool[i].gameObject.SetActive(active);
+                // Alarm 1 in the first row: machine rows created after the pool must not end up in front of it.
+                _pool[i].transform.SetSiblingIndex(_firstEntrySiblingIndex + i);
 
                 if (active)
                 {
@@ -65,9 +71,7 @@ namespace Game.HMI
 
             while (_pool.Count < required)
             {
-                var prefab = Instantiate(_entryPrefab, _entryContainer);
-                _pool.Add(prefab);
-                prefab.transform.SetSiblingIndex(3); // below the header and status labels
+                _pool.Add(Instantiate(_entryPrefab, _entryContainer));
             }
         }
     }

@@ -88,7 +88,6 @@ namespace Game.Production
 
         private void OnEnable()
         {
-            contents.ForEach(c => c.InfoKey.StringChanged += c.SetInfo);
             //_buttonTiltingUpward.interactable = true;
             //_buttonTiltingDownward.interactable = true;
             DrumTilted += () => NotifyContentChanged(Info(RunningState.Tilted));
@@ -98,7 +97,6 @@ namespace Game.Production
 
         private void OnDisable()
         {
-            contents.ForEach(c => c.InfoKey.StringChanged -= c.SetInfo);
             DrumTilted = null;
             DrumReset = null;
         }

@@ -19,12 +19,22 @@ namespace Game.Persistence
     ///
     /// Apply order: setpoints and machine content -> products -> faults/stops -> statistics.
     /// Public API is called by the debug panel / pause menu: <see cref="Save"/>, <see cref="Load"/>,
-    /// <see cref="HasSave"/>.
+    /// <see cref="HasSave"/> (all on <see cref="CurrentSlot"/> by default); the main menu uses the static
+    /// <see cref="BeginLoad"/> and <see cref="TryRead"/>.
     /// </summary>
     [DisallowMultipleComponent]
     public class SaveLoadController : MonoBehaviour
     {
         public const string DefaultSlot = "slot1";
+
+        /// <summary>Slots offered by the main menu.</summary>
+        public static readonly string[] Slots = { "slot1", "slot2", "slot3" };
+
+        /// <summary>
+        /// Slot of the running session (chosen in the main menu): save, load and quick save use it.
+        /// Starting the game scene directly (editor) uses <see cref="DefaultSlot"/>.
+        /// </summary>
+        public static string CurrentSlot { get; set; } = DefaultSlot;
 
         [Tooltip("Prefab spawned for saved products (the portioner's pizza prefab). Products are not saved without it.")]
         [SerializeField] private ProductToken _productPrefab;
@@ -56,7 +66,13 @@ namespace Game.Persistence
 
         public ISaveStorage Storage => _storage ??= SaveStorageFactory.CreateDefault();
 
-        public bool HasSave(string slot = DefaultSlot) => Storage.Exists(slot);
+        public bool HasSave(string slot = null) => Storage.Exists(slot ?? CurrentSlot);
+
+        /// <summary>
+        /// True from <see cref="BeginLoad"/> until the loaded data was applied. Components with saved state (tutorial)
+        /// do not start fresh then - their state comes from the save.
+        /// </summary>
+        public static bool IsLoadPending => _pendingLoad != null;
 
         private void Awake()
         {
@@ -81,8 +97,9 @@ namespace Game.Persistence
 
         // ---- Save ----
 
-        public bool Save(string slot = DefaultSlot, string label = null)
+        public bool Save(string slot = null, string label = null)
         {
+            slot ??= CurrentSlot;
             try
             {
                 SaveData data = Capture(label);
@@ -108,7 +125,7 @@ namespace Game.Persistence
                 SavedAtUtc = DateTime.UtcNow.ToString("o"),
                 SceneName = SceneManager.GetActiveScene().name,
                 Label = label,
-                PlayTimeSeconds = Time.timeSinceLevelLoad
+                PlayTimeSeconds = _qualityInspector != null ? _qualityInspector.RunTimeSeconds : Time.timeSinceLevelLoad
             };
 
             foreach (KeyValuePair<string, MachineBase> entry in FindMachinesByPath())
@@ -155,6 +172,13 @@ namespace Game.Persistence
                 data.Products.Add(save);
             }
 
+            foreach (KeyValuePair<string, ISaveableState> entry in FindSaveableComponentsByPath())
+            {
+                var save = new ComponentSave { Path = entry.Key };
+                entry.Value.CaptureState(save.Content);
+                data.Components.Add(save);
+            }
+
             if (_faultMonitor != null)
             {
                 _faultMonitor.CaptureStatistics(data.FaultStatistics);
@@ -170,50 +194,80 @@ namespace Game.Persistence
         // ---- Load ----
 
         /// <summary>Reads, migrates and schedules a save; reloads the scene. False if there is nothing valid to load.</summary>
-        public bool Load(string slot = DefaultSlot)
+        public bool Load(string slot = null)
         {
-            string json;
-            try
+            slot ??= CurrentSlot;
+            if (BeginLoad(slot, Storage, out string error))
             {
-                json = Storage.Read(slot);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception, this);
-                Loaded?.Invoke(slot, false, exception.Message);
-                return false;
+                return true;
             }
 
-            if (string.IsNullOrEmpty(json))
-            {
-                Loaded?.Invoke(slot, false, "No save in slot " + slot);
-                return false;
-            }
+            Debug.LogWarning("[SaveLoad] " + error, this);
+            Loaded?.Invoke(slot, false, error);
+            return false;
+        }
 
-            SaveData data;
-            try
+        /// <summary>
+        /// Loads <paramref name="slot"/> without a controller in the active scene (main menu): reads and migrates
+        /// the save, makes it the <see cref="CurrentSlot"/> and loads the saved scene. Its SaveLoadController
+        /// applies the data after start.
+        /// </summary>
+        public static bool BeginLoad(string slot, ISaveStorage storage, out string error)
+        {
+            if (!TryRead(slot, storage, out SaveData data, out error))
             {
-                data = JsonUtility.FromJson<SaveData>(json);
-            }
-            catch (Exception exception)
-            {
-                Debug.LogException(exception, this);
-                Loaded?.Invoke(slot, false, "Save file is corrupt");
-                return false;
-            }
-
-            if (!SaveMigrations.Migrate(data, out string error))
-            {
-                Debug.LogWarning("[SaveLoad] " + error, this);
-                Loaded?.Invoke(slot, false, error);
                 return false;
             }
 
             _pendingLoad = data;
             _pendingSlot = slot;
+            CurrentSlot = slot;
 
             string sceneName = string.IsNullOrEmpty(data.SceneName) ? SceneManager.GetActiveScene().name : data.SceneName;
             SceneManager.LoadScene(sceneName);
+            return true;
+        }
+
+        /// <summary>Reads and migrates a save (also used by the main menu to show date and play time of a slot).</summary>
+        public static bool TryRead(string slot, ISaveStorage storage, out SaveData data, out string error)
+        {
+            data = null;
+            error = null;
+            string json;
+            try
+            {
+                json = storage.Read(slot);
+            }
+            catch (Exception exception)
+            {
+                error = exception.Message;
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(json))
+            {
+                error = "No save in slot " + slot;
+                return false;
+            }
+
+            try
+            {
+                data = JsonUtility.FromJson<SaveData>(json);
+            }
+            catch (Exception)
+            {
+                error = "Save file is corrupt";
+                return false;
+            }
+
+            if (data == null || !SaveMigrations.Migrate(data, out error))
+            {
+                error ??= "Save file is corrupt";
+                data = null;
+                return false;
+            }
+
+            error = null;
             return true;
         }
 
@@ -356,6 +410,16 @@ namespace Game.Persistence
                 _qualityInspector.RestoreStatistics(data.QualityStatistics);
             }
 
+            // 5. Other components (tutorial)
+            Dictionary<string, ISaveableState> components = FindSaveableComponentsByPath();
+            foreach (ComponentSave save in data.Components)
+            {
+                if (components.TryGetValue(save.Path, out ISaveableState component))
+                {
+                    component.RestoreState(save.Content);
+                }
+            }
+
             var report = new StringBuilder($"{machineCount} machines, {productCount} products");
             if (missing.Count > 0)
             {
@@ -396,6 +460,20 @@ namespace Game.Persistence
         // ---- Machine identity ----
 
         /// <summary>All active machines by hierarchy path; duplicates get "#2", "#3" in scene order.</summary>
+        /// <summary>Active components with saveable state that are not machines (machines are saved with their own entry).</summary>
+        private static Dictionary<string, ISaveableState> FindSaveableComponentsByPath()
+        {
+            var result = new Dictionary<string, ISaveableState>();
+            foreach (MonoBehaviour behaviour in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+            {
+                if (behaviour is ISaveableState saveable && !(behaviour is MachineBase) && behaviour.isActiveAndEnabled)
+                {
+                    result[PathOf(behaviour.transform) + ":" + behaviour.GetType().Name] = saveable;
+                }
+            }
+            return result;
+        }
+
         private static Dictionary<string, MachineBase> FindMachinesByPath()
         {
             var result = new Dictionary<string, MachineBase>();
@@ -435,6 +513,7 @@ namespace Game.Persistence
         {
             _pendingLoad = null;
             _pendingSlot = null;
+            CurrentSlot = DefaultSlot;
         }
     }
 }

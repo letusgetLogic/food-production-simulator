@@ -419,6 +419,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4744697050150632123}
     m_Modifications:
+    - target: {fileID: 78871969645989550, guid: 38a0318bc299a164d8e5f483bebf2606, type: 3}
+      propertyPath: _machine
+      value: 
+      objectReference: {fileID: 3564715231021656386}
     - target: {fileID: 6249309161409445341, guid: 38a0318bc299a164d8e5f483bebf2606, type: 3}
       propertyPath: m_Name
       value: MachineTerminal

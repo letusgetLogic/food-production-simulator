@@ -12,7 +12,7 @@ namespace Game.EditorTools
     /// <summary>
     /// Milestone build (WebGL).
     ///
-    /// - <see cref="SetLocalizationPreload"/>: marks every string table of "Localization Table" as preloaded.
+    /// - Localization preload: before every build all string tables of "Localization Table" are marked as preloaded.
     ///   Texts read from code use <c>LocText.Now</c>/<c>LocText.Get</c> (non-blocking; <c>GetLocalizedString()</c> throws in WebGL).
     ///   In WebGL the tables are loaded asynchronously - without preloading those calls return the key or an empty
     ///   string on the first frames. With preloading, Localization initialisation waits for the tables.
@@ -28,14 +28,6 @@ namespace Game.EditorTools
     {
         private const string TableCollectionName = "Localization Table";
         private const string OutputPath = "Builds/WebGL";
-
-        [MenuItem("Tools/Food Production/Set Localization Preload")]
-        public static void SetLocalizationPreload()
-        {
-            int count = ApplyPreload();
-            SetupUi.Dialog("Set Localization Preload",
-                count > 0 ? $"{count} Tabellen von \"{TableCollectionName}\" werden jetzt vorgeladen." : $"Tabellen-Sammlung \"{TableCollectionName}\" nicht gefunden.", "OK");
-        }
 
         private const string PendingBuildKey = "fps.milestone.pendingWebGLBuild";
 
@@ -67,7 +59,7 @@ namespace Game.EditorTools
 
             if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.WebGL, BuildTarget.WebGL))
             {
-                SetupUi.Dialog("Build WebGL", "WebGL Build Support ist für diese Unity-Version nicht installiert (Unity Hub → Installs → Add modules).", "OK");
+                Debug.LogError("[Build WebGL] WebGL Build Support ist für diese Unity-Version nicht installiert (Unity Hub → Installs → Add modules).");
                 return;
             }
 

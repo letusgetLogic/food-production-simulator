@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Production;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.HMI
 {
@@ -10,6 +11,8 @@ namespace Game.HMI
     // tablet, ...) can exist without anything needing to reference them.
     public class OverviewPanel : HmiPanelBase
     {
+        [SerializeField] private HmiScreenController _screenController;
+
         [Header("Line figures")]
         [SerializeField] private StatusTileView _throughputTile;
         [SerializeField] private StatusTileView _producedUnitsTile;
@@ -110,7 +113,9 @@ namespace Game.HMI
             MachineStateRowView row = Instantiate(_rowTemplate, _rowContainer);
             row.gameObject.SetActive(true);
             row.SetMachineName(displayName);
-            row.SetMachine(machineId);
+
+            UnityAction action = () => _screenController.ShowMachinePanel(machineId);
+            row.SetButton(action);
             _rowsById.Add(machineId, row);
             return row;
         }

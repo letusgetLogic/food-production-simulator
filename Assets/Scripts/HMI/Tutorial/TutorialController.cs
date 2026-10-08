@@ -1,4 +1,6 @@
+using System.Collections;
 using Game.Core;
+using Game.Persistence;
 using Game.Production;
 using Game.Quality;
 using TMPro;
@@ -10,21 +12,20 @@ namespace Game.HMI
 {
     /// <summary>
     /// Guided first batch (Woche 3, Tutorial/Onboarding): shows one instruction at a time in a small overlay
-    /// panel (top left) and advances when the player has done it - walk, read the recipe terminal, start the
+    /// panel (top left) and advances when the player has done it - walk, read the recipe page of the HMI, start the
     /// mixer, tilt the drum, carry the pot to the portioner, raise the lift, first portion, first pizza base,
     /// open the HMI, first packaged pizza. Content (texts, order, conditions) lives in <see cref="SO_TutorialSequence"/>.
     ///
     /// Conditions read the real machines (no tutorial hooks in machine code). They also accept "the player is
     /// already further", e.g. a tilted drum completes "wait for mixing", so nobody gets stuck by doing steps early.
     ///
-    /// Starts by itself until it was finished once (PlayerPrefs <see cref="CompletedPrefsKey"/>), <see cref="Restart"/>
-    /// starts it again. Keys: next step (default N), hide/show (default H).
+    /// Progress belongs to the save slot (<see cref="ISaveableState"/>): a new game starts the tutorial at step 1,
+    /// a loaded game continues it where it was saved (or not at all once finished). <see cref="Restart"/> starts it
+    /// again. Keys: next step (default N), hide/show (default H).
     /// Builds its own overlay canvas from code, like <see cref="PauseMenu"/>.
     /// </summary>
-    public class TutorialController : MonoBehaviour
+    public class TutorialController : MonoBehaviour, ISaveableState
     {
-        public const string CompletedPrefsKey = "fps.tutorial.completed";
-
         [SerializeField] private SO_TutorialSequence _sequence;
 
         [Header("Scene references")]
@@ -38,7 +39,7 @@ namespace Game.HMI
         [SerializeField] private SO_HoldChannel _holdChannel;
 
         [Header("Behaviour")]
-        [Tooltip("Start automatically while the tutorial was never finished.")]
+        [Tooltip("Start automatically with a new game (a loaded game restores the saved progress instead).")]
         [SerializeField] private bool _startAutomatically = true;
         [SerializeField] private Key _nextKey = Key.N;
         [SerializeField] private Key _hideKey = Key.H;
@@ -58,6 +59,7 @@ namespace Game.HMI
         private Image _progressFill;
 
         private int _stepIndex = -1;
+        private bool _wasRestored;
         private bool _isRunning;
         private bool _isHidden;
         private float _stepTime;
@@ -86,9 +88,22 @@ namespace Game.HMI
             _canvas.gameObject.SetActive(false);
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
-            if (_startAutomatically && PlayerPrefs.GetInt(CompletedPrefsKey, 0) == 0)
+            if (!_startAutomatically)
+            {
+                yield break;
+            }
+
+            // Loading a save: RestoreState decides (running at step X, or finished). A save from before the
+            // tutorial was saved has no entry - it starts like a new game.
+            while (SaveLoadController.IsLoadPending)
+            {
+                yield return null;
+            }
+            yield return null;
+
+            if (!_wasRestored)
             {
                 Restart();
             }
@@ -137,10 +152,15 @@ namespace Game.HMI
                 return;
             }
 
+            StartAt(0);
+        }
+
+        private void StartAt(int stepIndex)
+        {
             _isRunning = true;
             _isHidden = false;
             _canvas.gameObject.SetActive(true);
-            EnterStep(0);
+            EnterStep(Mathf.Clamp(stepIndex, 0, _sequence.Steps.Count - 1));
         }
 
         /// <summary>Completes the current step (key, debug, automation).</summary>
@@ -161,13 +181,40 @@ namespace Game.HMI
             }
         }
 
-        /// <summary>Ends the tutorial and remembers that it was done.</summary>
+        /// <summary>Ends the tutorial (saved with the game: a loaded save does not show it again).</summary>
         public void Finish()
         {
             _isRunning = false;
             _canvas.gameObject.SetActive(false);
-            PlayerPrefs.SetInt(CompletedPrefsKey, 1);
-            PlayerPrefs.Save();
+        }
+
+        // ---- Save/Load (ISaveableState) ----
+
+        /// <inheritdoc />
+        public void CaptureState(SaveValues values)
+        {
+            values.Set("running", _isRunning);
+            values.Set("step", _stepIndex);
+            values.Set("hidden", _isHidden);
+        }
+
+        /// <inheritdoc />
+        public void RestoreState(SaveValues values)
+        {
+            _wasRestored = true;
+            if (!values.GetBool("running", false) || _sequence == null || _sequence.Steps.Count == 0)
+            {
+                Finish();
+                return;
+            }
+
+            // The step starts over (baselines are taken now) - conditions accept "already further", see class summary.
+            StartAt(values.GetInt("step", 0));
+            if (values.GetBool("hidden", false))
+            {
+                _isHidden = true;
+                _canvas.gameObject.SetActive(false);
+            }
         }
 
         // ---- Loop ----
@@ -259,6 +306,9 @@ namespace Game.HMI
                 case TutorialCondition.ProductInspected:
                     return _qualityInspector == null || _qualityInspector.TotalCount > _startInspected;
 
+                case TutorialCondition.RecipeOpened:
+                    return IsRecipeShown();
+
                 default:
                     return false;
             }
@@ -268,6 +318,25 @@ namespace Game.HMI
 
         private bool AnyMixer(System.Predicate<MixerMachine> predicate) =>
             _mixers != null && System.Array.Exists(_mixers, m => m != null && predicate(m));
+
+        private HmiScreenController _screen;
+        private RecipeTerminalPanel _recipePanel;
+
+        /// <summary>HMI open on its recipe page (any terminal, nav rail "Recipe"). No HMI in the scene = done.</summary>
+        private bool IsRecipeShown()
+        {
+            if (_screen == null)
+            {
+                _screen = FindFirstObjectByType<HmiScreenController>();
+                if (_screen == null)
+                {
+                    return true;
+                }
+                _recipePanel = _screen.GetPanel<RecipeTerminalPanel>();
+            }
+
+            return _recipePanel == null || (_screen.IsOpen && _recipePanel.IsVisible);
+        }
 
         private bool IsPotOnLift() => _portioner != null && _portioner.IsPotLoaded;
         private bool HasHopperContent() => _portioner != null && _portioner.HopperHasContent;
