@@ -8,7 +8,7 @@ Der Nutzer überwacht und steuert eine kleine industrielle Produktionslinie zur 
 
 ## Projekt
 Entwicklungs-Zeitraum: **15.09.2026 - 14.10.2026**
-- Update am 06.10.2026
+- Update am 11.10.2026
 
 Ziele des Hobby-Projektes:
 - Entwicklung von industriellen 3D Umgebung & Interaktions-Systemen
