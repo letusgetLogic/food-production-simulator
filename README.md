@@ -11,9 +11,9 @@ Entwicklungs-Zeitraum: **15.09.2026 - 14.10.2026**
 - Update am 11.10.2026
 
 Ziele des Hobby-Projektes:
-- Entwicklung von industriellen 3D Umgebung & Interaktions-Systemen
+- Entwicklung von 3D Umgebung & Interaktions-Systemen
 - Entwicklung auf Zielplattformen PC, WebGL und VR
-- Kennenlernen von Lebensmittel-Produktionsprozess
+- Kennenlernen von industriellen Lebensmittel-Produktionsprozess
 - Workflow mit KI-Agenten
 
 ------------------------------------------------------------------------
