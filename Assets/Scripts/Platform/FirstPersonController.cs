@@ -20,6 +20,12 @@ namespace Game.Platform
         [SerializeField] private float _acceleration = 14f;
         [SerializeField] private float _gravity = -18f;
 
+        [Header("Pushing")]
+        [Tooltip("Force (N) the player pushes loose physics objects with when walking into them (pallet 25 kg).")]
+        [Min(0f)] [SerializeField] private float _pushForce = 450f;
+        [Tooltip("Objects heavier than this (kg) cannot be pushed.")]
+        [Min(0f)] [SerializeField] private float _maxPushMass = 200f;
+
         [Header("Look")]
         [SerializeField] private float _lookSensitivity = 0.08f;
         [SerializeField] private float _minPitch = -80f;
@@ -91,6 +97,36 @@ namespace Game.Platform
 
             Vector3 velocity = _horizontalVelocity + Vector3.up * _verticalVelocity;
             _controller.Move(velocity * Time.deltaTime);
+        }
+
+        /// <summary>
+        /// A CharacterController does not push rigidbodies by itself: walking into a loose (non-kinematic) object
+        /// pushes it horizontally at the contact point, so it slides or tips over an edge. Objects the player stands
+        /// on, kinematic ones (parked pallet stacks, held items) and very heavy ones are not pushed.
+        /// </summary>
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            Rigidbody body = hit.collider.attachedRigidbody;
+            if (body == null || body.isKinematic || body.mass > _maxPushMass || hit.moveDirection.y < -0.3f)
+            {
+                return;
+            }
+
+            Vector3 direction = new Vector3(hit.moveDirection.x, 0f, hit.moveDirection.z);
+            if (direction.sqrMagnitude < 0.0001f)
+            {
+                return;
+            }
+            direction.Normalize();
+
+            // Not faster than the player walks into it.
+            float speedAlong = Vector3.Dot(body.linearVelocity, direction);
+            if (speedAlong >= _horizontalVelocity.magnitude)
+            {
+                return;
+            }
+
+            body.AddForceAtPosition(direction * (_pushForce * Time.deltaTime), hit.point, ForceMode.Impulse);
         }
 
         private static void ApplyCursorState(bool locked)

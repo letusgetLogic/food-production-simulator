@@ -10,8 +10,10 @@ namespace Game.Core
     [CreateAssetMenu(fileName = "HoldChannel", menuName = "Channels/Hold Channel")]
     public class SO_HoldChannel : ScriptableObject
     {
-        private HoldInteractable _holdingObject;
-        public HoldInteractable HoldingObject
+        private Component _holdingObject;
+
+        /// <summary>What the player currently holds or pushes (a HoldInteractable, the pallet jack, ...).</summary>
+        public Component HoldingObject
         {
             get => _holdingObject;
             protected set
@@ -30,7 +32,7 @@ namespace Game.Core
 
         // Returns true and marks the slot as taken if nothing else is currently held.
         // Returns false if another item already claimed it.
-        public bool TryClaim(HoldInteractable holdingObject)
+        public bool TryClaim(Component holdingObject)
         {
             if (_holdingObject != null)
             {

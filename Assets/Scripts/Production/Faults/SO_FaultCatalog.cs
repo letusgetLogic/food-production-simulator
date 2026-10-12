@@ -1,3 +1,4 @@
+using Game.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -68,7 +69,7 @@ namespace Game.Production
     /// marks which of them form the curated training set.
     ///
     /// MVP training set (PM decision 02.10.):
-    ///   1. SauceEmpty / ToppingEmpty  - dosing station, refill button
+    ///   1. IngredientEmpty:<id>       - dosing station reservoir (sauce, mozzarella, ...), refill button
     ///   2. BufferFull                 - press buffer, press stopped / too slow
     ///   3. Jam                        - belt jam, remove product, restart
     ///   4. TemperatureOutOfRange / HeatUpTimeout - oven heater failure (injectable)
@@ -101,10 +102,11 @@ namespace Game.Production
         {
             _faults = new List<FaultDefinition>
             {
-                Define("SauceEmpty", "Sauce tank empty",
-                    "Refill the sauce tank at the dosing station (refill button), acknowledge, complete maintenance, start."),
-                Define("ToppingEmpty", "Topping hopper empty",
-                    "Refill the topping hopper at the dosing station (refill button), acknowledge, complete maintenance, start."),
+                Define("IngredientEmpty", "Ingredient reservoir empty",
+                    "Refill the empty reservoir at the dosing station (blue + button on the control panel), acknowledge, complete maintenance, start."),
+                Define("EmergencyStop", "Emergency stop pressed",
+                    "Remove the hazard, release the emergency stop at the control panel (press it again), acknowledge the fault and complete maintenance at the terminal, then press Start (I).",
+                    canBeInjected: false),
                 Define("BufferFull", "Press buffer full",
                     "Check the press (running? cycle time too long?). Then acknowledge the buffer belt and restart."),
                 Define("Jam", "Conveyor jam",

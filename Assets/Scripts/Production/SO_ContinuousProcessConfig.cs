@@ -7,17 +7,20 @@ namespace Game.Production
     /// tunnel, shock freezer). Default values are only used at scene start - the operator sets dwell
     /// time and temperature at the HMI, reading them off the recipe terminal.
     ///
+    /// Line order as in real frozen pizza production: pre-bake the base, cool it, dose sauce/topping, freeze.
     /// Suggested values (Margherita, preliminary):
-    ///   Oven:    ToppedPizza -> BakedPizza,  dwell 15 s, target 280 °C, valid 250..320 °C, record bake time
-    ///   Cooling: BakedPizza  -> CooledPizza, dwell 10 s, target  20 °C
-    ///   Freezer: CooledPizza -> FrozenPizza, dwell 12 s, target -18 °C
+    ///   Oven (pre-bake): FormedPizza -> BakedPizza,  dwell 15 s, target 280 °C, valid 250..320 °C, record bake time
+    ///   Cooling:         BakedPizza  -> CooledPizza, dwell 10 s, target  20 °C (base cool before topping)
+    ///   (Dosing station: CooledPizza -> SaucedPizza -> ToppedPizza)
+    ///   Freezer:         ToppedPizza -> FrozenPizza, dwell 12 s, target -18 °C
+    ///   Packaging:       FrozenPizza -> PackagedPizza, dwell 8 s, no temperature
     /// </summary>
     [CreateAssetMenu(fileName = "SO_ContinuousProcessConfig", menuName = "Production/Machines/Continuous Process Config")]
     public class SO_ContinuousProcessConfig : ScriptableObject
     {
         [Header("Product")]
         [Tooltip("State a product must have when it leaves the zone to be processed.")]
-        public ProductState InputState = ProductState.ToppedPizza;
+        public ProductState InputState = ProductState.FormedPizza;
         [Tooltip("State the product gets when it leaves the zone.")]
         public ProductState OutputState = ProductState.BakedPizza;
         [Tooltip("Write the measured dwell time to ProductInstance.ActualBakeTimeSeconds (oven only).")]

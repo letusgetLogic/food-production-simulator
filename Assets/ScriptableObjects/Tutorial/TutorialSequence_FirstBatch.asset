@@ -23,15 +23,16 @@ MonoBehaviour:
   - TitleKey: tutorial.recipe.title
     TitleFallback: Read the recipe
     TextKey: tutorial.recipe.text
-    TextFallback: 'Aim at the recipe terminal and press {0} - or switch to "Recipe" on any
-      terminal. It lists the Margherita values every machine needs. Close it with Q.'
+    TextFallback: Aim at the recipe terminal and press {0} - or switch to "Recipe"
+      on any terminal. It lists the Margherita values every machine needs. Close
+      it with Q.
     Condition: 12
     Amount: 0
   - TitleKey: tutorial.mixer_start.title
     TitleFallback: Start the dough mixer
     TextKey: tutorial.mixer_start.text
-    TextFallback: 'Go to a dough mixer and start it: green start button on the mixer,
-      or its terminal ({0}).'
+    TextFallback: 'Go to a dough mixer and start it: white start button (I) on the
+      mixer''s control panel ({0}).'
     Condition: 3
     Amount: 0
   - TitleKey: tutorial.mixer_wait.title
@@ -72,7 +73,7 @@ MonoBehaviour:
     TitleFallback: Portioning
     TextKey: tutorial.portion.text
     TextFallback: The portioner cuts the dough into portions (target 250 g). If it
-      is stopped, start it at its terminal.
+      is stopped, start it at its control panel (I).
     Condition: 9
     Amount: 0
   - TitleKey: tutorial.press.title
@@ -92,8 +93,9 @@ MonoBehaviour:
   - TitleKey: tutorial.first_pizza.title
     TitleFallback: The first pizza
     TextKey: tutorial.first_pizza.text
-    TextFallback: 'Follow your pizza: sauce and topping, oven, cooling, shock freezer,
-      packaging. Quality is checked at the end of the line.'
+    TextFallback: 'Follow your pizza: the oven pre-bakes the base, it cools down,
+      then sauce and mozzarella, shock freezer, packaging. Quality is checked at
+      the end of the line.'
     Condition: 11
     Amount: 0
   - TitleKey: tutorial.done.title

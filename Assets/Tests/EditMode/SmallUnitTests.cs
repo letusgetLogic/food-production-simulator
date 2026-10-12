@@ -1,3 +1,4 @@
+using Game.Core;
 using Game.Production;
 using NUnit.Framework;
 using UnityEngine;
@@ -102,7 +103,7 @@ namespace Game.Tests
         [Test]
         public void Defaults_ContainTheMvpFaultCases()
         {
-            foreach (string code in new[] { "SauceEmpty", "ToppingEmpty", "BufferFull", "Jam", "TemperatureOutOfRange", "WrongProduct" })
+            foreach (string code in new[] { "IngredientEmpty", "BufferFull", "Jam", "TemperatureOutOfRange", "WrongProduct" })
             {
                 FaultDefinition definition = _catalog.Find(code);
                 Assert.IsNotNull(definition, code);
@@ -139,7 +140,7 @@ namespace Game.Tests
             foreach (string code in new[]
                      {
                          ConveyorBelt.FaultReasonJam, ConveyorBelt.FaultReasonBufferFull,
-                         DosingMachine.FaultReasonSauceEmpty, DosingMachine.FaultReasonToppingEmpty,
+                         DosingMachine.FaultReasonIngredientEmpty + ":mozzarella", MachineBase.FaultReasonEmergencyStop,
                          ContinuousProcessStation.FaultReasonTemperatureOutOfRange,
                          ContinuousProcessStation.FaultReasonHeatUpTimeout,
                          ContinuousProcessStation.FaultReasonBeltFault, PressMachine.FaultReasonWrongProduct
@@ -168,6 +169,50 @@ namespace Game.Tests
             {
                 Object.DestroyImmediate(line);
             }
+        }
+    }
+
+    public class DosingIngredientTests
+    {
+        [Test]
+        public void DefectCode_IsPascalCaseOfId()
+        {
+            Assert.AreEqual("Sauce", SO_DosingIngredient.CodeOf("sauce"));
+            Assert.AreEqual("Mozzarella", SO_DosingIngredient.CodeOf("mozzarella"));
+            Assert.AreEqual("TomatoSauce", SO_DosingIngredient.CodeOf("tomato_sauce"));
+            Assert.AreEqual("Ingredient", SO_DosingIngredient.CodeOf(null));
+        }
+
+        [Test]
+        public void ProductDoses_SetGetClear()
+        {
+            var product = new ProductInstance();
+            Assert.IsFalse(product.HasDose("sauce"));
+            product.SetDose("sauce", 80f);
+            product.SetDose("sauce", 82f);
+            Assert.AreEqual(82f, product.GetDose("sauce"));
+            Assert.AreEqual(1, product.Doses.Count);
+            product.ClearDose("sauce");
+            Assert.IsNull(product.GetDose("sauce"));
+        }
+    }
+
+    public class PalletLayoutTests
+    {
+        [Test]
+        public void Slots_FillLayerByLayer_CenteredOnDeck()
+        {
+            var pitch = new Vector2(0.73f, 0.73f);
+            Vector3 first = Pallet.SlotLocalPosition(0, 2, 2, pitch, 0.088f, 0.1445f);
+            Vector3 fourth = Pallet.SlotLocalPosition(3, 2, 2, pitch, 0.088f, 0.1445f);
+            Vector3 fifth = Pallet.SlotLocalPosition(4, 2, 2, pitch, 0.088f, 0.1445f);
+            Vector3 last = Pallet.SlotLocalPosition(47, 2, 2, pitch, 0.088f, 0.1445f);
+
+            Assert.AreEqual(new Vector3(-0.365f, 0.1445f, -0.365f), first);
+            Assert.AreEqual(new Vector3(0.365f, 0.1445f, 0.365f), fourth);
+            Assert.AreEqual(first.x, fifth.x, 1e-5f);
+            Assert.AreEqual(0.1445f + 0.088f, fifth.y, 1e-5f);
+            Assert.AreEqual(0.1445f + 11 * 0.088f, last.y, 1e-4f);
         }
     }
 }

@@ -137,9 +137,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.HMI::Game.HMI.TerminalInteractable
   _isInteractable: 1
+  _interactKey:
+    m_TableReference:
+      m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
+    m_TableEntryReference:
+      m_KeyId: 7615336380051457
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _interactChannel: {fileID: 11400000, guid: ace20263870ae6640b4ba6def038f860, type: 2}
   _machine: {fileID: 0}
   _panelId: overview
+  references:
+    version: 2
+    RefIds: []
 --- !u!65 &2408219303899430352
 BoxCollider:
   m_ObjectHideFlags: 0

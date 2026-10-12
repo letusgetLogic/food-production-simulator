@@ -20,6 +20,7 @@ namespace Game.Platform
         private InputAction _interactAction;
         private InputAction _escapeAction;
         private InputAction _releaseHoldAction;
+        private InputAction _useAction;
 
         public Vector2 Move => _moveAction.ReadValue<Vector2>();
         public Vector2 Look => _lookAction.ReadValue<Vector2>();
@@ -30,6 +31,9 @@ namespace Game.Platform
         /// <summary>Raised once per escape button press.</summary>
         public event Action EscapePerformed;
         public event Action ReleasePerformed;
+
+        /// <summary>Secondary action of the held tool (R): pallet jack forks up/down.</summary>
+        public event Action UsePerformed;
 
         private void Awake()
         {
@@ -62,6 +66,9 @@ namespace Game.Platform
 
             _releaseHoldAction = _map.AddAction("Release", InputActionType.Button, "<Keyboard>/q");
             _releaseHoldAction.performed += OnDropPerformed;
+
+            _useAction = _map.AddAction("Use", InputActionType.Button, "<Keyboard>/r");
+            _useAction.performed += OnUsePerformed;
         }
 
         private void OnEnable() => _map.Enable();
@@ -78,5 +85,6 @@ namespace Game.Platform
         private void OnInteractPerformed(InputAction.CallbackContext context) => InteractPerformed?.Invoke();
         private void OnEscapePerformed(InputAction.CallbackContext context) => EscapePerformed?.Invoke();
         private void OnDropPerformed(InputAction.CallbackContext context) => ReleasePerformed?.Invoke();
+        private void OnUsePerformed(InputAction.CallbackContext context) => UsePerformed?.Invoke();
     }
 }

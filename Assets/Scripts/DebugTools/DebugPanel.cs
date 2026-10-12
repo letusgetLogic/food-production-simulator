@@ -341,20 +341,20 @@ namespace Game.DebugTools
                         break;
 
                     case DosingMachine dosing:
-                        GUILayout.BeginHorizontal();
-                        if (GUILayout.Button("Dosing: sauce empty"))
+                        foreach (DosingUnit unit in dosing.Units)
                         {
-                            Report(_faultMonitor.InjectFault(machine, DosingMachine.FaultReasonSauceEmpty), machine);
+                            GUILayout.BeginHorizontal();
+                            if (GUILayout.Button($"Dosing: {unit.DisplayNameFallback} empty"))
+                            {
+                                Report(_faultMonitor.InjectFault(machine,
+                                    $"{DosingMachine.FaultReasonIngredientEmpty}:{unit.IngredientId}"), machine);
+                            }
+                            if (GUILayout.Button($"Refill {unit.DisplayNameFallback}"))
+                            {
+                                dosing.TryRefill(unit);
+                            }
+                            GUILayout.EndHorizontal();
                         }
-                        if (GUILayout.Button("Refill sauce"))
-                        {
-                            dosing.TryRefill(DosingMedium.Sauce);
-                        }
-                        if (GUILayout.Button("Refill topping"))
-                        {
-                            dosing.TryRefill(DosingMedium.Topping);
-                        }
-                        GUILayout.EndHorizontal();
                         break;
 
                     case PressMachine:
@@ -367,9 +367,9 @@ namespace Game.DebugTools
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Spawn pizza base at dosing"))
+            if (GUILayout.Button("Spawn pizza base at oven"))
             {
-                SpawnFormedPizzaAtDosing();
+                SpawnFormedPizzaAtOven();
             }
             if (GUILayout.Button("Spawn portion at infeed"))
             {
@@ -389,11 +389,15 @@ namespace Game.DebugTools
 
         private int _testProductCounter;
 
-        /// <summary>Spawns a formed pizza base (as if it came out of the press) at the start of the dosing station's belt.</summary>
-        public void SpawnFormedPizzaAtDosing()
+        /// <summary>
+        /// Spawns a formed pizza base (as if it came out of the press) at the start of the pre-bake oven's belt
+        /// (the station that takes FormedPizza) - tests oven, cooling, dosing, freezer and packaging.
+        /// </summary>
+        public void SpawnFormedPizzaAtOven()
         {
-            DosingMachine dosing = FindFirstObjectByType<DosingMachine>();
-            SpawnOnBelt(dosing != null ? dosing.Belt : null, ProductState.FormedPizza);
+            ContinuousProcessStation oven = FindObjectsByType<ContinuousProcessStation>(FindObjectsSortMode.None)
+                .FirstOrDefault(s => s.InputState == ProductState.FormedPizza);
+            SpawnOnBelt(oven != null ? oven.Belt : null, ProductState.FormedPizza);
         }
 
         /// <summary>Spawns a dough portion at the start of the belt behind the portioner (tests buffer + press).</summary>
@@ -415,7 +419,8 @@ namespace Game.DebugTools
 
             Transform drive = belt.transform;
             float length = drive.TryGetComponent(out BoxCollider box) ? box.size.z * Mathf.Abs(drive.lossyScale.z) : 2f;
-            Vector3 position = drive.position - drive.forward * (length * 0.5f - 0.35f) + Vector3.up * 0.15f;
+            // Low drop height: the pre-bake oven chamber is only ~9 cm high and starts right at the belt start.
+            Vector3 position = drive.position - drive.forward * (length * 0.5f - 0.35f) + Vector3.up * 0.06f;
 
             ProductToken token = Instantiate(prefab, position, drive.rotation);
             _testProductCounter++;
@@ -454,7 +459,7 @@ namespace Game.DebugTools
                 QualityResult result = history[i];
                 ProductInstance p = result.Product;
                 GUILayout.Label($"{p.InstanceId}: {result.Summary}  " +
-                                $"[{Fmt(p.MeasuredWeightGrams, "g")} {Fmt(p.DosedSauceGrams, "g S")} {Fmt(p.DosedToppingGrams, "g T")} " +
+                                $"[{Fmt(p.MeasuredWeightGrams, "g")} {string.Join(" ", p.Doses.Select(d => $"{d.Grams:0}g {d.IngredientId}"))} " +
                                 $"{Fmt(p.ActualBakeTimeSeconds, "s")} {Fmt(p.BakeTemperatureCelsius, "°C")}]", _smallStyle);
             }
         }

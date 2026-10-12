@@ -35,6 +35,9 @@ namespace Game.HMI
 
         [Header("Operator commands")]
         [SerializeField] private GameObject _commandRow;
+        [Tooltip("Off: Start, Stop and Reset-to-idle are operated at the machine's physical control panel (EN 60204-1); " +
+                 "the screen keeps only the relevant HMI commands - acknowledge fault and complete maintenance.")]
+        [SerializeField] private bool _showStartStopButtons;
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _stopButton;
         [SerializeField] private Button _acknowledgeFaultButton;
@@ -62,6 +65,16 @@ namespace Game.HMI
             _acknowledgeFaultButton?.onClick.AddListener(() => AcknowledgeFaultRequested?.Invoke());
             _completeMaintenanceButton?.onClick.AddListener(() => CompleteMaintenanceRequested?.Invoke());
             _resetToIdleButton?.onClick.AddListener(() => ResetToIdleRequested?.Invoke());
+
+            // Start/Stop live on the physical control panel at the machine - only acknowledge/maintenance stay here.
+            foreach (Button machineOnly in new[] { _startButton, _stopButton, _resetToIdleButton })
+            {
+                if (machineOnly != null)
+                {
+                    machineOnly.gameObject.SetActive(_showStartStopButtons);
+                }
+            }
+            SetControlEnabled(_controlEnabled);
         }
 
         public void SetMachineName(string machineName)

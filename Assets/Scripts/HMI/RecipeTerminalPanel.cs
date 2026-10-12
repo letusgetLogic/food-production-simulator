@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Globalization;
 using Game.Production;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using Game.Core;
 
 namespace Game.HMI
 {
@@ -153,11 +155,6 @@ namespace Game.HMI
                 Entry("hmi.diameter", "Diameter", r.BaseDiameterCentimeters, "cm"),
                 Entry("hmi.thickness", "Thickness", r.BaseThicknessMillimeters, "mm"),
             });
-            AddSection(root, "text.dosing_station", "Dosing station", new[]
-            {
-                Entry("hmi.sauce", "Sauce", r.SauceGrams, "g"),
-                Entry("hmi.topping", "Topping", r.ToppingGrams, "g"),
-            });
             AddSection(root, "text.oven", "Oven", new[]
             {
                 Entry("hmi.bake_time", "Bake time", r.TargetBakeTimeSeconds, "s", r.BakeTimeToleranceSeconds),
@@ -168,6 +165,10 @@ namespace Game.HMI
                 Entry("hmi.temperature", "Temperature", r.CoolingTemperatureCelsius, "°C"),
                 Entry("hmi.dwell_time", "Dwell time", r.CoolingDurationSeconds, "s"),
             });
+            AddSection(root, "text.dosing_station", "Dosing station", r.DosingIngredients
+                .Where(i => i != null && i.Ingredient != null)
+                .Select(i => Entry(i.Ingredient.NameKey, i.Ingredient.DisplayNameFallback, i.Grams, "g", i.ToleranceGrams))
+                .ToArray());
             AddSection(root, "text.freezer", "Shock freezer", new[]
             {
                 Entry("hmi.temperature", "Temperature", r.FreezingTemperatureCelsius, "°C"),

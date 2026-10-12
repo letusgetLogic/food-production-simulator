@@ -24,6 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Game.Core;
 
 namespace Game.Production
 {
@@ -280,8 +281,14 @@ namespace Game.Production
             NotifyContentChanged(Info(RunningState.Done));
         }
 
+        /// <summary>Button_Down on the panel (UnityEvent): tips the drum.</summary>
+        public void TipDrum() => TryTiltDrum(out _);
+
+        /// <summary>Button_Up on the panel (UnityEvent): turns the drum back upright.</summary>
+        public void DrumUp() => TryResetDrum();
+
         /// <summary>
-        /// Called from the tilt button on the mixer HMI. Explicit operator action — never tilts automatically.
+        /// Called from Button_Down on the mixer control panel. Explicit operator action — never tilts automatically.
         /// No container/sensor check: the ball is spawned at the drop point regardless of what's underneath.
         /// Also starts the drum's visual rotation to 100 deg on the X-axis. Fails if mixing isn't complete
         /// yet or the drum is already tilted (must be reset via TryResetDrum first).

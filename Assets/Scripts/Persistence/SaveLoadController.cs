@@ -162,6 +162,11 @@ namespace Game.Persistence
                     continue; // dough in mixer/pot/hopper is not saved (MVP)
                 }
 
+                if (token.GetComponentInParent<Pallet>() != null)
+                {
+                    continue; // cartons on a pallet are saved by the pallet (count, weight)
+                }
+
                 ProductSave save = ProductSave.From(product);
                 save.Position = token.transform.position;
                 save.Rotation = token.transform.rotation;

@@ -14,18 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Production::Game.Production.SO_DosingConfig
   StartupDurationSeconds: 1
   ShutdownDurationSeconds: 1
-  DefaultSauceGrams: 80
-  MinSauceGrams: 40
-  MaxSauceGrams: 150
-  SauceStepGrams: 5
-  SauceToleranceGrams: 5
-  DefaultToppingGrams: 120
-  MinToppingGrams: 60
-  MaxToppingGrams: 250
-  ToppingStepGrams: 5
-  ToppingToleranceGrams: 10
-  DosingDeviationPercent: 3
-  SauceTankCapacityGrams: 4000
-  ToppingHopperCapacityGrams: 6000
   InitialFillPercent: 100
   LowLevelWarningPercent: 20
+  DosingDeviationPercent: 3

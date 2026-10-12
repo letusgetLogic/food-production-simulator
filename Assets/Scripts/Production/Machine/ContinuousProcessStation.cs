@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Core;
 
 namespace Game.Production
 {
     /// <summary>
-    /// Durchlaufstation (oven, cooling tunnel, shock freezer): products ride through on the station's
+    /// Durchlaufstation (oven, cooling tunnel, shock freezer, packaging): products ride through on the station's
     /// own <see cref="ConveyorBelt"/> and are processed while they are inside the
     /// <see cref="ProcessZone"/> - the station never takes a single product off the belt.
     ///
@@ -24,7 +25,7 @@ namespace Game.Production
     /// Products are handed over by physics (belts), not through a processor interface.
     /// No RecipeDefinition binding in code: dwell/temperature are operator settings from the HMI.
     /// </summary>
-    public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState
+    public class ContinuousProcessStation : MachineBase, IInfeedReadiness, IDownstreamLink, IMachineParameterSource, ISaveableState
     {
         /// <summary>Content messages this station reports via NotifyContentChanged.</summary>
         public enum ProcessInfo
@@ -99,12 +100,24 @@ namespace Game.Production
         /// <inheritdoc />
         public bool IsReadyForInfeed => CurrentState == MachineState.Running && _belt != null && _belt.IsMoving;
 
+        /// <summary>
+        /// Wired by ConveyorLineController: the station's own belt hands its products to the next element
+        /// of the line, so the station order is defined only by the controller's element list.
+        /// </summary>
+        public void SetDownstream(MachineBase downstream)
+        {
+            if (_belt != null)
+            {
+                _belt.SetDownstream(downstream);
+            }
+        }
+
         private bool UsesTemperature => _config.UsesTemperature && _temperatureSensor != null;
 
         /// <summary>True when this station controls a zone temperature (oven, cooling, freezer - not packaging).</summary>
         public bool UsesTemperatureControl => UsesTemperature;
 
-        /// <summary>Input -> output state of this station (e.g. ToppedPizza -> BakedPizza).</summary>
+        /// <summary>Input -> output state of this station (e.g. FormedPizza -> BakedPizza in the pre-bake oven).</summary>
         public ProductState InputState => _config.InputState;
         public ProductState OutputState => _config.OutputState;
 

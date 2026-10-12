@@ -1027,6 +1027,10 @@ MonoBehaviour:
     m_Key: text.pause
     m_Metadata:
       m_Items: []
+  - m_Id: 7615336333914112
+    m_Key: text.put_down
+    m_Metadata:
+      m_Items: []
   - m_Id: 22459634364472
     m_Key: text.portioner
     m_Metadata:
@@ -1397,6 +1401,230 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6059829190144101
     m_Key: hmi.statistics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161412
+    m_Key: defect.mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161414
+    m_Key: defect.mozzarella_high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161413
+    m_Key: defect.mozzarella_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967109
+    m_Key: dosing.dosing_complete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967108
+    m_Key: dosing.ingredient_applied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161408
+    m_Key: dosing.reservoir_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967110
+    m_Key: dosing.reservoir_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161409
+    m_Key: dosing.reservoir_refilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7552876990115840
+    m_Key: fault.emergency_stop.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7552877061419008
+    m_Key: fault.emergency_stop.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161410
+    m_Key: fault.ingredient_empty.msg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161411
+    m_Key: fault.ingredient_empty.remedy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901960
+    m_Key: hmi.cartons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901963
+    m_Key: hmi.cartons_stacked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967106
+    m_Key: hmi.last_mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967107
+    m_Key: hmi.lowest_reservoir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555259441152
+    m_Key: hmi.mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967105
+    m_Key: hmi.mozzarella_reservoir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901959
+    m_Key: hmi.pallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901961
+    m_Key: hmi.pallet_weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901962
+    m_Key: hmi.pallets_completed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967104
+    m_Key: hmi.sauce_reservoir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901964
+    m_Key: hmi.scrap_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901954
+    m_Key: palletizer.carton_placed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901971
+    m_Key: palletizer.fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901972
+    m_Key: palletizer.maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901953
+    m_Key: palletizer.pallet_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901956
+    m_Key: palletizer.pallet_placed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901966
+    m_Key: palletizer.ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901968
+    m_Key: palletizer.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901955
+    m_Key: palletizer.scrap_removed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901967
+    m_Key: palletizer.starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901970
+    m_Key: palletizer.stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901969
+    m_Key: palletizer.stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901952
+    m_Key: palletizer.waiting_for_pallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547453603840
+    m_Key: text.palletizer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901965
+    m_Key: unit.kg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901957
+    m_Key: warning.no_pallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901958
+    m_Key: warning.pallet_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051456
+    m_Key: prompt.interact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051457
+    m_Key: prompt.open_terminal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051458
+    m_Key: prompt.pick_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051459
+    m_Key: prompt.put_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245760
+    m_Key: prompt.take_pallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245761
+    m_Key: prompt.take_pallet_jack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245762
+    m_Key: prompt.forks_up_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245763
+    m_Key: prompt.let_go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245764
+    m_Key: prompt.drum_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245765
+    m_Key: prompt.tip_drum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245766
+    m_Key: prompt.raise_lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245767
+    m_Key: prompt.lower_lift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245768
+    m_Key: prompt.refill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245769
+    m_Key: prompt.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245770
+    m_Key: prompt.stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245771
+    m_Key: prompt.emergency_stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245772
+    m_Key: prompt.release_emergency_stop
     m_Metadata:
       m_Items: []
   m_Metadata:

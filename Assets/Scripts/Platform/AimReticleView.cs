@@ -16,8 +16,10 @@ namespace Game.Platform
     public class AimReticleView : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private AimInteractor _interactor;
         [SerializeField] private Graphic _reticle;
+        [SerializeField] private TextMeshProUGUI _inputKeyLabel;
         [SerializeField] private TextMeshProUGUI _promptLabel;
 
         [Header("Appearance")]
@@ -28,13 +30,16 @@ namespace Game.Platform
         [SerializeField] private float _activeScale = 1.35f;
 
         [Header("Text")]
-        [SerializeField] private string _defaultPrompt = "(E) Interact";
-        [SerializeField] private string _holdPrompt = "(Q) Release";
+        [SerializeField] private string _inputKeyInteract = "E";
+        [SerializeField] private string _inputKeyRelease = "Q";
+        [SerializeField] private string _defaultPromptInteract = "Interact";
+        [SerializeField] private string _defaultPromptRelease = "Release";
 
         private IInteractable _boundTarget;
 
         private void OnEnable()
         {
+            _uiFocusChannel.FocusChanged += SetReticle;
             _interactor.HoldChannel.HoldChanged += OnHoldChanged;
             _interactor.TargetChanged += OnTargetChanged;
             BindByChangingTarget(_interactor.CurrentTarget);
@@ -42,6 +47,7 @@ namespace Game.Platform
 
         private void OnDisable()
         {
+            _uiFocusChannel.FocusChanged -= SetReticle;
             _interactor.HoldChannel.HoldChanged -= OnHoldChanged;
             _interactor.TargetChanged -= OnTargetChanged;
             BindByChangingTarget(null);
@@ -85,18 +91,29 @@ namespace Game.Platform
                     Vector3.one * (canInteract ? _activeScale : _idleScale);
             }
 
-            if (_promptLabel != null && _interactor.HoldChannel.HoldingObject == null)
-            {
-                // IInteractable carries no display text of its own, so this is a
-                // generic label. Swap in a per-target string here once the team
-                // adds one (e.g. a small optional interface on top of IInteractable).
-                _promptLabel.text = canInteract ? _defaultPrompt : string.Empty;
-            }
+            if (_interactor.HoldChannel.HoldingObject)
+                return;
+
+            _inputKeyLabel.text = !canInteract ? string.Empty : $"({_inputKeyInteract})";
+
+            // Per-target action text ("("Open terminal"); the generic label only if a target has none.
+            string text = hasTarget ? _boundTarget.InteractionText : null;
+            _promptLabel.text = !canInteract ? string.Empty
+                : string.IsNullOrEmpty(text) ? _defaultPromptInteract : $"{text}";
         }
 
         private void OnHoldChanged(bool isHeld)
         {
-             _promptLabel.text = isHeld ? _holdPrompt : string.Empty;
+            _inputKeyLabel.text = !isHeld ? string.Empty : $"({_inputKeyRelease})";
+
+            // What the keys do with the held item/tool now ("Put down", "(R) Forks up/down  Let go").
+            string holdText = _interactor.HoldChannel.HoldingObject is IReleaseable prompt ? prompt.ReleaseText : null;
+            _promptLabel.text = !isHeld ? string.Empty : string.IsNullOrEmpty(holdText) ? _defaultPromptRelease : holdText;
+        }
+
+        private void SetReticle(bool isFocusingUI)
+        {
+            _reticle.enabled = !isFocusingUI;
         }
     }
 }

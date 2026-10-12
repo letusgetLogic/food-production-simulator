@@ -13,17 +13,17 @@ namespace Game.Production
     /// Material flow at this station:
     ///   1. The worker puts the dough ball (from the mixer) into the pot on the lift platform.
     ///      The pot's PresenceSensor detects it -> platform colour + HMI content message.
-    ///   2. The operator raises the lift (<see cref="TryRaiseLift"/>, LiftUpButton):
+    ///   2. The operator raises the lift (<see cref="TryRaiseLift"/>, Button_Up on the control panel):
     ///      <see cref="PortionerLiftArm"/> moves up and tips the pot, the dough ball falls into the
     ///      hopper, the Hopper's intake trigger books its weight. <see cref="TryLowerLift"/>
-    ///      (LiftDownButton) brings it back down.
+    ///      (Button_Down on the control panel) brings it back down.
     ///   3. While Running and the hopper holds at least one portion's weight, the machine
     ///      portions: after the portioning duration the hopper's dough balls shrink by the portion
     ///      weight and a portion prefab is instantiated at the spawn point with a fresh
     ///      ProductInstance (PortionedDough). A rest below one portion waits in the hopper
     ///      (shown on the terminal) until the next dough ball arrives.
-    ///   4. <see cref="TryDrainHopper"/> (HopperDrainButton) lets the whole hopper content drop
-    ///      out without creating products.
+    ///   4. Entering Maintenance empties the hopper (<see cref="TryDrainHopper"/>): the whole content
+    ///      drops out without creating products (cleaning before the restart).
     ///
     /// The Portionierer is a source station
     /// (bulk dough in, individual products out), same as MixerMachine.
@@ -119,15 +119,7 @@ namespace Game.Production
         /// <summary>Raised whenever a portion has been instantiated at the spawn point.</summary>
         public event Action<ProductInstance> PortionDispatched;
 
-        public bool IsPortioning => _isProcessing;
-
-        public float TargetWeightGrams => _targetWeightGrams;
-        public float ToleranceGrams => _toleranceGrams;
-        public float PortioningDurationSeconds => _portioningDurationSeconds;
         public int PortionsProduced => _portionsProduced;
-
-        /// <summary>Weight of the last dispatched portion, or a negative value if none was produced yet.</summary>
-        public float LastPortionWeightGrams => _lastPortionWeightGrams;
 
         /// <summary>0..1 progress of the portion currently being produced.</summary>
         public float PortioningProgress01 => _isProcessing && _portioningDurationSeconds > 0f
@@ -247,21 +239,27 @@ namespace Game.Production
         // ---- Lift / pot ----
 
         /// <summary>
-        /// Operator action (LiftUpButton): raise the lift and tip the pot. Not possible in
+        /// Operator action (Button_Up on the control panel): raise the lift and tip the pot. Not possible in
         /// Fault/Maintenance; the lift itself doesn't care whether a pot is on it.
         /// </summary>
         public bool TryRaiseLift() => CanOperateLift() && _liftArm.TryRaise();
 
-        /// <summary>Operator action (LiftDownButton): tilt the pot back and lower the lift.</summary>
+        /// <summary>Operator action (Button_Down on the control panel): tilt the pot back and lower the lift.</summary>
         public bool TryLowerLift() => CanOperateLift() && _liftArm.TryLower();
 
+        /// <summary>Button_Up on the panel (UnityEvent): raises the lift and tips the pot.</summary>
+        public void RaiseLift() => TryRaiseLift();
+
+        /// <summary>Button_Down on the panel (UnityEvent): tilts the pot back and lowers the lift.</summary>
+        public void LowerLift() => TryLowerLift();
+
         /// <summary>
-        /// Operator action (HopperDrainButton): lets the whole hopper content drop out without
-        /// creating products. A portion currently in progress is cancelled.
+        /// Lets the whole hopper content drop out without creating products (done automatically when
+        /// maintenance starts; also used by the debug panel). A portion currently in progress is cancelled.
         /// </summary>
         public bool TryDrainHopper()
         {
-            if (_hopper == null || CurrentState == MachineState.Maintenance)
+            if (_hopper == null)
             {
                 return false;
             }
@@ -272,11 +270,20 @@ namespace Game.Production
                 return false;
             }
 
-            Report(PortionerInfo.HopperDraining, force: true);
+            if (CurrentState != MachineState.Maintenance)
+            {
+                Report(PortionerInfo.HopperDraining, force: true);
+            }
             return true;
         }
 
-        private void HandleDrainFinished() => Report(PortionerInfo.HopperEmpty, force: true);
+        private void HandleDrainFinished()
+        {
+            if (CurrentState != MachineState.Maintenance)
+            {
+                Report(PortionerInfo.HopperEmpty, force: true);
+            }
+        }
 
         private bool CanOperateLift()
         {
@@ -601,7 +608,11 @@ namespace Game.Production
 
         protected override void OnEnterStopped() => Report(PortionerInfo.Stopped, force: true);
 
-        protected override void OnEnterMaintenance() => Report(PortionerInfo.Maintenance, force: true);
+        protected override void OnEnterMaintenance()
+        {
+            TryDrainHopper();
+            Report(PortionerInfo.Maintenance, force: true);
+        }
 
         protected override void OnEnterStarting()
         {

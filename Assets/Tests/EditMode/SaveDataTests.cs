@@ -30,18 +30,19 @@ namespace Game.Tests
             var product = new ProductInstance("p1", null, ProductState.BakedPizza)
             {
                 MeasuredWeightGrams = 251f,
-                DosedSauceGrams = null,
                 ActualBakeTimeSeconds = 15.2f,
                 BakeTemperatureCelsius = 279f
             };
             product.Reject("PressInterrupted");
+            product.SetDose("mozzarella", 118f);
 
             ProductInstance restored = ProductSave.From(product).ToInstance();
 
             Assert.AreEqual("p1", restored.InstanceId);
             Assert.AreEqual(ProductState.BakedPizza, restored.CurrentState);
             Assert.AreEqual(251f, restored.MeasuredWeightGrams);
-            Assert.IsNull(restored.DosedSauceGrams);
+            Assert.IsNull(restored.GetDose("sauce"));
+            Assert.AreEqual(118f, restored.GetDose("mozzarella"));
             Assert.AreEqual(15.2f, restored.ActualBakeTimeSeconds);
             Assert.AreEqual(279f, restored.BakeTemperatureCelsius);
             Assert.IsNull(restored.FreezingTemperatureCelsius);
@@ -94,9 +95,30 @@ namespace Game.Tests
         }
 
         [Test]
+        public void Migration_RejectsVersion1FromOldLineLayout()
+        {
+            Assert.IsFalse(SaveMigrations.Migrate(new SaveData { Version = 1 }, out string error));
+            StringAssert.Contains("old line layout", error);
+        }
+
+        [Test]
+        public void ProductSave_StoresStateByName()
+        {
+            ProductSave save = ProductSave.From(new ProductInstance("p1", null, ProductState.CooledPizza));
+            Assert.AreEqual("CooledPizza", save.State);
+
+            var data = new SaveData();
+            data.Products.Add(new ProductSave { InstanceId = "x", State = "NoSuchState" });
+            Assert.IsFalse(SaveMigrations.Migrate(data, out _));
+
+            data.Products[0].State = "3";
+            Assert.IsFalse(SaveMigrations.Migrate(data, out _), "numeric states (version 1 style) are not accepted");
+        }
+
+        [Test]
         public void Migration_FillsMissingLists()
         {
-            SaveData data = JsonUtility.FromJson<SaveData>("{\"Version\":1}");
+            SaveData data = JsonUtility.FromJson<SaveData>("{\"Version\":2}");
             Assert.IsTrue(SaveMigrations.Migrate(data, out _));
             Assert.IsNotNull(data.Machines);
             Assert.IsNotNull(data.Products);

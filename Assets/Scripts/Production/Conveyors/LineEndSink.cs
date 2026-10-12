@@ -5,9 +5,12 @@ using UnityEngine;
 namespace Game.Production
 {
     /// <summary>
-    /// End of the line (behind the last station): every product that reaches this trigger volume leaves
-    /// the simulation. Raises <see cref="ProductArrived"/> once per product - the QualitySystem judges it
-    /// there - and removes the physical object after a short delay so the belt end never piles up.
+    /// End of the line (behind the last station): every product that reaches this trigger volume is handed
+    /// over once. Raises <see cref="ProductArrived"/> - the QualitySystem judges it there - then offers it to
+    /// the optional <see cref="IProductReceiver"/> (palletizer: good cartons go onto the pallet). Products the
+    /// receiver does not take (scrap) are removed after a short delay so the belt end never piles up.
+    /// While the receiver is not accepting (no pallet / pallet full) products stay on the belt and are
+    /// handed over later.
     ///
     /// Like a sensor it does not evaluate anything itself. Products carried by the worker (kinematic)
     /// are ignored until they are dropped.
@@ -18,7 +21,12 @@ namespace Game.Production
         [Tooltip("Seconds the product stays visible after arriving before it is removed.")]
         [Min(0f)] [SerializeField] private float _despawnDelaySeconds = 0.5f;
 
+        [Tooltip("Optional: takes the products (palletizer). Empty = products are removed after the quality check.")]
+        [SerializeField] private MonoBehaviour _receiver;
+
         private readonly HashSet<ProductToken> _handled = new HashSet<ProductToken>();
+
+        private IProductReceiver Receiver => _receiver as IProductReceiver;
 
         /// <summary>Raised once per product that reaches the end of the line.</summary>
         public event Action<ProductInstance> ProductArrived;
@@ -31,7 +39,12 @@ namespace Game.Production
             GetComponent<BoxCollider>().isTrigger = true;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other) => TryHandle(other);
+
+        // Products that arrived while the receiver was not accepting are handed over as soon as it is.
+        private void OnTriggerStay(Collider other) => TryHandle(other);
+
+        private void TryHandle(Collider other)
         {
             ProductToken token = ProductColliderUtility.FindToken(other);
             if (token == null || token.Product == null || _handled.Contains(token))
@@ -44,10 +57,20 @@ namespace Game.Production
                 return; // held by the worker or a machine
             }
 
+            IProductReceiver receiver = Receiver;
+            if (receiver != null && !receiver.IsAccepting)
+            {
+                return; // wait (no pallet / pallet full) - the belt holds the product
+            }
+
             _handled.Add(token);
             ArrivedCount++;
             ProductArrived?.Invoke(token.Product);
-            Destroy(token.gameObject, _despawnDelaySeconds);
+
+            if (receiver == null || !receiver.TryReceive(token))
+            {
+                Destroy(token.gameObject, _despawnDelaySeconds);
+            }
         }
 
         private void Update()

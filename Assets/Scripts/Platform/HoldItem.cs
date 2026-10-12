@@ -9,6 +9,8 @@ namespace Game.Platform
         [SerializeField] private PlayerInputReader _input;
         [SerializeField] private Transform _holdItemPoint;
         [SerializeField] private SO_HoldPoint _holdPointChannel;
+        [Tooltip("Relays the Use input (R) to the held tool, e.g. pallet jack forks.")]
+        [SerializeField] private SO_UseRequestChannel _useRequestChannel;
 
         private void Awake()
         {
@@ -18,11 +20,21 @@ namespace Game.Platform
         private void OnEnable()
         {
             _input.ReleasePerformed += OnDropPerformed;
+            _input.UsePerformed += OnUsePerformed;
         }
 
         private void OnDisable()
         {
             _input.ReleasePerformed -= OnDropPerformed;
+            _input.UsePerformed -= OnUsePerformed;
+        }
+
+        private void OnUsePerformed()
+        {
+            if (_useRequestChannel != null)
+            {
+                _useRequestChannel.RequestUse();
+            }
         }
 
         private void OnDropPerformed()

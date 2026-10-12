@@ -11,6 +11,8 @@ namespace Game.Tests
         private GameObject _go;
         private QualityInspector _inspector;
         private SO_QualitySpec _spec;
+        private SO_DosingIngredient _sauce;
+        private SO_DosingIngredient _mozzarella;
 
         [SetUp]
         public void SetUp()
@@ -18,6 +20,10 @@ namespace Game.Tests
             _go = new GameObject("QualityInspector");
             _inspector = _go.AddComponent<QualityInspector>();
             _spec = ScriptableObject.CreateInstance<SO_QualitySpec>();
+            _sauce = Ingredient("sauce");
+            _mozzarella = Ingredient("mozzarella");
+            _spec.Ingredients.Add(new IngredientSpec { Ingredient = _sauce, TargetGrams = 80f, ToleranceGrams = 8f });
+            _spec.Ingredients.Add(new IngredientSpec { Ingredient = _mozzarella, TargetGrams = 120f, ToleranceGrams = 12f });
 
             SetField(_inspector, "_spec", _spec);
             SetField(_inspector, "_logResults", false);
@@ -28,21 +34,36 @@ namespace Game.Tests
         {
             Object.DestroyImmediate(_go);
             Object.DestroyImmediate(_spec);
+            Object.DestroyImmediate(_sauce);
+            Object.DestroyImmediate(_mozzarella);
+        }
+
+        private static SO_DosingIngredient Ingredient(string id)
+        {
+            var ingredient = ScriptableObject.CreateInstance<SO_DosingIngredient>();
+            ingredient.Id = id;
+            return ingredient;
         }
 
         private static void SetField(object target, string field, object value) =>
             target.GetType().GetField(field, BindingFlags.Instance | BindingFlags.NonPublic).SetValue(target, value);
 
         /// <summary>A packaged Margherita exactly on the spec defaults.</summary>
-        private static ProductInstance GoodPizza() => new ProductInstance
+        private static ProductInstance GoodPizza()
+        {
+            ProductInstance pizza = GoodPizzaWithoutDoses();
+            pizza.SetDose("sauce", 80f);
+            pizza.SetDose("mozzarella", 120f);
+            return pizza;
+        }
+
+        private static ProductInstance GoodPizzaWithoutDoses() => new ProductInstance
         {
             InstanceId = "test",
             CurrentState = ProductState.PackagedPizza,
             MeasuredWeightGrams = 250f,
             FormedDiameterCm = 28f,
             FormedThicknessMm = 3f,
-            DosedSauceGrams = 80f,
-            DosedToppingGrams = 120f,
             ActualBakeTimeSeconds = 15f,
             BakeTemperatureCelsius = 280f,
             CoolingTemperatureCelsius = 20f,
@@ -125,12 +146,33 @@ namespace Game.Tests
         public void MissingMeasurement_DependsOnRequireAllMeasurements()
         {
             ProductInstance pizza = GoodPizza();
-            pizza.DosedSauceGrams = null;
+            pizza.ClearDose("sauce");
 
             Assert.IsFalse(_inspector.Evaluate(pizza).IsGood);
 
             _spec.RequireAllMeasurements = false;
             Assert.IsTrue(_inspector.Evaluate(pizza).IsGood);
+        }
+
+        [Test]
+        public void IngredientOutOfTolerance_GivesIngredientDefect()
+        {
+            ProductInstance pizza = GoodPizza();
+            pizza.SetDose("mozzarella", 90f);
+            pizza.SetDose("sauce", 95f);
+
+            QualityResult result = _inspector.Evaluate(pizza);
+            CollectionAssert.Contains(result.Defects, "MozzarellaLow");
+            CollectionAssert.Contains(result.Defects, "SauceHigh");
+        }
+
+        [Test]
+        public void MissingIngredient_GivesMissingDefect()
+        {
+            ProductInstance pizza = GoodPizza();
+            pizza.ClearDose("mozzarella");
+
+            CollectionAssert.Contains(_inspector.Evaluate(pizza).Defects, "MozzarellaMissing");
         }
 
         [Test]

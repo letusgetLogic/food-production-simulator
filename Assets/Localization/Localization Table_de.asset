@@ -1244,7 +1244,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703357
-    m_Localized: "Ziele auf das Rezept-Terminal und drücke {0} – oder wechsle an einem Terminal zu „Rezept“. Dort stehen die Margherita-Werte für jede Maschine. Mit Q schließen."
+    m_Localized: "Ziele auf das Rezept-Terminal und dr\xFCcke {0} \u2013 oder wechsle
+      an einem Terminal zu \u201ERezept\u201C. Dort stehen die Margherita-Werte f\xFCr
+      jede Maschine. Mit Q schlie\xDFen."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703358
@@ -1422,6 +1424,237 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6554184321544200
     m_Localized: "Hauptmen\xFC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555259441152
+    m_Localized: Mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967104
+    m_Localized: Saucentank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967105
+    m_Localized: "Mozzarella-Beh\xE4lter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967106
+    m_Localized: Letzter Mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967107
+    m_Localized: "Niedrigster F\xFCllstand"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967108
+    m_Localized: Zutat aufgetragen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967109
+    m_Localized: Pizza belegt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555313967110
+    m_Localized: "Beh\xE4lter fast leer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161408
+    m_Localized: "Beh\xE4lter leer \u2013 auff\xFCllen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161409
+    m_Localized: "Beh\xE4lter aufgef\xFCllt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161410
+    m_Localized: "Zutatenbeh\xE4lter leer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161411
+    m_Localized: "Leeren Beh\xE4lter an der Dosierstation auff\xFCllen (blaue +-Taste
+      am Bedienpult), quittieren, Wartung abschlie\xDFen, starten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161412
+    m_Localized: Mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161413
+    m_Localized: Zu wenig Mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7496555318161414
+    m_Localized: Zu viel Mozzarella
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547453603840
+    m_Localized: Palettierer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901952
+    m_Localized: Wartet auf leere Palette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901953
+    m_Localized: "Palette voll \u2013 leere Palette bereitstellen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901954
+    m_Localized: Karton abgelegt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901955
+    m_Localized: Ausschuss aussortiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901956
+    m_Localized: Palette in Position
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901957
+    m_Localized: Keine Palette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901958
+    m_Localized: Palette voll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901959
+    m_Localized: Palette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901960
+    m_Localized: Kartons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901961
+    m_Localized: Palettengewicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901962
+    m_Localized: Volle Paletten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901963
+    m_Localized: Kartons gestapelt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901964
+    m_Localized: Ausschuss aussortiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901965
+    m_Localized: kg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901966
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901967
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901968
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901969
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901970
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901971
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7522547675901972
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7552876990115840
+    m_Localized: "Not-Halt bet\xE4tigt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7552877061419008
+    m_Localized: "Gefahr beseitigen, Not-Halt am Bedienpult entriegeln (erneut dr\xFCcken),
+      St\xF6rung am Terminal quittieren und Wartung abschlie\xDFen, dann Start (I)
+      dr\xFCcken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336333914112
+    m_Localized: Ablegen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051456
+    m_Localized: Interagieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051457
+    m_Localized: "Terminal \xF6ffnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051458
+    m_Localized: Aufheben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336380051459
+    m_Localized: Abstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245760
+    m_Localized: Palette nehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245761
+    m_Localized: Hubwagen nehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245762
+    m_Localized: Gabel heben/senken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245763
+    m_Localized: Loslassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245764
+    m_Localized: Trommel hochfahren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245765
+    m_Localized: Trommel kippen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245766
+    m_Localized: Lift hochfahren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245767
+    m_Localized: Lift absenken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245768
+    m_Localized: "Nachf\xFCllen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245769
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245770
+    m_Localized: Stopp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245771
+    m_Localized: Not-Halt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7615336384245772
+    m_Localized: Not-Halt entriegeln
     m_Metadata:
       m_Items: []
   references:

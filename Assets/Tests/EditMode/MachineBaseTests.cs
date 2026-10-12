@@ -121,5 +121,58 @@ namespace Game.Tests
             Assert.AreEqual(string.Empty, _machine.WarningReason);
             Assert.AreEqual(2, events);
         }
+    
+        [Test]
+        public void EmergencyStop_FaultsAndBlocksResetAndStartUntilReleased()
+        {
+            var device = new object();
+            _machine.StartRun();
+            _machine.ForceState(MachineState.Running);
+
+            _machine.EngageEmergencyStop(device);
+            Assert.AreEqual(MachineState.Fault, _machine.CurrentState);
+            Assert.AreEqual(MachineBase.FaultReasonEmergencyStop, _machine.FaultReason);
+            Assert.IsTrue(_machine.IsEmergencyStopEngaged);
+
+            _machine.AcknowledgeFault();
+            Assert.AreEqual(MachineState.Fault, _machine.CurrentState, "no reset while latched");
+
+            _machine.ReleaseEmergencyStop(device);
+            Assert.IsFalse(_machine.IsEmergencyStopEngaged);
+            Assert.AreEqual(MachineState.Fault, _machine.CurrentState, "releasing does not restart");
+
+            _machine.AcknowledgeFault();
+            _machine.CompleteMaintenance();
+            Assert.AreEqual(MachineState.Ready, _machine.CurrentState);
+        }
+
+        [Test]
+        public void EmergencyStop_TwoDevices_BothMustBeReleased()
+        {
+            var machinePanel = new object();
+            var linePanel = new object();
+            _machine.EngageEmergencyStop(machinePanel);
+            _machine.EngageEmergencyStop(linePanel);
+            _machine.ReleaseEmergencyStop(machinePanel);
+            Assert.IsTrue(_machine.IsEmergencyStopEngaged);
+
+            _machine.ReleaseEmergencyStop(linePanel);
+            Assert.IsFalse(_machine.IsEmergencyStopEngaged);
+        }
+
+        [Test]
+        public void EmergencyStop_BlocksStartFromReady()
+        {
+            var device = new object();
+            _machine.EngageEmergencyStop(device);
+            _machine.ReleaseEmergencyStop(device);
+            _machine.AcknowledgeFault();
+            _machine.CompleteMaintenance();
+
+            _machine.EngageEmergencyStop(device);
+            _machine.ReleaseEmergencyStop(device);
+            _machine.StartRun();
+            Assert.AreEqual(MachineState.Fault, _machine.CurrentState);
+        }
     }
 }

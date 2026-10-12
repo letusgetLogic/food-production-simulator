@@ -6,6 +6,7 @@ using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.Build.Reporting;
 using UnityEditor.Localization;
 using UnityEngine;
+using Game.Core;
 
 namespace Game.EditorTools
 {

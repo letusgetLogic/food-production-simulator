@@ -24,8 +24,13 @@ MonoBehaviour:
   PortionWeightToleranceGrams: 15
   BaseDiameterCentimeters: 28
   BaseThicknessMillimeters: 3
-  SauceGrams: 80
-  ToppingGrams: 120
+  DosingIngredients:
+  - Ingredient: {fileID: 11400000, guid: e1a8b267ad17e62409da6bfffa2ee118, type: 2}
+    Grams: 80
+    ToleranceGrams: 8
+  - Ingredient: {fileID: 11400000, guid: 3ecd6e5df2cf28e47a2aba2b480be079, type: 2}
+    Grams: 120
+    ToleranceGrams: 12
   TargetBakeTimeSeconds: 15
   BakeTimeToleranceSeconds: 1.5
   TargetBakeTemperatureCelsius: 280

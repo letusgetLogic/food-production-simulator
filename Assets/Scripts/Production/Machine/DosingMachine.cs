@@ -1,47 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Game.Core;
 using Random = UnityEngine.Random;
 
 namespace Game.Production
 {
-    /// <summary>Medium a dosing unit applies.</summary>
-    public enum DosingMedium
-    {
-        Sauce,
-        Topping
-    }
-
     /// <summary>
-    /// Fourth production station (Dosierstation): applies sauce and topping to pizza bases while they
-    /// ride through on the station's own belt - continuous, like a waterfall applicator, the product is
-    /// never taken off the belt.
+    /// Dosing station (Dosierstation), modular: applies the ingredients of its <see cref="DosingUnit"/>s to
+    /// pre-baked, cooled pizza bases while they ride through on the station's own belt - continuous, the
+    /// product is never taken off the belt. Line order: press -> oven (pre-bake) -> cooling -> dosing -> freezer.
     ///
-    /// Material flow:
-    ///   1. FormedPizza enters the <see cref="_sauceZone"/> under the sauce nozzle -> SaucedPizza,
-    ///      the dosed amount (setpoint +- dosing deviation) is taken from the sauce tank and recorded
-    ///      in <see cref="ProductInstance.DosedSauceGrams"/>.
-    ///   2. SaucedPizza enters the <see cref="_toppingZone"/> under the topping dispenser -> ToppedPizza,
-    ///      recorded in <see cref="ProductInstance.DosedToppingGrams"/>.
-    ///   The pizza prefab (PizzaStateVisual) follows the state automatically (Sauce / Toppings visuals).
+    /// Units (dispensers) are the child <see cref="DosingUnit"/>s in hierarchy order, e.g. tomato sauce, then
+    /// mozzarella. Adding or replacing an ingredient needs no code: add/duplicate a unit, assign an
+    /// <see cref="SO_DosingIngredient"/>. Inactive units are skipped.
     ///
-    /// Reservoirs: sauce tank and topping hopper are consumed per pizza. Below LowLevelWarningPercent
-    /// -> warning (HMI amber); not enough for the next pizza -> Fault "SauceEmpty"/"ToppingEmpty",
-    /// the belt stops. The operator refills with the refill buttons at the station (allowed in any
-    /// state) and clears the fault via the terminal (Acknowledge -> Maintenance -> Complete -> Start).
+    /// Material flow (per unit, when a product enters the zone under its round head):
+    ///   - the first unit takes a CooledPizza (pre-baked, cooled base), later units take a SaucedPizza that has
+    ///     received all ingredients of the previous units;
+    ///   - the dose (setpoint +- dosing deviation) is taken from the unit's reservoir and recorded on the
+    ///     product (<see cref="ProductInstance.SetDose"/>, by ingredient id);
+    ///   - state: SaucedPizza while dosing is in progress, ToppedPizza after the last unit.
+    ///   The pizza prefab shows each dosed ingredient (PizzaIngredientVisual).
     ///
-    /// Wrong products (e.g. an unpressed dough, or a base that missed the sauce) pass through
-    /// unchanged and only raise a short warning - judging them is the QualitySystem's job (Woche 2).
+    /// Reservoirs: below LowLevelWarningPercent -> warning (HMI amber); not enough for the next pizza ->
+    /// Fault "IngredientEmpty:&lt;id&gt;", the belt stops. The operator refills with the unit's refill button
+    /// (allowed in any state) and clears the fault via the terminal (Acknowledge -> Maintenance -> Complete -> Start).
+    ///
+    /// Wrong products (e.g. a base that was not pre-baked/cooled, or one that missed a dispenser) pass through
+    /// unchanged and only raise a short warning - judging them is the QualitySystem's job.
     ///
     /// Upstream belts see this station through <see cref="IsReadyForInfeed"/>: while it is not running,
     /// the belt before it holds the pizzas instead of pushing them onto a stopped belt.
-    /// Products are handed over by physics (belts), not through a processor interface.
     /// No RecipeDefinition binding in code: amounts are operator settings from the HMI.
     /// </summary>
-    public class DosingMachine : MachineBase, IInfeedReadiness, IMachineParameterSource, ISaveableState
+    public class DosingMachine : MachineBase, IInfeedReadiness, IDownstreamLink, IMachineParameterSource, ISaveableState
     {
-        /// <summary>Content messages this station reports via NotifyContentChanged.</summary>
+        /// <summary>Content messages this station reports via NotifyContentChanged (detail = ingredient).</summary>
         public enum DosingInfo
         {
             Ready,
@@ -51,20 +48,17 @@ namespace Game.Production
             Stopped,
             Fault,
             Maintenance,
-            SauceApplied,
-            ToppingApplied,
-            SauceLow,
-            ToppingLow,
-            SauceEmpty,
-            ToppingEmpty,
-            SauceRefilled,
-            ToppingRefilled,
+            IngredientApplied,
+            DosingComplete,
+            ReservoirLow,
+            ReservoirEmpty,
+            ReservoirRefilled,
             WrongProduct,
             BeltFault
         }
 
-        public const string FaultReasonSauceEmpty = "SauceEmpty";
-        public const string FaultReasonToppingEmpty = "ToppingEmpty";
+        /// <summary>Fault code prefix; the full reason is "IngredientEmpty:&lt;ingredient id&gt;".</summary>
+        public const string FaultReasonIngredientEmpty = "IngredientEmpty";
         public const string FaultReasonBeltFault = "BeltFault";
         public const string WarningReasonLowLevel = "LowLevel";
         public const string WarningReasonWrongProduct = "WrongProduct";
@@ -77,22 +71,11 @@ namespace Game.Production
         [Tooltip("The belt running through the station. Owned by this station: it is started/stopped with it.")]
         [SerializeField] private ConveyorBelt _belt;
 
-        [Tooltip("Trigger volume under the sauce nozzle (FormedPizza -> SaucedPizza).")]
-        [SerializeField] private ProcessZone _sauceZone;
-
-        [Tooltip("Trigger volume under the topping dispenser (SaucedPizza -> ToppedPizza).")]
-        [SerializeField] private ProcessZone _toppingZone;
-
         [Header("HMI Content")]
         [SerializeField] private List<Content<DosingInfo>> _contents = new List<Content<DosingInfo>>();
 
-        private float _sauceSetpointGrams;
-        private float _toppingSetpointGrams;
-        private float _sauceLevelGrams;
-        private float _toppingLevelGrams;
+        private readonly List<DosingUnit> _units = new List<DosingUnit>();
 
-        private float _lastSauceGrams = -1f;
-        private float _lastToppingGrams = -1f;
         private int _completedCount;
         private int _wrongProductCount;
         private float _wrongProductWarningTimer;
@@ -105,15 +88,11 @@ namespace Game.Production
         private List<MachineParameter> _parameters;
         private List<MachineReadout> _readouts;
 
-        /// <summary>Raised when a pizza has received its topping (= left the station as ToppedPizza).</summary>
+        /// <summary>Raised when a pizza has received its last ingredient (= leaves the station as ToppedPizza).</summary>
         public event Action<ProductInstance> ProductDosed;
 
-        public float SauceSetpointGrams => _sauceSetpointGrams;
-        public float ToppingSetpointGrams => _toppingSetpointGrams;
-        public float SauceLevelGrams => _sauceLevelGrams;
-        public float ToppingLevelGrams => _toppingLevelGrams;
-        public float SauceLevel01 => _config.SauceTankCapacityGrams > 0f ? _sauceLevelGrams / _config.SauceTankCapacityGrams : 0f;
-        public float ToppingLevel01 => _config.ToppingHopperCapacityGrams > 0f ? _toppingLevelGrams / _config.ToppingHopperCapacityGrams : 0f;
+        /// <summary>Dispensers in dosing order.</summary>
+        public IReadOnlyList<DosingUnit> Units => _units;
         public int CompletedCount => _completedCount;
         public int WrongProductCount => _wrongProductCount;
         public ConveyorBelt Belt => _belt;
@@ -121,33 +100,43 @@ namespace Game.Production
         /// <inheritdoc />
         public bool IsReadyForInfeed => CurrentState == MachineState.Running && _belt != null && _belt.IsMoving;
 
-        private bool IsSauceLow => SauceLevel01 * 100f < _config.LowLevelWarningPercent;
-        private bool IsToppingLow => ToppingLevel01 * 100f < _config.LowLevelWarningPercent;
-        private bool IsSauceInsufficient => _sauceLevelGrams < _sauceSetpointGrams;
-        private bool IsToppingInsufficient => _toppingLevelGrams < _toppingSetpointGrams;
+        /// <summary>
+        /// Wired by ConveyorLineController: the station's own belt hands its products to the next element
+        /// of the line, so the station order is defined only by the controller's element list.
+        /// </summary>
+        public void SetDownstream(MachineBase downstream)
+        {
+            if (_belt != null)
+            {
+                _belt.SetDownstream(downstream);
+            }
+        }
+
+        /// <summary>Unit for an ingredient id, or null.</summary>
+        public DosingUnit FindUnit(string ingredientId) => _units.Find(u => u.IngredientId == ingredientId);
 
         // ---- Unity lifecycle ----
 
         private void Awake()
         {
-            _sauceSetpointGrams = _config.DefaultSauceGrams;
-            _toppingSetpointGrams = _config.DefaultToppingGrams;
+            _units.Clear();
+            _units.AddRange(GetComponentsInChildren<DosingUnit>());
+            if (_units.Count == 0)
+            {
+                Debug.LogWarning($"{name}: dosing station without DosingUnit children - nothing is dosed.", this);
+            }
 
-            float initial = Mathf.Clamp01(_config.InitialFillPercent / 100f);
-            _sauceLevelGrams = _config.SauceTankCapacityGrams * initial;
-            _toppingLevelGrams = _config.ToppingHopperCapacityGrams * initial;
+            foreach (DosingUnit unit in _units)
+            {
+                unit.Initialize(_config.InitialFillPercent);
+            }
         }
 
         private void OnEnable()
         {
-            if (_sauceZone != null)
+            foreach (DosingUnit unit in _units)
             {
-                _sauceZone.ProductEntered += HandleSauceZoneEntered;
-            }
-
-            if (_toppingZone != null)
-            {
-                _toppingZone.ProductEntered += HandleToppingZoneEntered;
+                unit.ProductEntered += HandleUnitProductEntered;
             }
 
             if (_belt != null)
@@ -158,14 +147,9 @@ namespace Game.Production
 
         private void OnDisable()
         {
-            if (_sauceZone != null)
+            foreach (DosingUnit unit in _units)
             {
-                _sauceZone.ProductEntered -= HandleSauceZoneEntered;
-            }
-
-            if (_toppingZone != null)
-            {
-                _toppingZone.ProductEntered -= HandleToppingZoneEntered;
+                unit.ProductEntered -= HandleUnitProductEntered;
             }
 
             if (_belt != null)
@@ -187,55 +171,32 @@ namespace Game.Production
             }
 
             // Not enough for the next pizza: stop before a base passes through undosed.
-            if (IsSauceInsufficient)
+            DosingUnit empty = _units.Find(u => u.IsInsufficient);
+            if (empty != null)
             {
-                Report(DosingInfo.SauceEmpty, force: true);
-                TriggerFault(FaultReasonSauceEmpty);
-                return;
-            }
-
-            if (IsToppingInsufficient)
-            {
-                Report(DosingInfo.ToppingEmpty, force: true);
-                TriggerFault(FaultReasonToppingEmpty);
+                Report(DosingInfo.ReservoirEmpty, empty.DisplayName, force: true);
+                TriggerFault($"{FaultReasonIngredientEmpty}:{empty.IngredientId}");
                 return;
             }
 
             UpdateWarning();
         }
 
-        // ---- HMI parameters ----
-
-        /// <summary>Operator setting (recipe terminal: Sauce 80 g).</summary>
-        public void SetSauceAmount(float grams)
-        {
-            _sauceSetpointGrams = Mathf.Clamp(grams, _config.MinSauceGrams, _config.MaxSauceGrams);
-        }
-
-        /// <summary>Operator setting (recipe terminal: Belag 120 g).</summary>
-        public void SetToppingAmount(float grams)
-        {
-            _toppingSetpointGrams = Mathf.Clamp(grams, _config.MinToppingGrams, _config.MaxToppingGrams);
-        }
-
         // ---- Reservoirs ----
 
         /// <summary>
-        /// Operator action (refill button at the station): fills the tank/hopper completely. Allowed in
-        /// every state - refilling during Maintenance is the normal way out of an "empty" fault.
+        /// Operator action (refill button at the unit): fills the reservoir completely. Allowed in every
+        /// state - refilling during Maintenance is the normal way out of an "empty" fault.
         /// </summary>
-        public bool TryRefill(DosingMedium medium)
+        public bool TryRefill(DosingUnit unit)
         {
-            if (medium == DosingMedium.Sauce)
+            if (unit == null || !_units.Contains(unit))
             {
-                _sauceLevelGrams = _config.SauceTankCapacityGrams;
-                Report(DosingInfo.SauceRefilled, force: true);
+                return false;
             }
-            else
-            {
-                _toppingLevelGrams = _config.ToppingHopperCapacityGrams;
-                Report(DosingInfo.ToppingRefilled, force: true);
-            }
+
+            unit.Refill();
+            Report(DosingInfo.ReservoirRefilled, unit.DisplayName, force: true);
 
             if (CurrentState == MachineState.Running)
             {
@@ -245,63 +206,60 @@ namespace Game.Production
             return true;
         }
 
-        // ---- Process ----
+        /// <summary>Refills the reservoir of an ingredient (debug panel, tests).</summary>
+        public bool TryRefill(string ingredientId) => TryRefill(FindUnit(ingredientId));
 
-        private void HandleSauceZoneEntered(ProductToken token)
+        /// <summary>Refills all reservoirs.</summary>
+        public void RefillAll()
         {
-            ProductInstance product = token != null ? token.Product : null;
-            if (product == null || CurrentState != MachineState.Running)
+            foreach (DosingUnit unit in _units)
             {
-                return;
+                TryRefill(unit);
             }
-
-            if (product.CurrentState != ProductState.FormedPizza)
-            {
-                // Already sauced (re-entering) is fine; anything before the press is a wrong product.
-                if (product.CurrentState < ProductState.FormedPizza)
-                {
-                    RegisterWrongProduct(product);
-                }
-                return;
-            }
-
-            float dosed = Dose(_sauceSetpointGrams, _sauceLevelGrams);
-            _sauceLevelGrams -= dosed;
-            _lastSauceGrams = dosed;
-
-            product.DosedSauceGrams = dosed;
-            product.CurrentState = ProductState.SaucedPizza;
-            Report(DosingInfo.SauceApplied, $"{dosed:0} g", force: true);
         }
 
-        private void HandleToppingZoneEntered(ProductToken token)
+        // ---- Process ----
+
+        private void HandleUnitProductEntered(DosingUnit unit, ProductToken token)
         {
             ProductInstance product = token != null ? token.Product : null;
-            if (product == null || CurrentState != MachineState.Running)
+            if (product == null || CurrentState != MachineState.Running || product.HasDose(unit.IngredientId))
             {
+                return; // already dosed by this unit (re-entering) or station not running
+            }
+
+            if (product.CurrentState >= ProductState.ToppedPizza)
+            {
+                return; // finished product passing by
+            }
+
+            int index = _units.IndexOf(unit);
+            bool previousDone = _units.Take(index).All(u => product.HasDose(u.IngredientId));
+            bool stateOk = index == 0
+                ? product.CurrentState == ProductState.CooledPizza || product.CurrentState == ProductState.SaucedPizza
+                : product.CurrentState == ProductState.SaucedPizza;
+
+            if (!previousDone || !stateOk)
+            {
+                RegisterWrongProduct(product);
                 return;
             }
 
-            if (product.CurrentState != ProductState.SaucedPizza)
+            float dosed = Dose(unit.SetpointGrams, unit.LevelGrams);
+            unit.Take(dosed);
+            product.SetDose(unit.IngredientId, dosed);
+
+            bool last = index == _units.Count - 1;
+            product.CurrentState = last ? ProductState.ToppedPizza : ProductState.SaucedPizza;
+            Report(DosingInfo.IngredientApplied, $"{unit.DisplayName} {dosed:0} g", force: true);
+
+            if (last)
             {
-                // A base without sauce (or a wrong product) passes without topping.
-                if (product.CurrentState < ProductState.SaucedPizza)
-                {
-                    RegisterWrongProduct(product);
-                }
-                return;
+                _completedCount++;
+                ProductDosed?.Invoke(product);
+                Report(DosingInfo.DosingComplete,
+                    string.Join(" / ", _units.Select(u => $"{u.LastDoseGrams:0} g")), force: true);
             }
-
-            float dosed = Dose(_toppingSetpointGrams, _toppingLevelGrams);
-            _toppingLevelGrams -= dosed;
-            _lastToppingGrams = dosed;
-
-            product.DosedToppingGrams = dosed;
-            product.CurrentState = ProductState.ToppedPizza;
-
-            _completedCount++;
-            ProductDosed?.Invoke(product);
-            Report(DosingInfo.ToppingApplied, $"{_lastSauceGrams:0} g / {dosed:0} g", force: true);
         }
 
         /// <summary>Setpoint with an approximately normal deviation, never more than what is left.</summary>
@@ -322,11 +280,11 @@ namespace Game.Production
 
         private void UpdateWarning()
         {
-            if (IsSauceLow || IsToppingLow)
+            DosingUnit low = _units.Find(u => u.IsLow(_config.LowLevelWarningPercent));
+            if (low != null)
             {
                 SetWarning(true, WarningReasonLowLevel);
-                Report(IsSauceLow ? DosingInfo.SauceLow : DosingInfo.ToppingLow,
-                    IsSauceLow ? $"{SauceLevel01 * 100f:0} %" : $"{ToppingLevel01 * 100f:0} %");
+                Report(DosingInfo.ReservoirLow, $"{low.DisplayName} {low.Level01 * 100f:0} %");
                 return;
             }
 
@@ -371,60 +329,89 @@ namespace Game.Production
             }
         }
 
+        /// <summary>
+        /// Built from the units: one setpoint per ingredient, reservoir and last dose per ingredient.
+        /// Labels are English texts; their keys are derived (hmi.mozzarella, hmi.mozzarella_reservoir, hmi.last_mozzarella).
+        /// </summary>
         private void BuildHmiValues()
         {
-            // TODO localization: labels are English fallbacks until keys exist in the table.
-            _parameters = new List<MachineParameter>
+            _parameters = new List<MachineParameter>();
+            foreach (DosingUnit unit in _units)
             {
-                new MachineParameter("sauceAmount", "Sauce", "g",
-                    _config.MinSauceGrams, _config.MaxSauceGrams, _config.SauceStepGrams, "0",
-                    () => _sauceSetpointGrams, SetSauceAmount),
-                new MachineParameter("toppingAmount", "Topping", "g",
-                    _config.MinToppingGrams, _config.MaxToppingGrams, _config.ToppingStepGrams, "0",
-                    () => _toppingSetpointGrams, SetToppingAmount),
-            };
+                SO_DosingIngredient ingredient = unit.Ingredient;
+                if (ingredient == null)
+                {
+                    continue;
+                }
+
+                DosingUnit captured = unit;
+                _parameters.Add(new MachineParameter($"{ingredient.Id}Amount", ingredient.DisplayNameFallback, "g",
+                    ingredient.MinGrams, ingredient.MaxGrams, ingredient.StepGrams, "0",
+                    () => captured.SetpointGrams, captured.SetSetpoint));
+            }
 
             _readouts = new List<MachineReadout>
             {
-                new MachineReadout("sauceLevel", "Sauce tank", "%",
-                    () => (SauceLevel01 * 100f).ToString("0"),
-                    () => EvaluateLevel(IsSauceInsufficient, IsSauceLow), MachineReadoutSlot.FillLevel),
+                new MachineReadout("lowestReservoir", "Lowest reservoir", "%",
+                    () => _units.Count > 0 ? (_units.Min(u => u.Level01) * 100f).ToString("0") : "--",
+                    EvaluateLowestLevel, MachineReadoutSlot.FillLevel),
                 new MachineReadout("setpoint", "Setpoint", "g",
-                    () => $"{_sauceSetpointGrams:0} / {_toppingSetpointGrams:0}",
+                    () => string.Join(" / ", _units.Select(u => u.SetpointGrams.ToString("0"))),
                     () => MachineValueLevel.Normal, MachineReadoutSlot.Setpoint),
-                new MachineReadout("sauceTank", "Sauce tank", "kg",
-                    () => (_sauceLevelGrams / 1000f).ToString("0.00"),
-                    () => EvaluateLevel(IsSauceInsufficient, IsSauceLow)),
-                new MachineReadout("toppingHopper", "Topping hopper", "kg",
-                    () => (_toppingLevelGrams / 1000f).ToString("0.00"),
-                    () => EvaluateLevel(IsToppingInsufficient, IsToppingLow)),
-                new MachineReadout("lastSauce", "Last sauce", "g",
-                    () => _lastSauceGrams >= 0f ? _lastSauceGrams.ToString("0") : "--",
-                    () => EvaluateDose(_lastSauceGrams, _sauceSetpointGrams, _config.SauceToleranceGrams)),
-                new MachineReadout("lastTopping", "Last topping", "g",
-                    () => _lastToppingGrams >= 0f ? _lastToppingGrams.ToString("0") : "--",
-                    () => EvaluateDose(_lastToppingGrams, _toppingSetpointGrams, _config.ToppingToleranceGrams)),
-                new MachineReadout("completed", "Pizzas dosed", "pcs",
-                    () => _completedCount.ToString()),
-                new MachineReadout("wrongProducts", "Passed undosed", "pcs",
-                    () => _wrongProductCount.ToString(),
-                    () => _wrongProductCount > 0 ? MachineValueLevel.Warning : MachineValueLevel.Normal),
-                new MachineReadout("belt", "Belt", "",
-                    () => _belt == null ? "--" : _belt.IsMoving ? LocText.Get("hmi.moving", "Moving") : _belt.CurrentState.ToString(),
-                    () => _belt == null ? MachineValueLevel.Inactive
-                        : _belt.CurrentState == MachineState.Fault ? MachineValueLevel.Alarm
-                        : _belt.IsMoving ? MachineValueLevel.Normal : MachineValueLevel.Inactive),
             };
+
+            foreach (DosingUnit unit in _units)
+            {
+                DosingUnit captured = unit;
+                string name = unit.DisplayNameFallback;
+                float tolerance = unit.Ingredient != null ? unit.Ingredient.ToleranceGrams : 0f;
+                _readouts.Add(new MachineReadout($"{unit.IngredientId}Reservoir", $"{name} reservoir", "kg",
+                    () => (captured.LevelGrams / 1000f).ToString("0.00"),
+                    () => EvaluateLevel(captured)));
+                _readouts.Add(new MachineReadout($"{unit.IngredientId}Last", $"Last {name}", "g",
+                    () => captured.LastDoseGrams >= 0f ? captured.LastDoseGrams.ToString("0") : "--",
+                    () => EvaluateDose(captured.LastDoseGrams, captured.SetpointGrams, tolerance)));
+            }
+
+            _readouts.Add(new MachineReadout("completed", "Pizzas dosed", "pcs",
+                () => _completedCount.ToString()));
+            _readouts.Add(new MachineReadout("wrongProducts", "Passed undosed", "pcs",
+                () => _wrongProductCount.ToString(),
+                () => _wrongProductCount > 0 ? MachineValueLevel.Warning : MachineValueLevel.Normal));
+            _readouts.Add(new MachineReadout("belt", "Belt", "",
+                () => _belt == null ? "--" : _belt.IsMoving ? LocText.Get("hmi.moving", "Moving") : _belt.CurrentState.ToString(),
+                () => _belt == null ? MachineValueLevel.Inactive
+                    : _belt.CurrentState == MachineState.Fault ? MachineValueLevel.Alarm
+                    : _belt.IsMoving ? MachineValueLevel.Normal : MachineValueLevel.Inactive));
         }
 
-        private static MachineValueLevel EvaluateLevel(bool isInsufficient, bool isLow)
+        private MachineValueLevel EvaluateLevel(DosingUnit unit)
         {
-            if (isInsufficient)
+            if (unit.IsInsufficient)
             {
                 return MachineValueLevel.Alarm;
             }
 
-            return isLow ? MachineValueLevel.Warning : MachineValueLevel.Normal;
+            return unit.IsLow(_config.LowLevelWarningPercent) ? MachineValueLevel.Warning : MachineValueLevel.Normal;
+        }
+
+        private MachineValueLevel EvaluateLowestLevel()
+        {
+            MachineValueLevel worst = MachineValueLevel.Normal;
+            foreach (DosingUnit unit in _units)
+            {
+                MachineValueLevel level = EvaluateLevel(unit);
+                if (level == MachineValueLevel.Alarm)
+                {
+                    return level;
+                }
+
+                if (level == MachineValueLevel.Warning)
+                {
+                    worst = level;
+                }
+            }
+            return worst;
         }
 
         private static MachineValueLevel EvaluateDose(float last, float setpoint, float tolerance)
@@ -460,14 +447,11 @@ namespace Game.Production
         /// <summary>Used until the localization keys exist in the table.</summary>
         private static string FallbackText(DosingInfo info) => info switch
         {
-            DosingInfo.SauceApplied => "Sauce applied",
-            DosingInfo.ToppingApplied => "Pizza topped (sauce / topping)",
-            DosingInfo.SauceLow => "Sauce tank low",
-            DosingInfo.ToppingLow => "Topping hopper low",
-            DosingInfo.SauceEmpty => "Sauce tank empty - refill",
-            DosingInfo.ToppingEmpty => "Topping hopper empty - refill",
-            DosingInfo.SauceRefilled => "Sauce tank refilled",
-            DosingInfo.ToppingRefilled => "Topping hopper refilled",
+            DosingInfo.IngredientApplied => "Ingredient applied",
+            DosingInfo.DosingComplete => "Pizza topped",
+            DosingInfo.ReservoirLow => "Reservoir low",
+            DosingInfo.ReservoirEmpty => "Reservoir empty - refill",
+            DosingInfo.ReservoirRefilled => "Reservoir refilled",
             DosingInfo.WrongProduct => "Product passed without dosing",
             DosingInfo.BeltFault => "Belt fault",
             _ => info.ToString()
@@ -507,7 +491,9 @@ namespace Game.Production
 
         protected override void OnEnterFault(string reason)
         {
-            if (reason != FaultReasonSauceEmpty && reason != FaultReasonToppingEmpty && reason != FaultReasonBeltFault)
+            bool ownReport = reason != null
+                && (reason.StartsWith(FaultReasonIngredientEmpty, StringComparison.Ordinal) || reason == FaultReasonBeltFault);
+            if (!ownReport)
             {
                 Report(DosingInfo.Fault, force: true);
             }
@@ -555,21 +541,18 @@ namespace Game.Production
 
         private void OnDrawGizmosSelected()
         {
-            DrawZoneGizmo(_sauceZone, new Color(0.85f, 0.15f, 0.1f));
-            DrawZoneGizmo(_toppingZone, new Color(0.95f, 0.8f, 0.2f));
-        }
-
-        private static void DrawZoneGizmo(ProcessZone zone, Color color)
-        {
-            if (zone == null || !zone.TryGetComponent(out BoxCollider box))
+            foreach (DosingUnit unit in GetComponentsInChildren<DosingUnit>())
             {
-                return;
-            }
+                if (unit.Zone == null || !unit.Zone.TryGetComponent(out BoxCollider box))
+                {
+                    continue;
+                }
 
-            Gizmos.color = color;
-            Gizmos.matrix = box.transform.localToWorldMatrix;
-            Gizmos.DrawWireCube(box.center, box.size);
-            Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.color = new Color(0.95f, 0.6f, 0.2f);
+                Gizmos.matrix = box.transform.localToWorldMatrix;
+                Gizmos.DrawWireCube(box.center, box.size);
+                Gizmos.matrix = Matrix4x4.identity;
+            }
         }
 
         // ---- Save/Load (ISaveableState) ----
@@ -577,10 +560,11 @@ namespace Game.Production
         /// <inheritdoc />
         public void CaptureState(SaveValues values)
         {
-            values.Set("sauceLevel", _sauceLevelGrams);
-            values.Set("toppingLevel", _toppingLevelGrams);
-            values.Set("lastSauce", _lastSauceGrams);
-            values.Set("lastTopping", _lastToppingGrams);
+            foreach (DosingUnit unit in _units)
+            {
+                values.Set($"{unit.IngredientId}.level", unit.LevelGrams);
+                values.Set($"{unit.IngredientId}.last", unit.LastDoseGrams);
+            }
             values.Set("completed", _completedCount);
             values.Set("wrongProducts", _wrongProductCount);
         }
@@ -588,10 +572,11 @@ namespace Game.Production
         /// <inheritdoc />
         public void RestoreState(SaveValues values)
         {
-            _sauceLevelGrams = Mathf.Clamp(values.GetFloat("sauceLevel", _sauceLevelGrams), 0f, _config.SauceTankCapacityGrams);
-            _toppingLevelGrams = Mathf.Clamp(values.GetFloat("toppingLevel", _toppingLevelGrams), 0f, _config.ToppingHopperCapacityGrams);
-            _lastSauceGrams = values.GetFloat("lastSauce", _lastSauceGrams);
-            _lastToppingGrams = values.GetFloat("lastTopping", _lastToppingGrams);
+            foreach (DosingUnit unit in _units)
+            {
+                unit.Restore(values.GetFloat($"{unit.IngredientId}.level", unit.LevelGrams),
+                    values.GetFloat($"{unit.IngredientId}.last", unit.LastDoseGrams));
+            }
             _completedCount = values.GetInt("completed", _completedCount);
             _wrongProductCount = values.GetInt("wrongProducts", _wrongProductCount);
         }

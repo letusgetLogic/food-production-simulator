@@ -1,22 +1,36 @@
-using Game.Core;
 using UnityEngine;
 
 namespace Game.Production
 {
     /// <summary>
-    /// Operator button at the Dosierstation: refills the sauce tank or the topping hopper completely.
-    /// Same pattern as HopperDrainButton at the Portionierer.
+    /// Momentary button on the Dosierstation panel: refills one unit's reservoir completely.
+    /// Crosshair text "Refill: Mozzarella".
     /// </summary>
-    public class DosingRefillButton : InteractableBase
+    public class DosingRefillButton : PushButton
     {
-        [SerializeField] private DosingMachine _machine;
-        [SerializeField] private DosingMedium _medium = DosingMedium.Sauce;
+        [Tooltip("The dispenser unit this button refills. Empty = the DosingUnit this button sits in.")]
+        [SerializeField] private DosingUnit _unit;
 
-        protected override void OnInteract(IInteractor interactor)
+        public DosingUnit Unit => _unit != null ? _unit : GetComponentInParent<DosingUnit>();
+
+        protected override string DefaultInteractionText => "Refill";
+
+        public override string InteractionText
         {
-            if (_machine != null)
+            get
             {
-                _machine.TryRefill(_medium);
+                DosingUnit unit = Unit;
+                return unit != null ? $"{base.InteractionText}: {unit.DisplayName}" : base.InteractionText;
+            }
+        }
+
+        protected override void OnPressed()
+        {
+            DosingUnit unit = Unit;
+            DosingMachine machine = unit != null ? unit.GetComponentInParent<DosingMachine>() : null;
+            if (machine != null)
+            {
+                machine.TryRefill(unit);
             }
         }
     }

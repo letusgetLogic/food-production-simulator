@@ -58,12 +58,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Core::Game.Core.HoldInteractable
   _isInteractable: 1
+  _interactKey:
+    m_TableReference:
+      m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
+    m_TableEntryReference:
+      m_KeyId: 7615336380051458
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _holdChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
   _holdPoint: {fileID: 11400000, guid: ea0be8a8ca8b8d448b226ee8e54ae6aa, type: 2}
   _dropRequestChannel: {fileID: 11400000, guid: 65fcf4e66fd258f4aa181065a9e71123, type: 2}
   _rigidbody: {fileID: 7956007428085552623}
   _followLerpSpeed: 5
-  _lookYaw: 90
+  _maxHoldDistance: 1.5
+  _holdOffset: {x: 0, y: 0, z: 0}
+  _holdRotOffset: {x: 0, y: 90, z: 0}
+  references:
+    version: 2
+    RefIds: []
 --- !u!54 &7956007428085552623
 Rigidbody:
   m_ObjectHideFlags: 0

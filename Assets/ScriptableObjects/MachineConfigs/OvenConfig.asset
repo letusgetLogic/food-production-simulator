@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4bd58117e893c45ad7faa2664d3ad5, type: 3}
   m_Name: OvenConfig
   m_EditorClassIdentifier: Game.Production::Game.Production.SO_ContinuousProcessConfig
-  InputState: 5
-  OutputState: 6
+  InputState: 3
+  OutputState: 4
   RecordDwellAsBakeTime: 1
   WrongProductWarningSeconds: 3
   StartupDurationSeconds: 1

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 608ccc9e7500e274cb07854c268de910, type: 3}
+  m_Name: Ingredient_Mozzarella
+  m_EditorClassIdentifier: Game.Production::Game.Production.SO_DosingIngredient
+  Id: mozzarella
+  DisplayNameFallback: Mozzarella
+  DefaultGrams: 120
+  MinGrams: 60
+  MaxGrams: 250
+  StepGrams: 5
+  ToleranceGrams: 12
+  ReservoirCapacityGrams: 15000
+  DispenserMaterial: {fileID: 2100000, guid: 1e81347c66cfb8b4d8a5950a5382790d, type: 2}

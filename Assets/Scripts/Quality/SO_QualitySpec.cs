@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Game.Production;
 using UnityEngine;
 
 namespace Game.Quality
@@ -36,10 +39,8 @@ namespace Game.Quality
 
         [Header("Dosing (g)")]
         public bool CheckDosing = true;
-        public float TargetSauceGrams = 80f;
-        [Min(0f)] public float SauceToleranceGrams = 8f;
-        public float TargetToppingGrams = 120f;
-        [Min(0f)] public float ToppingToleranceGrams = 12f;
+        [Tooltip("One entry per ingredient of the dosing station. Defects: <Ingredient>Low / <Ingredient>High / <Ingredient>Missing.")]
+        public List<IngredientSpec> Ingredients = new List<IngredientSpec>();
 
         [Header("Baking")]
         public bool CheckBaking = true;
@@ -60,5 +61,14 @@ namespace Game.Quality
         [Header("Statistics")]
         [Tooltip("Window for the throughput figure (units per minute).")]
         [Min(5f)] public float ThroughputWindowSeconds = 60f;
+    }
+
+    /// <summary>Target amount of one dosed ingredient and its tolerance.</summary>
+    [Serializable]
+    public class IngredientSpec
+    {
+        public SO_DosingIngredient Ingredient;
+        public float TargetGrams = 80f;
+        [Min(0f)] public float ToleranceGrams = 8f;
     }
 }

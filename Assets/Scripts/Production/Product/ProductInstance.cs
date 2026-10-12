@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Game.Production
 {
@@ -79,11 +80,42 @@ namespace Game.Production
         /// <summary>Average shock freezer temperature (in °C) the product was exposed to.</summary>
         public float? FreezingTemperatureCelsius;
 
-        /// <summary>Sauce amount (in grams) actually dosed by the dosing station.</summary>
-        public float? DosedSauceGrams;
+        /// <summary>
+        /// Amounts actually dosed by the dosing station, one entry per ingredient (by <see cref="SO_DosingIngredient.Id"/>,
+        /// e.g. "sauce", "mozzarella"). Generic so ingredients can be added or replaced without code changes.
+        /// </summary>
+        public List<IngredientDose> Doses = new List<IngredientDose>();
 
-        /// <summary>Topping amount (in grams) actually dosed by the dosing station.</summary>
-        public float? DosedToppingGrams;
+        /// <summary>Dosed grams of an ingredient, or null if it was not dosed.</summary>
+        public float? GetDose(string ingredientId)
+        {
+            IngredientDose dose = Doses?.Find(d => d.IngredientId == ingredientId);
+            return dose != null ? dose.Grams : (float?)null;
+        }
+
+        /// <summary>True once the ingredient has been dosed onto this product.</summary>
+        public bool HasDose(string ingredientId) => GetDose(ingredientId).HasValue;
+
+        /// <summary>Records (or overwrites) the dosed amount of an ingredient.</summary>
+        public void SetDose(string ingredientId, float grams)
+        {
+            Doses ??= new List<IngredientDose>();
+            IngredientDose dose = Doses.Find(d => d.IngredientId == ingredientId);
+            if (dose == null)
+            {
+                Doses.Add(new IngredientDose { IngredientId = ingredientId, Grams = grams });
+            }
+            else
+            {
+                dose.Grams = grams;
+            }
+        }
+
+        /// <summary>Removes the dose of an ingredient (tests, debug).</summary>
+        public void ClearDose(string ingredientId) => Doses?.RemoveAll(d => d.IngredientId == ingredientId);
+
+        /// <summary>Verdict of the QualitySystem at the line end: true = good, false = scrap, null = not judged yet.</summary>
+        public bool? QualityPassed;
 
         /// <summary>Scrap reason set by a station via <see cref="Reject"/>; null while the product is not rejected.</summary>
         public string RejectReason;
@@ -115,5 +147,13 @@ namespace Game.Production
         public ProductInstance()
         {
         }
+    }
+
+    /// <summary>Amount of one ingredient dosed onto a product (serializable for save files).</summary>
+    [Serializable]
+    public class IngredientDose
+    {
+        public string IngredientId;
+        public float Grams;
     }
 }

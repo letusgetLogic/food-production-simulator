@@ -3,6 +3,7 @@ using Game.Production;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Game.Core;
 
 namespace Game.HMI
 {

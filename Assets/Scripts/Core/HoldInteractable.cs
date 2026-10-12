@@ -1,26 +1,57 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Game.Core
 {
     [RequireComponent(typeof(Transform))]
-    public class HoldInteractable : InteractableBase
+    public class HoldInteractable : InteractableBase, IReleaseable
     {
+        protected override string DefaultInteractionText => "Pick up";
+
+        /// <inheritdoc />
+        public string ReleaseText => Localizer("Put down");
+
         [SerializeField] private SO_HoldChannel _holdChannel;
         [SerializeField] private SO_HoldPoint _holdPoint;
+        public SO_HoldPoint HoldPoint => _holdPoint;
         [SerializeField] private SO_DropRequestChannel _dropRequestChannel;
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float _followLerpSpeed = 15f;
-        [SerializeField] private float _lookYaw = 90f;
 
         [Tooltip("The item drops when it gets stuck this far (m) from the hold point, e.g. behind a wall.")]
         [SerializeField] private float _maxHoldDistance = 1.5f;
+        [Tooltip("Position offset from the hold point (m), in the player's facing direction: x = right, y = up, " +
+                 "z = forward. Example pallet: (0, 1, 0) = 1 m higher.")]
+        [SerializeField] private Vector3 _holdOffset = Vector3.zero;
+        public Vector3 HoldOffset => _holdOffset;
+        [Tooltip("Rotation of the item while held (degrees), around its OWN axes, relative to the player's facing " +
+                 "direction (yaw only - looking up/down does not tilt the item). Example pallet: (89, 0, 0) = upright.")]
+        [SerializeField] private Vector3 _holdRotOffset = new Vector3(0f, 0f, 0f);
+        public Vector3 HoldRotOffset => _holdRotOffset;
+
+        /// <summary>
+        /// Target rotation while held: the player's yaw, then <see cref="HoldRotOffset"/> around the item's own axes
+        /// (Unity applies Euler angles Z, X, Y - for a single axis like (89, 0, 0) it is simply "tip forward 89°").
+        /// </summary>
+        public Quaternion HoldRotation(Transform holdPoint) => Yaw(holdPoint) * Quaternion.Euler(_holdRotOffset);
+
+        /// <summary>Target position while held: hold point + <see cref="HoldOffset"/> in the player's facing frame.</summary>
+        public Vector3 HoldPosition(Transform holdPoint) => holdPoint.position + Yaw(holdPoint) * _holdOffset;
+
+        private static Quaternion Yaw(Transform holdPoint) => Quaternion.Euler(0f, holdPoint.eulerAngles.y, 0f);
 
         private Transform _tf;
         private Collider[] _ownColliders = System.Array.Empty<Collider>();
         private readonly Collider[] _overlaps = new Collider[16];
         private bool _isHeld;
         public event Action<HoldInteractable> OnReleased; 
+
+        /// <summary>True while the player carries this item.</summary>
+        public bool IsHeld => _isHeld;
+
+        /// <summary>Enables/disables picking up (e.g. a pallet only while empty, a carton on a pallet never).</summary>
+        public void SetInteractable(bool value) => IsInteractable = value;
 
         private void Start()
         {
@@ -93,6 +124,7 @@ namespace Game.Core
             if (_rigidbody != null)
             {
                 _rigidbody.isKinematic = false;
+                _rigidbody.WakeUp(); // a body that was kinematic counts as sleeping - it must fall right away
             }
 
             OnReleased?.Invoke(this);
@@ -110,20 +142,22 @@ namespace Game.Core
             {
                 return;
             }
-            var lookDirection = Quaternion.Euler(0, _lookYaw, 0) * holdPoint.rotation;
+            
+            Quaternion holdRotation = HoldRotation(holdPoint);
+            Vector3 holdPosition = HoldPosition(holdPoint);
 
             // Frame-rate independent exponential smoothing instead of a fixed Lerp factor,
             // so _followLerpSpeed behaves consistently regardless of the physics timestep.
             float t = 1f - Mathf.Exp(-_followLerpSpeed * Time.fixedDeltaTime);
-            Vector3 nextPosition = Vector3.Lerp(_tf.position, holdPoint.position, t);
-            Quaternion nextRotation = Quaternion.Slerp(_tf.rotation, lookDirection, t);
+            Vector3 nextPosition = Vector3.Lerp(_tf.position, holdPosition, t);
+            Quaternion nextRotation = Quaternion.Slerp(_tf.rotation, holdRotation, t);
 
             if (_rigidbody != null)
             {
                 // Held items stay kinematic (belts, buffer and line end read that as "taken"), and a kinematic
                 // body passes through static geometry - so walls, hopper and machines are checked here.
                 nextPosition = ConstrainToWorld(_tf.position, nextPosition, holdPoint.root);
-                if ((holdPoint.position - nextPosition).sqrMagnitude > _maxHoldDistance * _maxHoldDistance)
+                if ((holdPosition - nextPosition).sqrMagnitude > _maxHoldDistance * _maxHoldDistance)
                 {
                     Release(); // stuck behind something while the player walked on: it drops
                     return;

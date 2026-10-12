@@ -10,6 +10,8 @@ namespace Game.Core
     /// </summary>
     public interface IInteractable
     {
+        string InteractionText { get; }
+
         /// <summary>
         /// Whether this object can currently be interacted with. Use this to disable a navigation
         /// arrow while a machine is still loading, or to disable an HMI button while its underlying

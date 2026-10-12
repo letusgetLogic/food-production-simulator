@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db4bd58117e893c45ad7faa2664d3ad5, type: 3}
   m_Name: CoolingConfig
   m_EditorClassIdentifier: Game.Production::Game.Production.SO_ContinuousProcessConfig
-  InputState: 6
-  OutputState: 7
+  InputState: 4
+  OutputState: 5
   RecordDwellAsBakeTime: 0
   WrongProductWarningSeconds: 3
   StartupDurationSeconds: 1

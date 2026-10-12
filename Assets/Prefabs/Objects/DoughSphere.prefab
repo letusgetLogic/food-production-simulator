@@ -132,6 +132,8 @@ MonoBehaviour:
     CurrentState: 0
     Recipe: {fileID: 0}
     RecipeId: 
+    Doses: []
+    RejectReason: 
 --- !u!114 &2354834711768331086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,12 +147,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Core::Game.Core.HoldInteractable
   _isInteractable: 1
+  _interactKey:
+    m_TableReference:
+      m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
+    m_TableEntryReference:
+      m_KeyId: 7615336380051458
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _holdChannel: {fileID: 11400000, guid: 07dd37cff1f93ed46aaff55eee7fa65e, type: 2}
   _holdPoint: {fileID: 11400000, guid: a56a74a36ecee7f44889d62fea37bc75, type: 2}
   _dropRequestChannel: {fileID: 11400000, guid: 65fcf4e66fd258f4aa181065a9e71123, type: 2}
   _rigidbody: {fileID: 6679393429894747144}
   _followLerpSpeed: 5
   _lookYaw: 0
+  _maxHoldDistance: 1.5
+  _holdOffset: {x: 0, y: 0, z: 0}
+  _uprightWhileHeld: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!54 &6679393429894747144
 Rigidbody:
   m_ObjectHideFlags: 0

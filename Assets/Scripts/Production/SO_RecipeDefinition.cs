@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Production
@@ -56,11 +58,8 @@ namespace Game.Production
 
         [Header("Dosing")]
 
-        /// <summary>Sauce per pizza, in grams.</summary>
-        public float SauceGrams;
-
-        /// <summary>Topping per pizza, in grams.</summary>
-        public float ToppingGrams;
+        /// <summary>Ingredients of the dosing station in dosing order (e.g. tomato sauce 80 g, mozzarella 120 g).</summary>
+        public List<RecipeIngredient> DosingIngredients = new List<RecipeIngredient>();
 
         [Header("Baking")]
 
@@ -100,5 +99,15 @@ namespace Game.Production
 
         /// <summary>Acceptable deviation from <see cref="TargetFinalWeightGrams"/> before a quality fault is raised, in grams.</summary>
         public float FinalWeightToleranceGrams;
+    }
+
+    /// <summary>Amount of one dosing-station ingredient per pizza.</summary>
+    [Serializable]
+    public class RecipeIngredient
+    {
+        public SO_DosingIngredient Ingredient;
+        [Min(0f)] public float Grams;
+        [Tooltip("Shown as '± …' on the recipe page; 0 = no tolerance shown.")]
+        [Min(0f)] public float ToleranceGrams;
     }
 }

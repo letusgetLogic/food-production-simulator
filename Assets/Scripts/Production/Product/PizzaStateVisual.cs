@@ -14,7 +14,9 @@ namespace Game.Production
     /// While no ProductInstance is assigned yet (prefab placed by hand), a local state is used.
     ///
     /// Visual lookup: the entry with the highest state that is not above the current state wins.
-    /// So CooledPizza / FrozenPizza / PackagedPizza keep showing BakedPizza until they get their own entry.
+    /// So CooledPizza, SaucedPizza, ToppedPizza and FrozenPizza keep showing the pre-baked base (BakedPizza)
+    /// until they get their own entry. Dosed ingredients (sauce, mozzarella) are shown by
+    /// <see cref="PizzaIngredientVisual"/> - do not list them here.
     ///
     /// Colliders are separated from the visuals: the visuals carry no trigger colliders. One child
     /// "ContactCollider" (convex trigger, shape of the formed pizza) is always active and receives the

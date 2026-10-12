@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FaultCatalog
   m_EditorClassIdentifier: Game.Production::Game.Production.SO_FaultCatalog
   _faults:
-  - Code: SauceEmpty
+  - Code: EmergencyStop
     MessageKey:
       m_TableReference:
         m_TableCollectionName: 
@@ -23,7 +23,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    FallbackMessage: Sauce tank empty
+    FallbackMessage: Emergency stop pressed
     RemedyKey:
       m_TableReference:
         m_TableCollectionName: 
@@ -33,11 +33,12 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    FallbackRemedy: Refill the sauce tank at the dosing station (refill button),
-      acknowledge, complete maintenance, start.
+    FallbackRemedy: Remove the hazard, release the emergency stop at the control
+      panel (press it again), acknowledge the fault and complete maintenance at the
+      terminal, then press Start (I).
     IsTrainingCase: 1
     CanBeInjected: 0
-  - Code: ToppingEmpty
+  - Code: IngredientEmpty
     MessageKey:
       m_TableReference:
         m_TableCollectionName: 
@@ -47,7 +48,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    FallbackMessage: Topping hopper empty
+    FallbackMessage: Ingredient reservoir empty
     RemedyKey:
       m_TableReference:
         m_TableCollectionName: 
@@ -57,8 +58,8 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    FallbackRemedy: Refill the topping hopper at the dosing station (refill button),
-      acknowledge, complete maintenance, start.
+    FallbackRemedy: Refill the empty reservoir at the dosing station (blue + button
+      on the control panel), acknowledge, complete maintenance, start.
     IsTrainingCase: 1
     CanBeInjected: 0
   - Code: BufferFull

@@ -5,8 +5,7 @@ namespace Game.Production
     /// <summary>
     /// Marks a collider that switches a product from one <see cref="ProductState"/> to the next on
     /// contact - e.g. the piston top of the press (PortionedDough -> FormedPizza). Further stations
-    /// get their own trigger: sauce nozzle (FormedPizza -> SaucedPizza), topping dispenser
-    /// (SaucedPizza -> ToppedPizza), oven (ToppedPizza -> BakedPizza).
+    /// change the state themselves (oven, cooling, dosing units, freezer).
     ///
     /// Has no logic of its own - the product (<see cref="PizzaStateVisual"/>) reacts in its
     /// OnTriggerEnter. Needs a Collider on the same GameObject or a child. The collider is a

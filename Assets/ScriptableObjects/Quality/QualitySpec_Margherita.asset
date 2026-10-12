@@ -24,10 +24,13 @@ MonoBehaviour:
   TargetThicknessMm: 3
   ThicknessToleranceMm: 0.5
   CheckDosing: 1
-  TargetSauceGrams: 80
-  SauceToleranceGrams: 8
-  TargetToppingGrams: 120
-  ToppingToleranceGrams: 12
+  Ingredients:
+  - Ingredient: {fileID: 11400000, guid: e1a8b267ad17e62409da6bfffa2ee118, type: 2}
+    TargetGrams: 80
+    ToleranceGrams: 8
+  - Ingredient: {fileID: 11400000, guid: 3ecd6e5df2cf28e47a2aba2b480be079, type: 2}
+    TargetGrams: 120
+    ToleranceGrams: 12
   CheckBaking: 1
   TargetBakeTimeSeconds: 15
   BakeTimeToleranceSeconds: 1.5

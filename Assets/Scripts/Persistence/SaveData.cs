@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Production;
 using UnityEngine;
 
@@ -8,6 +9,13 @@ namespace Game.Persistence
     /// <summary>
     /// Root of a save file (JSON via JsonUtility). Versioned: bump <see cref="CurrentVersion"/> whenever
     /// the format changes and add a step to <see cref="SaveMigrations.Migrate"/>.
+    ///
+    /// Version history:
+    ///  1 - first format (product state stored as enum number).
+    ///  2 - 11.10.: line order changed to real frozen pizza production (pre-bake -> cool -> dose -> freeze),
+    ///      ProductState reordered. Product state is now stored by name, so later reorders keep saves valid.
+    ///      Version 1 files are not migrated (their numbers mean other states) - delete them in the main menu.
+    ///      Same day: dosed amounts as a list by ingredient id (modular dosing station) instead of sauce/topping fields.
     ///
     /// What is saved (MVP):
     ///  - every machine: state, fault reason, HMI setpoints (generic via IMachineParameterSource) and its
@@ -19,7 +27,7 @@ namespace Game.Persistence
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 2;
 
         public int Version = CurrentVersion;
         public string SavedAtUtc;
@@ -76,7 +84,8 @@ namespace Game.Persistence
         public Vector3 Velocity;
 
         public string InstanceId;
-        public ProductState State;
+        /// <summary>ProductState by name (not by number - robust against reordering the enum).</summary>
+        public string State;
         public string RecipeId;
         public string RejectReason;
         public OptionalFloat WeightGrams;
@@ -84,8 +93,8 @@ namespace Game.Persistence
         public OptionalFloat BakeTimeSeconds;
         public OptionalFloat DiameterCm;
         public OptionalFloat ThicknessMm;
-        public OptionalFloat SauceGrams;
-        public OptionalFloat ToppingGrams;
+        /// <summary>Dosed ingredients by id (generic - new ingredients need no format change).</summary>
+        public List<IngredientDose> Doses = new List<IngredientDose>();
         public OptionalFloat BakeTemperatureCelsius;
         public OptionalFloat CoolingTemperatureCelsius;
         public OptionalFloat FreezingTemperatureCelsius;
@@ -93,7 +102,7 @@ namespace Game.Persistence
         public static ProductSave From(ProductInstance p) => new ProductSave
         {
             InstanceId = p.InstanceId,
-            State = p.CurrentState,
+            State = p.CurrentState.ToString(),
             RecipeId = p.RecipeId,
             RejectReason = p.RejectReason,
             WeightGrams = OptionalFloat.From(p.MeasuredWeightGrams),
@@ -101,18 +110,27 @@ namespace Game.Persistence
             BakeTimeSeconds = OptionalFloat.From(p.ActualBakeTimeSeconds),
             DiameterCm = OptionalFloat.From(p.FormedDiameterCm),
             ThicknessMm = OptionalFloat.From(p.FormedThicknessMm),
-            SauceGrams = OptionalFloat.From(p.DosedSauceGrams),
-            ToppingGrams = OptionalFloat.From(p.DosedToppingGrams),
+            Doses = p.Doses != null
+                ? p.Doses.Select(d => new IngredientDose { IngredientId = d.IngredientId, Grams = d.Grams }).ToList()
+                : new List<IngredientDose>(),
             BakeTemperatureCelsius = OptionalFloat.From(p.BakeTemperatureCelsius),
             CoolingTemperatureCelsius = OptionalFloat.From(p.CoolingTemperatureCelsius),
             FreezingTemperatureCelsius = OptionalFloat.From(p.FreezingTemperatureCelsius)
         };
 
-        /// <summary>Creates the ProductInstance. The recipe asset is not bound in code (re-resolve via RecipeId later).</summary>
+        /// <summary>Parses <see cref="State"/>; false for an unknown or empty name.</summary>
+        public bool TryGetState(out ProductState state) =>
+            Enum.TryParse(State, false, out state) && Enum.IsDefined(typeof(ProductState), state)
+            && !int.TryParse(State, out _);
+
+        /// <summary>
+        /// Creates the ProductInstance. The recipe asset is not bound in code (re-resolve via RecipeId later).
+        /// The state name is validated by <see cref="SaveMigrations.Migrate"/> before loading.
+        /// </summary>
         public ProductInstance ToInstance() => new ProductInstance
         {
             InstanceId = InstanceId,
-            CurrentState = State,
+            CurrentState = TryGetState(out ProductState state) ? state : ProductState.PortionedDough,
             RecipeId = RecipeId,
             RejectReason = RejectReason,
             MeasuredWeightGrams = WeightGrams.ToNullable(),
@@ -120,8 +138,9 @@ namespace Game.Persistence
             ActualBakeTimeSeconds = BakeTimeSeconds.ToNullable(),
             FormedDiameterCm = DiameterCm.ToNullable(),
             FormedThicknessMm = ThicknessMm.ToNullable(),
-            DosedSauceGrams = SauceGrams.ToNullable(),
-            DosedToppingGrams = ToppingGrams.ToNullable(),
+            Doses = Doses != null
+                ? Doses.Select(d => new IngredientDose { IngredientId = d.IngredientId, Grams = d.Grams }).ToList()
+                : new List<IngredientDose>(),
             BakeTemperatureCelsius = BakeTemperatureCelsius.ToNullable(),
             CoolingTemperatureCelsius = CoolingTemperatureCelsius.ToNullable(),
             FreezingTemperatureCelsius = FreezingTemperatureCelsius.ToNullable()
@@ -153,14 +172,30 @@ namespace Game.Persistence
                 return false;
             }
 
+            if (data.Version < 2)
+            {
+                // Line order and ProductState numbers changed (11.10.) - old product states cannot be mapped reliably.
+                error = $"Save file version {data.Version} is from the old line layout and can no longer be loaded";
+                return false;
+            }
+
             // Add steps here when the format changes, e.g.:
-            // if (data.Version == 1) { ...convert...; data.Version = 2; }
+            // if (data.Version == 2) { ...convert...; data.Version = 3; }
 
             data.Machines ??= new List<MachineSave>();
             data.Products ??= new List<ProductSave>();
             data.FaultStatistics ??= new SaveValues();
             data.QualityStatistics ??= new SaveValues();
             data.Components ??= new List<ComponentSave>(); // saves before 08.10. have none
+
+            foreach (ProductSave product in data.Products)
+            {
+                if (product != null && !product.TryGetState(out _))
+                {
+                    error = $"Unknown product state '{product.State}' in save file";
+                    return false;
+                }
+            }
             return true;
         }
     }

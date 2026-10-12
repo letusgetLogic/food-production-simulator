@@ -442,6 +442,7 @@ MonoBehaviour:
   _content: {fileID: 0}
   _parameterList: {fileID: 0}
   _commandRow: {fileID: 0}
+  _showStartStopButtons: 0
   _startButton: {fileID: 8009947345294579120}
   _stopButton: {fileID: 9206379332764530082}
   _acknowledgeFaultButton: {fileID: 6861513317405246010}
@@ -1332,9 +1333,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.HMI::Game.HMI.TerminalInteractable
   _isInteractable: 1
+  _interactKey:
+    m_TableReference:
+      m_TableCollectionName: GUID:8dde0fd5ff2680540a08d198e1b46953
+    m_TableEntryReference:
+      m_KeyId: 7615336380051457
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   _interactChannel: {fileID: 11400000, guid: ace20263870ae6640b4ba6def038f860, type: 2}
   _machine: {fileID: 0}
   _panelId: machine
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4986830710275331995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,6 +1370,7 @@ MonoBehaviour:
   _content: {fileID: 5821404093771020404}
   _parameterList: {fileID: 0}
   _commandRow: {fileID: 0}
+  _showStartStopButtons: 0
   _startButton: {fileID: 8009947345294579120}
   _stopButton: {fileID: 9206379332764530082}
   _acknowledgeFaultButton: {fileID: 6861513317405246010}

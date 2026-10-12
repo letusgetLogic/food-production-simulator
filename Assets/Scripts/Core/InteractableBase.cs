@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Localization;
 
 namespace Game.Core
 {
@@ -15,6 +16,32 @@ namespace Game.Core
     public abstract class InteractableBase : MonoBehaviour, IInteractable
     {
         [SerializeField] private bool _isInteractable = true;
+
+        [Tooltip("Localized text shown at the crosshair while aiming at this object. " +
+                 "Empty = the default text of the component (key prompt.<text in snake_case>).")]
+        [SerializeField] private LocalizedString _interactKey;
+        /// <summary>
+        /// Crosshair text: the localized inspector text if set, otherwise the component's default text
+        /// (<see cref="DefaultInteractionText"/>, translated via the prompt.* keys).
+        /// </summary>
+        public virtual string InteractionText
+        {
+            get
+            {
+                string fallback = Localizer(DefaultInteractionText);
+                return _interactKey == null || _interactKey.IsEmpty ? fallback : LocText.Now(_interactKey, fallback);
+            }
+        }
+
+        /// <summary>
+        /// Translates an English prompt text. Set by LocText at start-up;
+        /// identity until then. Keeps Game.Core free of a table dependency.
+        /// </summary>
+        public static System.Func<string, string> Localizer = text => text;
+
+
+        /// <summary>English default text of this component type.</summary>
+        protected virtual string DefaultInteractionText => "Interact";
 
         public bool IsInteractable
         {

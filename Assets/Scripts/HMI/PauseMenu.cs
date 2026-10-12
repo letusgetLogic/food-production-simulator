@@ -353,7 +353,8 @@ namespace Game.HMI
                 "Q - close screen\n" +
                 "P - pause menu\n" +
                 "{0} - quick save, {1} - quick load\n" +
-                "{2} - debug panel (development)"),
+                "{2} - debug panel (development)\n" +
+                "R – pallet jack: raise/lower forks"),
                 ShortcutHints.QuickSave, ShortcutHints.QuickLoad, ShortcutHints.DebugPanel);
         }
     }

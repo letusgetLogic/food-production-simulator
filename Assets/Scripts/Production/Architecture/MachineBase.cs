@@ -1,4 +1,6 @@
+using Game.Core;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization;
 
@@ -41,13 +43,11 @@ namespace Game.Production
         /// <inheritdoc />
         public string Id => $"{NameKey}_{_number}";
 
-        private string _name;
-
         /// <summary>
         /// Localized name ("Ofen"). The language is only switched in the main menu, so it is resolved once and
         /// cached; the GameObject name stands in while the string table is still loading (non-blocking - WebGL).
         /// </summary>
-        public string Name => (_name ??= LocText.Now(_nameKey, null)) ?? name;
+        public string Name => LocText.Now(_nameKey, gameObject.name);
 
         /// <summary>Name with the per-type number from the overview ("Ofen 1"), or only the name while unnumbered.</summary>
         public string DisplayName => _number > 0 ? $"{Name} {_number}" : Name;
@@ -69,7 +69,7 @@ namespace Game.Production
         protected string LastFaultReason { get; private set; } = string.Empty;
 
         /// <summary>
-        /// Public read access to the current fault reason (code, e.g. "Jam", "SauceEmpty",
+        /// Public read access to the current fault reason (code, e.g. "Jam", "IngredientEmpty:sauce",
         /// "WrongProduct:MixedDough"). Valid while in Fault or Maintenance, empty otherwise.
         /// Used by the FaultMonitor/HMI to look up the fault definition.
         /// </summary>
@@ -125,10 +125,52 @@ namespace Game.Production
             StartRun();
         }
 
+        // ---- Emergency stop (Not-Halt, ISO 13850 / EN 60204-1) ----
+
+        /// <summary>Fault reason while an emergency stop device has stopped the machine.</summary>
+        public const string FaultReasonEmergencyStop = "EmergencyStop";
+
+        private readonly HashSet<object> _emergencyStopSources = new HashSet<object>();
+
+        /// <summary>
+        /// True while at least one emergency stop device (machine panel, line panel) is latched for this machine.
+        /// Then the machine cannot be acknowledged, finished from maintenance or started - releasing the device
+        /// does not restart anything: Reset and Start are separate, deliberate actions.
+        /// </summary>
+        public bool IsEmergencyStopEngaged => _emergencyStopSources.Count > 0;
+
+        /// <summary>Raised when <see cref="IsEmergencyStopEngaged"/> changes.</summary>
+        public event Action<bool> EmergencyStopChanged;
+
+        /// <summary>An emergency stop device latched: the machine faults immediately ("EmergencyStop").</summary>
+        public void EngageEmergencyStop(object source)
+        {
+            bool wasEngaged = IsEmergencyStopEngaged;
+            _emergencyStopSources.Add(source ?? this);
+            if (_currentState != MachineState.Fault && _currentState != MachineState.Maintenance)
+            {
+                TriggerFault(FaultReasonEmergencyStop);
+            }
+
+            if (!wasEngaged)
+            {
+                EmergencyStopChanged?.Invoke(true);
+            }
+        }
+
+        /// <summary>The device was released (unlatched). The machine stays in Fault until it is reset.</summary>
+        public void ReleaseEmergencyStop(object source)
+        {
+            if (_emergencyStopSources.Remove(source ?? this) && !IsEmergencyStopEngaged)
+            {
+                EmergencyStopChanged?.Invoke(false);
+            }
+        }
+
         /// <inheritdoc />
         public void StartRun()
         {
-            if (_currentState != MachineState.Ready)
+            if (_currentState != MachineState.Ready || IsEmergencyStopEngaged)
             {
                 return;
             }
@@ -164,7 +206,7 @@ namespace Game.Production
         /// <inheritdoc />
         public void AcknowledgeFault()
         {
-            if (_currentState != MachineState.Fault)
+            if (_currentState != MachineState.Fault || IsEmergencyStopEngaged)
             {
                 return;
             }
@@ -175,7 +217,7 @@ namespace Game.Production
         /// <inheritdoc />
         public void CompleteMaintenance()
         {
-            if (_currentState != MachineState.Maintenance)
+            if (_currentState != MachineState.Maintenance || IsEmergencyStopEngaged)
             {
                 return;
             }

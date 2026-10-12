@@ -11,6 +11,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Game.Core;
 
 namespace Game.HMI
 {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Production;
 using Game.Quality;
 using UnityEngine;
+using Game.Core;
 
 namespace Game.HMI
 {

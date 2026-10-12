@@ -35,10 +35,7 @@ namespace Game.Quality
         public const string DefectOverweight = "Overweight";
         public const string DefectDiameter = "Diameter";
         public const string DefectThickness = "Thickness";
-        public const string DefectSauceLow = "SauceLow";
-        public const string DefectSauceHigh = "SauceHigh";
-        public const string DefectToppingLow = "ToppingLow";
-        public const string DefectToppingHigh = "ToppingHigh";
+        // Dosing defects are built from the ingredient: SO_DosingIngredient.DefectCode + "Low" / "High" (e.g. MozzarellaLow).
         public const string DefectUnderbaked = "Underbaked";
         public const string DefectOverbaked = "Overbaked";
         public const string DefectBakeTemperature = "BakeTemperature";
@@ -123,6 +120,7 @@ namespace Game.Quality
                 Check(product, _spec, result.Defects);
             }
 
+            product.QualityPassed = result.IsGood; // the palletizer stacks only good cartons
             Record(result);
             return result;
         }
@@ -157,10 +155,17 @@ namespace Game.Quality
 
             if (spec.CheckDosing)
             {
-                CheckRange(p.DosedSauceGrams, spec.TargetSauceGrams, spec.SauceToleranceGrams,
-                    DefectSauceLow, DefectSauceHigh, "Sauce", require, defects);
-                CheckRange(p.DosedToppingGrams, spec.TargetToppingGrams, spec.ToppingToleranceGrams,
-                    DefectToppingLow, DefectToppingHigh, "Topping", require, defects);
+                foreach (IngredientSpec ingredient in spec.Ingredients)
+                {
+                    if (ingredient == null || ingredient.Ingredient == null)
+                    {
+                        continue;
+                    }
+
+                    string code = ingredient.Ingredient.DefectCode; // "Sauce" -> SauceLow / SauceHigh / SauceMissing
+                    CheckRange(p.GetDose(ingredient.Ingredient.Id), ingredient.TargetGrams, ingredient.ToleranceGrams,
+                        code + "Low", code + "High", code, require, defects);
+                }
             }
 
             if (spec.CheckBaking)
