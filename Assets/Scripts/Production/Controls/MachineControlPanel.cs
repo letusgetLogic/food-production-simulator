@@ -33,18 +33,6 @@ namespace Game.Production
         /// <summary>True while this panel's emergency stop is engaged (latched).</summary>
         public bool IsEmergencyStopEngaged => _emergencyStopButton != null && _emergencyStopButton.IsEngaged;
 
-        private void Awake()
-        {
-            if (_startButton != null)
-            {
-                _startButton.FallbackText = "Start";
-            }
-            if (_stopButton != null)
-            {
-                _stopButton.FallbackText = "Stop";
-            }
-        }
-
         private void OnEnable()
         {
             if (_startButton != null) _startButton.Pressed += HandleStart;

@@ -1,17 +1,11 @@
 using System;
 using UnityEngine;
-using UnityEngine.Localization;
 
 namespace Game.Core
 {
     [RequireComponent(typeof(Transform))]
-    public class HoldInteractable : InteractableBase, IReleaseable
+    public class HoldInteractable : InteractableBase
     {
-        protected override string DefaultInteractionText => "Pick up";
-
-        /// <inheritdoc />
-        public string ReleaseText => Localizer("Put down");
-
         [SerializeField] private SO_HoldChannel _holdChannel;
         [SerializeField] private SO_HoldPoint _holdPoint;
         public SO_HoldPoint HoldPoint => _holdPoint;
@@ -42,6 +36,7 @@ namespace Game.Core
         private static Quaternion Yaw(Transform holdPoint) => Quaternion.Euler(0f, holdPoint.eulerAngles.y, 0f);
 
         private Transform _tf;
+        private RigidbodyInterpolation _interpolationBeforeHold;
         private Collider[] _ownColliders = System.Array.Empty<Collider>();
         private readonly Collider[] _overlaps = new Collider[16];
         private bool _isHeld;
@@ -97,6 +92,10 @@ namespace Game.Core
             if (_rigidbody != null)
             {
                 _rigidbody.isKinematic = true;
+                // The item follows the camera, which moves every frame - FixedUpdate only runs at the physics rate.
+                // Interpolation renders the steps in between, otherwise the held item jitters in front of the camera.
+                _interpolationBeforeHold = _rigidbody.interpolation;
+                _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
             }
 
             if (_dropRequestChannel != null)
@@ -123,6 +122,7 @@ namespace Game.Core
 
             if (_rigidbody != null)
             {
+                _rigidbody.interpolation = _interpolationBeforeHold;
                 _rigidbody.isKinematic = false;
                 _rigidbody.WakeUp(); // a body that was kinematic counts as sleeping - it must fall right away
             }
@@ -149,14 +149,17 @@ namespace Game.Core
             // Frame-rate independent exponential smoothing instead of a fixed Lerp factor,
             // so _followLerpSpeed behaves consistently regardless of the physics timestep.
             float t = 1f - Mathf.Exp(-_followLerpSpeed * Time.fixedDeltaTime);
-            Vector3 nextPosition = Vector3.Lerp(_tf.position, holdPosition, t);
-            Quaternion nextRotation = Quaternion.Slerp(_tf.rotation, holdRotation, t);
+            // With interpolation the transform shows an in-between pose - smooth from the physics pose instead.
+            Vector3 currentPosition = _rigidbody != null ? _rigidbody.position : _tf.position;
+            Quaternion currentRotation = _rigidbody != null ? _rigidbody.rotation : _tf.rotation;
+            Vector3 nextPosition = Vector3.Lerp(currentPosition, holdPosition, t);
+            Quaternion nextRotation = Quaternion.Slerp(currentRotation, holdRotation, t);
 
             if (_rigidbody != null)
             {
                 // Held items stay kinematic (belts, buffer and line end read that as "taken"), and a kinematic
                 // body passes through static geometry - so walls, hopper and machines are checked here.
-                nextPosition = ConstrainToWorld(_tf.position, nextPosition, holdPoint.root);
+                nextPosition = ConstrainToWorld(currentPosition, nextPosition, holdPoint.root);
                 if ((holdPosition - nextPosition).sqrMagnitude > _maxHoldDistance * _maxHoldDistance)
                 {
                     Release(); // stuck behind something while the player walked on: it drops
@@ -197,7 +200,9 @@ namespace Game.Core
                 }
             }
 
-            return to + Depenetration(to - from, carrier);
+            // Sweep and bounds use the physics pose (from), ComputePenetration the transform - which lags behind
+            // with interpolation, so it gets its own offset.
+            return to + Depenetration(to - from, to - _tf.position, carrier);
         }
 
         private bool TryFindBlockingHit(Vector3 direction, float distance, Transform carrier, out RaycastHit closest)
@@ -215,7 +220,7 @@ namespace Game.Core
             return found;
         }
 
-        private Vector3 Depenetration(Vector3 offset, Transform carrier)
+        private Vector3 Depenetration(Vector3 offset, Vector3 transformOffset, Transform carrier)
         {
             Vector3 correction = Vector3.zero;
             foreach (Collider own in _ownColliders)
@@ -237,7 +242,7 @@ namespace Game.Core
                         continue;
                     }
 
-                    if (Physics.ComputePenetration(own, own.transform.position + offset + correction, own.transform.rotation,
+                    if (Physics.ComputePenetration(own, own.transform.position + transformOffset + correction, own.transform.rotation,
                             other, other.transform.position, other.transform.rotation, out Vector3 pushDirection, out float depth))
                     {
                         correction += pushDirection * depth;
@@ -278,6 +283,10 @@ namespace Game.Core
             }
 
             _holdChannel?.ReleaseClaim();
+            if (_rigidbody != null)
+            {
+                _rigidbody.interpolation = _interpolationBeforeHold;
+            }
         }
     }
 

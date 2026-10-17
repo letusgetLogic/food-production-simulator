@@ -11,8 +11,6 @@ namespace Game.HMI
     // terminal that only opens the plant-wide overview.
     public class TerminalInteractable : InteractableBase
     {
-        protected override string DefaultInteractionText => "Open terminal";
-
         [SerializeField] private SO_TerminalInteractChannel _interactChannel;
         [SerializeField] private MachineBase _machine;
         [SerializeField] private string _panelId = "overview";

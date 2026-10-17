@@ -88,11 +88,16 @@ namespace Game.Production
                 }
 
                 MachineBase captured = element;
-                Action<MachineState, MachineState> handler = (_, next) =>
+                Action<MachineState, MachineState> handler = (previous, next) =>
                 {
                     if (next == MachineState.Running && !(captured is ConveyorBelt))
                     {
                         RestartAdjacentBelts(captured);
+                    }
+                    else if (captured is ConveyorBelt belt && previous == MachineState.Maintenance
+                             && next == MachineState.Ready)
+                    {
+                        ResumeBeltAfterMaintenance(belt);
                     }
                     ElementStateChanged?.Invoke(captured, next);
                 };
@@ -202,6 +207,46 @@ namespace Game.Production
             {
                 RestartBelt(belt);
             }
+        }
+
+        /// <summary>
+        /// A belt has no start button of its own: after its fault was acknowledged and maintenance completed
+        /// (HMI), it runs again by itself when the station before or after it is running - e.g. the buffer
+        /// belt after "BufferFull", so the press gets dough again without stopping and starting it.
+        /// A stopped line stays stopped.
+        /// </summary>
+        private void ResumeBeltAfterMaintenance(ConveyorBelt belt)
+        {
+            if (IsSequenceRunning)
+            {
+                return;
+            }
+
+            int index = _elements.IndexOf(belt);
+            if (index < 0)
+            {
+                return;
+            }
+
+            if (IsNeighbourStationRunning(index, +1) || IsNeighbourStationRunning(index, -1))
+            {
+                belt.RequestRun();
+            }
+        }
+
+        /// <summary>First element that is not a belt in <paramref name="step"/> direction is running.</summary>
+        private bool IsNeighbourStationRunning(int index, int step)
+        {
+            for (int i = index + step; i >= 0 && i < _elements.Count; i += step)
+            {
+                MachineBase element = _elements[i];
+                if (element == null || element is ConveyorBelt)
+                {
+                    continue;
+                }
+                return element.CurrentState == MachineState.Running || element.CurrentState == MachineState.Starting;
+            }
+            return false;
         }
 
         private static void RestartBelt(ConveyorBelt belt)

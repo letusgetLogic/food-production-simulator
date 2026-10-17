@@ -14,7 +14,7 @@ namespace Game.HMI
     /// Guided first batch (Woche 3, Tutorial/Onboarding): shows one instruction at a time in a small overlay
     /// panel (top left) and advances when the player has done it - walk, read the recipe page of the HMI, start the
     /// mixer, tilt the drum, carry the pot to the portioner, raise the lift, first portion, first pizza base,
-    /// open the HMI, first packaged pizza. Content (texts, order, conditions) lives in <see cref="SO_TutorialSequence"/>.
+    /// open the HMI, first packaged pizza, palletizer, pallet jack (grab, raise forks), changing the pallet. Content (texts, order, conditions) lives in <see cref="SO_TutorialSequence"/>.
     ///
     /// Conditions read the real machines (no tutorial hooks in machine code). They also accept "the player is
     /// already further", e.g. a tilted drum completes "wait for mixing", so nobody gets stuck by doing steps early.
@@ -35,6 +35,10 @@ namespace Game.HMI
         [SerializeField] private PortionerMachine _portioner;
         [SerializeField] private PressMachine _press;
         [SerializeField] private QualityInspector _qualityInspector;
+        [Tooltip("Empty = found in the scene at runtime.")]
+        [SerializeField] private PalletStation _palletStation;
+        [Tooltip("Empty = found in the scene at runtime.")]
+        [SerializeField] private PalletJack _palletJack;
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private SO_HoldChannel _holdChannel;
 
@@ -69,6 +73,7 @@ namespace Game.HMI
         private int _startPortions;
         private int _startFormed;
         private int _startInspected;
+        private int _startCartons;
         private bool _uiOpenedSinceStep;
         private bool _drumTiltedSinceStep;
 
@@ -257,6 +262,7 @@ namespace Game.HMI
             _startPortions = _portioner != null ? _portioner.PortionsProduced : 0;
             _startFormed = _press != null ? _press.FormedCount : 0;
             _startInspected = _qualityInspector != null ? _qualityInspector.TotalCount : 0;
+            _startCartons = PalletStationRef != null ? PalletStationRef.CartonsTotal : 0;
             _uiOpenedSinceStep = false;
             _drumTiltedSinceStep = false;
             RefreshTexts();
@@ -309,8 +315,58 @@ namespace Game.HMI
                 case TutorialCondition.RecipeOpened:
                     return IsRecipeShown();
 
+                case TutorialCondition.CartonPalletized:
+                    return PalletStationRef == null
+                           || PalletStationRef.CartonsTotal > _startCartons
+                           || PalletStationRef.PalletsCompleted > 0
+                           || (PalletStationRef.CurrentPallet != null && !PalletStationRef.CurrentPallet.IsEmpty);
+
+                case TutorialCondition.PalletJackHeld:
+                    return PalletJackRef == null || PalletJackRef.IsHeld || PalletJackRef.IsRaised;
+
+                case TutorialCondition.PalletJackRaised:
+                    return PalletJackRef == null || PalletJackRef.IsRaised;
+
                 default:
                     return false;
+            }
+        }
+
+        private bool _palletRefsSearched;
+
+        private PalletStation PalletStationRef
+        {
+            get
+            {
+                FindPalletRefs();
+                return _palletStation;
+            }
+        }
+
+        private PalletJack PalletJackRef
+        {
+            get
+            {
+                FindPalletRefs();
+                return _palletJack;
+            }
+        }
+
+        /// <summary>Scene without palletizer/pallet jack: the steps complete by themselves.</summary>
+        private void FindPalletRefs()
+        {
+            if (_palletRefsSearched)
+            {
+                return;
+            }
+            _palletRefsSearched = true;
+            if (_palletStation == null)
+            {
+                _palletStation = FindFirstObjectByType<PalletStation>();
+            }
+            if (_palletJack == null)
+            {
+                _palletJack = FindFirstObjectByType<PalletJack>();
             }
         }
 

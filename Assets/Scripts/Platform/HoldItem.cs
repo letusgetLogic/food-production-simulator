@@ -21,12 +21,14 @@ namespace Game.Platform
         {
             _input.ReleasePerformed += OnDropPerformed;
             _input.UsePerformed += OnUsePerformed;
+            _input.ModePerformed += OnModePerformed;
         }
 
         private void OnDisable()
         {
             _input.ReleasePerformed -= OnDropPerformed;
             _input.UsePerformed -= OnUsePerformed;
+            _input.ModePerformed -= OnModePerformed;
         }
 
         private void OnUsePerformed()
@@ -34,6 +36,14 @@ namespace Game.Platform
             if (_useRequestChannel != null)
             {
                 _useRequestChannel.RequestUse();
+            }
+        }
+
+        private void OnModePerformed()
+        {
+            if (_useRequestChannel != null)
+            {
+                _useRequestChannel.RequestModeToggle();
             }
         }
 

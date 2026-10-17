@@ -31,9 +31,9 @@ MonoBehaviour:
   - Ingredient: {fileID: 11400000, guid: 3ecd6e5df2cf28e47a2aba2b480be079, type: 2}
     Grams: 120
     ToleranceGrams: 12
-  TargetBakeTimeSeconds: 15
+  TargetBakeTimeSeconds: 10
   BakeTimeToleranceSeconds: 1.5
-  TargetBakeTemperatureCelsius: 280
+  TargetBakeTemperatureCelsius: 230
   BakeTemperatureToleranceCelsius: 0
   CoolingTemperatureCelsius: 20
   CoolingDurationSeconds: 10

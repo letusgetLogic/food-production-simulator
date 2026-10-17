@@ -16,6 +16,7 @@ namespace Game.Platform
         [Header("References")]
         [SerializeField] private Camera _aimCamera;
         [SerializeField] private PlayerInputReader _input;
+        public PlayerInputReader Input => _input;
         [SerializeField] private SO_HoldChannel _holdChannel;
         public SO_HoldChannel HoldChannel => _holdChannel;
 

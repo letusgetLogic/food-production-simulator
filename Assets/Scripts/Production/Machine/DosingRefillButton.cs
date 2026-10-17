@@ -13,8 +13,6 @@ namespace Game.Production
 
         public DosingUnit Unit => _unit != null ? _unit : GetComponentInParent<DosingUnit>();
 
-        protected override string DefaultInteractionText => "Refill";
-
         public override string InteractionText
         {
             get

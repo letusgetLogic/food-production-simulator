@@ -98,6 +98,30 @@ MonoBehaviour:
       the end of the line.'
     Condition: 11
     Amount: 0
+  - TitleKey: tutorial.palletizer.title
+    TitleFallback: 'Palletizing'
+    TextKey: tutorial.palletizer.text
+    TextFallback: 'Behind the line end, good cartons are stacked on the pallet - 48 per pallet. Without a pallet or with a full one the palletizer stops and the line backs up (amber warning).'
+    Condition: 13
+    Amount: 0
+  - TitleKey: tutorial.pallet_jack.title
+    TitleFallback: 'Take the pallet jack'
+    TextKey: tutorial.pallet_jack.text
+    TextFallback: 'Full pallets are moved with the pallet jack. Aim at its handle and grab it with {0}. Push it with W A S D - it follows your view.'
+    Condition: 14
+    Amount: 0
+  - TitleKey: tutorial.pallet_forks.title
+    TitleFallback: 'Raise the forks'
+    TextKey: tutorial.pallet_forks.text
+    TextFallback: 'Drive the forks under a pallet and press R to raise them. R again lowers them, {1} lets go of the handle.'
+    Condition: 15
+    Amount: 0
+  - TitleKey: tutorial.pallet_swap.title
+    TitleFallback: 'Change the pallet'
+    TextKey: tutorial.pallet_swap.text
+    TextFallback: 'When the pallet is full: take it to a marked storage place in the left corner, then take an empty pallet from a stack in the right corner ({0}) and put it on the palletizer ({1}).'
+    Condition: 0
+    Amount: 25
   - TitleKey: tutorial.done.title
     TitleFallback: First batch done!
     TextKey: tutorial.done.text

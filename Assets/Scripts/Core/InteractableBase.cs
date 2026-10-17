@@ -22,13 +22,12 @@ namespace Game.Core
         [SerializeField] private LocalizedString _interactKey;
         /// <summary>
         /// Crosshair text: the localized inspector text if set, otherwise the component's default text
-        /// (<see cref="DefaultInteractionText"/>, translated via the prompt.* keys).
         /// </summary>
         public virtual string InteractionText
         {
             get
             {
-                string fallback = Localizer(DefaultInteractionText);
+                string fallback = Localizer("Interact");
                 return _interactKey == null || _interactKey.IsEmpty ? fallback : LocText.Now(_interactKey, fallback);
             }
         }
@@ -38,10 +37,6 @@ namespace Game.Core
         /// identity until then. Keeps Game.Core free of a table dependency.
         /// </summary>
         public static System.Func<string, string> Localizer = text => text;
-
-
-        /// <summary>English default text of this component type.</summary>
-        protected virtual string DefaultInteractionText => "Interact";
 
         public bool IsInteractable
         {

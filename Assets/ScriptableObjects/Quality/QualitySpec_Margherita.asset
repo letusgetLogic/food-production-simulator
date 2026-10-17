@@ -32,10 +32,10 @@ MonoBehaviour:
     TargetGrams: 120
     ToleranceGrams: 12
   CheckBaking: 1
-  TargetBakeTimeSeconds: 15
+  TargetBakeTimeSeconds: 10
   BakeTimeToleranceSeconds: 1.5
-  MinBakeTemperatureCelsius: 250
-  MaxBakeTemperatureCelsius: 320
+  MinBakeTemperatureCelsius: 210
+  MaxBakeTemperatureCelsius: 250
   CheckCooling: 1
   MaxCoolingTemperatureCelsius: 25
   CheckFreezing: 1

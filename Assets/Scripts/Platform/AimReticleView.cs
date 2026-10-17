@@ -29,11 +29,7 @@ namespace Game.Platform
         [SerializeField] private float _idleScale = 1f;
         [SerializeField] private float _activeScale = 1.35f;
 
-        [Header("Text")]
-        [SerializeField] private string _inputKeyInteract = "E";
-        [SerializeField] private string _inputKeyRelease = "Q";
-        [SerializeField] private string _defaultPromptInteract = "Interact";
-        [SerializeField] private string _defaultPromptRelease = "Release";
+       
 
         private IInteractable _boundTarget;
 
@@ -94,21 +90,28 @@ namespace Game.Platform
             if (_interactor.HoldChannel.HoldingObject)
                 return;
 
-            _inputKeyLabel.text = !canInteract ? string.Empty : $"({_inputKeyInteract})";
+            _inputKeyLabel.text = !canInteract ? string.Empty : $"({_interactor.Input.InputKeyInteract})";
 
             // Per-target action text ("("Open terminal"); the generic label only if a target has none.
             string text = hasTarget ? _boundTarget.InteractionText : null;
             _promptLabel.text = !canInteract ? string.Empty
-                : string.IsNullOrEmpty(text) ? _defaultPromptInteract : $"{text}";
+                : string.IsNullOrEmpty(text) ? _interactor.Input.PromptInteract : $"{text}";
         }
 
         private void OnHoldChanged(bool isHeld)
         {
-            _inputKeyLabel.text = !isHeld ? string.Empty : $"({_inputKeyRelease})";
+            string customPrompt = _interactor.HoldChannel.HoldingObject is IHoldingCustomHint prompt ? prompt.HintText : null;
+            _promptLabel.text = !isHeld ? string.Empty : string.IsNullOrEmpty(customPrompt) ? _interactor.Input.PromptRelease : customPrompt;
+            _inputKeyLabel.text = !isHeld ? string.Empty : string.IsNullOrEmpty(customPrompt) ? $"({_interactor.Input.InputKeyRelease})" : string.Empty;
+        }
 
-            // What the keys do with the held item/tool now ("Put down", "(R) Forks up/down  Let go").
-            string holdText = _interactor.HoldChannel.HoldingObject is IReleaseable prompt ? prompt.ReleaseText : null;
-            _promptLabel.text = !isHeld ? string.Empty : string.IsNullOrEmpty(holdText) ? _defaultPromptRelease : holdText;
+        private void LateUpdate()
+        {
+            // A custom hint can change while the item is held (pallet jack: riding, forks raised).
+            if (_interactor.HoldChannel.HoldingObject is IHoldingCustomHint prompt && _promptLabel.text != prompt.HintText)
+            {
+                OnHoldChanged(true);
+            }
         }
 
         private void SetReticle(bool isFocusingUI)

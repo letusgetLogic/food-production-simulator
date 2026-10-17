@@ -495,7 +495,7 @@ MonoBehaviour:
       \u2013 correr\nE \u2013 usar / recoger\nQ \u2013 soltar\nClic izquierdo \u2013
       botones de pantallas y terminales\nQ \u2013 cerrar pantalla\nP \u2013 pausa\n{0}
       \u2013 guardado r\xE1pido, {1} \u2013 carga r\xE1pida\n{2} \u2013 panel de
-      depuraci\xF3n (desarrollo)"
+      depuraci\xF3n (desarrollo)\nR \u2013 transpaleta: subir/bajar las horquillas"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -1254,8 +1254,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Ve a una amasadora y arr\xE1ncala: bot\xF3n verde de la m\xE1quina
-      o su terminal ({0})."
+    m_Localized: "Ve a una amasadora y arr\xE1ncala: bot\xF3n blanco de marcha (I)
+      en el panel de mando de la amasadora ({0})."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1308,7 +1308,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703371
     m_Localized: "La porcionadora divide la masa en porciones (objetivo 250 g). Si
-      est\xE1 parada, arr\xE1ncala en su terminal."
+      est\xE1 parada, arr\xE1ncala en su panel de mando (I)."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703372
@@ -1334,8 +1334,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703377
-    m_Localized: "Sigue tu pizza: salsa e ingredientes, horno, enfriado, ultracongelador,
-      envasado. La calidad se comprueba al final de la l\xEDnea."
+    m_Localized: "Sigue tu pizza: el horno precuece la base, se enfr\xEDa, luego
+      salsa y mozzarella, ultracongelador, envasado. La calidad se comprueba al final
+      de la l\xEDnea."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703378
@@ -1656,6 +1657,44 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7615336384245772
     m_Localized: Desbloquear la parada de emergencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217344802816
+    m_Localized: Paletizado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105984
+    m_Localized: "Detr\xE1s del final de la l\xEDnea, las cajas buenas se apilan
+      en el pal\xE9: 48 por pal\xE9. Sin pal\xE9 o con el pal\xE9 lleno, el paletizador
+      se detiene y la l\xEDnea se acumula hacia atr\xE1s (aviso \xE1mbar)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105985
+    m_Localized: Coge la transpaleta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105986
+    m_Localized: "Los pal\xE9s llenos se mueven con la transpaleta. Apunta a su tim\xF3n
+      y ag\xE1rralo con {0}. Emp\xFAjala con W A S D: sigue tu mirada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105987
+    m_Localized: Sube las horquillas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105988
+    m_Localized: "Mete las horquillas bajo un pal\xE9 y pulsa R para subirlas. R
+      de nuevo las baja; {1} suelta el tim\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105989
+    m_Localized: "Cambia el pal\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105990
+    m_Localized: "Cuando el pal\xE9 est\xE9 lleno: ll\xE9valo a un sitio marcado
+      en la esquina izquierda, luego coge un pal\xE9 vac\xEDo de una pila de la esquina
+      derecha ({0}) y d\xE9jalo en el paletizador ({1})."
     m_Metadata:
       m_Items: []
   references:

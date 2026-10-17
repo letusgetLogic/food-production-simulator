@@ -21,8 +21,6 @@ namespace Game.Production
         private float _refreshTimer;
         private int _count;
 
-        protected override string DefaultInteractionText => "Take pallet";
-
         /// <summary>Empty pallets in the whole store.</summary>
         public int Count => _count;
 

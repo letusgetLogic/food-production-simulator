@@ -354,7 +354,8 @@ namespace Game.HMI
                 "P - pause menu\n" +
                 "{0} - quick save, {1} - quick load\n" +
                 "{2} - debug panel (development)\n" +
-                "R – pallet jack: raise/lower forks"),
+                "R – pallet jack: raise/lower forks\n" +
+                "T – pallet jack: ride (Q gets off)"),
                 ShortcutHints.QuickSave, ShortcutHints.QuickLoad, ShortcutHints.DebugPanel);
         }
     }

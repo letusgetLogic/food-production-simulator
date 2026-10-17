@@ -100,6 +100,7 @@ MonoBehaviour:
   _input: {fileID: 4439690519695887088}
   _holdItemPoint: {fileID: 1080167003784949718}
   _holdPointChannel: {fileID: 11400000, guid: ea0be8a8ca8b8d448b226ee8e54ae6aa, type: 2}
+  _useRequestChannel: {fileID: 11400000, guid: 8f0580348bd542a48bfb9c2f56edc871, type: 2}
 --- !u!1 &2948436746435655542
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +113,6 @@ GameObject:
   - component: {fileID: 4511672219316766616}
   - component: {fileID: 4439690519695887088}
   - component: {fileID: 615882724646218653}
-  - component: {fileID: 2254077342322165819}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -177,6 +177,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe1ccc4781b56140b1b426b06585e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Platform::Game.Platform.PlayerInputReader
+  InputKeyInteract: E
+  InputKeyRelease: Q
+  PromptInteract: Interact
 --- !u!114 &615882724646218653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,27 +197,13 @@ MonoBehaviour:
   _sprintSpeed: 4.6
   _acceleration: 14
   _gravity: -18
+  _pushForce: 450
+  _maxPushMass: 200
   _lookSensitivity: 0.08
   _minPitch: -80
   _maxPitch: 80
   _lockCursor: 1
   Input: {fileID: 4439690519695887088}
---- !u!114 &2254077342322165819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2948436746435655542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54e7e06a5d93c9a409485c035a1f7b73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Platform::Game.Platform.HoldItem
-  _dropRequestChannel: {fileID: 11400000, guid: 65fcf4e66fd258f4aa181065a9e71123, type: 2}
-  _input: {fileID: 4439690519695887088}
-  _holdItemPoint: {fileID: 1250055337303413924}
-  _holdPointChannel: {fileID: 11400000, guid: a56a74a36ecee7f44889d62fea37bc75, type: 2}
 --- !u!1 &3390326043784928543
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +269,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -434,6 +423,7 @@ MonoBehaviour:
   _input: {fileID: 4439690519695887088}
   _holdItemPoint: {fileID: 1250055337303413924}
   _holdPointChannel: {fileID: 11400000, guid: a56a74a36ecee7f44889d62fea37bc75, type: 2}
+  _useRequestChannel: {fileID: 11400000, guid: 8f0580348bd542a48bfb9c2f56edc871, type: 2}
 --- !u!1 &5676213786323758391
 GameObject:
   m_ObjectHideFlags: 0

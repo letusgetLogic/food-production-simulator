@@ -1627,6 +1627,38 @@ MonoBehaviour:
     m_Key: prompt.release_emergency_stop
     m_Metadata:
       m_Items: []
+  - m_Id: 9691217344802816
+    m_Key: tutorial.palletizer.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105984
+    m_Key: tutorial.palletizer.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105985
+    m_Key: tutorial.pallet_jack.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105986
+    m_Key: tutorial.pallet_jack.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105987
+    m_Key: tutorial.pallet_forks.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105988
+    m_Key: tutorial.pallet_forks.text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105989
+    m_Key: tutorial.pallet_swap.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105990
+    m_Key: tutorial.pallet_swap.text
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

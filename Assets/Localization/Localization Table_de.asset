@@ -495,7 +495,7 @@ MonoBehaviour:
       sprinten\nE \u2013 benutzen / aufheben\nQ \u2013 ablegen\nLinksklick \u2013
       Kn\xF6pfe an Bildschirmen und Terminals\nQ \u2013 Bildschirm schlie\xDFen\nP
       \u2013 Pause\n{0} \u2013 Schnellspeichern, {1} \u2013 Schnellladen\n{2} \u2013
-      Debug-Panel (Entwicklung)"
+      Debug-Panel (Entwicklung)\nR \u2013 Hubwagen: Gabel heben/senken"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -1254,8 +1254,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Geh zu einem Teigmischer und starte ihn: gr\xFCner Start-Knopf
-      am Mischer oder sein Terminal ({0})."
+    m_Localized: "Geh zu einem Teigmischer und starte ihn: wei\xDFer Start-Taster
+      (I) am Bedienpult des Mischers ({0})."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1307,7 +1307,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703371
     m_Localized: Der Portionierer teilt den Teig in Portionen (Ziel 250 g). Steht
-      er, starte ihn an seinem Terminal.
+      er, starte ihn an seinem Bedienpult (I).
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703372
@@ -1333,8 +1333,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703377
-    m_Localized: "Folge deiner Pizza: Sauce und Belag, Ofen, K\xFChlung, Schockfroster,
-      Verpackung. Am Linienende wird die Qualit\xE4t gepr\xFCft."
+    m_Localized: "Folge deiner Pizza: Der Ofen backt den Boden vor, er k\xFChlt ab,
+      dann kommen Sauce und Mozzarella, Schockfroster, Verpackung. Am Linienende
+      wird die Qualit\xE4t gepr\xFCft."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703378
@@ -1655,6 +1656,44 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7615336384245772
     m_Localized: Not-Halt entriegeln
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217344802816
+    m_Localized: Palettieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105984
+    m_Localized: "Hinter dem Linienende werden gute Kartons auf die Palette gestapelt
+      \u2013 48 pro Palette. Ohne Palette oder mit voller Palette h\xE4lt der Palettierer
+      an und die Linie staut zur\xFCck (gelbe Warnung)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105985
+    m_Localized: Hubwagen nehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105986
+    m_Localized: "Volle Paletten bewegst du mit dem Hubwagen. Ziele auf die Deichsel
+      und greif sie mit {0}. Schieb ihn mit W A S D \u2013 er folgt deiner Blickrichtung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105987
+    m_Localized: Gabel heben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105988
+    m_Localized: "Fahr die Gabel unter eine Palette und dr\xFCck R, um sie anzuheben.
+      Nochmal R senkt sie, {1} l\xE4sst die Deichsel los."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105989
+    m_Localized: Palette wechseln
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105990
+    m_Localized: 'Ist die Palette voll: Fahr sie auf einen markierten Lagerplatz
+      in der linken Ecke, nimm dann eine leere Palette von einem Stapel in der rechten
+      Ecke ({0}) und stell sie auf den Palettierer ({1}).'
     m_Metadata:
       m_Items: []
   references:

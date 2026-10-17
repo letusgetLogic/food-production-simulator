@@ -240,6 +240,24 @@ namespace Game.EditorTools
                     case "tests":
                         RunTests();
                         break;
+                    case "states":
+                        // states - every machine with path and state (warning, fault reason)
+                        foreach (Game.Production.MachineBase m in UnityEngine.Object.FindObjectsByType<Game.Production.MachineBase>(FindObjectsSortMode.None)
+                                     .OrderBy(m => m.transform.position.x))
+                        {
+                            Write($"  {AnimationUtility.CalculateTransformPath(m.transform, null)}: {m.CurrentState}" +
+                                  (string.IsNullOrEmpty(m.FaultReason) ? "" : $" fault={m.FaultReason}") +
+                                  (m.HasWarning ? $" warning={m.WarningReason}" : ""));
+                        }
+                        break;
+                    case "ackfaults":
+                        // ackfaults - like the operator at the HMI: acknowledge every fault, complete maintenance
+                        foreach (Game.Production.MachineBase m in UnityEngine.Object.FindObjectsByType<Game.Production.MachineBase>(FindObjectsSortMode.None))
+                        {
+                            if (m.CurrentState == Game.Production.MachineState.Fault) m.AcknowledgeFault();
+                            if (m.CurrentState == Game.Production.MachineState.Maintenance) { m.CompleteMaintenance(); Write("  cleared " + m.name); }
+                        }
+                        break;
                     case "clearlog":
                         File.WriteAllText(LogFile, string.Empty);
                         break;
@@ -419,6 +437,12 @@ namespace Game.EditorTools
             if (type == typeof(string)) return raw;
             if (type == typeof(bool)) return bool.Parse(raw);
             if (type.IsEnum) return Enum.Parse(type, raw);
+            if (type == typeof(Vector3))
+            {
+                // "x,y,z"
+                float[] v = raw.Split(',').Select(p => float.Parse(p, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+                return new Vector3(v[0], v[1], v[2]);
+            }
             return System.Convert.ChangeType(raw, type, System.Globalization.CultureInfo.InvariantCulture);
         }
 

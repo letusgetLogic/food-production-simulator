@@ -29,14 +29,6 @@ namespace Game.Production
         /// <summary>One signal per press.</summary>
         public event Action<PushButton> Pressed;
 
-        /// <summary>
-        /// Crosshair text used when no localized text is set in the inspector (e.g. "Start", set by the panel).
-        /// English, translated via the prompt.* keys.
-        /// </summary>
-        public string FallbackText { get; set; }
-
-        protected override string DefaultInteractionText => string.IsNullOrEmpty(FallbackText) ? "Press" : FallbackText;
-
         protected virtual void Awake()
         {
            if (_cap != null)

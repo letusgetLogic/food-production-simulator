@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459571449856
-    m_Localized: "Reconna\xEEtre sa faute"
+    m_Localized: "Reconna\xEEtre la faute"
     m_Metadata:
       m_Items: []
   - m_Id: 22459630170112
@@ -495,7 +495,8 @@ MonoBehaviour:
       \u2013 courir\nE \u2013 utiliser / ramasser\nA \u2013 poser\nClic gauche \u2013
       boutons des \xE9crans et terminaux\nA \u2013 fermer l\u2019\xE9cran\nP \u2013
       pause\n{0} \u2013 sauvegarde rapide, {1} \u2013 chargement rapide\n{2} \u2013
-      panneau de d\xE9bogage (d\xE9veloppement)"
+      panneau de d\xE9bogage (d\xE9veloppement)\nR \u2013 transpalette : monter/descendre
+      les fourches"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -1255,8 +1256,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Va \xE0 un p\xE9trin et d\xE9marre-le : bouton vert sur le p\xE9trin
-      ou son terminal ({0})."
+    m_Localized: "Va \xE0 un p\xE9trin et d\xE9marre-le : bouton blanc de marche
+      (I) sur le pupitre du p\xE9trin ({0})."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1309,7 +1310,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703371
     m_Localized: "La portionneuse d\xE9coupe la p\xE2te en portions (cible 250 g).
-      Si elle est arr\xEAt\xE9e, d\xE9marre-la depuis son terminal."
+      Si elle est arr\xEAt\xE9e, d\xE9marre-la depuis son pupitre (I)."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703372
@@ -1335,8 +1336,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703377
-    m_Localized: "Suis ta pizza : sauce et garniture, four, refroidissement, surg\xE9lation,
-      emballage. La qualit\xE9 est contr\xF4l\xE9e en fin de ligne."
+    m_Localized: "Suis ta pizza : le four pr\xE9cuit la p\xE2te, elle refroidit,
+      puis sauce et mozzarella, surg\xE9lation, emballage. La qualit\xE9 est contr\xF4l\xE9e
+      en fin de ligne."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703378
@@ -1657,6 +1659,45 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7615336384245772
     m_Localized: "D\xE9verrouiller l'arr\xEAt d'urgence"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217344802816
+    m_Localized: Palettisation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105984
+    m_Localized: "Derri\xE8re la fin de ligne, les cartons conformes sont empil\xE9s
+      sur la palette \u2013 48 par palette. Sans palette ou avec une palette pleine,
+      le palettiseur s'arr\xEAte et la ligne se bloque en amont (avertissement orange)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105985
+    m_Localized: Prendre le transpalette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105986
+    m_Localized: "Les palettes pleines se d\xE9placent avec le transpalette. Vise
+      son timon et saisis-le avec {0}. Pousse-le avec Z Q S D \u2013 il suit ton
+      regard."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105987
+    m_Localized: Lever les fourches
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105988
+    m_Localized: "Glisse les fourches sous une palette et appuie sur R pour les lever.
+      R \xE0 nouveau les abaisse, {1} l\xE2che le timon."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105989
+    m_Localized: Changer de palette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105990
+    m_Localized: "Quand la palette est pleine : am\xE8ne-la sur un emplacement marqu\xE9
+      dans le coin gauche, puis prends une palette vide sur une pile du coin droit
+      ({0}) et pose-la sur le palettiseur ({1})."
     m_Metadata:
       m_Items: []
   references:

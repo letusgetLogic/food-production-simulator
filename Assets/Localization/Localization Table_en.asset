@@ -512,7 +512,10 @@ MonoBehaviour:
 
       {0} - quick save, {1} - quick load
 
-      {2} - debug panel (development)'
+      {2} - debug panel (development)
+
+      R
+      - pallet jack: raise/lower forks'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -1271,8 +1274,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: 'Go to a dough mixer and start it: green start button on the mixer,
-      or its terminal ({0}).'
+    m_Localized: 'Go to a dough mixer and start it: white start button (I) on the
+      mixer''s control panel ({0}).'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1325,7 +1328,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703371
     m_Localized: The portioner cuts the dough into portions (target 250 g). If it
-      is stopped, start it at its terminal.
+      is stopped, start it at its control panel (I).
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703372
@@ -1351,8 +1354,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703377
-    m_Localized: 'Follow your pizza: sauce and topping, oven, cooling, shock freezer,
-      packaging. Quality is checked at the end of the line.'
+    m_Localized: 'Follow your pizza: the oven pre-bakes the base, it cools down,
+      then sauce and mozzarella, shock freezer, packaging. Quality is checked at
+      the end of the line.'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703378
@@ -1673,6 +1677,44 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7615336384245772
     m_Localized: Release emergency stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217344802816
+    m_Localized: Palletizing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105984
+    m_Localized: Behind the line end, good cartons are stacked on the pallet - 48
+      per pallet. Without a pallet or with a full one the palletizer stops and the
+      line backs up (amber warning).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105985
+    m_Localized: Take the pallet jack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105986
+    m_Localized: Full pallets are moved with the pallet jack. Aim at its handle and
+      grab it with {0}. Push it with W A S D - it follows your view.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105987
+    m_Localized: Raise the forks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105988
+    m_Localized: Drive the forks under a pallet and press R to raise them. R again
+      lowers them, {1} lets go of the handle.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105989
+    m_Localized: Change the pallet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9691217416105990
+    m_Localized: 'When the pallet is full: take it to a marked storage place in the
+      left corner, then take an empty pallet from a stack in the right corner ({0})
+      and put it on the palletizer ({1}).'
     m_Metadata:
       m_Items: []
   references:

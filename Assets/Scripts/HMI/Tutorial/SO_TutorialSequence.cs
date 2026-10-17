@@ -21,7 +21,13 @@ namespace Game.HMI
         PizzaFormed,
         ProductInspected,
         /// <summary>The recipe page of the HMI is shown (appended - values are stored as numbers in the asset).</summary>
-        RecipeOpened
+        RecipeOpened,
+        /// <summary>A carton was stacked on the palletizer's pallet (appended - stored as numbers in the asset).</summary>
+        CartonPalletized,
+        /// <summary>The player holds the pallet jack's handle.</summary>
+        PalletJackHeld,
+        /// <summary>The pallet jack's forks are raised.</summary>
+        PalletJackRaised
     }
 
     /// <summary>

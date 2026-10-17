@@ -13,6 +13,12 @@ namespace Game.Platform
     [DisallowMultipleComponent]
     public class PlayerInputReader : MonoBehaviour
     {
+        public string InputKeyInteract = "E";
+        public string InputKeyRelease = "Q";
+        public string PromptInteract = "Interact";
+        public string PromptRelease => InteractableBase.Localizer("Put down");
+
+
         private InputActionMap _map;
         private InputAction _moveAction;
         private InputAction _lookAction;
@@ -21,6 +27,7 @@ namespace Game.Platform
         private InputAction _escapeAction;
         private InputAction _releaseHoldAction;
         private InputAction _useAction;
+        private InputAction _modeAction;
 
         public Vector2 Move => _moveAction.ReadValue<Vector2>();
         public Vector2 Look => _lookAction.ReadValue<Vector2>();
@@ -34,6 +41,9 @@ namespace Game.Platform
 
         /// <summary>Secondary action of the held tool (R): pallet jack forks up/down.</summary>
         public event Action UsePerformed;
+
+        /// <summary>Mode switch of the held tool (T): ride the pallet jack.</summary>
+        public event Action ModePerformed;
 
         private void Awake()
         {
@@ -69,6 +79,9 @@ namespace Game.Platform
 
             _useAction = _map.AddAction("Use", InputActionType.Button, "<Keyboard>/r");
             _useAction.performed += OnUsePerformed;
+
+            _modeAction = _map.AddAction("Mode", InputActionType.Button, "<Keyboard>/t");
+            _modeAction.performed += OnModePerformed;
         }
 
         private void OnEnable() => _map.Enable();
@@ -86,5 +99,6 @@ namespace Game.Platform
         private void OnEscapePerformed(InputAction.CallbackContext context) => EscapePerformed?.Invoke();
         private void OnDropPerformed(InputAction.CallbackContext context) => ReleasePerformed?.Invoke();
         private void OnUsePerformed(InputAction.CallbackContext context) => UsePerformed?.Invoke();
+        private void OnModePerformed(InputAction.CallbackContext context) => ModePerformed?.Invoke();
     }
 }
