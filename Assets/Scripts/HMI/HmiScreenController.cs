@@ -21,6 +21,8 @@ namespace Game.HMI
         [SerializeField] private GameObject _screenRoot;
         [SerializeField] private NavMachineButton _navFirstMachineButton;
         [SerializeField] private NavMachineButton _navSecondaryMachineButton;
+        [Tooltip("Navigation row: equal-width themed buttons, highlights the shown page.")]
+        [SerializeField] private HmiNavRail _navRail;
         [SerializeField] private List<HmiPanelBase> _panels = new List<HmiPanelBase>();
         [SerializeField] private string _defaultPanelId = "overview";
         [SerializeField] private bool _openOnStart;
@@ -94,6 +96,17 @@ namespace Game.HMI
             _navSecondaryMachineButton.gameObject.SetActive(false);
 
             ShowPanel(panelId, machine);
+            if (_navRail != null)
+            {
+                if (panelId == MachinePanelId)
+                {
+                    _navRail.Highlight(_navFirstMachineButton.Button);
+                }
+                else
+                {
+                    _navRail.Highlight(panelId);
+                }
+            }
 
             if (IsOpen)
             {
@@ -134,17 +147,14 @@ namespace Game.HMI
         {
             MachineBase machine = _machineOverviewReporter != null ? _machineOverviewReporter.GetMachineById(machineId) : null;
    
-            if (TerminalInteractId == MachinePanelId)
-            {
-                _navSecondaryMachineButton.SetLabel(machine.DisplayName);
-                _navSecondaryMachineButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                _navFirstMachineButton.SetLabel(machine.DisplayName);
-                _navFirstMachineButton.gameObject.SetActive(true);
-            }
+            NavMachineButton target = TerminalInteractId == MachinePanelId ? _navSecondaryMachineButton : _navFirstMachineButton;
+            target.SetLabel(machine.DisplayName);
+            target.gameObject.SetActive(true);
             ShowPanel(MachinePanelId, machine);
+            if (_navRail != null)
+            {
+                _navRail.Highlight(target.Button);
+            }
         }
 
         /// <summary>
@@ -155,17 +165,15 @@ namespace Game.HMI
 
         public void ShowPanel(string panelId, MachineBase machine)
         {
-            if (TerminalInteractId != MachinePanelId)
+            // Leaving the machine page hides the machine buttons that came from overview rows. Showing a machine
+            // keeps them - ShowMachinePanel has just labelled and shown the button for it.
+            if (panelId != MachinePanelId)
             {
-                _navFirstMachineButton.gameObject.SetActive(false);
-                _navSecondaryMachineButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                if (panelId != MachinePanelId)
+                if (TerminalInteractId != MachinePanelId)
                 {
-                    _navSecondaryMachineButton.gameObject.SetActive(false);
+                    _navFirstMachineButton.gameObject.SetActive(false);
                 }
+                _navSecondaryMachineButton.gameObject.SetActive(false);
             }
             _machineDetailBinder.Bind(machine);
 

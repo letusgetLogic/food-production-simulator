@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171ee93dcb1374d4d9d5986c8f1ae6da, type: 3}
   m_Name: DoughMixerConfig
   m_EditorClassIdentifier: Assembly-CSharp::Game.Production.SO_DoughMixerConfig
-  MaxBatchWeightKg: 5
   MixingSpeedRpm: 60
-  DoughBallWeightGrams: 10000
+  DoughBallWeightGrams: 12500
   DefaultMixingDurationSeconds: 20
   StartupDurationSeconds: 2
   ShutdownDurationSeconds: 1.5

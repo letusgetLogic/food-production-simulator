@@ -31,11 +31,14 @@ namespace Game.EditorTools
     ///   dump RootName [depth]            hierarchy below an object with positions/components
     ///   call Object Component Method [arg]   invoke a method via reflection (arg: number, bool or text)
     ///   get Object Component member      log a field/property value
-    ///   set Object Component member value   set a field/property (number, bool, enum or text) - test setups, e.g. a tank level
+    ///   set Object Component member value   set a field/property (number, bool, enum, text, or a scene object by name
+    ///                                    for component/GameObject fields) - in Edit Mode the scene is marked dirty
     ///   move Object x y z                teleport an object (e.g. pot onto the portioner lift)
     ///   screenshot name                  game view screenshot to Automation/name.png (Play Mode)
     ///   tests                            run all EditMode tests, results in the log
     ///   clearlog                         empty log.txt
+    ///   open Assets/Scenes/X.unity       open a scene (saves the open scenes first)
+    ///   pullloc                          pull the "Localization Table" collection from its Google Sheet
     /// The folder is git-ignored. Remove this file before a release build (editor only, so it never ships).
     /// </summary>
     [InitializeOnLoad]
@@ -220,7 +223,7 @@ namespace Game.EditorTools
                     {
                         float[] o = args.Skip(1).Take(6).Select(a => float.Parse(a, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
                         Collider[] hits = Physics.OverlapBox(new Vector3(o[0], o[1], o[2]), new Vector3(o[3], o[4], o[5]), Quaternion.identity, ~0, QueryTriggerInteraction.Collide);
-                        Write("overlap: " + string.Join(" | ", hits.Select(h => $"{h.transform.root.name}/{h.name} ({h.GetType().Name}{(h.isTrigger ? ",trigger" : "")}) bounds={Fmt(h.bounds.min)}..{Fmt(h.bounds.max)}")));
+                        Write("overlap: " + string.Join(" | ", hits.Select(h => $"{h.transform.root.name}/{h.name} ({h.GetType().Name}{(h.isTrigger ? ",trigger" : "")},layer {LayerMask.LayerToName(h.gameObject.layer)}) bounds={Fmt(h.bounds.min)}..{Fmt(h.bounds.max)}")));
                         break;
                     }
                     case "move":
@@ -258,8 +261,30 @@ namespace Game.EditorTools
                             if (m.CurrentState == Game.Production.MachineState.Maintenance) { m.CompleteMaintenance(); Write("  cleared " + m.name); }
                         }
                         break;
+                    case "aimray":
+                    {
+                        // aimray [distance] - every collider on the centre-of-screen ray of the main camera
+                        Camera cam = Camera.main;
+                        float dist = args.Count > 1 ? float.Parse(args[1], System.Globalization.CultureInfo.InvariantCulture) : 5f;
+                        Ray r = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+                        Write("aimray from " + Fmt(r.origin) + " dir " + Fmt(r.direction) + ": " + string.Join(" | ",
+                            Physics.RaycastAll(r, dist, ~0, QueryTriggerInteraction.Collide).OrderBy(h => h.distance)
+                                .Select(h => $"{h.distance:0.00} {h.collider.transform.root.name}/{h.collider.name} ({LayerMask.LayerToName(h.collider.gameObject.layer)}{(h.collider.isTrigger ? ",trigger" : "")})")));
+                        break;
+                    }
                     case "clearlog":
                         File.WriteAllText(LogFile, string.Empty);
+                        break;
+                    case "open":
+                    {
+                        string scenePath = command.Substring(command.IndexOf(' ') + 1).Trim();
+                        EditorSceneManager.SaveOpenScenes();
+                        EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+                        Write("opened " + scenePath);
+                        break;
+                    }
+                    case "pullloc":
+                        PullLocalization();
                         break;
                     default:
                         Write("UNKNOWN COMMAND: " + verb);
@@ -360,9 +385,12 @@ namespace Game.EditorTools
             string methodName = args.ElementAtOrDefault(3);
             string rawArg = args.ElementAtOrDefault(4);
             // out parameters (e.g. TryTiltDrum(out ProductInstance)) do not count as arguments.
+            int argCount = rawArg == null ? 0 : 1;
             MethodInfo method = component.GetType().GetMethods(AnyMember)
-                .FirstOrDefault(m => m.Name == methodName && m.GetParameters().Count(p => !p.IsOut) == (rawArg == null ? 0 : 1)
-                                     || m.Name == methodName && rawArg == null && m.GetParameters().All(p => p.IsOptional || p.IsOut));
+                .Where(m => m.Name == methodName)
+                .OrderBy(m => m.GetParameters().Count(p => !p.IsOut) == argCount ? 0 : 1) // exact match first
+                .FirstOrDefault(m => m.GetParameters().Count(p => !p.IsOut) >= argCount
+                                     && m.GetParameters().Count(p => !p.IsOut && !p.IsOptional) <= argCount);
             if (method == null)
             {
                 Write($"METHOD NOT FOUND: {methodName}");
@@ -429,12 +457,25 @@ namespace Game.EditorTools
                 Write($"MEMBER NOT WRITABLE: {member}");
                 return;
             }
+            if (!EditorApplication.isPlaying)
+            {
+                // Edit Mode: keep the change - "save" writes the scene afterwards.
+                EditorUtility.SetDirty(component);
+                EditorSceneManager.MarkSceneDirty(component.gameObject.scene);
+            }
             Write($"{type.Name}.{member} := {raw}");
         }
 
         private static object Convert(string raw, Type type)
         {
             if (type == typeof(string)) return raw;
+            if (typeof(Component).IsAssignableFrom(type))
+            {
+                // Scene reference: the GameObject name, the component of the field's type on it.
+                GameObject go = Find(raw);
+                return go != null ? go.GetComponent(type) : null;
+            }
+            if (type == typeof(GameObject)) return Find(raw);
             if (type == typeof(bool)) return bool.Parse(raw);
             if (type.IsEnum) return Enum.Parse(type, raw);
             if (type == typeof(Vector3))
@@ -444,6 +485,30 @@ namespace Game.EditorTools
                 return new Vector3(v[0], v[1], v[2]);
             }
             return System.Convert.ChangeType(raw, type, System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        // ---- Localization ----
+
+        /// <summary>Same as "Pull" in the Google Sheets extension of the string table collection.</summary>
+        private static void PullLocalization()
+        {
+            UnityEditor.Localization.StringTableCollection collection =
+                UnityEditor.Localization.LocalizationEditorSettings.GetStringTableCollection("Localization Table");
+            UnityEditor.Localization.Plugins.Google.GoogleSheetsExtension extension = collection?.Extensions
+                .OfType<UnityEditor.Localization.Plugins.Google.GoogleSheetsExtension>().FirstOrDefault();
+            if (extension == null)
+            {
+                Write("PULL FAILED: no Google Sheets extension on 'Localization Table'");
+                return;
+            }
+
+            var sheets = new UnityEditor.Localization.Plugins.Google.GoogleSheets(extension.SheetsServiceProvider)
+            {
+                SpreadSheetId = extension.SpreadsheetId
+            };
+            sheets.PullIntoStringTableCollection(extension.SheetId, collection, extension.Columns, extension.RemoveMissingPulledKeys);
+            AssetDatabase.SaveAssets();
+            Write($"localization pulled (remove missing keys: {extension.RemoveMissingPulledKeys})");
         }
 
         // ---- Camera ----

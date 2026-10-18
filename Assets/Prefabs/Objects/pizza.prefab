@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 7201938456120934411}
   - component: {fileID: 8407600898016249120}
   - component: {fileID: 6758504400753635011}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: pizza
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3568,13 +3568,13 @@ GameObject:
   m_Component:
   - component: {fileID: 955310399354799046}
   - component: {fileID: 7874306552334122375}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PackagedBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &955310399354799046
 Transform:
   m_ObjectHideFlags: 0
@@ -4437,7 +4437,7 @@ GameObject:
   - component: {fileID: 7601197746362763229}
   - component: {fileID: 7736420564929147145}
   - component: {fileID: 4276989007266221902}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ContactCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

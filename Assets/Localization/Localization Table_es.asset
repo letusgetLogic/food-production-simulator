@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459571449856
-    m_Localized: Reconocer el error
+    m_Localized: "Confirmar aver\xEDa"
     m_Metadata:
       m_Items: []
   - m_Id: 22459630170112
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364423
-    m_Localized: Mantenimiento completo
+    m_Localized: Finalizar mantenimiento
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364424
@@ -493,9 +493,11 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "WASD / flechas \u2013 moverse\nRat\xF3n \u2013 mirar\nMay\xFAs
       \u2013 correr\nE \u2013 usar / recoger\nQ \u2013 soltar\nClic izquierdo \u2013
-      botones de pantallas y terminales\nQ \u2013 cerrar pantalla\nP \u2013 pausa\n{0}
-      \u2013 guardado r\xE1pido, {1} \u2013 carga r\xE1pida\n{2} \u2013 panel de
-      depuraci\xF3n (desarrollo)\nR \u2013 transpaleta: subir/bajar las horquillas"
+      botones de pantallas y terminales (de cerca)\nEsc / Q / clic derecho \u2013
+      cerrar pantalla\nP / Esc \u2013 pausa\n{0} \u2013 guardado r\xE1pido, {1} \u2013
+      carga r\xE1pida\n{2} \u2013 panel de depuraci\xF3n (desarrollo)\nR \u2013 transpaleta:
+      subir/bajar las horquillas\nT \u2013 transpaleta: montarse (Q para bajarse)\nN
+      / B / H \u2013 tutorial: siguiente / atr\xE1s / ocultar"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -590,24 +592,8 @@ MonoBehaviour:
     m_Localized: Salsa
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120417
-    m_Localized: Ingredientes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120418
-    m_Localized: "Dep\xF3sito de salsa"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120419
-    m_Localized: Tolva de ingredientes
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120420
     m_Localized: "\xDAltima salsa"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120421
-    m_Localized: "\xDAltimos ingredientes"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120422
@@ -774,24 +760,6 @@ MonoBehaviour:
     m_Localized: Nivel bajo
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120463
-    m_Localized: "Dep\xF3sito de salsa vac\xEDo"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120464
-    m_Localized: "Rellenar el dep\xF3sito de salsa en la estaci\xF3n de dosificaci\xF3n
-      (bot\xF3n de recarga), confirmar, finalizar el mantenimiento, arrancar."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120465
-    m_Localized: "Tolva de ingredientes vac\xEDa"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120466
-    m_Localized: "Rellenar la tolva de ingredientes en la estaci\xF3n de dosificaci\xF3n
-      (bot\xF3n de recarga), confirmar, finalizar el mantenimiento, arrancar."
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120467
     m_Localized: "B\xFAfer de la prensa lleno"
     m_Metadata:
@@ -878,14 +846,6 @@ MonoBehaviour:
     m_Localized: Demasiada salsa
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882295509004
-    m_Localized: Pocos ingredientes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509005
-    m_Localized: Demasiados ingredientes
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882295509006
     m_Localized: Poco horneada
     m_Metadata:
@@ -916,10 +876,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882295509013
     m_Localized: Salsa
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509014
-    m_Localized: Ingredientes
     m_Metadata:
       m_Items: []
   - m_Id: 5442882295509015
@@ -1052,38 +1008,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703309
     m_Localized: Mantenimiento
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703310
-    m_Localized: Salsa aplicada
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703311
-    m_Localized: Pizza cubierta (salsa / ingredientes)
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703312
-    m_Localized: "Dep\xF3sito de salsa casi vac\xEDo"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703313
-    m_Localized: "Tolva de ingredientes casi vac\xEDa"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703314
-    m_Localized: "Dep\xF3sito de salsa vac\xEDo \u2013 rellenar"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703315
-    m_Localized: "Tolva de ingredientes vac\xEDa \u2013 rellenar"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703316
-    m_Localized: "Dep\xF3sito de salsa rellenado"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703317
-    m_Localized: Tolva de ingredientes rellenada
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703318
@@ -1254,8 +1178,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Ve a una amasadora y arr\xE1ncala: bot\xF3n blanco de marcha (I)
-      en el panel de mando de la amasadora ({0})."
+    m_Localized: "Ve a una amasadora y arr\xE1ncala: bot\xF3n de marcha (I) en el
+      panel de mando de la amasadora ({0})."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1298,8 +1222,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703369
-    m_Localized: "Pulsa el bot\xF3n de subida con {0}. La olla se inclina y la masa
-      cae en la tolva."
+    m_Localized: "Pulsa el bot\xF3n \xABSubir el elevador\xBB con {0}. La olla se
+      inclina y la masa cae en la tolva."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703370
@@ -1325,8 +1249,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703375
-    m_Localized: "Abre el terminal de l\xEDnea junto a la prensa con {0}. Verde =
-      en marcha, \xE1mbar = aviso, rojo = aver\xEDa."
+    m_Localized: "Abre un terminal con {0}: el terminal de l\xEDnea (pantalla \xABVista
+      general de la l\xEDnea\xBB) est\xE1 al final de la l\xEDnea, junto al envasado,
+      a la derecha en el sentido de producci\xF3n; cada m\xE1quina tiene adem\xE1s
+      el suyo. Verde = en marcha, \xE1mbar = aviso, rojo = aver\xEDa."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703376
@@ -1344,8 +1270,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703379
-    m_Localized: "Habr\xE1 aver\xEDas: el HMI muestra la causa y la soluci\xF3n.
-      P abre el men\xFA de pausa con controles, guardar y cargar."
+    m_Localized: "Ya conoces toda la l\xEDnea. Las aver\xEDas se resuelven como en
+      el simulacro: lee la causa en el HMI, confirma, corrige, termina el mantenimiento
+      y arranca. P abre el men\xFA de pausa con controles, guardar y cargar."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1353,7 +1280,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703381
-    m_Localized: '[{2}] siguiente paso   [{3}] ocultar'
+    m_Localized: "[{4}] atr\xE1s   [{3}] ocultar"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703382
@@ -1473,8 +1400,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161411
-    m_Localized: "Rellenar el dep\xF3sito vac\xEDo en la estaci\xF3n de dosificaci\xF3n
-      (bot\xF3n azul + del panel), confirmar, terminar el mantenimiento, arrancar."
+    m_Localized: "Rellenar el dep\xF3sito vac\xEDo con el bot\xF3n de relleno de
+      su dispensador en la estaci\xF3n de dosificaci\xF3n y pulsar marcha (I) en
+      el panel de mando."
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161412
@@ -1695,6 +1623,148 @@ MonoBehaviour:
     m_Localized: "Cuando el pal\xE9 est\xE9 lleno: ll\xE9valo a un sitio marcado
       en la esquina izquierda, luego coge un pal\xE9 vac\xEDo de una pila de la esquina
       derecha ({0}) y d\xE9jalo en el paletizador ({1})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591076499456
+    m_Localized: Conducir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774144
+    m_Localized: Bajarse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774145
+    m_Localized: Montarse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783231463424
+    m_Localized: "\xA1Aver\xEDa!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572288
+    m_Localized: "La estaci\xF3n de dosificaci\xF3n indica una aver\xEDa: el dep\xF3sito
+      de salsa est\xE1 vac\xEDo y la estaci\xF3n y la cinta est\xE1n paradas (luz
+      roja). Abre un terminal ({0}): la aver\xEDa aparece arriba en la vista general,
+      con la causa y la soluci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572293
+    m_Localized: Hecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572294
+    m_Localized: "[{4}] atr\xE1s   [{2}] adelante   [{3}] ocultar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572295
+    m_Localized: "[{4}] atr\xE1s   [{2}] cerrar tutorial   [{3}] ocultar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572296
+    m_Localized: Lista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572297
+    m_Localized: Arrancando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572298
+    m_Localized: En marcha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572299
+    m_Localized: Parando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572300
+    m_Localized: Parada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572301
+    m_Localized: "Aver\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572302
+    m_Localized: Mantenimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572303
+    m_Localized: Carrera de prensa interrumpida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572304
+    m_Localized: Producto incorrecto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572305
+    m_Localized: Masa cruda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572306
+    m_Localized: Masa amasada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572307
+    m_Localized: "Porci\xF3n de masa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572308
+    m_Localized: Base formada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572309
+    m_Localized: Base precocida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572310
+    m_Localized: Base enfriada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572311
+    m_Localized: Pizza con salsa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572312
+    m_Localized: Pizza con ingredientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572313
+    m_Localized: Pizza congelada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572314
+    m_Localized: Pizza envasada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883625435136
+    m_Localized: "P / Esc \u2013 pausa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883692544000
+    m_Localized: "Esc / Q / clic derecho \u2013 cerrar pantalla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10054296280707072
+    m_Localized: "[{4}] atr\xE1s   [{2}] siguiente paso   [{3}] ocultar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470304796672
+    m_Localized: "Rellena el dep\xF3sito"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185280
+    m_Localized: "Ve a la estaci\xF3n de dosificaci\xF3n y pulsa el bot\xF3n de relleno
+      del dispensador de salsa ({0}). Con el dep\xF3sito lleno, la aver\xEDa queda
+      resuelta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185281
+    m_Localized: "Arranca la estaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185282
+    m_Localized: "Pulsa marcha (I) en el panel de mando de la estaci\xF3n de dosificaci\xF3n
+      ({0}): la l\xEDnea sigue funcionando."
     m_Metadata:
       m_Items: []
   references:

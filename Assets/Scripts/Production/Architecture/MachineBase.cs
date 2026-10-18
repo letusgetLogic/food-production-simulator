@@ -44,10 +44,13 @@ namespace Game.Production
         public string Id => $"{NameKey}_{_number}";
 
         /// <summary>
-        /// Localized name ("Ofen"). The language is only switched in the main menu, so it is resolved once and
-        /// cached; the GameObject name stands in while the string table is still loading (non-blocking - WebGL).
+        /// Localized name ("Ofen"). Non-blocking (WebGL): the GameObject name stands in while the string table is
+        /// still loading - see <see cref="IsNameLoaded"/>.
         /// </summary>
         public string Name => LocText.Now(_nameKey, gameObject.name);
+
+        /// <summary>True once <see cref="Name"/> is the translation (or the machine has no name key at all).</summary>
+        public bool IsNameLoaded => _nameKey == null || _nameKey.IsEmpty || LocText.Now(_nameKey, null) != null;
 
         /// <summary>Name with the per-type number from the overview ("Ofen 1"), or only the name while unnumbered.</summary>
         public string DisplayName => _number > 0 ? $"{Name} {_number}" : Name;

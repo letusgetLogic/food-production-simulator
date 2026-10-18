@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459571449856
-    m_Localized: "Reconna\xEEtre la faute"
+    m_Localized: "Acquitter le d\xE9faut"
     m_Metadata:
       m_Items: []
   - m_Id: 22459630170112
@@ -63,7 +63,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364423
-    m_Localized: "Maintenance compl\xE8te"
+    m_Localized: Terminer la maintenance
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364424
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364481
-    m_Localized: "La production a cess\xE9"
+    m_Localized: "La production a \xE9t\xE9 arr\xEAt\xE9e."
     m_Metadata:
       m_Items: []
   - m_Id: 22459634364482
@@ -493,10 +493,12 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "ZQSD / fl\xE8ches \u2013 se d\xE9placer\nSouris \u2013 regarder\nMaj
       \u2013 courir\nE \u2013 utiliser / ramasser\nA \u2013 poser\nClic gauche \u2013
-      boutons des \xE9crans et terminaux\nA \u2013 fermer l\u2019\xE9cran\nP \u2013
-      pause\n{0} \u2013 sauvegarde rapide, {1} \u2013 chargement rapide\n{2} \u2013
-      panneau de d\xE9bogage (d\xE9veloppement)\nR \u2013 transpalette : monter/descendre
-      les fourches"
+      boutons des \xE9crans et terminaux (de pr\xE8s)\n\xC9chap / A / clic droit
+      \u2013 fermer l\u2019\xE9cran\nP / \xC9chap \u2013 pause\n{0} \u2013 sauvegarde
+      rapide, {1} \u2013 chargement rapide\n{2} \u2013 panneau de d\xE9bogage (d\xE9veloppement)\nR
+      \u2013 transpalette : monter/descendre les fourches\nT \u2013 transpalette
+      : rouler dessus (A pour descendre)\nN / B / H \u2013 tutoriel : suivant / retour
+      / masquer"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -591,24 +593,8 @@ MonoBehaviour:
     m_Localized: Sauce
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120417
-    m_Localized: Garniture
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120418
-    m_Localized: "R\xE9servoir de sauce"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120419
-    m_Localized: "Tr\xE9mie de garniture"
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120420
     m_Localized: "Derni\xE8re sauce"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120421
-    m_Localized: "Derni\xE8re garniture"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120422
@@ -775,24 +761,6 @@ MonoBehaviour:
     m_Localized: Niveau bas
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120463
-    m_Localized: "R\xE9servoir de sauce vide"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120464
-    m_Localized: "Remplir le r\xE9servoir de sauce \xE0 la station de dosage (bouton
-      de remplissage), acquitter, terminer la maintenance, d\xE9marrer."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120465
-    m_Localized: "Tr\xE9mie de garniture vide"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120466
-    m_Localized: "Remplir la tr\xE9mie de garniture \xE0 la station de dosage (bouton
-      de remplissage), acquitter, terminer la maintenance, d\xE9marrer."
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120467
     m_Localized: Tampon de la presse plein
     m_Metadata:
@@ -879,14 +847,6 @@ MonoBehaviour:
     m_Localized: Trop de sauce
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882295509004
-    m_Localized: Trop peu de garniture
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509005
-    m_Localized: Trop de garniture
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882295509006
     m_Localized: Pas assez cuite
     m_Metadata:
@@ -917,10 +877,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882295509013
     m_Localized: Sauce
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509014
-    m_Localized: Garniture
     m_Metadata:
       m_Items: []
   - m_Id: 5442882295509015
@@ -1053,38 +1009,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703309
     m_Localized: Maintenance
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703310
-    m_Localized: "Sauce appliqu\xE9e"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703311
-    m_Localized: Pizza garnie (sauce / garniture)
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703312
-    m_Localized: "R\xE9servoir de sauce presque vide"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703313
-    m_Localized: "Tr\xE9mie de garniture presque vide"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703314
-    m_Localized: "R\xE9servoir de sauce vide \u2013 remplir"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703315
-    m_Localized: "Tr\xE9mie de garniture vide \u2013 remplir"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703316
-    m_Localized: "R\xE9servoir de sauce rempli"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703317
-    m_Localized: "Tr\xE9mie de garniture remplie"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703318
@@ -1256,8 +1180,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Va \xE0 un p\xE9trin et d\xE9marre-le : bouton blanc de marche
-      (I) sur le pupitre du p\xE9trin ({0})."
+    m_Localized: "Va \xE0 un p\xE9trin et d\xE9marre-le : bouton de marche (I) sur
+      le pupitre du p\xE9trin ({0})."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1300,8 +1224,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703369
-    m_Localized: "Appuie sur le bouton de mont\xE9e avec {0}. La cuve bascule et
-      la p\xE2te tombe dans la tr\xE9mie."
+    m_Localized: "Appuie sur le bouton \xAB Monter l'\xE9l\xE9vateur \xBB avec {0}.
+      La cuve bascule et la p\xE2te tombe dans la tr\xE9mie."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703370
@@ -1327,8 +1251,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703375
-    m_Localized: "Ouvre le terminal de ligne \xE0 c\xF4t\xE9 de la presse avec {0}.
-      Vert = en marche, orange = avertissement, rouge = d\xE9faut."
+    m_Localized: "Ouvre un terminal avec {0} : le terminal de ligne (\xE9cran \xAB
+      Vue d'ensemble de la ligne \xBB) se trouve en fin de ligne, \xE0 c\xF4t\xE9
+      de l'emballage, \xE0 droite dans le sens de production \u2013 chaque machine
+      a aussi le sien. Vert = en marche, orange = avertissement, rouge = d\xE9faut."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703376
@@ -1346,8 +1272,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703379
-    m_Localized: "Des pannes arriveront \u2013 l'IHM affiche la cause et la solution.
-      P ouvre le menu pause avec les commandes, la sauvegarde et le chargement."
+    m_Localized: "Tu connais maintenant toute la ligne. Les pannes se traitent comme
+      \xE0 l'exercice : lire la cause sur l'IHM, acquitter, corriger, terminer la
+      maintenance, d\xE9marrer. P ouvre le menu pause avec les commandes, la sauvegarde
+      et le chargement."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1355,7 +1283,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703381
-    m_Localized: "[{2}] \xE9tape suivante   [{3}] masquer"
+    m_Localized: '[{4}] retour   [{3}] masquer'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703382
@@ -1475,8 +1403,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161411
-    m_Localized: "Remplir le r\xE9servoir vide \xE0 la station de dosage (bouton
-      bleu + du pupitre), acquitter, terminer la maintenance, d\xE9marrer."
+    m_Localized: "Remplir le r\xE9servoir vide avec le bouton de remplissage de son
+      distributeur \xE0 la station de dosage, puis appuyer sur marche (I) au pupitre."
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161412
@@ -1698,6 +1626,148 @@ MonoBehaviour:
     m_Localized: "Quand la palette est pleine : am\xE8ne-la sur un emplacement marqu\xE9
       dans le coin gauche, puis prends une palette vide sur une pile du coin droit
       ({0}) et pose-la sur le palettiseur ({1})."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591076499456
+    m_Localized: Rouler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774144
+    m_Localized: Descendre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774145
+    m_Localized: Rouler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783231463424
+    m_Localized: Panne !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572288
+    m_Localized: "La station de dosage signale une panne : le r\xE9servoir de sauce
+      est vide, la station et le tapis sont \xE0 l'arr\xEAt (voyant rouge). Ouvre
+      un terminal ({0}) \u2013 la panne appara\xEEt en haut de la vue d'ensemble,
+      avec la cause et la solution."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572293
+    m_Localized: "Termin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572294
+    m_Localized: '[{4}] retour   [{2}] suivant   [{3}] masquer'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572295
+    m_Localized: '[{4}] retour   [{2}] fermer le tutoriel   [{3}] masquer'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572296
+    m_Localized: "Pr\xEAte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572297
+    m_Localized: "D\xE9marrage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572298
+    m_Localized: En marche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572299
+    m_Localized: "Arr\xEAt en cours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572300
+    m_Localized: "Arr\xEAt\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572301
+    m_Localized: "D\xE9faut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572302
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572303
+    m_Localized: Course de presse interrompue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572304
+    m_Localized: Mauvais produit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572305
+    m_Localized: "P\xE2te crue"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572306
+    m_Localized: "P\xE2te p\xE9trie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572307
+    m_Localized: "P\xE2ton"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572308
+    m_Localized: "Fond form\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572309
+    m_Localized: "Fond pr\xE9cuit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572310
+    m_Localized: Fond refroidi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572311
+    m_Localized: Pizza avec sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572312
+    m_Localized: Pizza garnie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572313
+    m_Localized: "Pizza surgel\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572314
+    m_Localized: "Pizza emball\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883625435136
+    m_Localized: "P / \xC9chap \u2013 pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883692544000
+    m_Localized: "\xC9chap / A / clic droit \u2013 fermer l\u2019\xE9cran"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10054296280707072
+    m_Localized: "[{4}] retour   [{2}] \xE9tape suivante   [{3}] masquer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470304796672
+    m_Localized: "Remplir le r\xE9servoir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185280
+    m_Localized: "Va \xE0 la station de dosage et appuie sur le bouton de remplissage
+      du distributeur de sauce ({0}). Une fois le r\xE9servoir plein, la panne est
+      lev\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185281
+    m_Localized: "D\xE9marrer la station"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185282
+    m_Localized: "Appuie sur marche (I) au pupitre de la station de dosage ({0})
+      \u2013 la ligne repart."
     m_Metadata:
       m_Items: []
   references:

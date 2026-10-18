@@ -503,19 +503,25 @@ MonoBehaviour:
       Q - put down
 
       Left click
-      - buttons on screens and terminals
+      - buttons on screens and terminals (up close)
 
-      Q - close screen
+      Esc / Q / right click
+      - close screen
 
-      P - pause
-      menu
+      P / Esc - pause menu
 
-      {0} - quick save, {1} - quick load
+      {0} - quick save, {1} - quick
+      load
 
       {2} - debug panel (development)
 
-      R
-      - pallet jack: raise/lower forks'
+      R - pallet jack: raise/lower
+      forks
+
+      T - pallet jack: ride (Q gets off)
+
+      N / B / H - tutorial:
+      next / back / hide'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -610,24 +616,8 @@ MonoBehaviour:
     m_Localized: Sauce
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120417
-    m_Localized: Topping
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120418
-    m_Localized: Sauce tank
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120419
-    m_Localized: Topping hopper
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120420
     m_Localized: Last sauce
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120421
-    m_Localized: Last topping
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120422
@@ -794,24 +784,6 @@ MonoBehaviour:
     m_Localized: Low level
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120463
-    m_Localized: Sauce tank empty
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120464
-    m_Localized: Refill the sauce tank at the dosing station (refill button), acknowledge,
-      complete maintenance, start.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120465
-    m_Localized: Topping hopper empty
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120466
-    m_Localized: Refill the topping hopper at the dosing station (refill button),
-      acknowledge, complete maintenance, start.
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120467
     m_Localized: Press buffer full
     m_Metadata:
@@ -898,14 +870,6 @@ MonoBehaviour:
     m_Localized: Sauce high
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882295509004
-    m_Localized: Topping low
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509005
-    m_Localized: Topping high
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882295509006
     m_Localized: Underbaked
     m_Metadata:
@@ -936,10 +900,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882295509013
     m_Localized: Sauce
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509014
-    m_Localized: Topping
     m_Metadata:
       m_Items: []
   - m_Id: 5442882295509015
@@ -1072,38 +1032,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703309
     m_Localized: Maintenance
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703310
-    m_Localized: Sauce applied
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703311
-    m_Localized: Pizza topped (sauce / topping)
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703312
-    m_Localized: Sauce tank low
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703313
-    m_Localized: Topping hopper low
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703314
-    m_Localized: Sauce tank empty - refill
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703315
-    m_Localized: Topping hopper empty - refill
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703316
-    m_Localized: Sauce tank refilled
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703317
-    m_Localized: Topping hopper refilled
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703318
@@ -1274,8 +1202,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: 'Go to a dough mixer and start it: white start button (I) on the
-      mixer''s control panel ({0}).'
+    m_Localized: 'Go to a dough mixer and start it: start button (I) on the mixer''s
+      control panel ({0}).'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1318,8 +1246,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703369
-    m_Localized: Press the lift-up button with {0}. The pot tips and the dough falls
-      into the hopper.
+    m_Localized: Press the "Raise lift" button with {0}. The pot tips and the dough
+      falls into the hopper.
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703370
@@ -1345,8 +1273,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703375
-    m_Localized: Open the line terminal next to the press with {0}. Green = running,
-      amber = warning, red = fault.
+    m_Localized: 'Open a terminal with {0}: the line terminal (screen "Line overview")
+      stands at the end of the line next to the packaging, on the right in the direction
+      of flow - every machine also has its own. Green = running, amber = warning,
+      red = fault.'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703376
@@ -1364,8 +1294,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703379
-    m_Localized: Faults will happen - the HMI shows the cause and the remedy. P opens
-      the pause menu with controls, save and load.
+    m_Localized: 'You know the whole line now. Faults are handled like in the drill:
+      read the cause in the HMI, acknowledge, fix, complete maintenance, start. P
+      opens the pause menu with controls, save and load.'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703380
@@ -1373,7 +1304,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703381
-    m_Localized: '[{2}] next step   [{3}] hide'
+    m_Localized: '[{4}] back   [{3}] hide'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703382
@@ -1493,8 +1424,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161411
-    m_Localized: Refill the empty reservoir at the dosing station (blue + button
-      on the control panel), acknowledge, complete maintenance, start.
+    m_Localized: Refill the empty reservoir with the refill button on its dispenser
+      at the dosing station, then press start (I) on the control panel.
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161412
@@ -1715,6 +1646,146 @@ MonoBehaviour:
     m_Localized: 'When the pallet is full: take it to a marked storage place in the
       left corner, then take an empty pallet from a stack in the right corner ({0})
       and put it on the palletizer ({1}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591076499456
+    m_Localized: Drive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774144
+    m_Localized: Get off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774145
+    m_Localized: Ride
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783231463424
+    m_Localized: Fault!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572288
+    m_Localized: 'The dosing station reports a fault: the sauce reservoir is empty,
+      station and belt stand still (red lamp). Open a terminal ({0}) - the fault
+      is at the top of the overview with cause and remedy.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572293
+    m_Localized: Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572294
+    m_Localized: '[{4}] back   [{2}] forward   [{3}] hide'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572295
+    m_Localized: '[{4}] back   [{2}] close tutorial   [{3}] hide'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572296
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572297
+    m_Localized: Starting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572298
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572299
+    m_Localized: Stopping
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572300
+    m_Localized: Stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572301
+    m_Localized: Fault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572302
+    m_Localized: Maintenance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572303
+    m_Localized: Press stroke interrupted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572304
+    m_Localized: Wrong product
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572305
+    m_Localized: Raw dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572306
+    m_Localized: Mixed dough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572307
+    m_Localized: Dough portion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572308
+    m_Localized: Formed base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572309
+    m_Localized: Pre-baked base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572310
+    m_Localized: Cooled base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572311
+    m_Localized: Pizza with sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572312
+    m_Localized: Topped pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572313
+    m_Localized: Frozen pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572314
+    m_Localized: Packaged pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883625435136
+    m_Localized: "P / Esc \u2013 pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883692544000
+    m_Localized: "Esc / Q / right click \u2013 close screen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10054296280707072
+    m_Localized: '[{4}] back   [{2}] next step   [{3}] hide'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470304796672
+    m_Localized: Refill the reservoir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185280
+    m_Localized: Go to the dosing station and press the refill button on the sauce
+      dispenser ({0}). With the reservoir full the fault is cleared.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185281
+    m_Localized: Start the station
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185282
+    m_Localized: Press start (I) on the dosing station's control panel ({0}) - the
+      line runs on.
     m_Metadata:
       m_Items: []
   references:

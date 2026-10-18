@@ -280,7 +280,10 @@ namespace Game.DebugTools
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label($"{machine.name}", GUILayout.Width(_width * 0.45f));
-                GUILayout.Label(machine.HasWarning ? $"{machine.CurrentState} ({machine.WarningReason})" : machine.CurrentState.ToString(), _smallStyle);
+                string stateText = MachineStateText.Get(machine.CurrentState);
+                GUILayout.Label(machine.HasWarning
+                    ? $"{stateText} ({LocText.Get("warning." + LocText.Snake(machine.WarningReason), machine.WarningReason)})"
+                    : stateText, _smallStyle);
                 GUILayout.EndHorizontal();
             }
         }
@@ -458,7 +461,8 @@ namespace Game.DebugTools
             {
                 QualityResult result = history[i];
                 ProductInstance p = result.Product;
-                GUILayout.Label($"{p.InstanceId}: {result.Summary}  " +
+                string summary = result.IsGood ? "OK" : string.Join(", ", result.Defects.Select(QualityDefectText.Get));
+                GUILayout.Label($"{p.InstanceId}: {summary}  " +
                                 $"[{Fmt(p.MeasuredWeightGrams, "g")} {string.Join(" ", p.Doses.Select(d => $"{d.Grams:0}g {d.IngredientId}"))} " +
                                 $"{Fmt(p.ActualBakeTimeSeconds, "s")} {Fmt(p.BakeTemperatureCelsius, "°C")}]", _smallStyle);
             }

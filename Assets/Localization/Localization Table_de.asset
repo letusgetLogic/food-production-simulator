@@ -493,9 +493,11 @@ MonoBehaviour:
   - m_Id: 5442882287120393
     m_Localized: "WASD / Pfeiltasten \u2013 bewegen\nMaus \u2013 umsehen\nShift \u2013
       sprinten\nE \u2013 benutzen / aufheben\nQ \u2013 ablegen\nLinksklick \u2013
-      Kn\xF6pfe an Bildschirmen und Terminals\nQ \u2013 Bildschirm schlie\xDFen\nP
-      \u2013 Pause\n{0} \u2013 Schnellspeichern, {1} \u2013 Schnellladen\n{2} \u2013
-      Debug-Panel (Entwicklung)\nR \u2013 Hubwagen: Gabel heben/senken"
+      Kn\xF6pfe an Bildschirmen und Terminals (aus der N\xE4he)\nEsc / Q / Rechtsklick
+      \u2013 Bildschirm schlie\xDFen\nP / Esc \u2013 Pause\n{0} \u2013 Schnellspeichern,
+      {1} \u2013 Schnellladen\n{2} \u2013 Debug-Panel (Entwicklung)\nR \u2013 Hubwagen:
+      Gabel heben/senken\nT \u2013 Hubwagen: fahren (Q zum Absteigen)\nN / B / H
+      \u2013 Tutorial: weiter / zur\xFCck / ausblenden"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120394
@@ -590,24 +592,8 @@ MonoBehaviour:
     m_Localized: Sauce
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120417
-    m_Localized: Belag
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120418
-    m_Localized: Saucentank
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120419
-    m_Localized: "Belagbeh\xE4lter"
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120420
     m_Localized: Letzte Sauce
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120421
-    m_Localized: Letzter Belag
     m_Metadata:
       m_Items: []
   - m_Id: 5442882287120422
@@ -774,24 +760,6 @@ MonoBehaviour:
     m_Localized: "F\xFCllstand niedrig"
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882287120463
-    m_Localized: Saucentank leer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120464
-    m_Localized: "Saucentank an der Dosierstation auff\xFCllen (Nachf\xFCllknopf),
-      quittieren, Wartung abschlie\xDFen, starten."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120465
-    m_Localized: "Belagbeh\xE4lter leer"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882287120466
-    m_Localized: "Belagbeh\xE4lter an der Dosierstation auff\xFCllen (Nachf\xFCllknopf),
-      quittieren, Wartung abschlie\xDFen, starten."
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882287120467
     m_Localized: Pressen-Puffer voll
     m_Metadata:
@@ -878,14 +846,6 @@ MonoBehaviour:
     m_Localized: Zu viel Sauce
     m_Metadata:
       m_Items: []
-  - m_Id: 5442882295509004
-    m_Localized: Zu wenig Belag
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509005
-    m_Localized: Zu viel Belag
-    m_Metadata:
-      m_Items: []
   - m_Id: 5442882295509006
     m_Localized: Zu kurz gebacken
     m_Metadata:
@@ -916,10 +876,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882295509013
     m_Localized: Sauce
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882295509014
-    m_Localized: Belag
     m_Metadata:
       m_Items: []
   - m_Id: 5442882295509015
@@ -1052,38 +1008,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5442882299703309
     m_Localized: Wartung
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703310
-    m_Localized: Sauce aufgetragen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703311
-    m_Localized: Pizza belegt (Sauce / Belag)
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703312
-    m_Localized: Saucentank fast leer
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703313
-    m_Localized: "Belagbeh\xE4lter fast leer"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703314
-    m_Localized: "Saucentank leer \u2013 auff\xFCllen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703315
-    m_Localized: "Belagbeh\xE4lter leer \u2013 auff\xFCllen"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703316
-    m_Localized: "Saucentank aufgef\xFCllt"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5442882299703317
-    m_Localized: "Belagbeh\xE4lter aufgef\xFCllt"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703318
@@ -1254,8 +1178,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703359
-    m_Localized: "Geh zu einem Teigmischer und starte ihn: wei\xDFer Start-Taster
-      (I) am Bedienpult des Mischers ({0})."
+    m_Localized: 'Geh zu einem Teigmischer und starte ihn: Start-Taster (I) am Bedienpult
+      des Mischers ({0}).'
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703360
@@ -1297,8 +1221,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703369
-    m_Localized: "Dr\xFCck mit {0} den Knopf \u201ELift hoch\u201C. Der Topf kippt
-      und der Teig f\xE4llt in den Trichter."
+    m_Localized: "Dr\xFCck mit {0} den Knopf \u201ELift hochfahren\u201C. Der Topf
+      kippt und der Teig f\xE4llt in den Trichter."
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703370
@@ -1324,7 +1248,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703375
-    m_Localized: "\xD6ffne mit {0} das Linien-Terminal neben der Presse. Gr\xFCn
+    m_Localized: "\xD6ffne mit {0} ein Terminal: Das Linien-Terminal (Bildschirm
+      \u201ELinien\xFCbersicht\u201C) steht am Linienende neben der Verpackung, in
+      Flussrichtung rechts \u2013 jede Maschine hat au\xDFerdem ihr eigenes. Gr\xFCn
       = l\xE4uft, Gelb = Warnung, Rot = St\xF6rung."
     m_Metadata:
       m_Items: []
@@ -1343,7 +1269,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703379
-    m_Localized: "St\xF6rungen kommen vor \u2013 das HMI zeigt Ursache und Abhilfe.
+    m_Localized: "Du kennst jetzt die ganze Linie. St\xF6rungen behebst du wie ge\xFCbt:
+      Ursache im HMI lesen, quittieren, beheben, Wartung abschlie\xDFen, starten.
       P \xF6ffnet das Pausemen\xFC mit Steuerung, Speichern und Laden."
     m_Metadata:
       m_Items: []
@@ -1352,7 +1279,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703381
-    m_Localized: "[{2}] n\xE4chster Schritt   [{3}] ausblenden"
+    m_Localized: "[{4}] zur\xFCck   [{3}] ausblenden"
     m_Metadata:
       m_Items: []
   - m_Id: 5442882299703382
@@ -1472,8 +1399,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161411
-    m_Localized: "Leeren Beh\xE4lter an der Dosierstation auff\xFCllen (blaue +-Taste
-      am Bedienpult), quittieren, Wartung abschlie\xDFen, starten."
+    m_Localized: "Leeren Beh\xE4lter mit dem Nachf\xFCll-Knopf an seinem Spender
+      in der Dosierstation auff\xFCllen, dann Start (I) am Bedienpult dr\xFCcken."
     m_Metadata:
       m_Items: []
   - m_Id: 7496555318161412
@@ -1694,6 +1621,146 @@ MonoBehaviour:
     m_Localized: 'Ist die Palette voll: Fahr sie auf einen markierten Lagerplatz
       in der linken Ecke, nimm dann eine leere Palette von einem Stapel in der rechten
       Ecke ({0}) und stell sie auf den Palettierer ({1}).'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591076499456
+    m_Localized: Fahren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774144
+    m_Localized: Absteigen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10025591168774145
+    m_Localized: Fahren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783231463424
+    m_Localized: "St\xF6rung!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572288
+    m_Localized: "Die Dosierung meldet eine St\xF6rung: Der Saucenbeh\xE4lter ist
+      leer, Station und Band stehen (Lampe rot). \xD6ffne ein Terminal ({0}) \u2013
+      die St\xF6rung steht oben in der \xDCbersicht, mit Ursache und Abhilfe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572293
+    m_Localized: Erledigt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572294
+    m_Localized: "[{4}] zur\xFCck   [{2}] vor   [{3}] ausblenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572295
+    m_Localized: "[{4}] zur\xFCck   [{2}] Tutorial schlie\xDFen   [{3}] ausblenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572296
+    m_Localized: Bereit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572297
+    m_Localized: Startet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572298
+    m_Localized: "L\xE4uft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572299
+    m_Localized: Stoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572300
+    m_Localized: Gestoppt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572301
+    m_Localized: "St\xF6rung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572302
+    m_Localized: Wartung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572303
+    m_Localized: Presshub abgebrochen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572304
+    m_Localized: Falsches Produkt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572305
+    m_Localized: Rohteig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572306
+    m_Localized: Gemischter Teig
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572307
+    m_Localized: Teigportion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572308
+    m_Localized: Geformter Boden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572309
+    m_Localized: Vorgebackener Boden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572310
+    m_Localized: "Abgek\xFChlter Boden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572311
+    m_Localized: Pizza mit Sauce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572312
+    m_Localized: Belegte Pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572313
+    m_Localized: Gefrorene Pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10040783298572314
+    m_Localized: Verpackte Pizza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883625435136
+    m_Localized: "P / Esc \u2013 Pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10049883692544000
+    m_Localized: "Esc / Q / Rechtsklick \u2013 Bildschirm schlie\xDFen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10054296280707072
+    m_Localized: "[{4}] zur\xFCck   [{2}] n\xE4chster Schritt   [{3}] ausblenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470304796672
+    m_Localized: "Beh\xE4lter auff\xFCllen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185280
+    m_Localized: "Geh zur Dosierung und dr\xFCck den Nachf\xFCll-Knopf am Sauce-Spender
+      ({0}). Ist der Beh\xE4lter voll, ist die St\xF6rung behoben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185281
+    m_Localized: Station starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10072470313185282
+    m_Localized: "Dr\xFCck Start (I) am Bedienpult der Dosierung ({0}) \u2013 die
+      Linie l\xE4uft weiter."
     m_Metadata:
       m_Items: []
   references:

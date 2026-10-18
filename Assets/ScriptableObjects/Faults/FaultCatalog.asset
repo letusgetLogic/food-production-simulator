@@ -58,8 +58,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    FallbackRemedy: Refill the empty reservoir at the dosing station (blue + button
-      on the control panel), acknowledge, complete maintenance, start.
+    FallbackRemedy: "Refill the empty reservoir with the refill button on its dispenser at the dosing station, then press start (I) on the control panel."
     IsTrainingCase: 1
     CanBeInjected: 0
   - Code: BufferFull

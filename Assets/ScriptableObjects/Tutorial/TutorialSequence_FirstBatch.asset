@@ -29,10 +29,9 @@ MonoBehaviour:
     Condition: 12
     Amount: 0
   - TitleKey: tutorial.mixer_start.title
-    TitleFallback: Start the dough mixer
+    TitleFallback: "Start the dough mixer"
     TextKey: tutorial.mixer_start.text
-    TextFallback: 'Go to a dough mixer and start it: white start button (I) on the
-      mixer''s control panel ({0}).'
+    TextFallback: "Go to a dough mixer and start it: start button (I) on the mixer's control panel ({0})."
     Condition: 3
     Amount: 0
   - TitleKey: tutorial.mixer_wait.title
@@ -63,10 +62,9 @@ MonoBehaviour:
     Condition: 7
     Amount: 0
   - TitleKey: tutorial.lift_up.title
-    TitleFallback: Raise the lift
+    TitleFallback: "Raise the lift"
     TextKey: tutorial.lift_up.text
-    TextFallback: Press the lift-up button with {0}. The pot tips and the dough falls
-      into the hopper.
+    TextFallback: "Press the \"Raise lift\" button with {0}. The pot tips and the dough falls into the hopper."
     Condition: 8
     Amount: 0
   - TitleKey: tutorial.portion.title
@@ -84,10 +82,9 @@ MonoBehaviour:
     Condition: 10
     Amount: 0
   - TitleKey: tutorial.hmi.title
-    TitleFallback: Watch the line
+    TitleFallback: "Watch the line"
     TextKey: tutorial.hmi.text
-    TextFallback: Open the line terminal next to the press with {0}. Green = running,
-      amber = warning, red = fault.
+    TextFallback: "Open a terminal with {0}: the line terminal (screen \"Line overview\") stands at the end of the line next to the packaging, on the right in the direction of flow - every machine also has its own. Green = running, amber = warning, red = fault."
     Condition: 2
     Amount: 0
   - TitleKey: tutorial.first_pizza.title
@@ -97,6 +94,24 @@ MonoBehaviour:
       then sauce and mozzarella, shock freezer, packaging. Quality is checked at
       the end of the line.'
     Condition: 11
+    Amount: 0
+  - TitleKey: tutorial.fault_alarm.title
+    TitleFallback: "Fault!"
+    TextKey: tutorial.fault_alarm.text
+    TextFallback: "The dosing station reports a fault: the sauce reservoir is empty, station and belt stand still (red lamp). Open a terminal ({0}) - the fault is at the top of the overview with cause and remedy."
+    Condition: 16
+    Amount: 0
+  - TitleKey: tutorial.fault_refill.title
+    TitleFallback: "Refill the reservoir"
+    TextKey: tutorial.fault_refill.text
+    TextFallback: "Go to the dosing station and press the refill button on the sauce dispenser ({0}). With the reservoir full the fault is cleared."
+    Condition: 17
+    Amount: 0
+  - TitleKey: tutorial.fault_restart.title
+    TitleFallback: "Start the station"
+    TextKey: tutorial.fault_restart.text
+    TextFallback: "Press start (I) on the dosing station's control panel ({0}) - the line runs on."
+    Condition: 18
     Amount: 0
   - TitleKey: tutorial.palletizer.title
     TitleFallback: 'Palletizing'
@@ -123,9 +138,8 @@ MonoBehaviour:
     Condition: 0
     Amount: 25
   - TitleKey: tutorial.done.title
-    TitleFallback: First batch done!
+    TitleFallback: "First batch done!"
     TextKey: tutorial.done.text
-    TextFallback: Faults will happen - the HMI shows the cause and the remedy. P
-      opens the pause menu with controls, save and load.
+    TextFallback: "You know the whole line now. Faults are handled like in the drill: read the cause in the HMI, acknowledge, fix, complete maintenance, start. P opens the pause menu with controls, save and load."
     Condition: 0
-    Amount: 12
+    Amount: 0

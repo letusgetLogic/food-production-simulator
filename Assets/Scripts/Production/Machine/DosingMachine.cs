@@ -197,6 +197,7 @@ namespace Game.Production
 
             unit.Refill();
             Report(DosingInfo.ReservoirRefilled, unit.DisplayName, force: true);
+            ClearEmptyFaultIfRefilled();
 
             if (CurrentState == MachineState.Running)
             {
@@ -204,6 +205,50 @@ namespace Game.Production
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Training (tutorial fault drill): empties a reservoir. A running station then stops by itself with
+        /// IngredientEmpty, exactly like a real empty tank; a station that is not running gets the fault directly.
+        /// </summary>
+        public bool DrainReservoir(DosingUnit unit)
+        {
+            if (unit == null || !_units.Contains(unit))
+            {
+                return false;
+            }
+
+            unit.Restore(0f, unit.LastDoseGrams);
+            if (CurrentState != MachineState.Running && CurrentState != MachineState.Fault
+                && CurrentState != MachineState.Maintenance)
+            {
+                Report(DosingInfo.ReservoirEmpty, unit.DisplayName, force: true);
+                TriggerFault($"{FaultReasonIngredientEmpty}:{unit.IngredientId}");
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Refilling is the operator's remedy for an empty reservoir: once no reservoir is short any more, an
+        /// IngredientEmpty fault (or the maintenance after it) is cleared and the station is Ready - the operator
+        /// only has to press Start (I). Not while an emergency stop is engaged (MachineBase blocks it).
+        /// </summary>
+        private void ClearEmptyFaultIfRefilled()
+        {
+            bool emptyFault = FaultReason != null && FaultReason.StartsWith(FaultReasonIngredientEmpty, StringComparison.Ordinal);
+            if (!emptyFault || _units.Exists(u => u.IsInsufficient))
+            {
+                return;
+            }
+
+            if (CurrentState == MachineState.Fault)
+            {
+                AcknowledgeFault();
+            }
+            if (CurrentState == MachineState.Maintenance)
+            {
+                CompleteMaintenance();
+            }
         }
 
         /// <summary>Refills the reservoir of an ingredient (debug panel, tests).</summary>

@@ -11,7 +11,7 @@ namespace Game.Production
     /// speed, so the stripes follow start/stop ramps, speed changes, hold-back and faults. The quad carries no
     /// collider - products rest on the belt's own surface collider underneath.
     ///
-    /// Replaces the plank approach of <see cref="ConveyorPlankVisual"/>, which needs separate plank objects.
+    /// Replaces the earlier plank approach (separate plank objects per belt).
     /// </summary>
     [RequireComponent(typeof(Renderer))]
     public class ConveyorSurfaceScroll : MonoBehaviour

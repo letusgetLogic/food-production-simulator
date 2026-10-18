@@ -103,7 +103,7 @@ namespace Game.Production
             _faults = new List<FaultDefinition>
             {
                 Define("IngredientEmpty", "Ingredient reservoir empty",
-                    "Refill the empty reservoir at the dosing station (blue + button on the control panel), acknowledge, complete maintenance, start."),
+                    "Refill the empty reservoir with the refill button on its dispenser at the dosing station, then press start (I) on the control panel."),
                 Define("EmergencyStop", "Emergency stop pressed",
                     "Remove the hazard, release the emergency stop at the control panel (press it again), acknowledge the fault and complete maintenance at the terminal, then press Start (I).",
                     canBeInjected: false),

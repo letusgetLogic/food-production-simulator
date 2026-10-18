@@ -27,14 +27,23 @@ namespace Game.HMI
         /// <summary>The player holds the pallet jack's handle.</summary>
         PalletJackHeld,
         /// <summary>The pallet jack's forks are raised.</summary>
-        PalletJackRaised
+        PalletJackRaised,
+        /// <summary>
+        /// Fault drill, part 1: entering the step empties a reservoir of the dosing station (real IngredientEmpty
+        /// fault). Done when the fault is there and the player opened a terminal (or already got past the fault).
+        /// </summary>
+        FaultDrillAlarm,
+        /// <summary>Fault drill, part 2: reservoir refilled - the fault is cleared, the station is Ready (or running).</summary>
+        FaultDrillRefilled,
+        /// <summary>Fault drill, part 3: the drill station runs again (Start pressed).</summary>
+        FaultDrillResolved
     }
 
     /// <summary>
     /// Content of the guided first batch (PM content, no code): the step list with text keys and the
     /// condition that completes each step. Texts come from the localization table via <c>LocText</c>
     /// (key <c>tutorial.*</c>), the English text here is the fallback. Placeholders: {0} = interact key,
-    /// {1} = drop key, {2} = key for the next step, {3} = key to hide the tutorial.
+    /// {1} = drop key, {2} = key for the next step, {3} = key to hide the tutorial, {4} = key for the previous step.
     /// </summary>
     [CreateAssetMenu(fileName = "TutorialSequence", menuName = "Food Production/Tutorial Sequence")]
     public class SO_TutorialSequence : ScriptableObject

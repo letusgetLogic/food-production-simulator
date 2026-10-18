@@ -11,19 +11,15 @@ namespace Game.Production
     [CreateAssetMenu(fileName = "MixerConfig", menuName = "Production/Machines/Mixer Config")]
     public class SO_MixerConfig : ScriptableObject
     {
-        [Header("Capacity / Motor")]
-        [Tooltip("Currently unused by MixerMachine logic (ingredients are not " +
-                 "dialed in via the mixer itself). Kept as a documented machine limit " +
-                 "for a future automated dosing / quality-check pass.")]
-        [Min(0f)] public float MaxBatchWeightKg = 5f;
-        [Tooltip("Currently unused by MixerMachine logic - see MaxBatchWeightKg note.")]
+        [Header("Motor")]
+        [Tooltip("Currently unused by MixerMachine logic (documented machine value).")]
         [Min(0f)] public float MixingSpeedRpm = 60f;
 
         [Header("Output")]
         [Tooltip("Weight assigned to the dough ball's ProductInstance when the drum is tilted. " +
                  "A fixed machine value rather than a sensor reading or operator input, since the " +
                  "dough ball has no scale of its own at this point in the line.")]
-        [Min(0f)] public float DoughBallWeightGrams = 10000f; // 50-times 250g
+        [Min(0f)] public float DoughBallWeightGrams = 12500f; // 50 portions x 250 g (recipe target weight)
 
         [Header("Mixing")]
         [Tooltip("Default mixing duration used until the operator overrides it via " +

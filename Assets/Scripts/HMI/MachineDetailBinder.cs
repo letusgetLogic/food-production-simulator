@@ -19,6 +19,7 @@ namespace Game.HMI
         public MachineBase BoundMachine => _boundMachine;
         private Action<MachineState, MachineState> _stateHandler;
         private float _nextRefreshTime;
+        private bool _nameIsTranslated;
 
         // Start instead of Awake: the machine on the same GameObject must have run its own Awake
         // (config defaults, clip length) before its setpoints are read.
@@ -32,7 +33,21 @@ namespace Game.HMI
 
         private void Update()
         {
-            if (_boundMachine == null || _detailPanel == null || Time.unscaledTime < _nextRefreshTime)
+            if (_boundMachine == null || _detailPanel == null)
+            {
+                return;
+            }
+
+            // Bound in Start, often before the string table has loaded: the panel then shows the GameObject
+            // name ("dough-mixer-machine (3)"). Show the translated name as soon as it is there.
+            if (!_nameIsTranslated && _boundMachine.IsNameLoaded)
+            {
+                _nameIsTranslated = true;
+                _detailPanel.SetMachineName(_boundMachine.DisplayName);
+                _detailPanel.SetState(_boundMachine.CurrentState);
+            }
+
+            if (Time.unscaledTime < _nextRefreshTime)
             {
                 return;
             }
@@ -63,6 +78,7 @@ namespace Game.HMI
             machine.StateChanged += _stateHandler;
             machine.ContentChanged += _detailPanel.SetContent;
 
+            _nameIsTranslated = machine.IsNameLoaded;
             _detailPanel.SetMachineName(machine.DisplayName);
             _detailPanel.SetState(machine.CurrentState);
 

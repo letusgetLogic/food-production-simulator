@@ -12,11 +12,13 @@ using UnityEngine.UI;
 namespace Game.HMI
 {
     /// <summary>
-    /// Pause menu (Woche 3, Plattform-UX): P while no other UI is open pauses the game
+    /// Pause menu (Woche 3, Plattform-UX): P or Escape while no other UI is open pauses the game
     /// (Time.timeScale 0, UI focus) and shows Resume / Save / Load / Controls / Tutorial / Main menu / Quit.
     /// Save and load use the slot chosen in the main menu (<see cref="SaveLoadController.CurrentSlot"/>).
-    /// P again, Q (or Escape) or Resume closes it - Q/Escape are routed through <see cref="SO_UiFocusChannel.CloseRequested"/>
-    /// like every other UI. Not Escape to open: in the browser Escape leaves fullscreen.
+    /// P or Escape again, Q, right click or Resume closes it. With a terminal (HMI) open, Escape first closes the
+    /// terminal (UI close request), the next Escape pauses; P closes the terminal and pauses at once. In a fullscreen browser the first Escape is taken by
+    /// the browser to leave fullscreen - P always works.
+    /// A small hint at the bottom right shows the pause keys (or the close keys while a screen is open).
     ///
     /// The language is chosen in the main menu only (no switch while playing).
     ///
@@ -50,6 +52,9 @@ namespace Game.HMI
         private TextMeshProUGUI _mainMenuLabel;
         private TextMeshProUGUI _quitLabel;
         private Button _loadButton;
+        private Canvas _hintCanvas;
+        private TextMeshProUGUI _hint;
+        private bool _hintShowsClose;
 
         private bool _isOpen;
         private bool _wasUiFocusedLastFrame;
@@ -71,6 +76,7 @@ namespace Game.HMI
             }
 
             Build();
+            BuildHint();
             _canvas.gameObject.SetActive(false);
         }
 
@@ -120,11 +126,14 @@ namespace Game.HMI
         private void Update()
         {
             Keyboard keyboard = Keyboard.current;
-            if (keyboard == null || !keyboard.pKey.wasPressedThisFrame)
+            if (keyboard == null || !(keyboard.pKey.wasPressedThisFrame || keyboard.escapeKey.wasPressedThisFrame))
             {
                 return;
             }
 
+            // Escape is also the UI close request (input callbacks run before Update): with the menu or a terminal
+            // open, that request has already closed it this frame and the UI was still focused last frame -
+            // so the same press never reopens anything. The next press pauses.
             if (_isOpen)
             {
                 Close();
@@ -133,11 +142,82 @@ namespace Game.HMI
             {
                 Open();
             }
+            else if (keyboard.pKey.wasPressedThisFrame && _uiFocusChannel != null)
+            {
+                // P with a terminal open: close it and pause in one press (Escape only closes the terminal).
+                _uiFocusChannel.CloseFocus();
+                Open();
+            }
         }
 
         private void LateUpdate()
         {
             _wasUiFocusedLastFrame = _uiFocusChannel != null && _uiFocusChannel.IsUiFocused;
+            UpdateHint();
+        }
+
+        // ---- Key hint ----
+
+        private void UpdateHint()
+        {
+            if (_hintCanvas == null)
+            {
+                return;
+            }
+
+            bool otherUiOpen = !_isOpen && _wasUiFocusedLastFrame;
+            bool visible = !_isOpen;
+            if (_hintCanvas.gameObject.activeSelf != visible)
+            {
+                _hintCanvas.gameObject.SetActive(visible);
+            }
+
+            if (visible && (otherUiOpen != _hintShowsClose || string.IsNullOrEmpty(_hint.text)))
+            {
+                _hintShowsClose = otherUiOpen;
+                RefreshHint();
+            }
+        }
+
+        private void RefreshHint()
+        {
+            if (_hint != null)
+            {
+                _hint.text = _hintShowsClose
+                    ? LocText.Get("hmi.close_hint", "Esc / Q / right click – close screen")
+                    : LocText.Get("hmi.pause_hint", "P / Esc – pause");
+            }
+        }
+
+        private void BuildHint()
+        {
+            var canvasGo = new GameObject("PauseHintCanvas", typeof(RectTransform));
+            canvasGo.transform.SetParent(transform, false);
+            _hintCanvas = canvasGo.AddComponent<Canvas>();
+            _hintCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            _hintCanvas.sortingOrder = _sortingOrder - 1;
+            var scaler = canvasGo.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920f, 1080f);
+            scaler.matchWidthOrHeight = 0.5f;
+
+            // No raycaster: the hint never takes clicks.
+            Image back = HmiUiFactory.CreateImage(canvasGo.transform, "Hint", new Color(PanelColor.r, PanelColor.g, PanelColor.b, 0.75f));
+            var rect = (RectTransform)back.transform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(1f, 0f);
+            rect.anchoredPosition = new Vector2(-20f, 20f);
+            var layout = back.gameObject.AddComponent<HorizontalLayoutGroup>();
+            layout.padding = new RectOffset(12, 12, 6, 6);
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = false;
+            var fitter = back.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            _hint = HmiUiFactory.CreateText(back.transform, "Text", string.Empty, _fontSize * 0.6f, LabelColor,
+                TextAlignmentOptions.Right, Font);
+            _hint.textWrappingMode = TextWrappingModes.NoWrap;
+            _hint.raycastTarget = false;
         }
 
         public void Open()
@@ -233,6 +313,7 @@ namespace Game.HMI
             {
                 RefreshTexts();
             }
+            RefreshHint();
         }
 
         private void RestartTutorial()
@@ -330,7 +411,7 @@ namespace Game.HMI
         private void RefreshTexts()
         {
             _title.text = LocText.Get("hmi.paused", "PAUSED");
-            _resumeLabel.text = LocText.Get("hmi.resume", "Resume");
+            _resumeLabel.text = $"{LocText.Get("hmi.resume", "Resume")}  <size=70%>(P / Esc)</size>";
             _saveLabel.text = LocText.Get("hmi.save_game", "Save game");
             _loadLabel.text = LocText.Get("hmi.load_game", "Load game");
             _tutorialLabel.text = LocText.Get("hmi.tutorial", "Restart tutorial");
@@ -349,13 +430,14 @@ namespace Game.HMI
                 "Shift - sprint\n" +
                 "E - interact / pick up\n" +
                 "Q - put down\n" +
-                "Left click - buttons on screens and terminals\n" +
-                "Q - close screen\n" +
-                "P - pause menu\n" +
+                "Left click - buttons on screens and terminals (up close)\n" +
+                "Esc / Q / right click - close screen\n" +
+                "P / Esc - pause menu\n" +
                 "{0} - quick save, {1} - quick load\n" +
                 "{2} - debug panel (development)\n" +
                 "R – pallet jack: raise/lower forks\n" +
-                "T – pallet jack: ride (Q gets off)"),
+                "T – pallet jack: ride (Q gets off)\n" +
+                "N / B / H – tutorial: next / back / hide"),
                 ShortcutHints.QuickSave, ShortcutHints.QuickLoad, ShortcutHints.DebugPanel);
         }
     }

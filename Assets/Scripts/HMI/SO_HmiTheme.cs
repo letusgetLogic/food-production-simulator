@@ -43,11 +43,16 @@ namespace Game.HMI
             return TryGetStyle(state, out MachineStateStyle style) ? style.Color : Inactive;
         }
 
+        /// <summary>
+        /// Translated state name (key "state.&lt;state&gt;", e.g. state.maintenance). The style's DisplayName, or
+        /// the enum name, is the fallback while the table loads or the key is missing.
+        /// </summary>
         public string GetMachineStateDisplayName(MachineState state)
         {
-            return TryGetStyle(state, out MachineStateStyle style) && !string.IsNullOrEmpty(style.DisplayName)
+            string fallback = TryGetStyle(state, out MachineStateStyle style) && !string.IsNullOrEmpty(style.DisplayName)
                 ? style.DisplayName
                 : state.ToString();
+            return MachineStateText.Get(state, fallback);
         }
 
         private bool TryGetStyle(MachineState state, out MachineStateStyle result)

@@ -360,19 +360,7 @@ namespace Game.HMI
 
         // ---- Labels ----
 
-        private static string DefectLabel(string code)
-        {
-            // "WeightMissing" -> "Missing measurement: Weight"
-            const string missing = QualityInspector.MissingSuffix;
-            if (code.EndsWith(missing) && code.Length > missing.Length)
-            {
-                string measurement = code.Substring(0, code.Length - missing.Length);
-                return LocText.Get("defect.missing", "Missing measurement") + ": " +
-                       LocText.Get("defect." + LocText.Snake(measurement), measurement);
-            }
-
-            return LocText.Get("defect." + LocText.Snake(code), code);
-        }
+        private static string DefectLabel(string code) => QualityDefectText.CodeLabel(code);
 
         private string FaultLabel(string code)
         {

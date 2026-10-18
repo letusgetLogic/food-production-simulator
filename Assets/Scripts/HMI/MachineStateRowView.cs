@@ -44,6 +44,19 @@ namespace Game.HMI
             SetUnknownState();
         }
 
+        private void OnEnable() => LocText.TableChanged += RefreshState;
+
+        private void OnDisable() => LocText.TableChanged -= RefreshState;
+
+        /// <summary>State text was set before the table loaded ("Ready"): show it again in the selected language.</summary>
+        private void RefreshState()
+        {
+            if (_lastState.HasValue)
+            {
+                SetState(_lastState.Value);
+            }
+        }
+
         public void SetMachineName(string machineName)
         {
             _machineName = machineName;

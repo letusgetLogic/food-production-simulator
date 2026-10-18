@@ -25,7 +25,8 @@ namespace Game.Platform
         [Header("Raycast Setup")]
         [SerializeField] private Camera _raycastCamera;
         [SerializeField] private LayerMask _interactableLayerMask = ~0;
-        [SerializeField] private float _maxRayDistance = 100f;
+        [Tooltip("Reach of a left click in metres (like the E interaction) - terminals and buttons farther away do not react.")]
+        [SerializeField] private float _maxRayDistance = 3f;
 
         [Header("Behaviour")]
         [Tooltip("If true, re-evaluates the hovered target every frame. Disable and call " +

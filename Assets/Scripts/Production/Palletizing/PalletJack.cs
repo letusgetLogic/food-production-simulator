@@ -52,7 +52,9 @@ namespace Game.Production
         [Tooltip("Distance from the player to the jack origin (rear, handle base) while pushing.")]
         [Min(0.3f)][SerializeField] private float _reach = 1.05f;
         [Min(0.1f)][SerializeField] private float _followSpeed = 8f;
-        [Min(0.1f)][SerializeField] private float _turnSpeed = 6f;
+        [Tooltip("Max. turn rate while pushing (°/s): the jack is turned directly towards the view, half of the " +
+                 "remaining angle per physics step up to this rate.")]
+        [Min(10f)][SerializeField] private float _maxPushTurnRate = 300f;
         [Tooltip("Lets go automatically when it gets stuck this far behind the player.")]
         [Min(0.5f)][SerializeField] private float _maxStuckDistance = 1.2f;
         [Min(0.1f)][SerializeField] private float _liftSpeed = 0.1f;
@@ -203,6 +205,7 @@ namespace Game.Production
             }
 
             _isHeld = true;
+            SetCollisionWithHolder(false);
             _dropRequestChannel.DropRequested += Release;
             _useRequestChannel.UseRequested += ToggleLift;
             _useRequestChannel.ModeToggleRequested += ToggleRide;
@@ -232,6 +235,7 @@ namespace Game.Production
         {
             StopRide();
 
+            SetCollisionWithHolder(true);
             _isHeld = false;
             if (_dropRequestChannel != null)
             {
@@ -411,6 +415,42 @@ namespace Game.Production
             }
         }
 
+        private Collider[] _holderColliders;
+
+        /// <summary>
+        /// While the player holds the handle, the jack and the player's body do not collide: the handle end swings
+        /// through the player's capsule when the jack turns with the view. With contact the capsule blocked the
+        /// turn and the jack stayed at an angle to the view (and the contact counted as an obstacle).
+        /// </summary>
+        private void SetCollisionWithHolder(bool enabled)
+        {
+            if (!enabled)
+            {
+                Transform holder = _holdPoint != null && _holdPoint.HoldPoint != null ? _holdPoint.HoldPoint.root : null;
+                _holderColliders = holder != null ? holder.GetComponentsInChildren<Collider>(true) : null;
+            }
+            if (_holderColliders == null)
+            {
+                return;
+            }
+
+            foreach (Collider other in _holderColliders)
+            {
+                foreach (Collider own in _ownColliders)
+                {
+                    if (own != null && other != null)
+                    {
+                        Physics.IgnoreCollision(own, other, !enabled);
+                    }
+                }
+            }
+
+            if (enabled)
+            {
+                _holderColliders = null;
+            }
+        }
+
         private void SetCollisionWithJack(Rigidbody body, bool enabled)
         {
             if (body == null)
@@ -574,6 +614,7 @@ namespace Game.Production
             Quaternion rotation = _body.rotation;
             Vector3 desiredVelocity = Vector3.zero;
             float yawRate = 0f; // °/s
+            Quaternion pushTurn = Quaternion.identity; // pushing: turn applied directly this step
             bool driven = false;
             Vector3 nextVelocity = _body.linearVelocity;
             Transform player = null;
@@ -666,7 +707,13 @@ namespace Game.Production
                         desiredVelocity = Vector3.ClampMagnitude(offset * _followSpeed, _maxPushSpeed);
                         float yawError = Mathf.DeltaAngle(rotation.eulerAngles.y,
                             Quaternion.LookRotation(forward, Vector3.up).eulerAngles.y);
-                        yawRate = yawError * _turnSpeed;
+                        // The jack is turned directly (not by angular velocity): a contact (pallet stack, wall,
+                        // parked pallets) must not hold it at an angle to the view - the physics then pushes it off
+                        // the obstacle. Half of the remaining angle per step, capped; the last bit snaps.
+                        float step = Mathf.Abs(yawError) < 0.5f ? yawError
+                            : Mathf.Clamp(yawError * 0.5f, -_maxPushTurnRate * dt, _maxPushTurnRate * dt);
+                        pushTurn = Quaternion.AngleAxis(step, Vector3.up);
+                        _body.WakeUp();
                         driven = true;
                     }
                 }
@@ -696,6 +743,10 @@ namespace Game.Production
                 _body.AddForce(change, ForceMode.VelocityChange);
                 nextVelocity = current + change;
                 _body.angularVelocity = new Vector3(0f, yawRate * Mathf.Deg2Rad, 0f);
+                if (pushTurn != Quaternion.identity)
+                {
+                    _body.MoveRotation(pushTurn * rotation);
+                }
             }
             else
             {
@@ -712,7 +763,7 @@ namespace Game.Production
             // Pose after this step - the lifted load follows it (kinematic, without a step lag).
             nextVelocity.y = 0f;
             position += nextVelocity * dt;
-            rotation = Quaternion.AngleAxis(_body.angularVelocity.y * Mathf.Rad2Deg * dt, Vector3.up) * rotation;
+            rotation = pushTurn * Quaternion.AngleAxis(_body.angularVelocity.y * Mathf.Rad2Deg * dt, Vector3.up) * rotation;
 
             // Forks up/down.
             float targetOffset = _raised ? LiftHeight : 0f;

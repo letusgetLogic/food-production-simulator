@@ -1,5 +1,7 @@
 ------------------------------------------------------------------------
-# Food Production Simulator 
+
+# Food Production Simulator
+
 Ein 3D-Unity-Projekt über eine Simulation von einer Lebensmittel-Produktionskette.
 
 Der Nutzer überwacht und steuert eine kleine industrielle Produktionslinie zur Herstellung von Tiefkühlpizza. Die Simulation bildet den Produktionsprozess von der Rohstoffbereitstellung bis zur verpackten Tiefkühlpizza ab. Maschinen, Förderbänder, Sensoren und Steuerungssysteme reagieren auf Produktionszustände und Fehler. Der Schwerpunkt liegt auf der realistischen Darstellung eines automatisierten Produktionsprozesses und einer modularen technischen Umsetzung.
@@ -7,10 +9,15 @@ Der Nutzer überwacht und steuert eine kleine industrielle Produktionslinie zur 
 ------------------------------------------------------------------------
 
 ## Projekt
+
 Entwicklungs-Zeitraum: **15.09.2026 - 14.10.2026**
+
+- MVP-Stand erreicht
+- Keine Erweiterungen implementiert, außer Palettierer und Waren-Transport
 - Update am 11.10.2026
 
 Ziele des Hobby-Projektes:
+
 - Entwicklung von 3D Umgebung & Interaktions-Systemen
 - Entwicklung auf Zielplattformen PC, WebGL und VR
 - Kennenlernen von industriellen Lebensmittel-Produktionsprozess
@@ -19,6 +26,7 @@ Ziele des Hobby-Projektes:
 ------------------------------------------------------------------------
 
 ## MVP
+
 - Ein Rezept: Tiefkühlpizza Margherita
 - Eine Produktionslinie
 - Teigmischer, Portionierer, Formanlage, Sauce-/Käsedosierung, Ofen, Kühler, Gefriereimhiet, Verpackung
@@ -32,6 +40,7 @@ Ziele des Hobby-Projektes:
 ------------------------------------------------------------------------
 
 ## Erweiterungen
+
 - Material- & Lagerverwaltung
 - Kühlkammer
 - Mehrere Rezepten & Produktionslinien
@@ -45,12 +54,14 @@ Ziele des Hobby-Projektes:
 ------------------------------------------------------------------------
 
 ## Features
+
 - Bewegung & Interaktion
 - Machine-System (State Machine)
 - Sensor-System
 - Förderband-System
 - Rezept-/Produkt-Zustandsmodell
-- 8 Produktionsstationen
+- 8 Produktionsstationen + Palettierer + Palettenlagerung
+- Hubwagen
 - Fehlersystem
 - HMI/UI-System
 - Quality-Check
@@ -63,12 +74,17 @@ Ziele des Hobby-Projektes:
 ------------------------------------------------------------------------
 
 ## Design-Entscheidungen
+
 - Puffer-Förderband vor Teigpresse um automatisches Stoppen zu realisieren
+- Palettierer + Waren-Transport + Paletten-Management
+- Benutzung von Hubwagen als Scooter
+- Tutorial-Schritte wie Verarbeitung von Fehlerfällen und Waren-Transport hinzugefügt
 
 ------------------------------------------------------------------------
 
 ## Learning
-- Assembly-Architektur
+
+- Assembly-Architektur und Zusammenhang + Unabhängigkeit zwischen Assemblies
 - Localization Google Sheet
 - Auseinandersetzung zwischen Code-Logik (Daten-Transfer) und Realität-Logik
 - Scriptable-Object-Channel-Singelton-Pattern

@@ -25,6 +25,11 @@ namespace Game.Platform
         [SerializeField] private float _maxDistance = 3f;
         [SerializeField] private LayerMask _interactableMask = ~0;
         [SerializeField] private QueryTriggerInteraction _triggerInteraction = QueryTriggerInteraction.Collide;
+        [Tooltip("Solid colliders on these layers block the aim (machine housings, tunnel walls) - nothing behind " +
+                 "them can be targeted. Triggers without an interactable never block.")]
+        [SerializeField] private LayerMask _occluderMask = Physics.DefaultRaycastLayers;
+
+        private readonly RaycastHit[] _hits = new RaycastHit[16];
 
         private IInteractable _currentTarget;
 
@@ -87,13 +92,40 @@ namespace Game.Platform
 
             Ray ray = _aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-            if (!Physics.Raycast(ray, out RaycastHit hit, _maxDistance, _interactableMask, _triggerInteraction))
+            int count = Physics.RaycastNonAlloc(ray, _hits, _maxDistance, _interactableMask | _occluderMask, _triggerInteraction);
+            Array.Sort(_hits, 0, count, HitDistanceComparer.Instance);
+
+            for (int i = 0; i < count; i++)
             {
-                return null;
+                Collider collider = _hits[i].collider;
+                if (collider.transform.IsChildOf(transform.root))
+                {
+                    continue; // own body: the eye sits at the top of the player's capsule
+                }
+
+                // GetComponentInParent so colliders can sit on child meshes of a button.
+                IInteractable interactable = collider.GetComponentInParent<IInteractable>();
+                bool onInteractableLayer = (_interactableMask.value & (1 << collider.gameObject.layer)) != 0;
+                if (interactable != null && onInteractableLayer)
+                {
+                    return interactable;
+                }
+
+                // A solid wall/housing in front of everything else ends the search; triggers (belt drives,
+                // sensors, zones) are looked through.
+                if (!collider.isTrigger)
+                {
+                    return null;
+                }
             }
 
-            // GetComponentInParent so colliders can sit on child meshes of a button.
-            return hit.collider.GetComponentInParent<IInteractable>();
+            return null;
+        }
+
+        private sealed class HitDistanceComparer : System.Collections.Generic.IComparer<RaycastHit>
+        {
+            public static readonly HitDistanceComparer Instance = new HitDistanceComparer();
+            public int Compare(RaycastHit a, RaycastHit b) => a.distance.CompareTo(b.distance);
         }
 
         /// <summary>

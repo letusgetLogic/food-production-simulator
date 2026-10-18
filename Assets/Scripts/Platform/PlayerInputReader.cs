@@ -72,6 +72,7 @@ namespace Game.Platform
             // Q only drops held items while no UI is focused (HoldItem is disabled during UI focus).
             _escapeAction = _map.AddAction("Escape", InputActionType.Button, "<Keyboard>/q");
             _escapeAction.AddBinding("<Keyboard>/escape");
+            _escapeAction.AddBinding("<Mouse>/rightButton"); // right click closes a screen (left click opens it)
             _escapeAction.performed += OnEscapePerformed;
 
             _releaseHoldAction = _map.AddAction("Release", InputActionType.Button, "<Keyboard>/q");

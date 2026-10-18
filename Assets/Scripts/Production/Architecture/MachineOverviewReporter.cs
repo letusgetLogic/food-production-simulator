@@ -58,21 +58,39 @@ namespace Game.Production
 
         /// <summary>
         /// Awake may run before the string tables are loaded (scene started directly in the editor - names are
-        /// the GameObject names then). The language only changes in the main menu, so one report after the
-        /// localization initialisation is enough; coming from the main menu it is already done.
+        /// the GameObject names then). The language only changes in the main menu, so each machine is reported
+        /// once more as soon as its translated name is available. Waiting only for the localization
+        /// initialisation is not enough: the name's own table operation may still be running, and machines
+        /// that do not change state on their own (dough mixers) would keep the GameObject name in the overview.
         /// </summary>
         private IEnumerator Start()
         {
             yield return LocalizationSettings.InitializationOperation;
 
-            foreach (KeyValuePair<string, MachineBase> entry in _machinesById)
+            var pending = new List<KeyValuePair<string, MachineBase>>(_machinesById);
+            float giveUpTime = Time.realtimeSinceStartup + NameTimeoutSeconds;
+            while (pending.Count > 0)
             {
-                if (entry.Value != null)
+                bool timedOut = Time.realtimeSinceStartup > giveUpTime;
+                for (int i = pending.Count - 1; i >= 0; i--)
                 {
-                    _channel.ReportState(entry.Key, entry.Value.DisplayName, entry.Value.CurrentState);
+                    MachineBase machine = pending[i].Value;
+                    if (machine == null)
+                    {
+                        pending.RemoveAt(i);
+                    }
+                    else if (machine.IsNameLoaded || timedOut)
+                    {
+                        _channel.ReportState(pending[i].Key, machine.DisplayName, machine.CurrentState);
+                        pending.RemoveAt(i);
+                    }
                 }
+
+                yield return null;
             }
         }
+
+        private const float NameTimeoutSeconds = 10f;
 
         private void OnDestroy()
         {

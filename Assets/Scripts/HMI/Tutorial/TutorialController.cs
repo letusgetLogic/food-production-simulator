@@ -14,14 +14,17 @@ namespace Game.HMI
     /// Guided first batch (Woche 3, Tutorial/Onboarding): shows one instruction at a time in a small overlay
     /// panel (top left) and advances when the player has done it - walk, read the recipe page of the HMI, start the
     /// mixer, tilt the drum, carry the pot to the portioner, raise the lift, first portion, first pizza base,
-    /// open the HMI, first packaged pizza, palletizer, pallet jack (grab, raise forks), changing the pallet. Content (texts, order, conditions) lives in <see cref="SO_TutorialSequence"/>.
+    /// open the HMI, first packaged pizza, fault drill (empty sauce reservoir: read the alarm, refill, start), palletizer, pallet jack (grab, raise forks), changing the pallet. Content (texts, order, conditions)
+    /// lives in <see cref="SO_TutorialSequence"/>.
     ///
     /// Conditions read the real machines (no tutorial hooks in machine code). They also accept "the player is
     /// already further", e.g. a tilted drum completes "wait for mixing", so nobody gets stuck by doing steps early.
     ///
     /// Progress belongs to the save slot (<see cref="ISaveableState"/>): a new game starts the tutorial at step 1,
     /// a loaded game continues it where it was saved (or not at all once finished). <see cref="Restart"/> starts it
-    /// again. Keys: next step (default N), hide/show (default H).
+    /// again. Keys: previous step (default B - only shows it again, it stays done), N browses forward again up to
+    /// the current step; N completes the current step only if it is a Manual (read-only) step - steps with a task
+    /// cannot be skipped. Hide/show (default H). The last step stays until the player closes it with N.
     /// Builds its own overlay canvas from code, like <see cref="PauseMenu"/>.
     /// </summary>
     public class TutorialController : MonoBehaviour, ISaveableState
@@ -39,6 +42,8 @@ namespace Game.HMI
         [SerializeField] private PalletStation _palletStation;
         [Tooltip("Empty = found in the scene at runtime.")]
         [SerializeField] private PalletJack _palletJack;
+        [Tooltip("Fault drill: the station whose first reservoir is emptied. Empty = the drill steps complete by themselves.")]
+        [SerializeField] private DosingMachine _faultDrillStation;
         [SerializeField] private SO_UiFocusChannel _uiFocusChannel;
         [SerializeField] private SO_HoldChannel _holdChannel;
 
@@ -47,12 +52,14 @@ namespace Game.HMI
         [SerializeField] private bool _startAutomatically = true;
         [SerializeField] private Key _nextKey = Key.N;
         [SerializeField] private Key _hideKey = Key.H;
+        [SerializeField] private Key _backKey = Key.B;
 
         [Header("Look")]
         [SerializeField] private SO_HmiTheme _theme;
         [Tooltip("Font is copied from this text. Empty = TMP default font.")]
         [SerializeField] private TextMeshProUGUI _styleSource;
-        [SerializeField] private int _sortingOrder = 400;
+        [Tooltip("Below the HMI screen (Canvas_HMI: 10) - an open terminal covers the tutorial panel.")]
+        [SerializeField] private int _sortingOrder = 5;
         [SerializeField] private float _fontSize = 22f;
 
         private Canvas _canvas;
@@ -63,6 +70,8 @@ namespace Game.HMI
         private Image _progressFill;
 
         private int _stepIndex = -1;
+        /// <summary>Step shown in the panel: the current one, or an earlier (done) one while browsing back.</summary>
+        private int _viewIndex = -1;
         private bool _wasRestored;
         private bool _isRunning;
         private bool _isHidden;
@@ -76,6 +85,7 @@ namespace Game.HMI
         private int _startCartons;
         private bool _uiOpenedSinceStep;
         private bool _drumTiltedSinceStep;
+        private bool _drillFaultSeen;
 
         public bool IsRunning => _isRunning;
         public int StepIndex => _stepIndex;
@@ -164,6 +174,7 @@ namespace Game.HMI
         {
             _isRunning = true;
             _isHidden = false;
+            _viewIndex = -1;
             _canvas.gameObject.SetActive(true);
             EnterStep(Mathf.Clamp(stepIndex, 0, _sequence.Steps.Count - 1));
         }
@@ -232,31 +243,72 @@ namespace Game.HMI
             }
 
             Keyboard keyboard = Keyboard.current;
-            bool uiFocused = _uiFocusChannel != null && _uiFocusChannel.IsUiFocused;
-            if (keyboard != null && !uiFocused)
+            // Tutorial keys also work while a terminal has the UI focus (the steps often ask the player to read
+            // something in the HMI, N/B/H are not used by any screen) - but not in the pause menu.
+            bool paused = Time.timeScale <= 0f; // pause menu open - the tutorial waits
+            if (keyboard != null && !paused)
             {
                 if (keyboard[_hideKey].wasPressedThisFrame)
                 {
                     _isHidden = !_isHidden;
                     _canvas.gameObject.SetActive(!_isHidden);
                 }
+                else if (_isHidden)
+                {
+                    // Browsing a hidden panel would change it unseen.
+                }
+                else if (keyboard[_backKey].wasPressedThisFrame)
+                {
+                    ShowStep(_viewIndex - 1);
+                }
                 else if (keyboard[_nextKey].wasPressedThisFrame)
                 {
-                    NextStep();
-                    return;
+                    if (_viewIndex < _stepIndex)
+                    {
+                        ShowStep(_viewIndex + 1);
+                    }
+                    else if (_sequence.Steps[_stepIndex].Condition == TutorialCondition.Manual)
+                    {
+                        // Only read-only steps (and the last one) are confirmed with N - a step with a task
+                        // completes when the player has done it; later steps stay locked until then.
+                        NextStep();
+                        return;
+                    }
                 }
             }
 
             _stepTime += Time.unscaledDeltaTime;
+            if (_faultDrillStation != null && _faultDrillStation.CurrentState == MachineState.Fault)
+            {
+                _drillFaultSeen = true;
+            }
+
             if (IsStepDone(_sequence.Steps[_stepIndex]))
             {
                 NextStep();
             }
         }
 
+        /// <summary>Shows an earlier step again (browsing) - progress is unchanged.</summary>
+        private void ShowStep(int index)
+        {
+            int clamped = Mathf.Clamp(index, 0, _stepIndex);
+            if (clamped != _viewIndex)
+            {
+                _viewIndex = clamped;
+                RefreshTexts();
+            }
+        }
+
         private void EnterStep(int index)
         {
+            // Browsing stays where it is; whoever looks at the current step follows the progress.
+            bool following = _viewIndex < 0 || _viewIndex >= _stepIndex;
             _stepIndex = index;
+            if (following)
+            {
+                _viewIndex = index;
+            }
             _stepTime = 0f;
             _startPosition = _player != null ? _player.position : Vector3.zero;
             _startPortions = _portioner != null ? _portioner.PortionsProduced : 0;
@@ -265,8 +317,29 @@ namespace Game.HMI
             _startCartons = PalletStationRef != null ? PalletStationRef.CartonsTotal : 0;
             _uiOpenedSinceStep = false;
             _drumTiltedSinceStep = false;
+            if (_sequence.Steps[index].Condition == TutorialCondition.FaultDrillAlarm)
+            {
+                StartFaultDrill();
+            }
             RefreshTexts();
         }
+
+        /// <summary>Empties the first reservoir of the drill station - it faults with IngredientEmpty by itself.</summary>
+        private void StartFaultDrill()
+        {
+            _drillFaultSeen = false;
+            if (_faultDrillStation == null || DrillUnit == null)
+            {
+                return;
+            }
+
+            MachineState state = _faultDrillStation.CurrentState;
+            _drillFaultSeen = state == MachineState.Fault || state == MachineState.Maintenance;
+            _faultDrillStation.DrainReservoir(DrillUnit);
+        }
+
+        private DosingUnit DrillUnit =>
+            _faultDrillStation != null && _faultDrillStation.Units.Count > 0 ? _faultDrillStation.Units[0] : null;
 
         private bool IsStepDone(SO_TutorialSequence.Step step)
         {
@@ -327,6 +400,21 @@ namespace Game.HMI
                 case TutorialCondition.PalletJackRaised:
                     return PalletJackRef == null || PalletJackRef.IsRaised;
 
+                case TutorialCondition.FaultDrillAlarm:
+                    return _faultDrillStation == null || DrillUnit == null
+                           || (_drillFaultSeen && (_uiOpenedSinceStep || IsUiFocused
+                                                   || _faultDrillStation.CurrentState != MachineState.Fault));
+
+                case TutorialCondition.FaultDrillRefilled:
+                    return _faultDrillStation == null
+                           || (_faultDrillStation.CurrentState != MachineState.Fault
+                               && _faultDrillStation.CurrentState != MachineState.Maintenance
+                               && (DrillUnit == null || !DrillUnit.IsInsufficient));
+
+                case TutorialCondition.FaultDrillResolved:
+                    return _faultDrillStation == null
+                           || (_faultDrillStation.CurrentState == MachineState.Running && (DrillUnit == null || !DrillUnit.IsInsufficient));
+
                 default:
                     return false;
             }
@@ -369,6 +457,9 @@ namespace Game.HMI
                 _palletJack = FindFirstObjectByType<PalletJack>();
             }
         }
+
+        /// <summary>A terminal (or other UI) is open right now - e.g. it was already open when the step started.</summary>
+        private bool IsUiFocused => _uiFocusChannel != null && _uiFocusChannel.IsUiFocused;
 
         private bool HasMixers => _mixers != null && System.Array.Exists(_mixers, m => m != null);
 
@@ -416,16 +507,34 @@ namespace Game.HMI
                 return;
             }
 
-            SO_TutorialSequence.Step step = _sequence.Steps[_stepIndex];
-            string interact = KeyName(Key.E);
-            string drop = KeyName(Key.Q);
-            string next = KeyName(_nextKey);
-            string hide = KeyName(_hideKey);
+            int shown = Mathf.Clamp(_viewIndex, 0, _stepIndex);
+            bool reviewing = shown < _stepIndex;
+            bool lastStep = !reviewing && _stepIndex == _sequence.Steps.Count - 1;
+            bool manual = !reviewing && _sequence.Steps[_stepIndex].Condition == TutorialCondition.Manual;
+            SO_TutorialSequence.Step step = _sequence.Steps[shown];
+            object[] keys = { KeyName(Key.E), KeyName(Key.Q), KeyName(_nextKey), KeyName(_hideKey), KeyName(_backKey) };
 
-            _header.text = $"{LocText.Get("tutorial.header", "TUTORIAL").ToUpperInvariant()}  {_stepIndex + 1}/{_sequence.Steps.Count}";
-            _title.text = Format(LocText.Get(step.TitleKey, step.TitleFallback), interact, drop, next, hide);
-            _body.text = Format(LocText.Get(step.TextKey, step.TextFallback), interact, drop, next, hide);
-            _footer.text = Format(LocText.Get("tutorial.footer", "[{2}] next step   [{3}] hide"), interact, drop, next, hide);
+            string header = $"{LocText.Get("tutorial.header", "TUTORIAL").ToUpperInvariant()}  {shown + 1}/{_sequence.Steps.Count}";
+            if (reviewing)
+            {
+                header += "  ·  " + LocText.Get("tutorial.step_done", "Done").ToUpperInvariant();
+            }
+            _header.text = header;
+            _title.text = Format(LocText.Get(step.TitleKey, step.TitleFallback), keys);
+            _body.text = Format(LocText.Get(step.TextKey, step.TextFallback), keys);
+
+            string footer = reviewing
+                ? LocText.Get("tutorial.footer_review", "[{4}] back   [{2}] forward   [{3}] hide")
+                : lastStep
+                    ? LocText.Get("tutorial.footer_last", "[{4}] back   [{2}] close tutorial   [{3}] hide")
+                    : manual
+                        ? LocText.Get("tutorial.footer_manual", "[{4}] back   [{2}] next step   [{3}] hide")
+                        : LocText.Get("tutorial.footer", "[{4}] back   [{3}] hide");
+            _footer.text = Format(footer, keys);
+
+            // Earlier steps are greyed: they are done, the panel only shows them again.
+            _title.color = reviewing ? LabelColor : TextColor;
+            _body.color = reviewing ? LabelColor : TextColor;
 
             var fill = (RectTransform)_progressFill.transform;
             fill.anchorMax = new Vector2((_stepIndex + 1f) / _sequence.Steps.Count, 1f);

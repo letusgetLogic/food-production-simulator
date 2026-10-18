@@ -122,26 +122,29 @@ namespace Game.HMI
         /// <summary>
         /// Binds the machine's setpoints and actual values. Readouts with a slot go into the fixed tiles
         /// (temperature, fill level, cycle time, setpoint) if this panel has them, everything else into
-        /// the parameter list. Pass null to clear (tiles fall back to "--").
+        /// the parameter list. Pass null to clear. Each tile takes the translated label of its readout
+        /// ("Zykluszeit (s)"); tiles the machine has no readout for are hidden.
         /// </summary>
         public void SetValueSource(IMachineParameterSource source)
         {
             _valueSource = source;
             _tileReadouts.Clear();
 
-            ResetTile(_temperatureTile);
-            ResetTile(_fillLevelTile);
-            ResetTile(_cycleTimeTile);
-            ResetTile(_setpointTile);
+            HideTile(_temperatureTile);
+            HideTile(_fillLevelTile);
+            HideTile(_cycleTimeTile);
+            HideTile(_setpointTile);
 
             var listReadouts = new List<MachineReadout>();
             if (source?.Readouts != null)
             {
                 foreach (MachineReadout readout in source.Readouts)
                 {
-                    if (GetTile(readout.Slot) != null)
+                    StatusTileView tile = GetTile(readout.Slot);
+                    if (tile != null)
                     {
                         _tileReadouts.Add(readout);
+                        ShowTile(tile, readout);
                     }
                     else if (readout.Slot == MachineReadoutSlot.None)
                     {
@@ -189,12 +192,20 @@ namespace Game.HMI
             _ => null
         };
 
-        private static void ResetTile(StatusTileView tile)
+        private static void HideTile(StatusTileView tile)
         {
             if (tile != null)
             {
                 tile.SetPlaceholder();
+                tile.gameObject.SetActive(false);
             }
+        }
+
+        private static void ShowTile(StatusTileView tile, MachineReadout readout)
+        {
+            string unit = readout.Unit;
+            tile.SetLabel(string.IsNullOrEmpty(unit) ? readout.Label : $"{readout.Label} ({unit})");
+            tile.gameObject.SetActive(true);
         }
 
         public void SetTemperature(float celsius, HmiValueSeverity severity) =>

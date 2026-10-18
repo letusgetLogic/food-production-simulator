@@ -528,6 +528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4384230846872804676}
   - component: {fileID: 8326551467865656434}
+  - component: {fileID: 7360210545551836417}
   m_Layer: 5
   m_Name: NavRail
   m_TagString: Untagged
@@ -3391,6 +3392,7 @@ MonoBehaviour:
   _screenRoot: {fileID: 4123366033977979079}
   _navFirstMachineButton: {fileID: 3832840111311461226}
   _navSecondaryMachineButton: {fileID: 8212688647059495347}
+  _navRail: {fileID: 7360210545551836417}
   _panels:
   - {fileID: 4041554715735776928}
   - {fileID: 5704011971420808589}
@@ -5410,3 +5412,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f26429d09f6a64e933502cb6842c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.HMI::Game.HMI.StatusTileView
+--- !u!114 &7360210545551836417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196929737225646985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abbd44282084a4aa8798cc34c82f86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.HMI::Game.HMI.HmiNavRail
+  _theme: {fileID: 11400000, guid: a0c154e929c6db34cb23230949504346, type: 2}
+  _entries:
+  - Button: {fileID: 7336665850430455001}
+    PanelId: overview
+  - Button: {fileID: 478978031795364183}
+    PanelId: recipe
+  - Button: {fileID: 1575733518449145586}
+    PanelId: machine
+  - Button: {fileID: 3702438102716478664}
+    PanelId: machine
+  _spacing: 6
+  _paddingHorizontal: 8
+  _paddingVertical: 6
+  _labelMargin: 8
+  _minFontSize: 12
+  _maxFontSize: 22
+  _activeBarHeight: 3
+  _closeButton: {fileID: 4010881792502103434}
+  _closeLabelSize: 24
