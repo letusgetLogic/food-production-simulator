@@ -16,7 +16,6 @@ namespace Game.Platform
         // Disabled components while ui focus:
         [SerializeField] private FirstPersonController _controller;
         [SerializeField] private AimInteractor _aimInteractor;
-        [SerializeField] private List<HoldItem> _holdBehaviours;
 
         private void OnEnable()
         {
@@ -42,11 +41,6 @@ namespace Game.Platform
             {
                 // Disabling clears the current hover target via OnDisable.
                 _aimInteractor.enabled = !uiFocused;
-            }
-
-            if (_holdBehaviours != null && _holdBehaviours.Count > 0)
-            {
-                _holdBehaviours.ForEach(hold => hold.enabled = !uiFocused);
             }
 
             Cursor.lockState = uiFocused ? CursorLockMode.None : CursorLockMode.Locked;

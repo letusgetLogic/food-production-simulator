@@ -142,12 +142,12 @@
     </mxGraphModel>
   </diagram>
   <diagram id="page2" name="2 Overview">
-    <mxGraphModel dx="2288" dy="1621" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel grid="0" page="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="p2-2" parent="1" style="swimlane;fontStyle=1;startSize=28;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;" value="Game.Platform" vertex="1">
-          <mxGeometry height="222" width="390" as="geometry" />
+          <mxGeometry height="222" width="390" x="-20" as="geometry" />
         </mxCell>
         <mxCell id="p2-3" parent="p2-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="PlayerInputReader" vertex="1">
           <mxGeometry height="30" width="170" x="10" y="36" as="geometry" />
@@ -168,7 +168,7 @@
           <mxGeometry height="30" width="170" x="210" y="156" as="geometry" />
         </mxCell>
         <mxCell id="p2-9" parent="1" style="swimlane;fontStyle=1;startSize=28;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;" value="Game.Core" vertex="1">
-          <mxGeometry height="222" width="390" y="272" as="geometry" />
+          <mxGeometry height="222" width="390" x="-20" y="272" as="geometry" />
         </mxCell>
         <mxCell id="p2-10" parent="p2-9" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="IInteractable" vertex="1">
           <mxGeometry height="30" width="170" x="10" y="36" as="geometry" />
@@ -252,16 +252,16 @@
           <mxGeometry height="30" width="170" x="210" y="396" as="geometry" />
         </mxCell>
         <mxCell id="p2-37" parent="1" style="swimlane;fontStyle=1;startSize=28;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;" value="Game.Quality" vertex="1">
-          <mxGeometry height="102" width="390" x="420" y="522" as="geometry" />
+          <mxGeometry height="162" width="201" x="420" y="522" as="geometry" />
         </mxCell>
         <mxCell id="p2-38" parent="p2-37" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="QualityInspector" vertex="1">
           <mxGeometry height="30" width="170" x="10" y="36" as="geometry" />
         </mxCell>
         <mxCell id="p2-39" parent="p2-37" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="SO_QualitySpec" vertex="1">
-          <mxGeometry height="30" width="170" x="210" y="36" as="geometry" />
+          <mxGeometry height="30" width="170" x="10" y="80" as="geometry" />
         </mxCell>
         <mxCell id="p2-40" parent="1" style="swimlane;fontStyle=1;startSize=28;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;" value="Game.Persistence" vertex="1">
-          <mxGeometry height="102" width="590" x="420" y="684" as="geometry" />
+          <mxGeometry height="139" width="390" x="654" y="545" as="geometry" />
         </mxCell>
         <mxCell id="p2-41" parent="p2-40" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="SaveLoadController" vertex="1">
           <mxGeometry height="30" width="170" x="10" y="36" as="geometry" />
@@ -270,7 +270,7 @@
           <mxGeometry height="30" width="170" x="210" y="36" as="geometry" />
         </mxCell>
         <mxCell id="p2-43" parent="p2-40" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="ISaveStorage" vertex="1">
-          <mxGeometry height="30" width="170" x="410" y="36" as="geometry" />
+          <mxGeometry height="30" width="170" x="110" y="83" as="geometry" />
         </mxCell>
         <mxCell id="p2-44" parent="1" style="swimlane;fontStyle=1;startSize=28;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;swimlaneFillColor=#ffffff;" value="Game.HMI" vertex="1">
           <mxGeometry height="362" width="390" x="1130" y="-20" as="geometry" />
@@ -380,17 +380,17 @@
         <mxCell id="p2-65" edge="1" parent="1" source="p2-11" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=block;endFill=0;endSize=12;dashed=1;exitX=0.0000;exitY=0.2333;exitDx=0;exitDy=0;entryX=1.0000;entryY=0.2333;entryDx=0;entryDy=0;" target="p2-10" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="195" y="315" />
+              <mxPoint x="175" y="315" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="p2-66" edge="1" parent="1" source="p2-5" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=open;endFill=0;dashed=1;exitX=0.0000;exitY=0.6333;exitDx=0;exitDy=0;entryX=0.0000;entryY=0.2333;entryDx=0;entryDy=0;" target="p2-10" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="-5" y="115" />
-              <mxPoint x="-15" y="115" />
-              <mxPoint x="-15" y="315" />
-              <mxPoint x="-5" y="315" />
+              <mxPoint x="-25" y="115" />
+              <mxPoint x="-35" y="115" />
+              <mxPoint x="-35" y="315" />
+              <mxPoint x="-25" y="315" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -405,8 +405,8 @@
         <mxCell id="p2-69" edge="1" parent="1" source="p2-12" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=block;endFill=0;endSize=12;exitX=0.9706;exitY=0.0000;exitDx=0;exitDy=0;entryX=0.0294;entryY=1.0000;entryDx=0;entryDy=0;" target="p2-11" value="">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="175" y="355" />
-              <mxPoint x="215" y="355" />
+              <mxPoint x="155" y="355" />
+              <mxPoint x="195" y="355" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -512,16 +512,8 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="p2-80" edge="1" parent="1" source="p2-41" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=open;endFill=0;dashed=1;exitX=0.9706;exitY=0.0000;exitDx=0;exitDy=0;entryX=1.0000;entryY=0.6333;entryDx=0;entryDy=0;" target="p2-36" value="capture / restore">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="595" y="705" />
-              <mxPoint x="595" y="615" />
-              <mxPoint x="825" y="615" />
-              <mxPoint x="825" y="415" />
-              <mxPoint x="815" y="415" />
-            </Array>
-          </mxGeometry>
+        <mxCell id="p2-80" edge="1" parent="1" source="p2-41" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;exitX=0.9706;exitY=0.0000;exitDx=0;exitDy=0;entryX=1.0000;entryY=0.6333;entryDx=0;entryDy=0;" target="p2-36" value="capture / restore">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="p2-81" edge="1" parent="1" source="p2-51" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=open;endFill=0;dashed=1;exitX=0.0294;exitY=1.0000;exitDx=0;exitDy=0;entryX=0.9706;entryY=0.0000;entryDx=0;entryDy=0;" target="p2-30" value="">
           <mxGeometry relative="1" as="geometry">
@@ -579,7 +571,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="page3" name="3 Machines">
-    <mxGraphModel dx="2738" dy="2170" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1587" dy="1426" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -805,11 +797,11 @@
         <mxCell id="p3-75" parent="p3-72" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=11;" value="+TryRaise() / TryLower()&lt;br&gt;+ResetToRest()" vertex="1">
           <mxGeometry height="40" width="300" y="108" as="geometry" />
         </mxCell>
-        <mxCell id="p3-76" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=12;fillColor=#fffbe6;strokeColor=#999999;fontSize=11;align=left;verticalAlign=top;spacingLeft=4;" value="All five stations (Mixer, Portioner, Press, ContinuousProcessStation, Dosing) also implement IMachineParameterSource and ISaveableState." vertex="1">
-          <mxGeometry height="70" width="300" y="900" as="geometry" />
+        <mxCell id="p3-76" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=12;fillColor=#fffbe6;strokeColor=#999999;fontSize=11;align=left;verticalAlign=top;spacingLeft=4;" value="All 8 stations (Mixer, Portioner, Press, ContinuousProcessStation*, Dosing) also implement IMachineParameterSource and ISaveableState.&lt;br&gt;&lt;br&gt;&lt;div&gt;*ContinuousProcessStation is implemented by Oven, Cooling Tunnel, Schock Freezer and Packaging.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="96" width="325" y="900" as="geometry" />
         </mxCell>
         <mxCell id="p3-77" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=12;fillColor=#fffbe6;strokeColor=#999999;fontSize=11;align=left;verticalAlign=top;spacingLeft=4;" value="Machine behaviour is event-driven: each OnEnter* hook runs when MachineBase.SetState switches state. ConveyorBelt and PalletStation also derive from MachineBase (pages 4 and 10)." vertex="1">
-          <mxGeometry height="90" width="300" y="990" as="geometry" />
+          <mxGeometry height="90" width="300" x="358" y="906" as="geometry" />
         </mxCell>
         <mxCell id="p3-78" edge="1" parent="1" source="p3-46" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;startArrow=diamondThin;startFill=1;startSize=14;endArrow=open;endFill=0;exitX=0.0147;exitY=1.0000;exitDx=0;exitDy=0;entryX=0.0147;entryY=0.0000;entryDx=0;entryDy=0;" target="p3-50" value="1..*">
           <mxGeometry relative="1" as="geometry">
@@ -2299,7 +2291,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="page8" name="8 Persistence">
-    <mxGraphModel dx="2681" dy="1875" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2010" dy="1441" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2599,7 +2591,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="page9" name="9 Player &amp; Interaction">
-    <mxGraphModel dx="2681" dy="1875" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2288" dy="1621" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -2832,7 +2824,7 @@
           <mxGeometry height="30" width="340" x="1440" y="442" as="geometry" />
         </mxCell>
         <mxCell id="p9-78" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=12;fillColor=#fffbe6;strokeColor=#999999;fontSize=11;align=left;verticalAlign=top;spacingLeft=4;" value="Further InteractableBase subclasses: TerminalInteractable (HMI), DosingRefillButton (derives from PushButton), PalletJackHandle, PalletStorage, DebugLogInteractable." vertex="1">
-          <mxGeometry height="80" width="340" x="1170" y="690" as="geometry" />
+          <mxGeometry height="80" width="340" x="1452" y="688" as="geometry" />
         </mxCell>
         <mxCell id="p9-79" edge="1" parent="1" source="p9-4" style="html=1;rounded=0;fontSize=10;labelBackgroundColor=#ffffff;edgeStyle=none;endArrow=open;endFill=0;dashed=1;exitX=0.0132;exitY=0.0000;exitDx=0;exitDy=0;entryX=0.0132;entryY=1.0000;entryDx=0;entryDy=0;" target="p9-2" value="">
           <mxGeometry relative="1" as="geometry">
