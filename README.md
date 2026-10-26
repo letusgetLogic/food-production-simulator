@@ -73,6 +73,11 @@ Ziele des Hobby-Projektes:
 
 ------------------------------------------------------------------------
 
+## Code-Architektur
+[Architecture Documentation](Docs/Architecture-Docu.md)
+
+------------------------------------------------------------------------
+
 ## Design-Entscheidungen
 
 - Puffer-Förderband vor Teigpresse um automatisches Stoppen zu realisieren
