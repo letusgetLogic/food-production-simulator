@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game.Core
 {
-    [RequireComponent(typeof(Transform))]
     public class HoldInteractable : InteractableBase
     {
         [SerializeField] private SO_HoldChannel _holdChannel;
