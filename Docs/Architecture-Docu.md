@@ -65,3 +65,6 @@ Die Maschinen-Architektur (MachineBase und die Stationen darauf) folgt diesen Pr
 
 ------------------------------------------------------------------------
 
+Weitere UML-Klassendiagramme sind in [UML Ordner](UML)
+
+------------------------------------------------------------------------
