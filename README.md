@@ -10,11 +10,11 @@ Der Nutzer überwacht und steuert eine kleine industrielle Produktionslinie zur 
 
 ## Projekt
 
-Entwicklungs-Zeitraum: **15.09.2026 - 14.10.2026**
+Entwicklungs-Zeitraum: **15.09.2026 - 26.10.2026**
 
 - MVP-Stand erreicht
 - Keine Erweiterungen implementiert, außer Palettierer und Waren-Transport
-- Update am 11.10.2026
+- Update am 26.10.2026
 
 Ziele des Hobby-Projektes:
 
@@ -70,6 +70,14 @@ Ziele des Hobby-Projektes:
 - Tutorial/Onboarding
 - Asset-Integration
 - Localization
+
+------------------------------------------------------------------------
+
+## Code-Architektur
+
+Die Codebasis wurde in mehreren Assemblies aufgeteilt, um die Kompilierzeit zu verringern, die Architektur sauber zu trennen.
+
+![Assemblies-Zusammenhang](Docs/UML/FPS-UML-1-Assemblies.png)
 
 ------------------------------------------------------------------------
 
