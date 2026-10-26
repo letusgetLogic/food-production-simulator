@@ -4,7 +4,7 @@
 
 Die Codebasis wurde in mehreren Assemblies aufgeteilt, um die Kompilierzeit zu verringern, die Architektur sauber zu trennen.
 
-![Assemblies-Zusammenhang](Docs/UML/FPS-UML-1-Assemblies.png)
+![Assemblies-Zusammenhang](UML/FPS-UML-1-Assemblies.png)
 
 
 ------------------------------------------------------------------------
@@ -13,7 +13,7 @@ Die Codebasis wurde in mehreren Assemblies aufgeteilt, um die Kompilierzeit zu v
 
 # Maschinen-Architektur 
 
-![Maschinen-Architektur](Docs/UML/FPS-UML-3-Machines.png)
+![Maschinen-Architektur](UML/FPS-UML-3-Machines.png)
 
 Die Maschinen-Architektur (MachineBase und die Stationen darauf) folgt diesen Prinzipien:
 - **Komposition statt Mehrfachvererbung**: IInteractable sitzt auf Maschinenteilen (Knöpfe, Hebel) und HMI-Elementen, nie auf der Maschine selbst.
