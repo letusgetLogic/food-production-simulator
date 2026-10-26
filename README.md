@@ -73,14 +73,6 @@ Ziele des Hobby-Projektes:
 
 ------------------------------------------------------------------------
 
-## Code-Architektur
-
-Die Codebasis wurde in mehreren Assemblies aufgeteilt, um die Kompilierzeit zu verringern, die Architektur sauber zu trennen.
-
-![Assemblies-Zusammenhang](Docs/UML/FPS-UML-1-Assemblies.png)
-
-------------------------------------------------------------------------
-
 ## Design-Entscheidungen
 
 - Puffer-Förderband vor Teigpresse um automatisches Stoppen zu realisieren
